@@ -1,4 +1,4 @@
-s_dir="/home/IhitplayzYT/buildsystemplates"
+s_dir="your/path/to/buildsystemplates"
 proj_name=$1
 c_dir=$PWD
 cd $s_dir
