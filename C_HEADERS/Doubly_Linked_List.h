@@ -5,14 +5,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#endif
-
 #define int_f 0b000001
 #define char_f 0b000010
 #define float_f 0b000100
 #define str_f 0b001000
 #define long_f 0b010000
 #define double_f 0b100000
+#endif
+
 typedef struct Data {
   int flag;
   void *data;
