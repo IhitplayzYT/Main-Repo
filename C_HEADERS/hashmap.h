@@ -40,6 +40,9 @@ int compute_hash(char *data) {
 void add_to_table(Node_h **hashtable, void *val, int flag) {
   if (flag == 0) {
     Node_h *ptr = hashtable[*((int *)val) % hashtable[0]->len];
+    if (ptr->data != NULL && *(int *)ptr->data == *(int *)val) {
+      return;
+    }
     if (ptr->data == NULL) {
       ptr->data = (int *)val;
       ptr->flag = 0;
@@ -47,6 +50,9 @@ void add_to_table(Node_h **hashtable, void *val, int flag) {
       return;
     }
     while (ptr->next != NULL) {
+      if (*(int *)(ptr->data) == *(int *)val) {
+        return;
+      }
       if (ptr->data == NULL) {
         break;
       }
@@ -60,6 +66,9 @@ void add_to_table(Node_h **hashtable, void *val, int flag) {
     int l = hashtable[0]->len;
     int z = compute_hash((char *)val) % l;
     Node_h *ptr = hashtable[z];
+    if (ptr->data != NULL && strcmp((char *)ptr->data, (char *)val) == 0) {
+      return;
+    }
     if (ptr->data == NULL) {
       ptr->data = (char *)val;
       ptr->flag = 1;
@@ -68,6 +77,9 @@ void add_to_table(Node_h **hashtable, void *val, int flag) {
     }
 
     while (ptr->next != NULL) {
+      if (strcmp((char *)(ptr->data), (char *)val) == 0) {
+        return;
+      }
       if (ptr->data == NULL) {
         break;
       }
