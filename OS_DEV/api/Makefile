@@ -6,7 +6,7 @@ ldflags=
 all: clean api.o
 
 api.o: api.c api.h os.h
-	gcc $(flags) -c $<
+	gcc $(flags) $(CFLAGS) -c $<
 
 clean:
 	rm -rf *.o

@@ -28,7 +28,7 @@ public i8 write_byte(i8 fd, i8 chr)
     if (fd < 0) reterr(BAD_FD);
     if (fd > 1  && !isopen(fd)) reterr(CLOSED_FD);
     i8 buff[2] = {0};
-    buff[1] = chr;
+    buff[0] = chr;
     i8 psxfd = getposixfd(fd);
     if (!psxfd) reterr(CLOSED_FD);
     psxfd = (psxfd == 1) ? 0 : (psxfd == 2) ? 1: (psxfd);
@@ -47,7 +47,6 @@ char buff[2] = {0};
     if (!psxfd) reterr(CLOSED_FD);
     psxfd = (psxfd == 1) ? 0 : (psxfd == 2) ? 1: (psxfd);
 if (!read(psxfd,buff,1)) reterr(IO_ERR);
-printf("%hu\n",psxfd);
 return (i8)*buff;
 }
 
@@ -55,7 +54,7 @@ return (i8)*buff;
 private void init_fds(){
 fds[0] = 1;
 fds[1] = 2;
-for (int i = 2;i < MAX_FD ;i ++)fds[0] = 0;
+for (int i = 2;i < MAX_FD ;i ++)fds[i] = 0;
 }
 
 public void print_err(){

@@ -3,7 +3,6 @@
 
 int main(int argc, char *argv[]) { 
     init();
-    char c = read_byte(0);
-    printf("%c\n",c);
+    write_byte(1,'a');
     print_err();
     }
