@@ -45,6 +45,25 @@ void deallocate(Stack **start) {
   return;
 }
 
+void *peek(Stack *start) {
+  int temp = start->data.flag[start->size + 1];
+  if (temp == int_f) {
+    return &((int *)(start->data.arr))[start->size + 1];
+  } else if (temp == char_f) {
+    return &((char *)(start->data.arr))[start->size + 1];
+  } else if (temp == float_f) {
+    return &((float *)(start->data.arr))[start->size + 1];
+  } else if (temp == str_f) {
+    return ((char **)(start->data.arr))[start->size + 1];
+  } else if (temp == long_f) {
+    return &((long *)(start->data.arr))[start->size + 1];
+  } else if (temp == double_f) {
+    return &((double *)(start->data.arr))[start->size + 1];
+  } else {
+    return NULL;
+  }
+}
+
 void push(Stack *start, void *data, int flag) {
   if (is_full(start)) {
     printf("Stack full\n");
@@ -71,12 +90,27 @@ void push(Stack *start, void *data, int flag) {
   return;
 }
 
-void pop(Stack *start) {
+void *pop(Stack *start) {
   if (is_empty(start)) {
-    return;
+    return NULL;
   }
   start->size--;
-  return;
+  int temp = start->data.flag[start->size + 1];
+  if (temp == int_f) {
+    return &((int *)(start->data.arr))[start->size + 1];
+  } else if (temp == char_f) {
+    return &((char *)(start->data.arr))[start->size + 1];
+  } else if (temp == float_f) {
+    return &((float *)(start->data.arr))[start->size + 1];
+  } else if (temp == str_f) {
+    return ((char **)(start->data.arr))[start->size + 1];
+  } else if (temp == long_f) {
+    return &((long *)(start->data.arr))[start->size + 1];
+  } else if (temp == double_f) {
+    return &((double *)(start->data.arr))[start->size + 1];
+  } else {
+    return NULL;
+  }
 }
 
 void printStack(Stack *start) {

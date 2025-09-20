@@ -160,3 +160,16 @@ int binary_search(int *arr, int m, int to_find) {
 
   return -1;
 }
+
+int *concat(int *a, int *b, int m, int n) {
+  int *arr = (int *)malloc(sizeof(int) * (m + n));
+  if (arr == NULL) {
+    return NULL;
+  }
+  memcpy(arr, a, m * sizeof(int));
+  memcpy(arr + m, b, n * sizeof(int));
+  return arr;
+}
+
+int min(int a, int b) { return a <= b ? a : b; }
+int max(int a, int b) { return a >= b ? a : b; }

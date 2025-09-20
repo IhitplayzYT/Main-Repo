@@ -5,17 +5,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#endif
+
 #define int_f 0b000001
 #define char_f 0b000010
 #define float_f 0b000100
 #define str_f 0b001000
 #define long_f 0b010000
 #define double_f 0b100000
-#endif
-
 typedef struct Data {
   int flag;
   void *data;
+  int len;
 } Data;
 
 typedef struct Node {
@@ -52,6 +53,7 @@ int fill_data(Node_d **node, void *data) {
 
 Node_d *add_beggining(Node_d **head, void *data, int type) {
   Node_d *node = (Node_d *)malloc(sizeof(Node_d));
+  node->data.len = 0;
   if (node == NULL) {
     return NULL;
   }
@@ -64,6 +66,7 @@ Node_d *add_beggining(Node_d **head, void *data, int type) {
   if (*head == NULL) {
     *head = node;
     node->next = node->prev = NULL;
+    node->data.len++;
     return node;
   }
 
@@ -71,11 +74,13 @@ Node_d *add_beggining(Node_d **head, void *data, int type) {
   node->next = *head;
   node->next->prev = node;
   *head = node;
+  (*head)->data.len = (*head)->next->data.len++;
   return node;
 }
 
 Node_d *add_end(Node_d **head, void *data, int type) {
   Node_d *node = (Node_d *)malloc(sizeof(Node_d));
+  node->data.len = 0;
   if (node == NULL) {
     return NULL;
   }
@@ -88,6 +93,7 @@ Node_d *add_end(Node_d **head, void *data, int type) {
     *head = node;
     node->prev = NULL;
     node->next = NULL;
+    node->data.len++;
     return node;
   }
   Node_d *ptr;
@@ -96,6 +102,7 @@ Node_d *add_end(Node_d **head, void *data, int type) {
   ptr->next = node;
   node->next = NULL;
   node->prev = ptr;
+  (*head)->data.len++;
   return node;
 }
 
@@ -113,7 +120,7 @@ void dealloc_list(Node_d **head) {
   *head = NULL;
 }
 
-void printlist(Node_d *head) {
+void prettyprintlist(Node_d *head) {
   printf("/HEAD/ <-> ");
   for (Node_d *cur = head; cur != NULL; cur = cur->next) {
     switch (cur->data.flag) {
@@ -179,10 +186,12 @@ void insert_at(Node_d **head, void *data, int type, int index) {
   node->next->prev = node;
   cur->next = node;
   node->prev = cur;
+  (*head)->data.len++;
 }
 
 void insert_after(Node_d **head, void *data, int flag_s, void *data_compare) {
   Node_d *node = (Node_d *)malloc(sizeof(Node_d));
+  node->data.len = 1;
   if (node == NULL) {
     return;
   }
@@ -192,6 +201,7 @@ void insert_after(Node_d **head, void *data, int flag_s, void *data_compare) {
       return;
     }
     *head = node;
+    (*head)->data.len++;
     return;
   }
   int found = 0;
@@ -259,12 +269,19 @@ void insert_after(Node_d **head, void *data, int flag_s, void *data_compare) {
   node->next->prev = node;
   node->prev = cur;
   cur->next = node;
+  (*head)->data.len++;
   return;
 }
 
 void delete_at(Node_d **head, int index) {
   if (*head == NULL || list_length(*head) <= index) {
     return;
+  }
+  if (index == 0) {
+    if ((*head)->next != NULL) {
+      (*head)->next->data.len = --(*head)->data.len;
+      *head = (*head)->next;
+    }
   }
 
   Node_d *cur = *head;
@@ -279,6 +296,7 @@ void delete_at(Node_d **head, int index) {
   cur->next = cur->next->next;
   free(cur->next->prev);
   cur->next->prev = cur;
+  (*head)->data.len--;
 }
 
 void delete_elem(Node_d **head, void *data) {
@@ -289,18 +307,21 @@ void delete_elem(Node_d **head, void *data) {
   int found = 0;
   if (cur->data.flag == char_f) {
     if (*(char *)cur->data.data == *(char *)data) {
+      (*head)->next->data.len = (*head)->data.len--;
       *head = cur->next;
       free(cur);
       return;
     }
   } else if (cur->data.flag == int_f) {
     if (*(int *)cur->data.data == *(int *)data) {
+      (*head)->next->data.len = (*head)->data.len--;
       *head = cur->next;
       free(cur);
       return;
     }
   } else if (cur->data.flag == str_f) {
     if (strcmp((char *)cur->data.data, (char *)data) == 0) {
+      (*head)->next->data.len = (*head)->data.len--;
       *head = cur->next;
       free(cur);
       return;
@@ -308,12 +329,14 @@ void delete_elem(Node_d **head, void *data) {
   } else if (cur->data.flag == float_f) {
     if ((int)((*(float *)cur->data.data) * 100) ==
         (int)(*(float *)data * 100)) {
+      (*head)->next->data.len = (*head)->data.len--;
       *head = cur->next;
       free(cur);
       return;
     }
   } else if (cur->data.flag == long_f) {
     if (*(long *)cur->data.data == *(long *)data) {
+      (*head)->next->data.len = (*head)->data.len--;
       *head = cur->next;
       free(cur);
       return;
@@ -321,6 +344,7 @@ void delete_elem(Node_d **head, void *data) {
   } else if (cur->data.flag == double_f) {
     if ((int)(*(double *)cur->data.data * 100) ==
         (int)(*(double *)data * 100)) {
+      (*head)->next->data.len = (*head)->data.len--;
       *head = cur->next;
       free(cur);
       return;
@@ -382,6 +406,7 @@ void delete_elem(Node_d **head, void *data) {
   cur->next = cur->next->next;
   free(cur->next->prev);
   cur->next->prev = cur;
+  (*head)->data.len--;
 }
 
 void insert_before(Node_d **head, void *data, int flag_s, void *data_compare) {
@@ -397,6 +422,7 @@ void insert_before(Node_d **head, void *data, int flag_s, void *data_compare) {
     }
     node->next = node->prev = NULL;
     *head = node;
+    (*head)->data.len = 1;
     return;
   }
 
@@ -460,6 +486,7 @@ void insert_before(Node_d **head, void *data, int flag_s, void *data_compare) {
   node->next = cur->next;
   node->prev = cur;
   cur->next = node;
+  (*head)->data.len++;
   return;
 }
 
@@ -467,6 +494,7 @@ void reverse_list(Node_d **head) {
   if (*head == NULL || list_length(*head) == 1) {
     return;
   }
+  int siz = (*head)->data.len;
   Node_d *cur = (*head)->next;
   Node_d *prev = *head;
   Node_d *temp;
@@ -480,5 +508,6 @@ void reverse_list(Node_d **head) {
     cur = temp;
   }
   *head = prev;
+  (*head)->data.len = siz;
   return;
 }
