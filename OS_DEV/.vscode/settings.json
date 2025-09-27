@@ -3,6 +3,7 @@
         "stdio.h": "c",
         "charconv": "c",
         "cmnd.h": "c",
-        "os.h": "c"
+        "os.h": "c",
+        "api.h": "c"
     }
 }

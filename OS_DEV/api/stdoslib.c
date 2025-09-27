@@ -1,17 +1,17 @@
 /* stdoslib.c */
 #include "stdoslib.h"
+#include <stdio.h>
 
-public void zero(i8 *p,i8 n){
+public void zero(i8 *p,i16 n){
 if (!p || n <= 0) return;
 for (;n;p++,n--) *p = (i8)0;
 }
 
-public void copyn(i8 *a,i8 *b,i8 n){
-for (;*b!='\0' && n;n--) *a = *b;
-*a = '\0';
+public void copyn(i8 *a,i8 *b,i16 n){
+for (;n;n--,a++,b++) *a = *b;
 }
 
-public void fill (i8*a,i32 l,i8 hx){
+public void fill (i8*a,i16 l,i8 hx){
 if (!a) return;
 for (;l;a++,l--) *a = hx;
 }
@@ -27,5 +27,76 @@ for (;*b !='\0';a++,b++) *a = *b;
 *a = '\0';
 }
 
+void print_bytes(void *ptr, i32 size) {
+    i8 *p = ptr;
+    for (i32 i = 0; i < size; i++) {
+        printf("%02X ", p[i]);   
+        if ((i + 1) % 16 == 0)  
+            printf("\n");
+    }
+    printf("\n");
+}
+
 public int min(int a,int b){return (a >= b) ? b : a;}
 public int max(int a,int b){return (a >= b) ? a : b;}
+
+public int ceil_div(int a,int b){
+return (!a % b) ? (int)a/b : ((int)a/b) + 1;
+}
+public int floor_div(int a,int b){
+return (int)a/b;
+}
+public int round_div(int a,int b){
+return (((float)a/b - (int)a/b) >= 0.5)? ((int)a/b) + 1 : (int)a/b;
+}
+
+public i8 _getbit(i8 * a,i16 n){
+return (((1 << n) & *a) >> n );
+}
+public void _setbit(i8 * a,i16 n){
+*a |= (1 << n);
+}
+public void _unsetbit(i8 * a,i16 n){
+*a &= (~(1 << n)) ;
+}
+public void _flipbit(i8 *a,i16 n){
+*a ^= (1 << n) ;
+}
+
+
+
+
+public i8 getbit(i8 *str,i16 idx){
+i16 bytes_move;
+i8 bits_move;
+bytes_move = (i16)idx/8;
+bits_move = idx % 8;
+void * mem = (void *)(str+bytes_move);
+i8 bit = _getbit((i8*)mem,bits_move);
+return bit;
+}
+
+public void setbit(i8 *str,i16 idx){
+i16 bytes_move;
+i8 bits_move;
+bytes_move = (i16)idx/8;
+bits_move = idx % 8;
+void * mem = (void *)(str+bytes_move);
+_setbit((i8*)mem,bits_move);
+}
+public void unsetbit(i8 *str,i16 idx){
+i16 bytes_move;
+i8 bits_move;
+bytes_move = (i16)idx/8;
+bits_move = idx % 8;
+void * mem = (void *)(str+bytes_move);
+_unsetbit((i8*)mem,bits_move);
+}
+public void flipbit(i8 *str,i16 idx){
+i16 bytes_move;
+i8 bits_move;
+bytes_move = (i16)idx/8;
+bits_move = idx % 8;
+void * mem = (void *)(str+bytes_move);
+_flipbit((i8*)mem,bits_move);
+}

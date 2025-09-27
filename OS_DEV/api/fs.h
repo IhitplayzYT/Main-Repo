@@ -26,61 +26,71 @@ typedef unsigned long i64;
 #define magic_str1 (0xfade)
 #define magic_str2 (0xaa55)
 #define Inodesperblock (16)
-#define PtrsperInode (8)
+#define IndirPtrsperInode (8)
 #define PtrsperBlock (256)
 
 /* Definations */
 typedef i16 ptr;
 typedef i8 Bootsector[500];
-internal packed enum {};
+internal packed enum {InvalidType=0x00,FileType=0x01,DirType=0x03};
+typedef i8 Bitmap;
 
-internal packed struct s_sb{
+/* Superblock 512B */
+internal struct s_sb{
     Bootsector boot;
     i16 _;
-    i16 blocks;
-    i16 inodeblocks;
+    i16 blocks; 
     i16 inodes;
+    i16 inodeblocks;
     i16 magic[2];
-};
+}packed;
 
 typedef struct s_sb Suprblk;
 
-internal packed struct s_fs{
+/* FileSystem */
+internal struct s_fs{
     i8 drive;
     Disk * dd;
     i8 * bitmap;
     Suprblk metadata;
-};
+}packed;
 
 typedef struct s_fs Filesystem;
 
-internal packed struct fname{
+internal struct fname{
 i8 name[8];
 i8 ext[3];
-};
+}packed;
 typedef struct fname Filename;
 
-internal packed struct s_inode{
+/* Inode 32B */
+internal struct s_inode{
 i8 validtype;
 i16 size;
 Filename name;
 ptr indirect;
-ptr direct[PtrsperInode];
-};
+ptr direct[IndirPtrsperInode];
+}packed;
 typedef struct s_inode Inode;
 
-internal packed union u_block{
+/* FSBLOCK(Block pointed to by indirect ptr) */
+internal union u_block{
     Suprblk super;
     i8 data[BLOCK_SIZE];
     ptr ptrs[PtrsperBlock];
-    ptr inodes[Inodesperblock];
-};
+    Inode inodes[Inodesperblock];
+}packed;
 typedef union u_block FSblock;
 
 
 
 /* Function Signatures */
 int main(int, char **);
-internal Filesystem *fsformat(Disk *,Bootsector*);
+public Filesystem *fsformat(Disk *,Bootsector*,i8);
+internal Bitmap* mkbitmap(Filesystem*,i8);
+internal  i16 allocbitmap(Filesystem*,Bitmap*);
+internal void  freebitmap(Filesystem*,Bitmap*,i16);
+internal i16 openfiles(Disk *);
+internal void closeallfiles(Disk*);
 
 /* Function Signatures */

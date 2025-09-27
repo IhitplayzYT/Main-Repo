@@ -2,8 +2,10 @@
 
 #define ERR_GLOBAL
 #include "api.h"
-//public i8 INIT_FLAG;
-public char err[][20] = {"No Errors","Bad/Invalid FD","I/O Error","Closed FD","Init not called","Buffer Overflow"};
+#include "os.h"
+public i8 err_number = 0;
+public i8 INIT_FLAG = 0;
+public char err[][20] = {"No Errors","Bad/Invalid FD","I/O Error","Closed FD","Init not called","Buffer Overflow","Disk not mounted","Disk IO Error","Unclosed/Busy File","Memory Error"};
 private i8 fds[MAX_FD];
 /* 
 fd[0] -> stderr

@@ -14,6 +14,8 @@ typedef unsigned long i64;
 #define public __attribute__((visibility("default")))
 #define internal __attribute__((visibility("hidden")))
 #define private static
+#define alloc(x) malloc((int)(x))
+#define dealloc(x) free((x))
 /* MACROS */
 
 /* Definations */
@@ -23,11 +25,23 @@ typedef unsigned long i64;
 /* Definations */
 
 /* Function Signatures */
-public void fill (i8*,i32,i8); /* Fills fixed no of bytes to input hex/char*/
-public void zero(i8 *,i8); /* Zeroes out all the bytes */
+public void fill (i8*,i16,i8); /* Fills fixed no of bytes to input hex/char*/
+public void zero(i8 *,i16); /* Zeroes out all the bytes */
 public int min(int,int);  /* Min of two numbers */
 public int max(int,int);   /* Max of two numbers */
 public int len(i8 *);   /* Length of a string */
 public void copy(i8 *,i8 *);  /* Copy contents from second to first string */
-public void copyn(i8 *,i8 *,i8); /* Copy a 'N' chars from src to dest string*/
+public void copyn(i8 *,i8 *,i16); /* Copy a 'N' chars from src to dest string*/
+public int floor_div(int,int);
+public int ceil_div(int,int);
+public int round_div(int,int);
+void print_bytes(void *, i32);
+public i8 _getbit(i8 *,i16);
+public void _setbit(i8 *,i16);
+public void _unsetbit(i8 *,i16);
+public void _flipbit(i8 *,i16);
+public i8 getbit(i8 *,i16);
+public void setbit(i8 *,i16);
+public void unsetbit(i8 *,i16);
+public void flipbit(i8 *,i16);
 /* Function Signatures */

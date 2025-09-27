@@ -15,12 +15,12 @@ typedef unsigned long i64;
 
 /* Error Number Implem */
 #ifndef ERR_GLOBAL
-public i8 err_number;
-public i8 INIT_FLAG;
-#else
+#define ERR_GLOBAL
 extern public i8 err_number;
 extern public i8 INIT_FLAG;
 #endif
+
+
 #define reterr(x)     \
     do                \
     {                 \
@@ -28,10 +28,11 @@ extern public i8 INIT_FLAG;
     return (x);       \
     } while (0);      \
 
+#define seterr(x) err_number = (x)
 /* Error Number Implem */
 
 /* Error Number defs */
-public enum{NO_ERR,BAD_FD,IO_ERR,CLOSED_FD,NO_INIT_ERR,BUFF_OVRFLW,NOT_MOUNT_ERR,DISK_IO_ERR};
+public enum{NO_ERR,BAD_FD,IO_ERR,CLOSED_FD,NO_INIT_ERR,BUFF_OVRFLW,NOT_MOUNT_ERR,DISK_IO_ERR,BUSY_ERR,MEM_ERR};
 /* Error Number defs */
 
 /*Function Signatures */

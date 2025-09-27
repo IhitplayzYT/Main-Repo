@@ -3,7 +3,7 @@ ldflags=-ldl -shared -fPIC
 
 .PHONY: all clean
 
-all: clean api.so
+all: clean api.so util
 
 api.so: api.o disk.o stdoslib.o fs.o
 	gcc $(flags) $(CFLAGS) $(ldflags)  $^ -o $@
@@ -16,8 +16,16 @@ disk.o: disk.c disk.h
 
 stdoslib.o: stdoslib.c stdoslib.h
 	gcc $(flags) $(CFLAGS) -fPIC -c $<
+
 fs.o: fs.c fs.h
 	gcc $(flags) $(CFLAGS) -fPIC -c $<
+
+util.o : util.c
+	gcc $(flags) $(CFLAGS) -fPIC -c $<
+
+util: util.o api.o disk.o stdoslib.o fs.o
+	gcc $(flags) $(CFLAGS) $^ -o $@
+	mv -f util ../util
 
 clean:
 	rm -rf *.o *.so
