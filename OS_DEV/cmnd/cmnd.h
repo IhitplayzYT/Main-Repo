@@ -1,8 +1,8 @@
 /* cmnd.h */
-
+#pragma once
 /*Includes*/
 #include <stdio.h>
-#include <os.h>
+#include "os.h"
 /*Includes*/
 
 /* Typedefinations */
@@ -14,6 +14,7 @@ typedef unsigned long i64;
 
 /* MACROS */
 #define public __attribute__((visibility("default")))
+#define internal __attribute__((visibility("hidden")))
 #define private static
 #define SWAP(X, Y) (X) ^= (Y) ^= (X) ^= (Y)
 /* MACROS */

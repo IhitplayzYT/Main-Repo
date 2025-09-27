@@ -1,8 +1,9 @@
 /* api.h */
-
+#pragma once
 /*Includes*/
+#include "stdoslib.h"
+#include "os.h"
 #include <stdio.h>
-#include <os.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -18,6 +19,7 @@ typedef unsigned long i64;
 
 /* MACROS */
 #define public __attribute__((visibility("default")))
+#define internal __attribute__((visibility("hidden")))
 #define private static
 #define SWAP(X, Y) (X) ^= (Y) ^= (X) ^= (Y)
 #define getposixfd(x) fds[(x)]

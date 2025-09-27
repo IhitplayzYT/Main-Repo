@@ -2,14 +2,16 @@
 
 #define ERR_GLOBAL
 #include "api.h"
-public i8 INIT_FLAG = 0;
-public char err[][50] = {"No errors encountered","Bad/Invalid FD Encountered","Input/Output Error","Closed FD Encountered","INIT not called"};
+//public i8 INIT_FLAG;
+public char err[][20] = {"No Errors","Bad/Invalid FD","I/O Error","Closed FD","Init not called","Buffer Overflow"};
 private i8 fds[MAX_FD];
 /* 
 fd[0] -> stderr
 fd[1] -> stdin
 fd[2] -> stdout
+fd[...] -> file stream FDs
 */
+
 
 /* Return : 1 -> Open FD, 0 -> Closed FD, NO_INIT_ERR */
 private i8 isopen(i8 fd)
@@ -65,5 +67,11 @@ public void init(){
 init_fds();
 err_number = 0;
 INIT_FLAG = 1;
+dinit();
 }
+
+public i8 get_errno(){return err_number;}
+
+
+
 

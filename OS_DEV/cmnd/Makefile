@@ -5,10 +5,10 @@ ldflags=
 
 all:clean clear cmnd 
 
-../api/api.o: ../api/api.c
-	$(MAKE) -C ../api -sk "CFLAGS=$(flags)" clean all
+../api/api.so: ../api/api.c ../api/api.h ../api/disk.c ../api/disk.h
+	$(MAKE) -C ../api -sk "CFLAGS=$(flags)"
 
-cmnd: cmnd.o ../api/api.o
+cmnd: cmnd.o ../api/api.so
 	gcc $(flags) $^ -o $@ $(ldflags)
 
 cmnd.o: cmnd.c cmnd.h
@@ -17,5 +17,5 @@ clear:
 	cd ../api
 	$(MAKE) clean
 clean:
-	rm -rf *.o cmnd
+	rm -rf *.o *.so cmnd
 

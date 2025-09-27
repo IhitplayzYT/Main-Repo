@@ -2,6 +2,7 @@
     "files.associations": {
         "stdio.h": "c",
         "charconv": "c",
-        "cmnd.h": "c"
+        "cmnd.h": "c",
+        "os.h": "c"
     }
 }
