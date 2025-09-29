@@ -28,7 +28,7 @@ typedef unsigned long i64;
 #define Inodesperblock (16)
 #define IndirPtrsperInode (8)
 #define PtrsperBlock (256)
-
+#define MAX_FS MAX_DD
 /* Definations */
 typedef i16 ptr;
 typedef i8 Bootsector[500];
@@ -82,15 +82,24 @@ internal union u_block{
 }packed;
 typedef union u_block FSblock;
 
-
+#ifndef y
+#define y
+extern public Filesystem* FileDescriptors[MAX_FS];
+#endif
 
 /* Function Signatures */
 int main(int, char **);
-public Filesystem *fsformat(Disk *,Bootsector*,i8);
+internal Filesystem *fsformat(Disk *,Bootsector*,i8);
 internal Bitmap* mkbitmap(Filesystem*,i8);
 internal  i16 allocbitmap(Filesystem*,Bitmap*);
 internal void  freebitmap(Filesystem*,Bitmap*,i16);
 internal i16 openfiles(Disk *);
 internal void closeallfiles(Disk*);
-
+internal void fsshow(Filesystem*);
+internal Inode* fetchinode(Filesystem*,ptr);
+internal i8* filestr(Filename*);
+internal void print_inodes(Filesystem *);
+internal void print_bitmap(Filesystem*);
+internal Filesystem* fsmount(i8);
+internal void fsunmount(Filesystem*);
 /* Function Signatures */

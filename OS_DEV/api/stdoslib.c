@@ -7,8 +7,19 @@ if (!p || n <= 0) return;
 for (;n;p++,n--) *p = (i8)0;
 }
 
-public void copyn(i8 *a,i8 *b,i16 n){
-for (;n;n--,a++,b++) *a = *b;
+public void _copyn(i8 *a,i8 *b,i16 n,i8 z){
+if (!a || !b) return;
+if (z==1) for (;n;n--,a++,b++) *a = *b;
+else{
+for (;n && *a != '\0' && *b != '\0';n--,a++,b++)*a = *b;
+*a = '\0';
+}
+}
+
+public void _copy(i8 *a,i8 *b){
+if (!a || !b) return;
+for (;*b != '\0';a++,b++) *a = *b;
+*a = '\0';
 }
 
 public void fill (i8*a,i16 l,i8 hx){
@@ -22,12 +33,10 @@ for (i = 0; str[i] != '\0';i++);
 return i;
 }
 
-public void copy(i8 *a,i8 *b){
-for (;*b !='\0';a++,b++) *a = *b;
-*a = '\0';
-}
+
 
 void print_bytes(void *ptr, i32 size) {
+    if (!ptr)return;
     i8 *p = ptr;
     for (i32 i = 0; i < size; i++) {
         printf("%02X ", p[i]);   
@@ -64,7 +73,13 @@ public void _flipbit(i8 *a,i16 n){
 }
 
 
-
+public i8* concat(i8*a,i8*b){
+static i8 buff[512];
+strcopy(buff,a);
+strcopy(&buff[len(a)],b);
+buff[len(buff)] = '\0';
+return buff;
+}
 
 public i8 getbit(i8 *str,i16 idx){
 i16 bytes_move;

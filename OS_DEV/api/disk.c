@@ -4,9 +4,19 @@
 // TODO: REPLACE FREE WITH OUR FREE AND MALLOC VARIATIONS 
 
 internal i8 attached;
+public Disk* DiskDescriptor[MAX_DD];
+
 
 public void dinit(){
 attached = 0;
+int n;
+for (n = 1;n<=MAX_DD;n++) DiskDescriptor[n-1] = attach(n);
+
+if (*DiskDescriptor){
+fsmount(1);
+}
+
+for (n = 1;n<=MAX_DD;n++) detach(DiskDescriptor[n-1]);
 }
 
 internal i8* numppend(i8 *a,i8 n){
@@ -14,7 +24,7 @@ if (!n || n > 250 || n > 9) return 0;
 static char buff[256];
 
 zero(buff,255);
-copy(buff,a);
+strcopy(buff,a);
 int l = len(a);
 buff[l] = 0x30 + n;
 buff[l+1] = '\0';
@@ -26,7 +36,7 @@ if (!dd || !dd->drive_no) return;
 printf("------(Disk %d)------\nAttached ? %s\nPath : %s\nFD -> %d\nBlock Size(Bytes) = %d\n--------------------\n",dd->drive_no,attached & dd->drive_no?"True":"False" ,numppend(Basepath,dd->drive_no),dd->fd,dd->blocks);
 }
 
-public Disk * attach(i8 d_no){
+internal Disk * attach(i8 d_no){
 if (d_no == 1 || d_no == 2);
 else return (Disk*)0;
 if (attached & d_no) return (Disk*)0;
@@ -52,7 +62,7 @@ return dd;
 }
 
 
-public void detach(Disk *dd){
+internal void detach(Disk *dd){
 if (!dd) return;
 attached = ~(dd->drive_no) & attached;
 close(dd->fd);

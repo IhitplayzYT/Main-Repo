@@ -16,6 +16,10 @@ typedef unsigned long i64;
 #define private static
 #define alloc(x) malloc((int)(x))
 #define dealloc(x) free((x))
+#define strcopy(a,b) _copy((a),(b)) 
+#define strncopy(a,b,n) _copyn((a),(b),(n),0)
+#define memcopy(a,b,n) _copyn((a),(b),(n),1)
+#define kprintf(f,args...)printf(f"\n",args)
 /* MACROS */
 
 /* Definations */
@@ -30,8 +34,9 @@ public void zero(i8 *,i16); /* Zeroes out all the bytes */
 public int min(int,int);  /* Min of two numbers */
 public int max(int,int);   /* Max of two numbers */
 public int len(i8 *);   /* Length of a string */
-public void copy(i8 *,i8 *);  /* Copy contents from second to first string */
-public void copyn(i8 *,i8 *,i16); /* Copy a 'N' chars from src to dest string*/
+public void _copy(i8 *,i8 *);  /* Copy contents from second to first string */
+public void _copyn(i8 *,i8 *,i16,i8); /* Copy a 'N' chars from src to dest string*/
+public i8* concat(i8*,i8*);
 public int floor_div(int,int);
 public int ceil_div(int,int);
 public int round_div(int,int);

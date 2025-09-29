@@ -4,6 +4,7 @@
         "charconv": "c",
         "cmnd.h": "c",
         "os.h": "c",
-        "api.h": "c"
+        "api.h": "c",
+        "random": "c"
     }
 }

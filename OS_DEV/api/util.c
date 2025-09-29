@@ -28,22 +28,28 @@ else{ if(s1[0] == '-' && s1[1]=='s'){
 }
 }
 
-drive = (drivestr[0] == 'c')? 1 :(drivestr[0] == 'd') ? 2 : -1;
+drive = (drivestr[0] == 'c' || drivestr[0] == 'C')? 1 :(drivestr[0] == 'd' || drivestr[0] == 'D') ? 2 : -1;
 if (drive == -1 ) usage_format("diskutil");
 if (bootable) {fprintf(stderr,"Boot not supported\n");exit(-1);}
 i8 force;
-printf("This will format the Disk %s and erase any data on the disk.Would you like to proceed?[y/N]\n",drivestr);
+printf("This will format the Disk %s erase all data.Proceed?[y/N]\n",drivestr);
 scanf("%c",&force);
+if (force != 'y' && force != 'Y') return;
 i8 iforce =  (force == 'y' || force == 'Y' )? 1 : 0;
-printf("Formatting Disk %s\n",drivestr);
+
+
+printf("Formatting Disk %s...\n",drivestr);
 dinit();
 Disk *d = attach(drive);
 if (!d) {printf("Bad Disk\n");exit(-1);}
 Filesystem * fs = fsformat(d,0,iforce);
 if (!fs) {printf("Formatting Error\n");exit(-1);}
-printf("Disk Formatted Successfully!\n");
-//fsshow();
+printf("Disk Formatted!\n");
+fsshow(fs);
+print_inodes(fs);
+print_bitmap(fs);
 detach(d);
+free(fs);
 return;
 }
 
