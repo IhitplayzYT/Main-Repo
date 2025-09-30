@@ -5,6 +5,10 @@
         "cmnd.h": "c",
         "os.h": "c",
         "api.h": "c",
-        "random": "c"
+        "random": "c",
+        "gui.h": "c",
+        "stdoslib.h": "c",
+        "assembly.h": "c",
+        "shapes.h": "c"
     }
 }
