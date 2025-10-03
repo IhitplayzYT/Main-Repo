@@ -9,6 +9,7 @@
         "gui.h": "c",
         "stdoslib.h": "c",
         "assembly.h": "c",
-        "shapes.h": "c"
+        "shapes.h": "c",
+        "bmp.h": "c"
     }
 }

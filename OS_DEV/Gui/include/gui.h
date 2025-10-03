@@ -16,6 +16,7 @@ typedef unsigned long i64;
 #define internal __attribute__((visibility("hidden")))
 #define private static
 #define packed __attribute__((packed))
+#define print(x) print_x((i8*)x)
 /* MACROS */
 
 /* Definations */
@@ -24,12 +25,16 @@ typedef unsigned long i64;
 #define ERR_STR "Error %d : %s\n"
 /* Definations */
 
-extern void *heap;
+extern void *heap1;
+extern i16 heapsize;
 
 /* Function Signatures */
-void print(i8*);
+void print_x(i8*);
 void putchar(i8);
 i8 getchar();
+i8 * tostr(i16);
+void save();
+void load();
 void *alloc(i16);
 void dealloc_all();
 void videomode(i8);

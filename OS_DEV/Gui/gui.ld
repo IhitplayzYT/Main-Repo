@@ -16,5 +16,4 @@ SECTIONS
         *(.bss);
     }
 
-    heap = ALIGN(2);
 }
