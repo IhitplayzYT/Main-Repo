@@ -1,4 +1,4 @@
-/*  gui.h  */
+/* omnistd.h */
 #pragma once
 
 /* Typedefinations */
@@ -14,9 +14,14 @@ typedef unsigned long i64;
 #define internal __attribute__((visibility("hidden")))
 #define private static
 #define packed __attribute__((packed))
-#define print(x) print_x((i8*)x)
-#define copy(a,b,n) copy_((i8*)a,(i8*)b,n)
-
+#define memcopy(a,b,n) copy(a,b,n)
+#define copy(a,b,n) _copy((i8*)a,(i8*)b,(i16)n,0)
+#define strcopy(a,b,n) _copy((i8*)a,(i8*)b,(i16)n,1)
+#define zero(a,n) _fill((i8*)a,0,(i16)n,0)
+#define fill(a,c,n) _fill((i8*)a,(i8)c,(i16)n,0)
+#define szero(a,n) _fill((i8*)a,0,(i16)n,1)
+#define sfill(a,c,n) _fill((i8*)a,(i8)c,(i16)n,1)
+#define BUFF_SZ 512
 /* MACROS */
 
 /* Definations */
@@ -25,23 +30,10 @@ typedef unsigned long i64;
 #define ERR_STR "Error %d : %s\n"
 /* Definations */
 
-extern void *heap1;
-extern i16 heapsize;
-
 /* Function Signatures */
-void print_x(i8*);
-void putchar(i8);
-i8 getchar();
-i8 * tostr(i16);
-void save();
-void load();
-void *alloc(i16);
-void dealloc_all();
-void videomode(i8);
-void copy_(i8*,i8*,i16);
-i16 open(i8*,i16);
-i8 read(i16);
-void close(i16);
+void _copy(i8*,i8*,i16,i8);
+void _fill(i8*,i8,i16,i8);
+i8* snprintf(i8*,i16,i8*,...);
 /* Function Signatures */
 
 

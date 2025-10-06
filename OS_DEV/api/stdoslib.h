@@ -31,15 +31,14 @@ typedef unsigned long i64;
 /* Function Signatures */
 public void fill (i8*,i16,i8); /* Fills fixed no of bytes to input hex/char*/
 public void zero(i8 *,i16); /* Zeroes out all the bytes */
-public int min(int,int);  /* Min of two numbers */
-public int max(int,int);   /* Max of two numbers */
-public int len(i8 *);   /* Length of a string */
+public i16 min(i16,i16);  /* Min of two numbers */
+public i16 max(i16,i16);   /* Max of two numbers */
+public i16 len(i8 *);   /* Length of a string */
 public void _copy(i8 *,i8 *);  /* Copy contents from second to first string */
 public void _copyn(i8 *,i8 *,i16,i8); /* Copy a 'N' chars from src to dest string*/
 public i8* concat(i8*,i8*);
-public int floor_div(int,int);
-public int ceil_div(int,int);
-public int round_div(int,int);
+public i16 floor_div(i16,i16);
+public i16 ceil_div(i16,i16);
 void print_bytes(void *, i32);
 public i8 _getbit(i8 *,i16);
 public void _setbit(i8 *,i16);

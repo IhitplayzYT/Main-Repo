@@ -10,6 +10,7 @@
         "stdoslib.h": "c",
         "assembly.h": "c",
         "shapes.h": "c",
-        "bmp.h": "c"
+        "bmp.h": "c",
+        "images.h": "c"
     }
 }

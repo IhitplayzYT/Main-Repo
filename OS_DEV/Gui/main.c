@@ -8,6 +8,7 @@ asm(".code16gcc\n"
 #include "assembly.h"
 #include "shapes.h"
 #include "bmp.h"
+#include "omnistd.h"
 
 void * heapptr,* heapsaved;
 
@@ -15,14 +16,11 @@ void main(){
 videoflag = 0;
 dealloc_all();
 heapptr = heap1;
-i16 thickness = 5;
-i8 color = 2;
-Point * p1 = init_point(1,1,color);
-Point * p2 = init_point(400,400,color);
-Rectangle *r = init_rectangle(p1,p2,color,0,1,thickness);
-if (!r) return;
-videomode(x640_480_16);
-draw_rectangle(r);
+videomode(x40_25_T);
+Bitmap * bmp = parse_bmp((i8*)"sample1",0,0);
+if (!bmp) return;
+i8 ret = draw_bmp(bmp);
+print(tostr(ret));
 getchar();
 dealloc_all();
 return;
@@ -51,6 +49,7 @@ return p;
 
 void dealloc_all(){
     heapptr = heap1;
+    heapsaved = heapptr;
     return;
 }
 
@@ -83,4 +82,27 @@ void save(){
 
 void load(){
     heapptr = heapsaved;
+}
+
+void copy_(i8*a,i8*b,i16 n){
+i8*p,*q;
+for (p=a,q=b;n;n--,p++,q++)*p = *q;
+}
+
+
+i16 open(i8* path,i16 offset){
+i16 fd = x_open(path); 
+if (!fd) return 0;
+i8 re = x_move(fd,offset);
+if (!re) {close(fd);return 0;}
+return fd;
+}
+
+i8 read(i16 fd){
+return x_read(fd);
+}
+
+
+void close(i16 fd){
+x_close(fd);
 }

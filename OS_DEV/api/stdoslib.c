@@ -27,8 +27,8 @@ if (!a) return;
 for (;l;a++,l--) *a = hx;
 }
 
-public int len(i8 * str){
-int i;
+public i16 len(i8 * str){
+i16 i;
 for (i = 0; str[i] != '\0';i++);
 return i;
 }
@@ -46,17 +46,14 @@ void print_bytes(void *ptr, i32 size) {
     printf("\n");
 }
 
-public int min(int a,int b){return (a >= b) ? b : a;}
-public int max(int a,int b){return (a >= b) ? a : b;}
+public i16 min(i16 a,i16 b){return (a >= b) ? b : a;}
+public i16 max(i16 a,i16 b){return (a >= b) ? a : b;}
 
-public int ceil_div(int a,int b){
-return (!a % b) ? (int)a/b : ((int)a/b) + 1;
+public i16 ceil_div(i16 a,i16 b){
+return (!a % b) ? (i16)a/b : ((i16)a/b) + 1;
 }
-public int floor_div(int a,int b){
-return (int)a/b;
-}
-public int round_div(int a,int b){
-return (((float)a/b - (int)a/b) >= 0.5)? ((int)a/b) + 1 : (int)a/b;
+public i16 floor_div(i16 a,i16 b){
+return (i16)a/b;
 }
 
 public i8 _getbit(i8 * a,i16 n){
@@ -99,6 +96,7 @@ bits_move = idx % 8;
 void * mem = (void *)(str+bytes_move);
 _setbit((i8*)mem,bits_move);
 }
+
 public void unsetbit(i8 *str,i16 idx){
 i16 bytes_move;
 i8 bits_move;
@@ -107,6 +105,7 @@ bits_move = idx % 8;
 void * mem = (void *)(str+bytes_move);
 _unsetbit((i8*)mem,bits_move);
 }
+
 public void flipbit(i8 *str,i16 idx){
 i16 bytes_move;
 i8 bits_move;

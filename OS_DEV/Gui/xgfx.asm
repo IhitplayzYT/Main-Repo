@@ -9,6 +9,12 @@ global xgetchar
 global xdrawpoint_txt
 global xdrawpixel
 global heapsize
+global x_open
+global x_move
+global x_close
+global x_read
+
+
 heap1 dw _heap
 _heap:  times 0x1000 db 0x00
         times 0x1000 db 0x00
@@ -94,6 +100,79 @@ xdrawpixel:
     mov ah,0x0c
     int 0x10
 
+    mov sp,bp
+    pop bp
+    ret
+
+
+
+x_open:
+    push bp
+    mov bp,sp
+    mov ax,0x3d01
+    arg dx,0
+    clc
+    int 0x21
+    jc .error
+    jmp .end
+    .error:
+        xor ax,ax
+    .end:
+        mov sp,bp
+        pop bp
+        ret
+x_move:
+    push bp
+    mov bp,sp
+    mov ax,0x4200
+    arg bx,0
+    xor cx,cx
+    mov dx,1
+    clc
+    int 0x21
+    jc .error
+    mov ax,0x01
+    jmp .end
+    .error:
+        xor ax,ax
+    .end:
+        mov sp,bp
+        pop bp
+        ret 
+x_close:
+    push bp
+    mov bp,sp
+    mov ah,0x3E
+    arg bx,0
+    clc
+    int 0x21
+    jc .error
+    mov ax,0x01
+    jmp .end
+    .error:
+        xor ax,ax
+    .end:
+        mov sp,bp
+        pop bp
+        ret
+readbuf dw 0x00
+x_read:
+    push bp
+    mov bp,sp
+    mov ah,0x3f
+    arg bx,0
+    mov cx,0x01
+    mov dx,readbuf
+    clc
+    int 0x21
+    jc .error
+    mov bx,readbuf
+    xor ax,ax
+    mov byte [bx],al
+    jmp .end
+    .error:
+        xor ax,ax
+    .end:
     mov sp,bp
     pop bp
     ret

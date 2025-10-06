@@ -13,7 +13,7 @@ typedef unsigned long i64;
 #define internal __attribute__((visibility("hidden")))
 #define private static
 #define packed __attribute__((packed))
-
+#define getcolor(x,y) (y)
 
 struct s_bmp {
 i16 sign;
@@ -28,18 +28,18 @@ typedef struct s_bmp Bmp_header;
 
 struct s_bmp_info{
 i16 _;
-i16 header_size;
 i16 __;
-i16 width;
 i16 ___;
-i16 height;
+i16 width;
 i16 ____;
+i16 height;
 i16 _____;
-i16 ______,_______;
-i16 ________,_________;  
-i16 __________,___________;
-i16 ____________,_____________; 
-i16 ______________,_______________;
+i16 ______;
+i16 _______,________;
+i16 __________,____________;  
+i16 _____________,______________;
+i16 _______________,________________; 
+i16 _________________,__________________;
 } packed;
 
 typedef struct s_bmp_info Bmp_Info_header;
@@ -53,17 +53,17 @@ struct s_rgb_color{
 
 typedef struct s_rgb_color RGB;
 typedef RGB Color_table[16];
-typedef Point Bmpline[MAX_X];
 
 struct s_bitmap{
+i8 *filename;
 i16 x,y;
 Bmp_header * header;
 Bmp_Info_header * info;
 Color_table * color;
-Bmpline lines[];
 }packed;
 
 typedef struct s_bitmap Bitmap;
 
-Bitmap * parse_bmp(i8*);
-void draw_bmp(Bitmap*);
+Bitmap * parse_bmp(i8*,i16,i16);
+i8 draw_bmp(Bitmap*);
+i8* addbmp(i8*);
