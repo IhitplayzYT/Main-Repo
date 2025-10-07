@@ -14,16 +14,27 @@ void * heapptr,* heapsaved;
 
 void main(){
 videoflag = 0;
-dealloc_all();
-heapptr = heap1;
-videomode(x40_25_T);
-Bitmap * bmp = parse_bmp((i8*)"sample1",0,0);
-if (!bmp) return;
-i8 ret = draw_bmp(bmp);
-print(tostr(ret));
-getchar();
+init_heap();
+//videomode(x640_480_16);
+Bitmap * bmp = parse_bmp((i8*)"sample1",1,2);
+//draw_bmp(bmp2);
 dealloc_all();
 return;
+}
+
+void readn(i16 fd, void* buf, i16 n) {
+    i8* p = buf;
+    for (i16 i=0; i<n; i++) {
+        i8 b = read(fd);
+        if (b == -1) { /* handle error */ }
+        p[i] = b;
+    }
+}
+
+
+void init_heap(){
+dealloc_all();
+heapptr=heap1;
 }
 
 void putchar(i8 c){
@@ -63,16 +74,19 @@ return ret;
 }
 
 i8* tostr(i16 x){
-static i8 buff[20];
+i8 *buff = (i8*)alloc(20);
+buff[19] = 0;
 i8 i = 18;
-if (x == 0) buff[i--] = '0';
+if (x == 0) {buff[i] = '0';
+return buff+i;}
 else{
 while (x > 0){
-buff[i--] = '0' + x % 10;
-x = x/10;
+buff[i] = '0' + x % 10;
+x /= 10;
+i--;
 }}
-buff[19] = '\0';
-return (buff+i+1);
+
+return buff+i+1;
 }
 
 
@@ -99,7 +113,14 @@ return fd;
 }
 
 i8 read(i16 fd){
-return x_read(fd);
+i16 n;
+i8 ah,al;
+n = x_read(fd);
+al = (n & 0xff);
+ah = ((n & 0xff00) >> 8);
+if (ah) {print("error");return 0;}
+else 
+    return al;
 }
 
 

@@ -109,25 +109,25 @@ xdrawpixel:
 x_open:
     push bp
     mov bp,sp
-    mov ax,0x3d01
+    mov ax,0x3d00
     arg dx,0
     clc
     int 0x21
     jc .error
     jmp .end
     .error:
-        xor ax,ax
+        neg ax
     .end:
         mov sp,bp
         pop bp
         ret
 x_move:
     push bp
-    mov bp,sp
+    mov bp,sp 
     mov ax,0x4200
     arg bx,0
     xor cx,cx
-    mov dx,1
+    arg dx,1
     clc
     int 0x21
     jc .error
@@ -142,7 +142,7 @@ x_move:
 x_close:
     push bp
     mov bp,sp
-    mov ah,0x3E
+    mov ah,3Eh
     arg bx,0
     clc
     int 0x21
@@ -155,11 +155,12 @@ x_close:
         mov sp,bp
         pop bp
         ret
-readbuf dw 0x00
+readbuf db 0x00
 x_read:
     push bp
     mov bp,sp
-    mov ah,0x3f
+
+    mov ax,0x3f00
     arg bx,0
     mov cx,0x01
     mov dx,readbuf
@@ -168,11 +169,11 @@ x_read:
     jc .error
     mov bx,readbuf
     xor ax,ax
-    mov byte [bx],al
+    mov byte al,[bx]
     jmp .end
     .error:
-        xor ax,ax
+        mov ah,0xff
     .end:
     mov sp,bp
     pop bp
-    ret
+    ret 

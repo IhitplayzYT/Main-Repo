@@ -34,7 +34,6 @@ return i;
 }
 
 
-
 void print_bytes(void *ptr, i32 size) {
     if (!ptr)return;
     i8 *p = ptr;
@@ -114,3 +113,6 @@ bits_move = idx % 8;
 void * mem = (void *)(str+bytes_move);
 _flipbit((i8*)mem,bits_move);
 }
+
+
+

@@ -11,6 +11,7 @@
         "assembly.h": "c",
         "shapes.h": "c",
         "bmp.h": "c",
-        "images.h": "c"
+        "images.h": "c",
+        "chrono": "c"
     }
 }

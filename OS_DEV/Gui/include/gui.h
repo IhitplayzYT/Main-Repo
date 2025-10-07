@@ -42,6 +42,8 @@ void copy_(i8*,i8*,i16);
 i16 open(i8*,i16);
 i8 read(i16);
 void close(i16);
+void init_heap();
+void readn(i16,void*,i16);
 /* Function Signatures */
 
 
