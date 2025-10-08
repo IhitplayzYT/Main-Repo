@@ -17,22 +17,21 @@ typedef unsigned long i64;
 
 struct s_bmp {   // size = 14 bytes
 i16 sign;
-i16 _;
 i16 file_size;
+i16 _;
 i16 __,___;
-i16 ____;
 i16 offset;
+i16 ____;
 }packed;
 
 typedef struct s_bmp Bmp_header;
 
 struct s_bmp_info{
-i16 _;   // Size of info header = 40
-i16 __;  
-i16 ___;
+i16 _,__;   // Size of info header = 40 
 i16 width;
-i16 ____;
+i16 ___;
 i16 height;
+i16 ____;
 i16 _____;  //Planes
 i16 ______;  //BPS
 i16 _______,________;  // Compression
@@ -45,15 +44,6 @@ i16 ___________________,____________________;
 
 typedef struct s_bmp_info Bmp_Info_header;
 
-struct s_rgb_color{
-    i8 red;
-    i8 blue;
-    i8 green;
-    i8 _;
-}packed;
-
-typedef struct s_rgb_color RGB;
-typedef RGB Color_table[16];
 
 struct s_bitmap{
 i8 *filename;
@@ -69,3 +59,4 @@ Bitmap * parse_bmp(i8*,i16,i16);
 i8 draw_bmp(Bitmap*);
 i8* addbmp(i8*);
 void bmp_show(Bitmap*);
+//i8 getcolor(Color_table*,i8);

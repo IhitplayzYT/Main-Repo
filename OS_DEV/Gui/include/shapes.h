@@ -29,6 +29,17 @@ i16 weight;
 
 typedef struct s_rectangle Rectangle;
 
+struct s_rgb_color{
+    i8 red;
+    i8 blue;
+    i8 green;
+    i8 _;
+}packed;
+
+typedef struct s_rgb_color RGB;
+typedef RGB Color_table[16];
+
+
 
 #define MAX_X 640
 #define MAX_Y 480
@@ -48,9 +59,11 @@ i8 draw_line(Line *);
 i16 getmax_x();
 i16 getmax_y();
 i16 draw_rectangle(Rectangle *);
-
+void set_palette(i16,RGB*);
+RGB** set_all_palettes();
 
 // -----------Constructors----------------//
 Point * init_point(i16,i16,i8);
 Line * init_line(Point*,Point*,i8,i16);
 Rectangle * init_rectangle(Point *,Point *,i8,i8,i8,i16);
+RGB * init_rgb(i8,i8,i8);

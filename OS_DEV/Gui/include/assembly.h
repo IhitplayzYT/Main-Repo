@@ -10,3 +10,4 @@ i16 x_open(i8*);
 i8 x_move(i16,i16);
 i8 x_close(i16);
 i8 x_read(i16);
+void x_set_palette(i16,i8,i8,i8);

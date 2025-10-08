@@ -12,6 +12,7 @@
         "shapes.h": "c",
         "bmp.h": "c",
         "images.h": "c",
-        "chrono": "c"
+        "chrono": "c",
+        "cstddef": "c"
     }
 }

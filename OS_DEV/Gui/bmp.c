@@ -2,6 +2,8 @@
 #include "bmp.h"
 #include "omnistd.h"
 
+extern RGB ** Palette_Table;
+ 
 Bitmap * parse_bmp(i8* image,i16 x,i16 y){
 if (!image) return (Bitmap*)0;
 save();
@@ -12,12 +14,11 @@ if (!fd) { load(); return 0; }
 
 Bmp_header *hdr = (Bmp_header*)alloc(sizeof(Bmp_header));
 if (!hdr){close(fd);load();return (Bitmap*)0;}
-readn(fd, hdr, sizeof(Bmp_header));
+readn(fd,(void *)hdr, sizeof(Bmp_header));
 
 Bmp_Info_header * info = (Bmp_Info_header*)alloc(sizeof(Bmp_Info_header));
 if (!info){close(fd);load();return (Bitmap*)0;}
 readn(fd, info, sizeof(Bmp_Info_header));
-
 
 Color_table *clrs = (Color_table*)alloc(sizeof(Color_table));
 if (!clrs){close(fd);load();return (Bitmap *)0;}
@@ -34,13 +35,8 @@ bm->info = info;
 bm->color = clrs; 
 bm->filename = filename;
 
-
-if (hdr->sign != 0x4D42) { 
-    close(fd); load(); return 0;
-}
-
+if (bm->header->sign != 0x4D42) {close(fd); load(); return (Bitmap *)0;}
 close(fd);
-bmp_show(bm);
 return bm;
 }
 
@@ -68,7 +64,6 @@ i8* addbmp(i8* a){
     return buff;
 }
 
-
 i8 draw_bmp(Bitmap* bmp){
 if (!bmp || !videoflag) return 0;
 save();
@@ -77,23 +72,20 @@ i16 size,width,height,l,col,fd,n;
 Point *pnt;
 fd = open(bmp->filename,bmp->header->offset);
 if (!fd) {load();return 0;}
-size = ((bmp->info->height * bmp->info->width) % 2)?((bmp->info->height * bmp->info->width) >> 1)+1:(bmp->info->height * bmp->info->width) >> 1;
 col = 0;
-l = bmp->info->height;
-
-width = bmp->info->width/2;
-
+l = bmp->info->height * 2;
+width = bmp->info->width;
+size = (bmp->header->file_size - bmp->header->offset);
 for (n=size;n;n--){
 if (!(n % width)) {l--;col = 0;}
-byte = read(fd);
+readn(fd,&byte,1);
 bl = (byte & 0x0f);
-bh = ((byte & 0xf0) >> 4);
-
-pnt = init_point(col+bmp->x,l+bmp->y,3);
+bh = (byte & 0x0f) >> 4;
+pnt = init_point(col+bmp->x,l+bmp->y,getcolor(bmp->color,bh));
 if (pnt) draw_point(pnt);
 col++;
-pnt = init_point(col+bmp->x,l+bmp->y,3);
-
+load(); 
+pnt = init_point(col+bmp->x,l+bmp->y,getcolor(bmp->color,bl));
 if (pnt) draw_point(pnt);
 col++;
 load(); 
@@ -103,3 +95,19 @@ close(fd);
 return 1;
 }
  
+
+// i8 getcolor(Color_table* clr,i8 x){
+// i8 r,g,b,ret = 0;
+// i16 n;
+// for (n = 0 ; n < 255;n++){
+//     r = Palette_Table[n]->red;
+//     g = Palette_Table[n]->green;
+//     b = Palette_Table[n]->blue;
+
+//     if ((r == clr[n]->red) && (g == clr[n]->green) && (b == clr[n]->blue)){
+//         ret = n;
+//         break;
+//     } 
+// }
+// return ret;
+// }

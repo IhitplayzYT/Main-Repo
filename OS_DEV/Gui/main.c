@@ -11,13 +11,18 @@ asm(".code16gcc\n"
 #include "omnistd.h"
 
 void * heapptr,* heapsaved;
+//extern RGB ** Palette_Table;
 
 void main(){
 videoflag = 0;
+//Palette_Table = (RGB**)0;
 init_heap();
-//videomode(x640_480_16);
-Bitmap * bmp = parse_bmp((i8*)"sample1",1,2);
-//draw_bmp(bmp2);
+videomode(x640_480_16);
+//Palette_Table = set_all_palettes();
+//if (!Palette_Table) return;
+Bitmap * bmp = parse_bmp((i8*)"output",50,50);
+bmp_show(bmp);
+draw_bmp(bmp);
 dealloc_all();
 return;
 }
@@ -26,8 +31,9 @@ void readn(i16 fd, void* buf, i16 n) {
     i8* p = buf;
     for (i16 i=0; i<n; i++) {
         i8 b = read(fd);
-        if (b == -1) { /* handle error */ }
+        if (b == -1) {return;}
         p[i] = b;
+        
     }
 }
 
@@ -117,7 +123,7 @@ i16 n;
 i8 ah,al;
 n = x_read(fd);
 al = (n & 0xff);
-ah = ((n & 0xff00) >> 8);
+ah = ((n >> 8) & 0xff);
 if (ah) {print("error");return 0;}
 else 
     return al;

@@ -1,6 +1,7 @@
 /* shapes.c */
 #include "shapes.h"
 i8 videoflag;
+RGB ** Palette_Table;
 
 void videomode(i8 mode){
     if (mode > 0x9f) return;
@@ -22,6 +23,35 @@ if (p->x > xm || p->y > ym) return 0;
 return xdrawpixel(p->x,p->y,p->color);
 }
 
+RGB ** set_all_palettes(){
+i16 reg,n;
+RGB *col;
+i8 r,g,b,h;
+static RGB* Palette_table[256];
+RGB ** clrptr;
+for (n = 0,reg = 0; n < 256;n++){
+    if (reg > 15) reg = 0;
+    if (!reg) r = g = b = 0;
+    else if (reg == 15) r = g = b = 0xff;
+    else {
+    h = reg+1;
+    r = g = b = 0;
+    r = g = b = (h << 4);
+}
+col = init_rgb(r,g,b);
+if (!col) return (RGB **)0;
+set_palette(n,col);
+Palette_table[n] = col;
+reg++;
+}
+clrptr = Palette_table;
+return clrptr; 
+}
+
+void set_palette(i16 reg,RGB* ptr){
+if (!ptr) return;
+x_set_palette(reg,ptr->red,ptr->green,ptr->blue);
+}
 
 i8 draw_line(Line * l){
 if (!l || !videoflag || l->start->x > l->end->x || l->start->y > l->end->y ) return 0;
@@ -128,4 +158,13 @@ rect->fgcolor = (fg)?fg:DEFAULT_COLOR;
 rect->bgcolor = (bg)?bg:DEFAULT_COLOR;
 rect->solid = (fill)?fill:DEFAULT_FILL;
 return rect;
+}
+
+RGB * init_rgb(i8 r,i8 g,i8 b){
+    RGB * rgb = (RGB *)alloc(sizeof(RGB));
+    if (!rgb) return (RGB*)0;
+    rgb->red = r;
+    rgb->blue = b;
+    rgb->green = g;
+return rgb;
 }

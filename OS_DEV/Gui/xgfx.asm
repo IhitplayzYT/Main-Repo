@@ -13,7 +13,8 @@ global x_open
 global x_move
 global x_close
 global x_read
-
+global readbuf
+global x_set_palette
 
 heap1 dw _heap
 _heap:  times 0x1000 db 0x00
@@ -164,16 +165,36 @@ x_read:
     arg bx,0
     mov cx,0x01
     mov dx,readbuf
+
     clc
     int 0x21
     jc .error
+
     mov bx,readbuf
     xor ax,ax
     mov byte al,[bx]
     jmp .end
+
     .error:
         mov ah,0xff
     .end:
     mov sp,bp
     pop bp
     ret 
+
+
+x_set_palette:
+    push bp
+    mov bp,sp
+    mov ax,0x1010
+    arg bx,0
+    xor cx,cx
+    xor dx,dx
+    arg ch,2
+    arg cl,3
+    arg dh,1
+    int 0x10
+    
+    mov sp,bp
+    pop bp
+    ret
