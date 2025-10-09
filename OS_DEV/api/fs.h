@@ -32,7 +32,9 @@ typedef unsigned long i64;
 /* Definations */
 typedef i16 ptr;
 typedef i8 Bootsector[500];
-internal packed enum {InvalidType=0x00,FileType=0x01,DirType=0x03};
+internal packed enum e_type{InvalidType=0x00,FileType=0x01,DirType=0x03};
+typedef enum e_type Type;
+
 typedef i8 Bitmap;
 
 /* Superblock 512B */
@@ -82,8 +84,8 @@ internal union u_block{
 }packed;
 typedef union u_block FSblock;
 
-#ifndef y
-#define y
+#ifndef omsdhwr
+#define omsdhwr
 extern public Filesystem* FileDescriptors[MAX_FS];
 #endif
 
@@ -102,4 +104,10 @@ internal void print_inodes(Filesystem *);
 internal void print_bitmap(Filesystem*);
 internal Filesystem* fsmount(i8);
 internal void fsunmount(Filesystem*);
+internal ptr create_inode(Filesystem*,Filename*,Type); 
+internal i8 destroy_inode(Filesystem*,ptr);
+internal ptr inode_alloc(Filesystem*);
+internal i8 inode_dealloc(Filesystem*,ptr);
+internal ptr save_inode(Filesystem*,Inode*,ptr);
+internal ptr save_inode(Filesystem*,Inode*,ptr);
 /* Function Signatures */

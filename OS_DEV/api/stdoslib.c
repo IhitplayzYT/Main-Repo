@@ -2,7 +2,7 @@
 #include "stdoslib.h"
 #include <stdio.h>
 
-public void zero(i8 *p,i16 n){
+public void _zero(i8 *p,i16 n){
 if (!p || n <= 0) return;
 for (;n;p++,n--) *p = (i8)0;
 }

@@ -23,9 +23,8 @@ else if (!s2){bootable = 0;drivestr = s1;}
 else{ if(s1[0] == '-' && s1[1]=='s'){
     bootable = 1;
     drivestr = s2;
-}else{
-    usage_format("diskutil");
-}
+}else usage_format("diskutil");
+
 }
 
 drive = (drivestr[0] == 'c' || drivestr[0] == 'C')? 1 :(drivestr[0] == 'd' || drivestr[0] == 'D') ? 2 : -1;
@@ -45,9 +44,9 @@ if (!d) {printf("Bad Disk\n");exit(-1);}
 Filesystem * fs = fsformat(d,0,iforce);
 if (!fs) {printf("Formatting Error\n");exit(-1);}
 printf("Disk Formatted!\n");
-fsshow(fs);
 print_inodes(fs);
-print_bitmap(fs);
+
+
 detach(d);
 free(fs);
 return;

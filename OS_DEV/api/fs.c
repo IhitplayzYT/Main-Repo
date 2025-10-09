@@ -29,7 +29,8 @@ return map;
 
 internal void print_inodes(Filesystem *fs){
 if (!fs) return;
-for (int i = 0 ; i < fs->metadata.inodeblocks;i++){
+i16 m = fs->metadata.inodeblocks * Inodesperblock;
+for (int i = 0 ; i < m ;i++){
     Inode * inode = fetchinode(fs,i);
     if (inode && inode->validtype & 0x01){
         printf("----Inode---- %d:\nPath: %s\nSize: %d\nInode Type: %s\n",(i+1),concat("/",filestr(&inode->name)),inode->size,(inode->validtype == FileType)?"File":(inode->validtype == DirType)?"Directory":"????");
@@ -41,7 +42,7 @@ for (int i = 0 ; i < fs->metadata.inodeblocks;i++){
 internal Inode* fetchinode(Filesystem*fs,ptr idx){
 if (!fs) return (Inode *)0;
 FSblock buff;
-Inode * ret = (Inode *)alloc(sizeof(Inode));
+Inode * ret = (Inode*)alloc(sizeof(Inode));
 if (!ret) return (Inode*)0;
 i16 bl = (i16)idx/Inodesperblock;
 i16 jump = idx % Inodesperblock;
@@ -132,6 +133,7 @@ return buff;
 
 public Filesystem *FileDescriptors[MAX_FS];
 
+
 internal Filesystem* fsmount(i8 drive){
 if (drive > MAX_FS)return (Filesystem*)0;
 Disk * dd = DiskDescriptor[drive-1];
@@ -152,6 +154,9 @@ return (Filesystem*)0;
 }
 kprintf("Mounted disk 0x%02x on drive %c:",fs->drive,(drive == 1)?'C':(drive == 2) ? 'D':'?');
 FileDescriptors[drive-1] = fs;
+i16 p = inode_alloc(fs);
+p = inode_alloc(fs);
+fsshow(fs);
 return fs;
 }
 
@@ -162,7 +167,58 @@ kprintf("Unmounted disk 0x%x on drive %c:",fs->drive,(fs->drive == 1)?'C':(fs->d
 dealloc(fs);
 }
 
+// internal ptr create_inode(Filesystem* fs,Filename* name,Type t){
+// if (!fs || !name || t & InvalidType) return 0;
+// Inode *inode;
+// } 
+// internal i8 destroy_inode(Filesystem* fs,ptr p){}
 
+
+internal ptr inode_alloc(Filesystem* fs){
+if (!fs) return 0;
+ptr idx = 0,n;
+Inode *p = (Inode*)alloc(sizeof(Inode));
+zero(p,sizeof(p));
+i16 t = Inodesperblock * fs->metadata.inodeblocks;
+for (n = 0;n<t;n++){
+p = fetchinode(fs,n);
+if (!(p->validtype & 0x01)) 
+{   
+    idx = n;
+    p->validtype=1;
+    if (!save_inode(fs,p,idx)) {idx = 0;break;}
+    fs->metadata.inodes++;
+    dwrite(fs->dd,&fs->metadata,1);
+
+    break;
+}
+}
+if (!p) dealloc(p);
+return idx;
+}
+
+internal i8 inode_dealloc(Filesystem*fs,ptr p){
+if (!fs) return 0;
+Inode * inode = fetchinode(fs,p);
+if (!inode) return 0; 
+inode->validtype = InvalidType;
+ptr b = save_inode(fs,inode,p);
+if (!b){dealloc(inode);return 0;}
+return 1;
+}
+
+internal ptr save_inode(Filesystem* fs,Inode* inode,ptr idx){
+if (!fs || !inode) return 0;
+ptr bno = ((ptr)idx/16)+2;
+ptr mod = idx % 16;
+FSblock bl;
+if (!dread(fs->dd,&bl,bno)) {return 0;}
+memcopy(&bl.inodes[mod],inode,sizeof(Inode));
+print_bytes(&bl.inodes,512);
+if (!dwrite(fs->dd,&bl.inodes,bno)) return 0;
+
+return bno;
+}
 
 //TODO: Implement these two
 internal i16 openfiles(Disk * dd){

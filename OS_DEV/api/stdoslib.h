@@ -17,8 +17,9 @@ typedef unsigned long i64;
 #define alloc(x) malloc((int)(x))
 #define dealloc(x) free((x))
 #define strcopy(a,b) _copy((a),(b)) 
+#define zero(a,b) _zero((i8*)a,b)
 #define strncopy(a,b,n) _copyn((a),(b),(n),0)
-#define memcopy(a,b,n) _copyn((a),(b),(n),1)
+#define memcopy(a,b,n) _copyn((i8*)(a),(i8*)(b),(n),1)
 #define kprintf(f,args...)printf(f"\n",args)
 /* MACROS */
 
@@ -30,7 +31,7 @@ typedef unsigned long i64;
 
 /* Function Signatures */
 public void fill (i8*,i16,i8); /* Fills fixed no of bytes to input hex/char*/
-public void zero(i8 *,i16); /* Zeroes out all the bytes */
+public void _zero(i8 *,i16); /* Zeroes out all the bytes */
 public i16 min(i16,i16);  /* Min of two numbers */
 public i16 max(i16,i16);   /* Max of two numbers */
 public i16 len(i8 *);   /* Length of a string */
