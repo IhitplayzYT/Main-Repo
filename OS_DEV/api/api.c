@@ -5,7 +5,12 @@
 #include "os.h"
 public i8 err_number = 0;
 public i8 INIT_FLAG = 0;
-public char err[][20] = {"No Errors","Bad/Invalid FD","I/O Error","Closed FD","Init not called","Buffer Overflow","Disk not mounted","Disk IO Error","Unclosed/Busy File","Memory Error"};
+public char err[][25] = {"No Errors","Bad/Invalid FD","I/O Error","Closed FD","Init not called","Buffer Overflow","Disk not mounted","Disk IO Error","Unclosed/Busy File","Memory Error","Invalid Argument(s)","Invalid File/Dir Name","Invalid Inode","Limit Reached"};
+
+public i8 latest_Err_idx = 0;
+public i8 ERR_BUFFER[ERR_BUF_SIZE];
+
+
 private i8 fds[MAX_FD];
 /* 
 fd[0] -> stderr
@@ -13,7 +18,6 @@ fd[1] -> stdin
 fd[2] -> stdout
 fd[...] -> file stream FDs
 */
-
 
 /* Return : 1 -> Open FD, 0 -> Closed FD, NO_INIT_ERR */
 private i8 isopen(i8 fd)
@@ -71,6 +75,15 @@ err_number = 0;
 INIT_FLAG = 1;
 dinit();
 }
+
+public void print_err_buff(){
+printf("-----Errors-----\n");
+int c;
+for (int i = latest_Err_idx,c = 0;c<ERR_BUF_SIZE;i++,c++){
+if (!ERR_BUFFER[i]) printf("Err %d : [%d] : %s\n",i+1,ERR_BUFFER[i % ERR_BUF_SIZE],err[ERR_BUFFER[i]]);
+}
+} 
+
 
 public i8 get_errno(){return err_number;}
 

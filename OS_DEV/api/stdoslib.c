@@ -2,10 +2,6 @@
 #include "stdoslib.h"
 #include <stdio.h>
 
-public void _zero(i8 *p,i16 n){
-if (!p || n <= 0) return;
-for (;n;p++,n--) *p = (i8)0;
-}
 
 public void _copyn(i8 *a,i8 *b,i16 n,i8 z){
 if (!a || !b) return;
@@ -22,7 +18,7 @@ for (;*b != '\0';a++,b++) *a = *b;
 *a = '\0';
 }
 
-public void fill (i8*a,i16 l,i8 hx){
+public void _fill (i8*a,i16 l,i8 hx){
 if (!a) return;
 for (;l;a++,l--) *a = hx;
 }

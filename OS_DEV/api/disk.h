@@ -28,7 +28,7 @@ typedef unsigned long i64;
 #define MAX_DD 2
 #define Basepath "/home/IhitplayzYT/C_FOLDER/OS_DEV/Drive/Disk."
 #define disk_io(f,d,a,b) (\
-(d) && (lseek((int)(d)->fd,(int)(BLOCK_SIZE*((b)-1)),SEEK_SET) != -1) && ((f)((d)->fd,(i8 *)(a),(i16)BLOCK_SIZE) == BLOCK_SIZE)\
+(d) && (lseek((d)->fd,(int)(BLOCK_SIZE*((b)-1)),SEEK_SET) != -1) && ((f)((d)->fd,(i8 *)(a),(i16)BLOCK_SIZE) == BLOCK_SIZE)\
 )
 #define dread(d,a,b) disk_io(read,(d),(a),(b))
 #define dwrite(d,a,b) disk_io(write,(d),(a),(b))

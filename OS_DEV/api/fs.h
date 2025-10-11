@@ -34,6 +34,7 @@ typedef i16 ptr;
 typedef i8 Bootsector[500];
 internal packed enum e_type{InvalidType=0x00,FileType=0x01,DirType=0x03};
 typedef enum e_type Type;
+typedef i8 Path;
 
 typedef i8 Bitmap;
 
@@ -84,6 +85,12 @@ internal union u_block{
 }packed;
 typedef union u_block FSblock;
 
+internal struct s_file_info{
+i16 size;
+ptr idx;
+}packed;
+typedef struct s_file_info File_stat;
+
 #ifndef omsdhwr
 #define omsdhwr
 extern public Filesystem* FileDescriptors[MAX_FS];
@@ -105,9 +112,13 @@ internal void print_bitmap(Filesystem*);
 internal Filesystem* fsmount(i8);
 internal void fsunmount(Filesystem*);
 internal ptr create_inode(Filesystem*,Filename*,Type); 
-internal i8 destroy_inode(Filesystem*,ptr);
+#define destroy_inode(f,p) inode_dealloc((Filesystem*)fs,(ptr)p);
 internal ptr inode_alloc(Filesystem*);
 internal i8 inode_dealloc(Filesystem*,ptr);
 internal ptr save_inode(Filesystem*,Inode*,ptr);
 internal ptr save_inode(Filesystem*,Inode*,ptr);
+internal i8 validfname(Filename*,Type);
+internal File_stat* fsstat(Filesystem*,ptr);
+internal void fstatshow(File_stat*);
+internal Filename * parse_name(i8*);
 /* Function Signatures */

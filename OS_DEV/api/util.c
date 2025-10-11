@@ -44,10 +44,11 @@ if (!d) {printf("Bad Disk\n");exit(-1);}
 Filesystem * fs = fsformat(d,0,iforce);
 if (!fs) {printf("Formatting Error\n");exit(-1);}
 printf("Disk Formatted!\n");
-print_inodes(fs);
+ptr p = inode_alloc(fs);
 
 
 detach(d);
+
 free(fs);
 return;
 }
