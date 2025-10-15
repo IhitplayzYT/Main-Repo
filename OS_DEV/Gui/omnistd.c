@@ -19,7 +19,7 @@ else for (p=a;n;n--,p++) *p = c;
 
 i8* _snprintf(i8*a,i16 size,i8* frmt,...){
 if (!a || !frmt) return 0;
-i16 bytes = 0,*iptr,l;
+i16 bytes = 0,l;
 i8* dptr,*sptr,contin=1,*p,**pp; 
 sptr = frmt;
 dptr = (i8*)a;

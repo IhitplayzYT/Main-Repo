@@ -68,7 +68,7 @@ i8 draw_bmp(Bitmap* bmp){
 if (!bmp || !videoflag) return 0;
 save();
 i8 byte,bl,bh;
-i16 size,width,height,l,col,fd,n;
+i16 size,width,l,col,fd,n;
 Point *pnt;
 fd = open(bmp->filename,bmp->header->offset);
 if (!fd) {load();return 0;}

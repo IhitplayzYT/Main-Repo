@@ -1,11 +1,12 @@
 flags=-O2 -std=c2x -I.
 ldflags=-ldl -shared -fPIC
-
+objects = api.o disk.o stdoslib.o fs.o
+CFLAGS = 
 .PHONY: all clean
 
 all: clean api.so util
 
-api.so: api.o disk.o stdoslib.o fs.o
+api.so: $(objects)
 	gcc $(flags) $(CFLAGS) $(ldflags)  $^ -o $@
 
 api.o: api.c api.h os.h

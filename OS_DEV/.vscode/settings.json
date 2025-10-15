@@ -13,6 +13,7 @@
         "bmp.h": "c",
         "images.h": "c",
         "chrono": "c",
-        "cstddef": "c"
+        "cstddef": "c",
+        "networks.h": "c"
     }
 }

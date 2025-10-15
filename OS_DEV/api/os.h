@@ -6,8 +6,6 @@
 #define private static
 #define ERR_BUF_SIZE 10
 /* Defines */
-extern i8 ERR_BUFFER[ERR_BUF_SIZE];
-extern public i8 latest_Err_idx;
 
 
 /* Typedefs */
@@ -36,8 +34,12 @@ latest_Err_idx ++; \
 } while(0);
 /* Error Number Implem */
 
+
+
 /* Error Number defs */
-public enum{NO_ERR,BAD_FD,IO_ERR,CLOSED_FD,NO_INIT_ERR,BUFF_OVRFLW,NOT_MOUNT_ERR,DISK_IO_ERR,BUSY_ERR,MEM_ERR,BAD_ARG,BAD_FILE_NAME,INODE_ERR,LIMIT_ERR};
+extern i8 ERR_BUFFER[ERR_BUF_SIZE];
+extern public i8 latest_Err_idx;
+public enum{NO_ERR,BAD_FD,IO_ERR,CLOSED_FD,NO_INIT_ERR,BUFF_OVRFLW,NOT_MOUNT_ERR,DISK_IO_ERR,BUSY_ERR,MEM_ERR,BAD_ARG,BAD_FILE_NAME,INODE_ERR,LIMIT_ERR,NET_ERR};
 /* Error Number defs */
 
 /*Function Signatures */
