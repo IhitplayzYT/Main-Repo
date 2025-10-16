@@ -1,5 +1,6 @@
 #include "Networks.h"
 extern i32 global_id;
+
 public Ip * init_ip(Type t,i8* s,i8* d,i16 id){
 if (!t || !s || !d ) return (Ip*)0;
 Ip * ip = (Ip*)malloc(sizeof(Ip));
@@ -13,7 +14,6 @@ if (!ip->dstaddr){free(ip);return (Ip*)0;}
 return ip;
 }
 
-
 public Icmp * init_icmp(Type type,i8* data,i16 size){
 if (!data || !size){return (Icmp*)0;}
 Icmp * icmp = (Icmp*)malloc(sizeof(Icmp));
@@ -22,4 +22,14 @@ icmp->type = type;
 icmp->size = size;
 icmp->header = data;
 return icmp;
+}
+
+public Ping * init_ping(i8* str,i16 len,i32 id,i32 seq){
+if (!len || !str || !id || !seq) return (Ping *)0;
+Ping * ping = (Ping *)malloc(sizeof(Ping) + len);
+if (!ping) return (Ping*)0;
+ping->id = id;
+ping->seq = seq;
+memcopy(ping->data,str,len);
+return ping;
 }

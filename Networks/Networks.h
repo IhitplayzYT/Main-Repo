@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <arpa/inet.h>
+
 /*Includes*/
 
 /* Typedefinations */
@@ -21,13 +23,22 @@ typedef unsigned long i64;
 #define copy(a,b,n) _copyn((i8*)(a),(i8*)(b),(n),1)
 #define strncopy(a,b,n) _copyn((i8*)(a),(i8*)(b),(n),0)
 #define memcopy(a,b,n) _copyn((i8*)(a),(i8*)(b),(n),1)
+#define show(x,y) _Generic((x),\
+Icmp*: show_icmp,        \
+Ip*:   show_ip            \
+)((x),(y))
+#define eval(x) _Generic((x),\
+Ip*:eval_ip,\
+Icmp*:eval_icmp\
+)(x)
+#define MAX_PACKET_SIZE 2048
 /* MACROS */
 
 /* Definations */
 
 /* Definations */
 
-public struct s_rawicmp{
+public struct s_rawicmp{   // 5 bytes
     i8 type;
     i8 code;
     i16 checksum;
@@ -64,9 +75,9 @@ Icmp * payload;
 
 typedef struct s_ip Ip;
 
-public struct s_raw_ip{
-i8 version:4;
+public struct s_raw_ip{    // 20 Bytes
 i8 ihl:4;
+i8 version:4;
 i8 dscp:6;
 i8 ecn:2;
 i16 len;
@@ -80,6 +91,13 @@ i32 srcaddr;
 i32 dstaddr;
 i8 options[];
 }packed;
+
+struct s_ping {
+i16 id;
+i16 seq;
+i8 data[];
+}packed;
+typedef struct s_ping Ping;
 
 typedef struct s_raw_ip Raw_ip;
 /* Function Signatures */
@@ -97,7 +115,10 @@ public i32 ipaddr(i8*);
 public void show_ip(Ip*,i8);
 public i8* ipstr(i32);
 public i8 * eval_ip(Ip*);
-
+public int send_ip(i32,Ip*);
+public Ip * recv_ip(i32);
+public i32 setup();
 /* Function Signatures */
 public Icmp * init_icmp(Type,i8*,i16);
 public Ip * init_ip(Type,i8*,i8*,i16);
+public Ping * init_ping(i8*,i16,i32,i32);
