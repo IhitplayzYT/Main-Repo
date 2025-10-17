@@ -36,13 +36,6 @@ if (!a) return;
 for (;l;a++,l--) *a = hx;
 }
 
-public i16 len(i8 * str){
-i16 i;
-for (i = 0; str[i] != '\0';i++);
-return i;
-}
-
-
 public void print_bytes(void *ptr, i32 size) {
     if (!ptr)return;
     i8 *p = ptr;

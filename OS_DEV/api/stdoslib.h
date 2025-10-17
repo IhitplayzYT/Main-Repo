@@ -368,7 +368,24 @@ p++;q++;}
 return (*p == *q)?0:(!*p)?-1:1;
 }
 DEFINE_STRING_SORT(char,_strsort)
-#endif
+
+#define DEF_FIXED(TYPE,name) \
+static inline TYPE name(TYPE arg,i32 len){\
+TYPE buff = (TYPE)alloc(len);\
+for (int i = 0 ; i < len ; i++) buff[i] = arg[len - 1 - i];\
+return buff;}
+
+DEF_FIXED(char *,rev_char);
+DEF_FIXED(s8 *,rev_s8);
+DEF_FIXED(i8 *,rev_i8);
+
+#define strreverse(x,y) _Generic((x),\
+char *: rev_char,\
+i8 *: rev_i8,\
+s8 *: rev_s8\
+)(x,y)
+
+
 
 #define max(x,...) _Generic((x),\
 i8:max_i8, \
@@ -444,13 +461,29 @@ i32:endian32,\
 i64:endian64\
 )(x)
 
+#define DEF_LEN(TYPE,name) \
+static inline i32 name(TYPE str){\
+i32 n = 0 ;\
+for (;str[n];n++); \
+return n; \
+}
+
+DEF_LEN(i8*,len_i8);
+DEF_LEN(char*,len_char);
+DEF_LEN(s8*,len_s8);
+
+#define len(x) _Generic((x),\
+i8*:len_i8,\
+s8*:len_s8,\
+char *:len_char\
+)(x)
 
 
+#endif
 /* MACROS */
 
 /* Function Signatures */
 public void _fill(i8 *, i16, i8); /* Fills fixed no of bytes to input hex/char*/
-public i16 len(i8 *); /* Length of a string */
 public void _copy(i8 *, i8 *); /* Copy contents from second to first string */
 public void _copyn(i8 *, i8 *, i16, i8); /* Copy a 'N' chars from src to dest string*/
 public i8 *concat(i8 *, i8 *);
