@@ -1,7 +1,5 @@
 /* stdoslib.c */
 #include "stdoslib.h"
-#include <stdio.h>
-
 
 public void _copyn(i8 *a,i8 *b,i16 n,i8 z){
 if (!a || !b) return;
@@ -12,30 +10,19 @@ for (;n && *a != '\0' && *b != '\0';n--,a++,b++)*a = *b;
 }
 }
 
-public signed short _strcomp(i8* a,i8* b){
-i8 * p = a,*q = b;
-while (*p && *q){
-if (*p > *q) return 1;
-if (*p < *q) return -1;
-p++;q++;}
-return (*p == *q)?0:(!*p)?-1:1;
-}
-
-public void print_hex(void * str,i32 n){
-i32 i = 0,j;
-for (;i < n ;i ++){
-printf("0x%02hhX ",*((i8*)str+i));
-if (!((i+1) % 16)){
-for (i16 m = i - 15;m <= i;m++) printf("%c", (*((i8*)str+m) >=32 && *((i8*)str+m) <= 126)? *((i8*)str+m) : '.' );
-printf("\n");}}
-int start = n - (n % 16);
-if (n % 16) {
-    printf("\t");
-    for (int k = 0 ; k < start/8;k++) printf("    ");
-    for (j = start; j < n; j++) {printf("%c", ((*((i8*)str+j) >= 32 && *((i8*)str+j) <= 126) ? *((i8*)str+j) : '.'));}
-} 
+void print_hex(void *str, i32 n) {
+i32 i, j;
+i8 *data = (i8*)str;
+for (i = 0; i < n; i += 16) {
+for (j = 0; j < 16; j++) {
+    if (i + j < n) printf("0x%02hhX ", data[i + j]);
+    else printf("     "); }
+printf(" ");
+for (j = 0; j < 16 && i + j < n; j++) {
+    i8 c = data[i + j];
+    printf("%c", (c >= 32 && c <= 126) ? c : '.');}
 printf("\n");
-}
+}}
 
 
 public void _copy(i8 *a,i8 *b){
@@ -66,9 +53,6 @@ public void print_bytes(void *ptr, i32 size) {
     }
     printf("\n");
 }
-
-public i16 min(i16 a,i16 b){return (a >= b) ? b : a;}
-public i16 max(i16 a,i16 b){return (a >= b) ? a : b;}
 
 public i16 ceil_div(i16 a,i16 b){
 return (!a % b) ? (i16)a/b : ((i16)a/b) + 1;
@@ -144,25 +128,56 @@ public double truncate(double x,i8 n){
 return x;
 }
 
-void _strsort(char **arr, i16 n, i8 asc) {
-    if(n < 2) return;
-    i16 mid = n / 2;
-    char **left = malloc(mid * sizeof(char*));
-    char **right = malloc((n-mid) * sizeof(char*));
-    for(i16 i=0;i<mid;i++) left[i]=arr[i];
-    for(i16 i=mid;i<n;i++) right[i-mid]=arr[i];
-
-    _strsort(left, mid, asc);
-    _strsort(right, n-mid, asc);
-
-    i16 i=0,j=0,k=0;
-    while(i<mid && j<n-mid) {
-        if(asc ? (strcomp(left[i], right[j]) <= 0) : (strcomp(left[i], right[j]) >= 0))
-            arr[k++] = left[i++];
-        else
-            arr[k++] = right[j++];
-    }
-    while(i<mid) arr[k++] = left[i++];
-    while(j<n-mid) arr[k++] = right[j++];
-    free(left); free(right);
+public i32 ipaddr(i8* s){
+i8 a[4] = {0},*p,c = 0;
+i32 ret;
+for (p = s;*p;p++){
+if (*p == '.' || *p == '-' || *p == ':') c++;
+else{
+a[c] *= 10;
+a[c] += *p - '0';
+}}
+ret = (a[3] << 24) | (a[2] << 16) | (a[1] << 8) | a[0];
+return ret;
 }
+
+public i8* ipstr(i32 addr){
+i8 *buff = (i8*)malloc(16);
+zero(buff,16);
+i8 a[4];
+a[0] = (addr & 0xff000000) >> 24;
+a[1] = (addr & 0x00ff0000) >> 16;
+a[2] = (addr & 0x0000ff00) >> 8;
+a[3] = (addr & 0x000000ff);
+snprintf((char*)buff, 16, "%u.%u.%u.%u", a[3], a[2], a[1], a[0]);
+return buff;
+}
+
+public i16 endian16(i16 x){
+i16 a,b,c;
+a = x & 0x00ff;
+b = (x & 0xff00) >> 8;
+c = (a << 8) | b;
+return c;
+}
+
+public i32 endian32(i32 x){
+i32 a,b,c;
+a = endian16(x & 0x0000ffff);
+b = endian16((x & 0xffff0000) >> 16);
+c = (a << 16) | b;
+return c;
+}
+
+public i64 endian64(i64 x){
+i64 a,b,c;
+a = endian32(x & 0x00000000ffffffffULL);
+b = endian32((x & 0xffffffff00000000ULL) >> 32);
+c = (a << 32) | b;
+return c;
+}
+
+public i16 net_port(i16 x){
+return endian16(x);
+}
+
