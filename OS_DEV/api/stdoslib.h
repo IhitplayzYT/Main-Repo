@@ -33,29 +33,40 @@ typedef double f64;
 static signed short _strcomp(i8 *, i8 *);
 
 #define compare(x, y) _compare((x), (y)) && ((x) == (y))
-#define _compare(x, y)                                                         \
-  _Generic((x),                                                                \
-      signed char: _Generic((y),                                               \
-          signed char: 1,                                                      \
-          default: 0) unsigned char: _Generic((y),                             \
-          unsigned char: 1,                                                    \
-          default: 0) unsigned short: _Generic((y),                            \
-          unsigned short: 1,                                                   \
-          default: 0) signed short: _Generic((y),                              \
-          signed short: 1,                                                     \
-          default: 0) unsigned int: _Generic((y),                              \
-          unsigned int: 1,                                                     \
-          default: 0) signed int: _Generic((y),                                \
-          signed int: 1,                                                       \
-          default: 0) unsigned long: _Generic((y),                             \
-          unsigned long: 1,                                                    \
-          default: 0) signed long: _Generic((y),                               \
-          signed long: 1,                                                      \
-          default: 0) float: _Generic((y),                                     \
-          float: 1,                                                            \
-          default: 0) double: _Generic((y), double: 1, default: 0));
+#define _compare(x,y) _Generic((x),\
+signed char: _Generic((y), \
+    signed char: 1, \
+    default: 0) \
+unsigned char: _Generic((y), \
+    unsigned char: 1,  \
+    default: 0) \
+unsigned short: _Generic((y), \
+    unsigned short: 1, \
+    default: 0) \
+signed short: _Generic((y), \
+    signed short: 1, \
+    default: 0) \
+unsigned int: _Generic((y),  \
+    unsigned int: 1,\
+    default: 0)\
+signed int: _Generic((y),\
+    signed int: 1,\
+    default: 0) \
+unsigned long: _Generic((y), \
+    unsigned long: 1, \
+    default: 0) \
+signed long: _Generic((y),\
+    signed long: 1, \
+    default: 0) \
+float: _Generic((y),\
+    float: 1,\
+    default: 0) \
+double: _Generic((y), \
+    double: 1,\
+    default: 0) \
+)
 
-#define DEFINE_NUM_SORT(TYPE, NAME)                                            \
+#define DEFINE_NUM_SORT(TYPE,NAME)   \
   static inline void NAME(TYPE *arr, i16 n, i8 asc) {                          \
     if (n < 2)                                                                 \
       return;                                                                  \
@@ -114,6 +125,7 @@ TYPE* min = X;\
 while ((next = va_arg(args,TYPE*))){\
   if (strcomp(next,min) == -1) min = next;\
 }\
+va_end(args);\
 return min;\
 }
 
@@ -126,6 +138,7 @@ TYPE* max = X;\
 while ((next = va_arg(args,TYPE*))){\
   if (strcomp(next,max) == 1) max = next;\
 }\
+va_end(args);\
 return max; \
 }
 
@@ -138,6 +151,7 @@ TYPE min = X;\
 while ((next = va_arg(args,TYPE))){\
   if (min > next) min = next;\
 }\
+va_end(args);\
 return min;\
 }
 
@@ -150,6 +164,7 @@ TYPE max = X;\
 while ((next = va_arg(args,TYPE))){\
   if (max < next) max = next;\
 }\
+va_end(args);\
 return max; \
 }
 
@@ -160,6 +175,7 @@ va_list args; \
 va_start(args,X);\
 i32 l =  va_arg(args,i32);\
 for (int i = 0; i < l ;i ++) if (*(X+i) < min) min = *(X+i);\
+va_end(args);\
 return min; \
 }
 
@@ -170,6 +186,7 @@ va_list args; \
 va_start(args,X);\
 i32 l =  va_arg(args,i32);\
 for (int i = 0; i < l ;i ++) if (*(X+i) > max) max = *(X+i);\
+va_end(args);\
 return max; \
 }
 
@@ -180,6 +197,7 @@ va_list args; \
 va_start(args,X);\
 i32 l =  va_arg(args,i32);\
 for (int i = 0; i < l ;i ++) if (strcomp(min,*(X+i))==1) min = *(X+i);\
+va_end(args);\
 return min; \
 }
 
@@ -190,6 +208,7 @@ va_list args; \
 va_start(args,X);\
 i32 l =  va_arg(args,i32);\
 for (int i = 0; i < l ;i ++) if (strcomp(max,*(X+i))==-1) max = *(X+i);\
+va_end(args);\
 return max; \
 }
 
@@ -262,6 +281,82 @@ DEFINE_MAX(f32,max_f);
 DEFINE_MAX(f64,max_d);
 DEFINE_MAX_STR(i8,max_i8s);
 DEFINE_MAX_STR(s8,max_s8s);
+
+#define DEF_PRINT_ARR(TYPE,name,fmt) \
+static inline void name(TYPE arr,...) {\
+va_list args;\
+va_start(args,arr);\
+i32 l = va_arg(args,i32);\
+for (int i = 0; i < l;i++) printf(fmt,arr[i]);\
+printf("\n"); \
+va_end(args);\
+}
+
+#define DEF_PRINT_ARGS(TYPE,name,fmt) \
+static inline void name(TYPE a,...) {\
+va_list args;\
+va_start(args,a);\
+TYPE c = a; \
+printf(fmt,c); \
+while (c = va_arg(args,TYPE)) printf(fmt,c);  \
+printf("\n"); \
+va_end(args);\
+}
+
+DEF_PRINT_ARR(i8*,print_i8a,"%hhu ");
+DEF_PRINT_ARR(i16*,print_i16a,"%hu ");
+DEF_PRINT_ARR(i32*,print_i32a,"%u ");
+DEF_PRINT_ARR(i64*,print_i64a,"%lu ");
+DEF_PRINT_ARR(s8*,print_s8a,"%c ");
+DEF_PRINT_ARR(s16*,print_s16a,"%hd ");
+DEF_PRINT_ARR(s32*,print_s32a,"%d ");
+DEF_PRINT_ARR(s64*,print_s64a,"%ld ");
+DEF_PRINT_ARR(f32*,print_f32a,"%f ");
+DEF_PRINT_ARR(f64*,print_f64a,"%lf ");
+DEF_PRINT_ARR(char**,print_charsa,"%s ");
+DEF_PRINT_ARR(char*,print_crsa,"%c ");
+DEF_PRINT_ARR(i8**,print_i8sa,"%s ");
+DEF_PRINT_ARR(s8**,print_s8sa,"%s ");
+
+DEF_PRINT_ARGS(i8,print_i8,"%c ");
+DEF_PRINT_ARGS(i16,print_i16,"%hu ");
+DEF_PRINT_ARGS(i32,print_i32,"%u ");
+DEF_PRINT_ARGS(i64,print_i64,"%lu ");
+DEF_PRINT_ARGS(s8,print_s8,"%c ");
+DEF_PRINT_ARGS(char,print_chars,"%c ");
+DEF_PRINT_ARGS(s16,print_s16,"%hd ");
+DEF_PRINT_ARGS(s32,print_s32,"%d ");
+DEF_PRINT_ARGS(s64,print_s64,"%ld ");
+DEF_PRINT_ARGS(f32,print_f32,"%f ");
+DEF_PRINT_ARGS(f64,print_f64,"%lf ");
+
+#define printarr(x,...) _Generic((x),\
+i8*:print_i8a,\
+i16*:print_i16a,\
+i32*:print_i32a,\
+i64*:print_i64a,\
+s8*:print_s8a,\
+s16*:print_s16a,\
+s32*:print_s32a,\
+s64*:print_s64a,\
+f32*:print_f32a,\
+f64*:print_f64a,\
+char*:print_crsa,\
+char**:print_charsa,\
+i8**:print_i8sa,\
+s8**:print_s8sa,\
+i8:print_i8,\
+i16:print_i16,\
+i32:print_i32,\
+i64:print_i64,\
+s8:print_s8,\
+s16:print_s16,\
+s32:print_s32,\
+s64:print_s64,\
+f32:print_f32,\
+f64:print_f64,\
+char:print_chars\
+)(x,__VA_ARGS__,NULL)
 
 
 static signed short _strcomp(i8* a,i8* b){
@@ -348,6 +443,7 @@ i16:endian16,\
 i32:endian32,\
 i64:endian64\
 )(x)
+
 
 
 /* MACROS */
