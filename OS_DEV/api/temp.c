@@ -1,13 +1,14 @@
 #include "stdoslib.h"
-int main() {
-  int arr[] = {1, 3, 5, 6, 3, 2123, 4};
-  char *strs[] = {"wdfear", "qfer", "dinjei"};
-  char a = 'a', b = ']', c = 'd';
-  char *x = "sadfg", *y = "qwe", *z = "aaset";
-  printarr(arr, 7);
-  printarr(strs, 3);
-  printarr(x, y, z);
-  printarr(a, b, c);
 
-  return 0;
+int main() {
+  int y = 72;
+  Vector *v = Vector_init(&y, 32);
+  int x = 45;
+  v->append(v, &x);
+  int z = 32;
+  v->append(v, &z);
+  v->pop(v);
+  printf("%d\n", *(int *)v->data[0]);
+  printf("%d\n", *(int *)v->data[1]);
+  printf("%d\n", *(int *)v->data[2]);
 }

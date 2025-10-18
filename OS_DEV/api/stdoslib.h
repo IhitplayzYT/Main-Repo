@@ -14,21 +14,14 @@ typedef signed int s32;
 typedef signed long s64;
 typedef float f32;
 typedef double f64;
-struct s_vector{
-i32 l,cap;
-i32 type;
-struct s_vector this;
-void ** data;
-void (*append)(void*);
-void (*pop)();
-} packed;
-typedef struct s_vector Vector;
+
 /* Typedefinations */
 
 /* MACROS */
 #define public __attribute__((visibility("default")))
 #define internal __attribute__((visibility("hidden")))
 #define private static
+#define packed __attribute__((packed))
 #define fill(a, n, x) _fill((i8 *)a, n, (i8)x)
 #define alloc(x) malloc((int)(x))
 #define dealloc(x) free((x))
@@ -75,7 +68,29 @@ double: _Generic((y), \
     default: 0) \
 )
 
-public void * this;
+
+
+struct s_iter{
+i32 i,l,type;
+void ** data;
+};
+typedef struct s_iter Iterator;
+
+
+struct s_vector{
+i32 l,cap;
+i32 type;
+void ** data;
+void (*append)(struct s_vector*,void*);
+void (*pop)(struct s_vector*);
+void (*print)(struct s_vector*);
+Iterator * (*iterator)(struct s_vector*);
+};
+
+
+typedef struct s_vector Vector;
+
+
 
 #define DEFINE_NUM_SORT(TYPE,NAME)   \
   static inline void NAME(TYPE *arr, i16 n, i8 asc) {                          \
@@ -139,6 +154,9 @@ while ((next = va_arg(args,TYPE*))){\
 va_end(args);\
 return min;\
 }
+
+
+#define new(NAME,...) NAME##_init(__VA_ARGS__)
 
 #define DEFINE_MAX_STR(TYPE,name) \
 static inline TYPE* name(TYPE* X,...){\
@@ -228,10 +246,14 @@ typedef __builtin_va_list va_list;
 #define va_arg(ap, type) __builtin_va_arg(ap, type)
 #define va_end(ap) __builtin_va_end(ap)
 
+
+
 #define trash(arg,...) ((void)0)
 
 #ifndef IMP_DEF
 #define IMP_DEF
+
+
 DEFINE_NUM_SORT(char, sort_i8)
 DEFINE_NUM_SORT(short, sort_i16)
 DEFINE_NUM_SORT(int, sort_i32)
@@ -517,5 +539,9 @@ public i16 net_port(i16);
 public i16 endian16(i16 x);
 public i32 endian32(i32 x);
 public i64 endian64(i64 x);
-public Vector * vector_init(void *,i32 sz);
+public Vector * Vector_init(void *,i32 sz,...);
+public void v_append(struct s_vector *,void *);
+public void v_print(struct s_vector  *);
+public void v_pop(struct s_vector  *);
+
 /* Function Signatures */
