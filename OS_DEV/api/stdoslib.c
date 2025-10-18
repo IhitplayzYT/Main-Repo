@@ -174,3 +174,51 @@ public i16 net_port(i16 x){
 return endian16(x);
 }
 
+
+
+/*
+struct s_vector{
+i32 l,cap;
+i32 type;
+void * data;
+void (*append)(void*);
+void (*pop)();
+} packed;
+typedef struct s_vector Vector;
+
+*/
+
+extern public void * this;
+
+public Vector * vector_init(void * data,i32 sz){
+Vector * v = (Vector*)alloc(sizeof(Vector));
+v->data = (void **)alloc(sizeof(void *) * 2);
+v->l = 1;
+v->cap = 2;
+v->type = sz;
+memcopy(v->data,data,sz);
+v->this = &v;
+return v;
+}
+
+
+
+public void v_append(void * data){
+if (((Vector*)this)->cap > ((Vector*)this)->l)
+{
+((Vector*)this)->data[((Vector*)this)->l++] = data;
+}
+else{
+((Vector*)this)->cap *= 2;
+void ** temp = realloc(((Vector*)this)->data,((Vector*)this)->cap * sizeof(void *));
+memcopy(temp,((Vector*)this)->data,((Vector*)this)->l * sizeof(void *));
+((Vector*)this)->data = temp;
+((Vector*)this)->l++;
+}
+
+
+
+}
+
+
+

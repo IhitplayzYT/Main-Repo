@@ -14,6 +14,15 @@ typedef signed int s32;
 typedef signed long s64;
 typedef float f32;
 typedef double f64;
+struct s_vector{
+i32 l,cap;
+i32 type;
+struct s_vector this;
+void ** data;
+void (*append)(void*);
+void (*pop)();
+} packed;
+typedef struct s_vector Vector;
 /* Typedefinations */
 
 /* MACROS */
@@ -65,6 +74,8 @@ double: _Generic((y), \
     double: 1,\
     default: 0) \
 )
+
+public void * this;
 
 #define DEFINE_NUM_SORT(TYPE,NAME)   \
   static inline void NAME(TYPE *arr, i16 n, i8 asc) {                          \
@@ -506,4 +517,5 @@ public i16 net_port(i16);
 public i16 endian16(i16 x);
 public i32 endian32(i32 x);
 public i64 endian64(i64 x);
+public Vector * vector_init(void *,i32 sz);
 /* Function Signatures */
