@@ -2,6 +2,7 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /* Typedefinations */
 typedef unsigned char i8;
@@ -73,6 +74,7 @@ double: _Generic((y), \
 struct s_iter{
 i32 i,l,type;
 void ** data;
+void* (*next)(struct s_iter*);
 };
 typedef struct s_iter Iterator;
 
@@ -83,7 +85,6 @@ i32 type;
 void ** data;
 void (*append)(struct s_vector*,void*);
 void (*pop)(struct s_vector*);
-void (*print)(struct s_vector*);
 Iterator * (*iterator)(struct s_vector*);
 };
 
@@ -532,7 +533,7 @@ public i8 getbit(i8 *, i16);
 public void setbit(i8 *, i16);
 public void unsetbit(i8 *, i16);
 public void flipbit(i8 *, i16);
-public double truncate(double, i8);
+public double precision(double, i8);
 public i32 ipaddr(i8*);
 public i8* ipstr(i32);
 public i16 net_port(i16);
@@ -543,5 +544,6 @@ public Vector * Vector_init(void *,i32 sz,...);
 public void v_append(struct s_vector *,void *);
 public void v_print(struct s_vector  *);
 public void v_pop(struct s_vector  *);
-
+Iterator * iterator(struct s_vector*);
+void* next(Iterator*);
 /* Function Signatures */

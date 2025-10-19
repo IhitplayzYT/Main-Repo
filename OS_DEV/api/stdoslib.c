@@ -113,7 +113,7 @@ void * mem = (void *)(str+bytes_move);
 _flipbit((i8*)mem,bits_move);
 }
 
-public double truncate(double x,i8 n){
+public double precision(double x,i8 n){
     i64 t = 1;
     for (int i = 0;i< n;i++) t*= 10;
     i64 l = x * t;
@@ -178,13 +178,15 @@ return endian16(x);
 
 public Vector * Vector_init(void * data,i32 sz,...){
 Vector * v = (Vector*)alloc(sizeof(Vector));
+if (!v) return (Vector *)0;
 v->l = 0;
 v->cap = 2;
-v->type = sz;
+v->type = sz * 8;
 v->append = v_append;
 v->pop = v_pop;
-v->print = v_print;
+v->iterator = iterator;
 v->data = (void **)alloc(sizeof(void *) * v->cap);
+if (!v->data) {dealloc(v);return (Vector*)0;}
 v->data[v->l++] = data;
 return v;
 }
@@ -202,20 +204,24 @@ v->data[v->l++] = data;
 
 
 public void v_pop(struct s_vector * v){
-v->data[v->l] = NULL;
 v->l = (v->l)?--v->l:v->l;
-}
-
-public void v_print(struct s_vector * v){
-
-for (int i = 0 ; i < v->l;i++){
-print_hex(v->data[i],v->type);
-printf("\n");
-}
-
+v->data[v->l]= NULL;
 }
 
 
+Iterator * iterator(struct s_vector* v){
+Iterator * iter = (Iterator *)alloc(sizeof(Iterator));
+if (!iter) return (Iterator*)0;
+iter->i = 0;
+iter->l = v->l;
+iter->type = v->type;
+iter->next = next;
+iter->data = v->data;
+return iter;
+}
 
+void* next(Iterator* iter){
+return (iter->i < iter->l)?iter->data[iter->i++]:(void*)0;
+}
 
 

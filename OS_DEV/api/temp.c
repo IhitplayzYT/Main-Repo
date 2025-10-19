@@ -7,8 +7,8 @@ int main() {
   v->append(v, &x);
   int z = 32;
   v->append(v, &z);
-  v->pop(v);
-  printf("%d\n", *(int *)v->data[0]);
-  printf("%d\n", *(int *)v->data[1]);
-  printf("%d\n", *(int *)v->data[2]);
+  Iterator *iter = v->iterator(v);
+  void *d = iter->next(iter);
+  d = iter->next(iter);
+  printf("%d ", *(int *)d);
 }
