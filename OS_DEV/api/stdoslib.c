@@ -175,8 +175,13 @@ return endian16(x);
 }
 
 
+// void * data,i32 sz,
+public Vector * Vector_init(void* _,...){
+va_list args;
+va_start(args,_);
+void * data = va_arg(args,void*);
+i32 sz = va_arg(args,i32);
 
-public Vector * Vector_init(void * data,i32 sz,...){
 Vector * v = (Vector*)alloc(sizeof(Vector));
 if (!v) return (Vector *)0;
 v->l = 0;
@@ -202,12 +207,10 @@ v->data[v->l++] = data;
 }
 }
 
-
 public void v_pop(struct s_vector * v){
 v->l = (v->l)?--v->l:v->l;
 v->data[v->l]= NULL;
 }
-
 
 Iterator * iterator(struct s_vector* v){
 Iterator * iter = (Iterator *)alloc(sizeof(Iterator));
@@ -224,4 +227,48 @@ void* next(Iterator* iter){
 return (iter->i < iter->l)?iter->data[iter->i++]:(void*)0;
 }
 
+public double _sum(float x,...){
+double a = x;
+va_list args;
+va_start(args,x);
+double z;
+while ((z = va_arg(args,double)) != 0.0)a += z;
+va_end(args);
+return a;
+}
+
+public float _sub(float x,...){
+float a = x;
+va_list args;
+va_start(args,x);
+float z;
+while ((z = va_arg(args,double)))a -= z;
+va_end(args);
+
+return a;
+}
+
+public float _mul(float x,...){
+float a  = x;
+va_list args;
+va_start(args,x);
+float z;
+while ((z = va_arg(args,double)))a *= z;
+va_end(args);
+
+return a;
+}
+
+public float _div(float x,...){
+float a  = x;
+va_list args;
+va_start(args,x);
+float z;
+while ((z = va_arg(args,double))) {
+    if (z == 0.0) continue;
+    a/= z;}
+    va_end(args);
+
+return a;
+}
 

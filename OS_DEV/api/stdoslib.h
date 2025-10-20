@@ -157,7 +157,7 @@ return min;\
 }
 
 
-#define new(NAME,...) NAME##_init(__VA_ARGS__)
+#define new(NAME,...) NAME##_init((void*)0,__VA_ARGS__)
 
 #define DEFINE_MAX_STR(TYPE,name) \
 static inline TYPE* name(TYPE* X,...){\
@@ -512,6 +512,10 @@ s8*:len_s8,\
 char *:len_char\
 )(x)
 
+#define sum(x,...) _sum(x,__VA_ARGS__,0.0)
+#define sub(x,...) _sub(x,__VA_ARGS__,0.0)
+#define mul(x,...) _mul(x,__VA_ARGS__,0.0)
+#define div(x,...) _div(x,__VA_ARGS__,0.0)
 
 #endif
 /* MACROS */
@@ -540,10 +544,15 @@ public i16 net_port(i16);
 public i16 endian16(i16 x);
 public i32 endian32(i32 x);
 public i64 endian64(i64 x);
-public Vector * Vector_init(void *,i32 sz,...);
+public Vector * Vector_init(void *,...);
 public void v_append(struct s_vector *,void *);
 public void v_print(struct s_vector  *);
 public void v_pop(struct s_vector  *);
 Iterator * iterator(struct s_vector*);
 void* next(Iterator*);
+public double _sum(float,...);
+public float _sub(float,...);
+public float _mul(float,...);
+public float _div(float,...);
+
 /* Function Signatures */
