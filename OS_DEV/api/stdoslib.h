@@ -21,6 +21,7 @@ typedef double f64;
 /* MACROS */
 #define public __attribute__((visibility("default")))
 #define internal __attribute__((visibility("hidden")))
+#define constructor __attribute__((constructor))
 #define private static
 #define packed __attribute__((packed))
 #define fill(a, n, x) _fill((i8 *)a, n, (i8)x)
@@ -33,6 +34,7 @@ typedef double f64;
 #define kprintf(f, args...) printf(f "\n", args)
 #define zero(a, n) _fill((i8 *)a, n, 0)
 #define strcomp(a, b) _strcomp((i8 *)(a), (i8 *)(b))
+#define MAX_OBJECTS (1024)
 static signed short _strcomp(i8 *, i8 *);
 
 #define compare(x, y) _compare((x), (y)) && ((x) == (y))
@@ -69,8 +71,6 @@ double: _Generic((y), \
     default: 0) \
 )
 
-
-
 struct s_iter{
 i32 i,l,type;
 void ** data;
@@ -88,10 +88,7 @@ void (*pop)(struct s_vector*);
 Iterator * (*iterator)(struct s_vector*);
 };
 
-
 typedef struct s_vector Vector;
-
-
 
 #define DEFINE_NUM_SORT(TYPE,NAME)   \
   static inline void NAME(TYPE *arr, i16 n, i8 asc) {                          \
@@ -185,6 +182,8 @@ va_end(args);\
 return min;\
 }
 
+
+
 #define DEFINE_MAX(TYPE,name) \
 static inline TYPE name(TYPE X,...){\
 va_list args; \
@@ -253,7 +252,6 @@ typedef __builtin_va_list va_list;
 
 #ifndef IMP_DEF
 #define IMP_DEF
-
 
 DEFINE_NUM_SORT(char, sort_i8)
 DEFINE_NUM_SORT(short, sort_i16)
@@ -447,6 +445,13 @@ s8**:max_s8sa,\
 char**:max_csa \
 )(x,__VA_ARGS__,NULL)
 
+#define pre_concat(x,y) x ## y
+
+
+
+
+
+
 #define min(x,...) _Generic((x),\
 i8:min_i8, \
 i16:min_i16, \
@@ -516,9 +521,20 @@ char *:len_char\
 #define sub(x,...) _sub(x,__VA_ARGS__,0.0)
 #define mul(x,...) _mul(x,__VA_ARGS__,0.0)
 #define div(x,...) _div(x,__VA_ARGS__,0.0)
-
+#define print(fmt,...) vprintf(fmt,__VA_ARGS__)
 #endif
 /* MACROS */
+#define init_filter(TYPE,fxn) \
+TYPE * pre_concat(TYPE##_##fxn,_filter)(TYPE * arr,i32 n){\
+TYPE * res = (TYPE *)alloc(sizeof(TYPE) * n);\
+if (!res) return (TYPE*)0;\
+i32 k = 0;\
+for (i32 i = 0 ;i < n; i++) if (fxn(arr[i])) res[k++] = arr[i];\
+if (!k) return (TYPE *)0;\
+TYPE * ret = (TYPE *)realloc(res,(k) * sizeof(TYPE));\
+if (!ret) return (TYPE *)0;\
+return ret;\
+};
 
 /* Function Signatures */
 public void _fill(i8 *, i16, i8); /* Fills fixed no of bytes to input hex/char*/

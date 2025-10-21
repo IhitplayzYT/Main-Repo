@@ -175,7 +175,6 @@ return endian16(x);
 }
 
 
-// void * data,i32 sz,
 public Vector * Vector_init(void* _,...){
 va_list args;
 va_start(args,_);
@@ -271,4 +270,5 @@ while ((z = va_arg(args,double))) {
 
 return a;
 }
+
 

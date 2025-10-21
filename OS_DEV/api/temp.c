@@ -1,5 +1,14 @@
 #include "stdoslib.h"
 
+i8 is_even(i32 k){return (k & 1)?0:1;}
+init_filter(i32,is_even);
 int main() {
-printf("%f %f %f %f\n",sum(1,2,3),sub(1,2,3),mul(1,2,3),div(1,2,3));
+i32 arr[] = {1231,4,5,342,3,6,7,3,21,6,78,76};
+i32 * res = i32_is_even_filter(arr,12);
+printarr(res,12);
 }
+
+
+
+
+
