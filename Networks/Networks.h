@@ -5,7 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-
+#include <sys/time.h>
 /*Includes*/
 
 /* Typedefinations */
@@ -31,22 +31,17 @@ Ip*:   show_ip            \
 Ip*:eval_ip,\
 Icmp*:eval_icmp\
 )(x)
+#define len(s) _len((i8*)s)
+#define stoi(s) _stoi((i8*)s)
+#define usage(x) _usage((i8*)x)
 #define MAX_PACKET_SIZE 2048
-#define sendping(src,dst,mssg,len) _sendping((i8*)src,(i8*)dst,(i8*)mssg,(i32)len)
+#define SRC_ADDR "0.0.0.0"
+#define TIMEOUT (1)
+#define strcomp(a,b) _strcomp((i8*)a,(i8*)b)
+#define sendping(src,dst,mssg,len) _sendping((i8*)src,(i8*)dst,(i8*)mssg,(i16)len)
 /* MACROS */
 
 /* Definations */
-
-/* Definations */
-
-public struct s_rawicmp{   // 5 bytes
-    i8 type;
-    i8 code;
-    i16 checksum;
-    i8 header[];
-} packed;
-typedef struct s_rawicmp Raw_icmp;
-
 public enum e_type{
 None,
 echo,
@@ -57,6 +52,14 @@ UDP
 }packed;
 
 typedef enum e_type Type;
+
+public struct s_rawicmp{   // 5 bytes
+    i8 type;
+    i8 code;
+    i16 checksum;
+    i8 header[];
+} packed;
+typedef struct s_rawicmp Raw_icmp;
 
 public struct s_icmp{
 Type type:3;
@@ -102,7 +105,7 @@ typedef struct s_ping Ping;
 
 typedef struct s_raw_ip Raw_ip;
 /* Function Signatures */
-int main();
+int main(int,char**);
 public i16 endian(i16);
 public i8* eval_icmp(Icmp*);
 public void show_icmp(Icmp*,i8); 
@@ -124,3 +127,7 @@ public Icmp * init_icmp(Type,i8*,i16);
 public Ip * init_ip(Type,i8*,i8*,i16);
 public Ping * init_ping(i8*,i16,i16,i16);
 public i8 _sendping(i8*,i8*,i8*,i16);
+public void _usage(i8*);
+public i16 _len(i8*);
+public i16 _stoi(i8*);
+public i16 _pow(i16,i16);

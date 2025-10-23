@@ -46,7 +46,6 @@ if (icmp->type == echo || icmp->type == echo_reply){
 Ping * ping = (Ping *)icmp->header;
 printf("Id: %d\n\tSeq: %d\n",endian(ping->id),endian(ping->seq));
 }
-printf("%d\n ",icmp->size-sizeof(Ping));
 if (df) print_hex(icmp->header+4,icmp->size-sizeof(Ping)-1);
 printf("-------------\n\n");
 }
@@ -91,3 +90,42 @@ c = (a << 8) | b;
 return c;
 }
 
+public i16 _len(i8* str){
+i8* p = str;
+for (;*p;p++);
+return (p - str);
+}
+
+public i16 _pow(i16 x,i16 n){
+if (x <= 1 || n == 1) return x;
+if (n == 0) return 1;
+i16 ret = 1;
+for (i16 i = 0 ; i < n; i++){
+ret *= x;
+}
+return ret;
+}
+
+public i16 _stoi(i8*s){
+i16 l = len(s);
+i16 ret = 0;
+for (i16 i = 0 ;i < l;i++){
+if (s[i] >= '0' && s[i] <= '9') ret += (s[i] - '0') * _pow(10,l-i-1);
+else if (s[i] == '+' || s[i] == ',' || s[i] == '_') continue;
+else return 0;
+}
+return ret;
+}
+
+public void _usage(i8* name){
+fprintf(stderr,"Usage : %s <Dest_IP> [MSSG] [Mssg_len]\n",name);
+}
+
+public i8 _strcomp(i8* a,i8* b){
+i8 * p = a,*q = b;
+while (*p && *q){
+if (*p > *q) return 1;
+if (*p < *q) return -1;
+p++;q++;}
+return (*p == *q)?0:(!*p)?-1:1;
+}

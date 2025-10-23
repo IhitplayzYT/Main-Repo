@@ -3,23 +3,57 @@
 
 i16 global_id;
 i16 seq,id;
-int main() { 
+int main(int argc,char * argv[]) { 
 srand(getpid());
-global_id = 10;//rand() % 50000;
+global_id = rand() % 50000;
 seq = 0;
-id = 10;//rand() % 50000;
+i16 count = 5;
+id = rand() % 50000;
+i8* dst,*mssg;
+i16 l;
+if (argc < 2) {usage(argv[0]);return -1;}
+else if (argc == 2) {
+dst = (i8*)argv[1];
+mssg = (i8*)"Hello";
+l = 5;
+}
+else if (argc == 3){
+dst = (i8*)argv[1];
+mssg = (i8*)argv[2];
+l = len(mssg);
+}
+else if (argc == 4){
+dst = (i8*)argv[1];
+mssg = (i8*)argv[2];
+l = stoi((i8*)argv[3]);
+}
+else {usage(argv[0]);return -1;}
+printf("Sending 5 packets of %d bytes ICMP echoes to %s | Timeout = %ds\n",l,dst,TIMEOUT);
+i8 c = 0;
+if (l > 225){printf("Mssg To Big!!\n");return -2;}
+for (int i = 0 ; i < count; i++){
+i8 ret = sendping(SRC_ADDR,dst,mssg,l);
+if (!ret) {printf("!");c++;}
+else printf(".");
+fflush(stdout);
+}
+if (!c) {fprintf(stderr,"\nError!\n");return -3;}
+printf("\nSuccess Rate (%d/%d) : %.02f %%\n",c,seq,(float)(c/5) * 100);
+return 0; 
+}
 
-i8 ret = sendping("10.180.212.171","1.1.1.1","add\n",4);
-if (!ret) printf("Success!\n");
-else printf("error %d\n",ret);
-return 0; }
+
+
 
 public i8 _sendping(i8* src,i8*dst,i8* mssg,i16 len){
 if (!*src || !*dst || !*mssg) return 1;
+
 Ping * str = init_ping((i8*)mssg,len+1,endian(id),endian(seq));
+seq++;
 if (!str) return 2;
 Icmp *pkt = init_icmp(echo,(i8*)str,sizeof(Ping) + len+1);
 if (!pkt) return 3;
+
 Ip* ip = init_ip(ICMP,(i8*)src,(i8*)dst,0);
 if (!ip) return 4;
 ip->payload = pkt;
@@ -27,10 +61,12 @@ i32 sock = setup();
 if (!sock) {close(sock);free(ip->payload);free(ip);return 5;}
 int x = send_ip(sock,ip);
 if (!x){close(sock);free(ip->payload);free(ip);return 6;}
+//
 Ip* reply = recv_ip(sock);
-if (!reply){printf("Failed\n");return 7;}
+//
+if (!reply){
+    close(sock);free(ip->payload);free(ip);free(reply);return 7;}
 close(sock);
-show(reply,1);
 free(ip->payload);
 free(ip);
 if (reply->payload && reply->payload->header)free(reply->payload);
@@ -60,10 +96,10 @@ break;
 i32 size = sizeof(Raw_icmp) + icmp->size;
 if (size & 1) size++;
 p = (i8*)malloc(size);
-size = sizeof(Raw_icmp);
-memcopy(p,&raw,size);
-memcopy(p+size,icmp->header,icmp->size);
-i16 check = checksum(p,sizeof(Raw_icmp) + icmp->size); 
+i16 t = sizeof(Raw_icmp);
+memcopy(p,&raw,t);
+memcopy(p+t,icmp->header,icmp->size);
+i16 check = checksum(p,size); 
 Raw_icmp * rawp = (Raw_icmp*)p;
 rawp->checksum = check;
 return p;
@@ -85,9 +121,8 @@ return ~(sum + carry);
 public i8 * eval_ip(Ip* ip){
 if (!ip) return (i8*)0;
 Raw_ip raw;
-
 raw.version = 4;
-raw.ihl = sizeof(Raw_ip)/4;
+raw.ihl = (sizeof(Raw_ip))/4;
 raw.dscp = 0;
 raw.ecn = 0;
 raw.len = (ip->payload)? endian(sizeof(Raw_ip) + ip->payload->size + sizeof(Raw_icmp)):sizeof(Raw_ip);
@@ -99,16 +134,12 @@ raw.protocol = (ip->type == ICMP)?1:0;
 raw.checksum = 0;
 raw.srcaddr = ip->srcaddr;
 raw.dstaddr = ip->dstaddr;
-
 i8 * p = (i8*)malloc(raw.len);
 i8*k = p;
 if (!p){return (i8*)0;}
-
 zero(p,raw.len);
-
 memcopy(p,&raw,sizeof(Raw_ip));
 p+=sizeof(Raw_ip);
-
 if (ip->payload && ip->payload->size){
     i8* k = eval_icmp(ip->payload);
     if (k){copy(p,k,ip->payload->size+sizeof(Raw_icmp));}
@@ -134,7 +165,6 @@ raw = (Raw_ip*)buff;
 i16 id = endian(raw->id);
 i16 csum = checksum(buff,((n % 2) ? ++n : n));
 if (csum){fprintf(stderr,"IP Checksum Error %.04hx! Packets Comprimised!\n",raw->checksum);return (Ip*)0;}
- 
 Type kind = (raw->protocol == 1) ? ICMP:None;
 if (kind != ICMP){fprintf(stderr,"Unsupported Packet Type\n");return (Ip*)0;}
 Ip* ip = init_ip(kind,ipstr(raw->srcaddr),ipstr(raw->dstaddr),id);
@@ -184,5 +214,10 @@ public i32 setup(){
 i32 one = 1;
 i32 s = socket(AF_INET,SOCK_RAW,1);
 if (s <= 2) return 0;
-return (setsockopt(s,SOL_IP,IP_HDRINCL,(const void *)&one,sizeof(i32)) == -1) ? 0 : s;
+struct timeval t;
+t.tv_sec = TIMEOUT;
+t.tv_usec = 0;
+if (setsockopt(s,SOL_IP,IP_HDRINCL,(const void *)&one,sizeof(i32)) == -1) return 0;
+ if (setsockopt(s,SOL_SOCKET,SO_RCVTIMEO,&t,sizeof(t)) == -1) {close(s);return 0;}
+  return s;
 }

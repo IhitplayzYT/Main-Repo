@@ -31,6 +31,6 @@ Ping * ping = (Ping *)malloc(sizeof(Ping) + len);
 if (!ping) return (Ping*)0;
 ping->id = id;
 ping->seq = seq;
-strcopy(ping->data,str,len);
+memcopy(ping->data,str,len);
 return ping;
 }
