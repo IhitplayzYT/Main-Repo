@@ -68,6 +68,7 @@ public void _flipbit(i8 *a,i16 n){
 }
 
 
+
 public i8* concat(i8*a,i8*b){
 static i8 buff[512];
 strcopy(buff,a);
@@ -226,49 +227,86 @@ void* next(Iterator* iter){
 return (iter->i < iter->l)?iter->data[iter->i++]:(void*)0;
 }
 
-public double _sum(float x,...){
-double a = x;
-va_list args;
-va_start(args,x);
-double z;
-while ((z = va_arg(args,double)) != 0.0)a += z;
-va_end(args);
-return a;
+public double _pow(double x,int y){
+if (x == 0 || x == 1) return x;
+if (y == 0) return 1;
+double ret = 1;
+if (y < 0){
+y *= -1;
+for (int i = 0 ; i < y; i++) ret *= (double)(1/x);
+}
+else{
+for (int i = 0 ; i < y ; i++) ret *= (double)x;
+}
+return ret;
 }
 
-public float _sub(float x,...){
-float a = x;
-va_list args;
-va_start(args,x);
-float z;
-while ((z = va_arg(args,double)))a -= z;
-va_end(args);
 
-return a;
+public i8 _stoi8(i8*s){
+i8 l = len(s);
+i8 ret = 0;
+for (i8 i = 0 ;i < l;i++){
+if (s[i] >= '0' && s[i] <= '9') ret += (s[i] - '0') * _pow(10,l-i-1);
+else if (s[i] == '+' || s[i] == ',' || s[i] == '_') continue;
+else return 0;
+}
+return ret;
 }
 
-public float _mul(float x,...){
-float a  = x;
-va_list args;
-va_start(args,x);
-float z;
-while ((z = va_arg(args,double)))a *= z;
-va_end(args);
-
-return a;
+public i16 _stoi16(i8*s){
+i8 l = len(s);
+i16 ret = 0;
+for (i8 i = 0 ;i < l;i++){
+if (s[i] >= '0' && s[i] <= '9') ret += (s[i] - '0') * _pow(10,l-i-1);
+else if (s[i] == '+' || s[i] == ',' || s[i] == '_') continue;
+else return 0;
+}
+return ret;
 }
 
-public float _div(float x,...){
-float a  = x;
-va_list args;
-va_start(args,x);
-float z;
-while ((z = va_arg(args,double))) {
-    if (z == 0.0) continue;
-    a/= z;}
-    va_end(args);
-
-return a;
+public i32 _stoi32(i8*s){
+i8 l = len(s);
+i32 ret = 0;
+for (i8 i = 0 ;i < l;i++){
+if (s[i] >= '0' && s[i] <= '9') ret += (s[i] - '0') * _pow(10,l-i-1);
+else if (s[i] == '+' || s[i] == ',' || s[i] == '_') continue;
+else return 0;
 }
+return ret;
+}
+
+public i64 _stoi64(i8*s){
+i8 l = len(s);
+i64 ret = 0;
+for (i8 i = 0 ;i < l;i++){
+if (s[i] >= '0' && s[i] <= '9') ret += (s[i] - '0') * _pow(10,l-i-1);
+else if (s[i] == '+' || s[i] == ',' || s[i] == '_') continue;
+else return 0;
+}
+return ret;
+}
+
+
+public int _stoi(i8*s){
+i8 l = len(s);
+i8 flag = 0;
+int ret = 0;
+for (i8 i = 0 ;i < l;i++){
+if (s[i]==' ' && !flag){continue;}
+else if (s[i] >= '0' && s[i] <= '9') {ret += (s[i] - '0') * _pow(10,l-i-1);flag = 1;}
+else if (s[i] == ',' || s[i] == '_'){continue;}
+else if (s[i] == '+' && !flag){continue;}
+else if (s[i] == '+' && flag){return __INT32_MAX__;}
+else if (s[i] == '-' && !flag){ret *= -1;}
+else if (s[i] == '-' && flag){return __INT32_MAX__;}
+else return 0;
+}
+return ret;
+}
+
+
+
+
+
 
 

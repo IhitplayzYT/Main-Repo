@@ -478,6 +478,104 @@ s8**:min_s8sa,\
 char**:min_csa \
 )(x,__VA_ARGS__,NULL)
 
+#define DEFINE_SUM(TYPE) \
+static TYPE _sum##TYPE(TYPE x,...){\
+va_list args;  \
+TYPE res = x,temp; \
+va_start(args,x); \
+while ((temp = va_arg(args,TYPE))){\
+res += temp;}\
+return res;}
+
+#define DEFINE_SUB(TYPE) \
+static TYPE _sub##TYPE(TYPE x,...) {\
+va_list args;  \
+TYPE res = x,temp; \
+va_start(args,x); \
+while ((temp = va_arg(args,TYPE))){\
+res -= temp;}\
+return res;}
+
+#define DEFINE_MUL(TYPE) \
+static TYPE _mul##TYPE(TYPE x,...) {\
+va_list args;  \
+TYPE res = x,temp; \
+va_start(args,x); \
+while ((temp = va_arg(args,TYPE))){\
+res *= temp;}\
+return res;}
+
+#define DEFINE_DIV(TYPE) \
+static TYPE _div##TYPE(TYPE x,...) {\
+va_list args;  \
+TYPE res = x,temp; \
+va_start(args,x); \
+while ((temp = va_arg(args,TYPE))){\
+if (temp) continue;\
+res /= temp;}\
+return res;}
+
+DEFINE_SUM(double);
+DEFINE_SUM(int);
+DEFINE_SUB(double);
+DEFINE_SUB(int);
+DEFINE_MUL(double);
+DEFINE_MUL(int);
+DEFINE_DIV(double);
+DEFINE_DIV(int);
+DEFINE_SUM(float);
+DEFINE_SUM(long);
+DEFINE_SUB(float);
+DEFINE_SUB(long);
+DEFINE_MUL(float);
+DEFINE_MUL(long);
+DEFINE_DIV(float);
+DEFINE_DIV(long);
+DEFINE_SUM(short);
+DEFINE_SUM(char);
+DEFINE_SUB(short);
+DEFINE_SUB(char);
+DEFINE_MUL(short);
+DEFINE_MUL(char);
+DEFINE_DIV(short);
+DEFINE_DIV(char);
+
+
+#define sum(x,...) _Generic((x), \
+char : _sumchar,\
+short : _sumshort, \
+int : _sumint,\
+long : _sumlong, \
+double : _sumdouble,\
+float: _sumfloat \
+)(x,...,NULL);
+
+#define sub(x,...) _Generic((x), \
+char : _subchar,\
+short : _subshort, \
+int : _subint,\
+long : _sublong, \
+double : _subdouble,\
+float: _subfloat \
+)(x,...,NULL);
+
+#define mul(x,...) _Generic((x), \
+char : _mulchar,\
+short : _mulshort, \
+int : _mulint,\
+long : _mullong, \
+double : _muldouble,\
+float: _mulfloat \
+)(x,...,NULL);
+
+#define div(x,...) _Generic((x), \
+char : _divchar,\
+short : _divshort, \
+int : _divint,\
+long : _divlong, \
+double : _divdouble,\
+float: _divfloat \
+)(x,...,NULL);
 
 #define sort(x, l, f)                                                          \
   _Generic((x),                                                                \
@@ -493,6 +591,13 @@ char**:min_csa \
       signed long *: sort_i64,                                                 \
       char **: _strsort                                                        \
 ) (x, l, f);
+
+#define stoi(x) _stoi((i8*)x)
+#define stoi8(x) _stoi8((i8*)x)
+#define stoi16(x) _stoi16((i8*)x)
+#define stoi32(x) _stoi32((i8*)x)
+#define stoi64(x) _stoi64((i8*)x)
+#define pow(x,y) _pow((double)x,(int)y)
 
 #define endian(x) _Generic((x),\
 i16:endian16,\
@@ -516,16 +621,12 @@ i8*:len_i8,\
 s8*:len_s8,\
 char *:len_char\
 )(x)
-
-#define sum(x,...) _sum(x,__VA_ARGS__,0.0)
-#define sub(x,...) _sub(x,__VA_ARGS__,0.0)
-#define mul(x,...) _mul(x,__VA_ARGS__,0.0)
-#define div(x,...) _div(x,__VA_ARGS__,0.0)
+ 
 #define print(fmt,...) vprintf(fmt,__VA_ARGS__)
 #endif
 /* MACROS */
 #define init_filter(TYPE,fxn) \
-TYPE * pre_concat(TYPE##_##fxn,_filter)(TYPE * arr,i32 n){\
+TYPE * pre_concat(TYPE##_##fxn,_filter)(TYPE * arr,i32 n,i32 * ret_len){\
 TYPE * res = (TYPE *)alloc(sizeof(TYPE) * n);\
 if (!res) return (TYPE*)0;\
 i32 k = 0;\
@@ -533,6 +634,7 @@ for (i32 i = 0 ;i < n; i++) if (fxn(arr[i])) res[k++] = arr[i];\
 if (!k) return (TYPE *)0;\
 TYPE * ret = (TYPE *)realloc(res,(k) * sizeof(TYPE));\
 if (!ret) return (TYPE *)0;\
+*ret_len = k;\
 return ret;\
 };
 
@@ -566,9 +668,11 @@ public void v_print(struct s_vector  *);
 public void v_pop(struct s_vector  *);
 Iterator * iterator(struct s_vector*);
 void* next(Iterator*);
-public double _sum(float,...);
-public float _sub(float,...);
-public float _mul(float,...);
-public float _div(float,...);
+public int _stoi(i8*);
+public i64 _stoi64(i8*);
+public i32 _stoi32(i8*);
+public i16 _stoi16(i8*);
+public i8 _stoi8(i8*);
+public double _pow(double,int);
 
 /* Function Signatures */
