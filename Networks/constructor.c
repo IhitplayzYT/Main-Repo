@@ -24,12 +24,13 @@ icmp->header = data;
 return icmp;
 }
 
-public Ping * init_ping(i8* str,i16 len,i32 id,i32 seq){
-if (!len || !str || !id || !seq) return (Ping *)0;
+public Ping * init_ping(i8* str,i16 len,i16 id,i16 seq){
+if (!len || !str) return (Ping *)0;
+if (!id) id = rand() % 50000;
 Ping * ping = (Ping *)malloc(sizeof(Ping) + len);
 if (!ping) return (Ping*)0;
 ping->id = id;
 ping->seq = seq;
-memcopy(ping->data,str,len);
+strcopy(ping->data,str,len);
 return ping;
 }

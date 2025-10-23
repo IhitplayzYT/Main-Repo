@@ -1,38 +1,42 @@
 /* Networks.c */
 #include "Networks.h"
 
-i32 global_id;
-
+i16 global_id;
+i16 seq,id;
 int main() { 
 srand(getpid());
-global_id = rand() % 50000;
-Ping * str = init_ping((i8*)"Hello\0",6,endian(5000),endian(1));
-Icmp *pkt = init_icmp(echo,(i8*)str,sizeof(Ping) + 6);
-Ip* ip = init_ip(ICMP,(i8*)"192.168.207.171",(i8*)"1.1.1.1",0);
-if (!ip || !pkt) return -1;
+global_id = 10;//rand() % 50000;
+seq = 0;
+id = 10;//rand() % 50000;
+
+i8 ret = sendping("10.180.212.171","1.1.1.1","add\n",4);
+if (!ret) printf("Success!\n");
+else printf("error %d\n",ret);
+return 0; }
+
+public i8 _sendping(i8* src,i8*dst,i8* mssg,i16 len){
+if (!*src || !*dst || !*mssg) return 1;
+Ping * str = init_ping((i8*)mssg,len+1,endian(id),endian(seq));
+if (!str) return 2;
+Icmp *pkt = init_icmp(echo,(i8*)str,sizeof(Ping) + len+1);
+if (!pkt) return 3;
+Ip* ip = init_ip(ICMP,(i8*)src,(i8*)dst,0);
+if (!ip) return 4;
 ip->payload = pkt;
-show(ip,1);
-//print_hex(eval(ip),sizeof(Raw_icmp) + sizeof(Raw_ip) + ip->payload->size);
 i32 sock = setup();
-if (!sock) {close(sock);free(ip->payload);free(ip);return -1;}
+if (!sock) {close(sock);free(ip->payload);free(ip);return 5;}
 int x = send_ip(sock,ip);
-if (!x){close(sock);free(ip->payload);free(ip);return -1;}
+if (!x){close(sock);free(ip->payload);free(ip);return 6;}
 Ip* reply = recv_ip(sock);
-if (!reply){printf("Failed\n");return -1;}
-show(reply,1);
-//print_hex(eval(reply),sizeof(Raw_icmp) + sizeof(Raw_ip) + ip->payload->size);
+if (!reply){printf("Failed\n");return 7;}
 close(sock);
+show(reply,1);
 free(ip->payload);
 free(ip);
 if (reply->payload && reply->payload->header)free(reply->payload);
 if (reply->payload) free(reply);
-return 0; }
-
-public void show_ip(Ip* ip,i8 flag){
-if (!ip) return;
-printf("\n---IP HEADER---\nID : %d\nType : %s\n[ %s ] -> [ %s ]\n   (SRC)      ->     (DST)\n",ip->id,(ip->type == TCP)?"TCP":(ip->type == UDP)?"UDP":(ip->type == ICMP)?"ICMP":"Invalid Type",ipstr(ip->srcaddr),ipstr(ip->dstaddr));
-if (ip->payload) helper_ip_icmp(ip->payload,flag);
-else printf("-------------\n\n");}
+return 0;
+}
 
 
 public i8* eval_icmp(Icmp* icmp){
@@ -78,54 +82,6 @@ sum = acc & 0x0000ffff;
 return ~(sum + carry);
 }
 
-
-public i32 ipaddr(i8* s){
-i8 a[4] = {0},*p,c = 0;
-i32 ret;
-for (p = s;*p;p++){
-if (*p == '.' || *p == '-' || *p == ':') c++;
-else{
-a[c] *= 10;
-a[c] += *p - '0';
-}}
-ret = (a[3] << 24) | (a[2] << 16) | (a[1] << 8) | a[0];
-return ret;
-}
-
-public i8* ipstr(i32 addr){
-i8 *buff = (i8*)malloc(16);
-zero(buff,16);
-i8 a[4];
-a[0] = (addr & 0xff000000) >> 24;
-a[1] = (addr & 0x00ff0000) >> 16;
-a[2] = (addr & 0x0000ff00) >> 8;
-a[3] = (addr & 0x000000ff);
-snprintf((char*)buff, 16, "%u.%u.%u.%u", a[3], a[2], a[1], a[0]);
-return buff;
-}
-
-public void show_icmp(Icmp* icmp,i8 df){
-if (!icmp){return;}
-printf("\n---ICMP HEADER---\nType : %s\nSize : %d Bytes\n",(icmp->type == None)?"Default":(icmp->type == echo)?"Echo":(icmp->type == echo_reply)?"Echo Reply":"Invalid Type",icmp->size);
-if (icmp->type == echo || icmp->type == echo_reply){
-Ping * ping = (Ping *)icmp->header;
-printf("Id: %d\nSeq: %d\n",endian(ping->id),endian(ping->seq));
-}
-if (df) print_hex(icmp->header,icmp->size);
-printf("-------------\n\n");
-}
-
-public void helper_ip_icmp(Icmp* icmp,i8 df){
-if (!icmp){return;}
-printf("\n  [Payload]\n\tType : %s\n\tSize : %d Bytes\n\t",(icmp->type == None)?"Default":(icmp->type == echo)?"Echo":(icmp->type == echo_reply)?"Echo Reply":"Invalid Type",icmp->size);
-if (icmp->type == echo || icmp->type == echo_reply){
-Ping * ping = (Ping *)icmp->header;
-printf("Id: %d\n\tSeq: %d\n\t",endian(ping->id),endian(ping->seq));
-}
-if (df) print_hex(icmp->header,icmp->size);
-printf("-------------\n\n");
-}
-
 public i8 * eval_ip(Ip* ip){
 if (!ip) return (i8*)0;
 Raw_ip raw;
@@ -164,29 +120,6 @@ rawp->checksum = endian(checksum(p,raw.len));
 return k;
 }
 
-public i16 endian(i16 x){
-i8 a,b;
-i16 c;
-a = x & 0x00ff;
-b = (x & 0xff00) >> 8;
-c = (a << 8) | b;
-return c;
-}
-
-public int send_ip(i32 s,Ip* ip){
-if (!s || !ip) return 0;
-i8 * raw = eval(ip);
-signed int ret;
-struct sockaddr_in sock; 
-zero((i8*)&sock,sizeof(sock));
-sock.sin_family  = AF_INET;
-sock.sin_addr.s_addr = (in_addr_t)ip->dstaddr;
-i32 len = sizeof(Raw_ip);
-len += (ip->payload && ip->payload->size)? sizeof(Raw_icmp) + ip->payload->size:0;
-ret = sendto((int)s,raw,(int)len,0,(const struct sockaddr *)&sock,sizeof(sock));
-if (ret < 0) return  0;
-return 1;
-}
 
 
 public Ip * recv_ip(i32 s){
@@ -208,7 +141,6 @@ Ip* ip = init_ip(kind,ipstr(raw->srcaddr),ipstr(raw->dstaddr),id);
 if (!ip) return (Ip *)0;
 n -= sizeof(Raw_ip);
 if (!n){ip->payload = (Icmp*)0;return ip;}
-
 
 rawicmp = (Raw_icmp*)(buff+sizeof(Raw_ip));
 Ping * ping;
@@ -233,13 +165,24 @@ ip->payload = pv;
 return ip;
 }
 
+public int send_ip(i32 s,Ip* ip){
+if (!s || !ip) return 0;
+i8 * raw = eval(ip);
+signed int ret;
+struct sockaddr_in sock; 
+zero((i8*)&sock,sizeof(sock));
+sock.sin_family  = AF_INET;
+sock.sin_addr.s_addr = (in_addr_t)ip->dstaddr;
+i32 len = sizeof(Raw_ip);
+len += (ip->payload && ip->payload->size)? sizeof(Raw_icmp) + ip->payload->size:0;
+ret = sendto((int)s,raw,(int)len,0,(const struct sockaddr *)&sock,sizeof(sock));
+if (ret < 0) return  0;
+return 1;
+}
+
 public i32 setup(){
 i32 one = 1;
 i32 s = socket(AF_INET,SOCK_RAW,1);
 if (s <= 2) return 0;
 return (setsockopt(s,SOL_IP,IP_HDRINCL,(const void *)&one,sizeof(i32)) == -1) ? 0 : s;
 }
-
-
-
-

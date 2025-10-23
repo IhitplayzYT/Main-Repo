@@ -32,6 +32,7 @@ Ip*:eval_ip,\
 Icmp*:eval_icmp\
 )(x)
 #define MAX_PACKET_SIZE 2048
+#define sendping(src,dst,mssg,len) _sendping((i8*)src,(i8*)dst,(i8*)mssg,(i32)len)
 /* MACROS */
 
 /* Definations */
@@ -121,4 +122,5 @@ public i32 setup();
 /* Function Signatures */
 public Icmp * init_icmp(Type,i8*,i16);
 public Ip * init_ip(Type,i8*,i8*,i16);
-public Ping * init_ping(i8*,i16,i32,i32);
+public Ping * init_ping(i8*,i16,i16,i16);
+public i8 _sendping(i8*,i8*,i8*,i16);
