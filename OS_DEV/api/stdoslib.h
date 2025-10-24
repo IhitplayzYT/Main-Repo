@@ -78,6 +78,12 @@ void* (*next)(struct s_iter*);
 };
 typedef struct s_iter Iterator;
 
+struct timeval{
+long sec;
+long u_sec;
+} packed;
+typedef struct timeval Timeval;
+
 
 struct s_vector{
 i32 l,cap;
@@ -674,5 +680,5 @@ public i32 _stoi32(i8*);
 public i16 _stoi16(i8*);
 public i8 _stoi8(i8*);
 public double _pow(double,int);
-
+public long cur_time();
 /* Function Signatures */
