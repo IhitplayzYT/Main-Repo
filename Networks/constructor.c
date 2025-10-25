@@ -1,4 +1,4 @@
-#include "Networks.h"
+#include "Ethernet.h"
 extern i32 global_id;
 
 public Ip * init_ip(Type t,i8* s,i8* d,i16 id){
@@ -33,4 +33,15 @@ ping->id = id;
 ping->seq = seq;
 memcopy(ping->data,str,len);
 return ping;
+}
+
+public Ethernet * init_ether(Mac* src,Mac* dst,EtherType type){
+if (!src || !dst || !type) return (Ethernet*)0;
+Ethernet * ether = (Ethernet*)malloc(sizeof(Ethernet));
+if (!ether) return (Ethernet*)0;
+ether->protocol = type;
+ether->src = *src;
+ether->dst = *dst;
+ether->payload = (Ip*)0;
+return ether;
 }

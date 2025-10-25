@@ -25,7 +25,7 @@ typedef unsigned long i64;
 #define memcopy(a,b,n) _copyn((i8*)(a),(i8*)(b),(n),1)
 #define show(x,y) _Generic((x),\
 Icmp*: show_icmp,        \
-Ip*:   show_ip            \
+Ip*:   show_ip         \
 )((x),(y))
 #define eval(x) _Generic((x),\
 Ip*:eval_ip,\

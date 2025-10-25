@@ -5,6 +5,7 @@
         "stdoslib.h": "c",
         "inet.h": "c",
         "unistd.h": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "ethernet.h": "c"
     }
 }

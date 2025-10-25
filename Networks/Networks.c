@@ -3,6 +3,7 @@
 
 i16 global_id;
 i16 seq,id;
+/*
 int main(int argc,char * argv[]) { 
 srand(getpid());
 global_id = rand() % 50000;
@@ -42,7 +43,7 @@ printf("\nSuccess Rate (%d/%d) : %.02f %%\n",c,seq,(float)(c/5) * 100);
 return 0; 
 }
 
-
+*/
 
 
 public i8 _sendping(i8* src,i8*dst,i8* mssg,i16 len){

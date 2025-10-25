@@ -1,4 +1,4 @@
-#include "Networks.h"
+#include "Ethernet.h"
 
 public void _copyn(i8 *a,i8 *b,i16 n,i8 z){
 if (!a || !b) return;
