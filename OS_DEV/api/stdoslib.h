@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+static void * this;
+static Tuple deallocator = {.add = t_add,.sz = 0,.cap = 0};
+
 /* Typedefinations */
 typedef unsigned char i8;
 typedef unsigned short i16;
@@ -25,7 +28,13 @@ typedef double f64;
 #define private static
 #define packed __attribute__((packed))
 #define fill(a, n, x) _fill((i8 *)a, n, (i8)x)
-#define alloc(x) malloc((int)(x))
+#define alloc(x) ({ \
+void * k = malloc((int)(x)); \
+((Tuple)deallocator).add(&deallocator,k);\
+k;\
+})
+
+
 #define dealloc(x) free((x))
 #define strcopy(a, b) _copy((a), (b))
 #define copy(a, b, n) _copyn((i8 *)(a), (i8 *)(b), (n), 1)
@@ -94,7 +103,19 @@ void (*pop)(struct s_vector*);
 Iterator * (*iterator)(struct s_vector*);
 };
 
+static struct s_tuple{
+i16 sz,cap;
+void (*add)(struct s_tuple *,void *);
+void **data;
+}packed;
+
+typedef struct s_tuple Tuple;
+
+
 typedef struct s_vector Vector;
+
+
+
 
 #define DEFINE_NUM_SORT(TYPE,NAME)   \
   static inline void NAME(TYPE *arr, i16 n, i8 asc) {                          \
@@ -160,7 +181,7 @@ return min;\
 }
 
 
-#define new(NAME,...) NAME##_init((void*)0,__VA_ARGS__)
+#define new(NAME,...) NAME##_init((void*)0,__VA_ARGS__,NULL)
 
 #define DEFINE_MAX_STR(TYPE,name) \
 static inline TYPE* name(TYPE* X,...){\
@@ -259,6 +280,11 @@ typedef __builtin_va_list va_list;
 #ifndef IMP_DEF
 #define IMP_DEF
 
+
+constructor void init_deallocator(){
+this = &deallocator;
+}
+
 DEFINE_NUM_SORT(char, sort_i8)
 DEFINE_NUM_SORT(short, sort_i16)
 DEFINE_NUM_SORT(int, sort_i32)
@@ -281,6 +307,9 @@ DEFINE_MIN_ARR(f64,min_da);
 DEFINE_MIN_ARR_S(i8,min_i8sa);
 DEFINE_MIN_ARR_S(s8,min_s8sa);
 DEFINE_MIN_ARR_S(char,min_csa);
+
+
+
 
 
 DEFINE_MAX_ARR(i16,max_i16a);
@@ -669,7 +698,9 @@ public i16 endian16(i16 x);
 public i32 endian32(i32 x);
 public i64 endian64(i64 x);
 public Vector * Vector_init(void *,...);
+public Tuple * Tuple_init(void*,...);
 public void v_append(struct s_vector *,void *);
+public void t_add(Tuple*,void*);
 public void v_print(struct s_vector  *);
 public void v_pop(struct s_vector  *);
 Iterator * iterator(struct s_vector*);
@@ -680,5 +711,6 @@ public i32 _stoi32(i8*);
 public i16 _stoi16(i8*);
 public i8 _stoi8(i8*);
 public double _pow(double,int);
+public void FINALIZE();
 public long cur_time();
 /* Function Signatures */

@@ -308,5 +308,38 @@ return ret;
 
 
 
+public long cur_time(){
 
+}
+
+public Tuple * Tuple_init(void* _ ,...){
+va_list args;
+va_start(args,_);
+Tuple * t = (Tuple*)alloc(sizeof(Tuple));
+if (!t) return;
+t->sz = 0;
+t->cap = 0;
+t->add = t_add;
+void * x;
+while ((x = va_arg(args,void*))){
+t->add(t,x);
+}
+return t;
+}
+
+public void t_add(Tuple* t,void* data){
+
+if (((Tuple *)t)->sz == ((Tuple*)t)->cap){
+((Tuple*)t)->data = realloc(((Tuple*)t)->data,((Tuple*)t)->cap*2);
+((Tuple*)t)->cap = sizeof(Tuple) * 2;
+}
+((Tuple*)t)->data[((Tuple*)t)->sz++] = data;
+}
+
+public void FINALIZE(){
+for (int i = ((Tuple*)this)->sz - 1;i >= 0;i--){
+    dealloc(((Tuple*)this)->data[i]);
+}
+dealloc(((Tuple*)this)->data);
+}
 
