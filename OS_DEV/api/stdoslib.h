@@ -5,7 +5,6 @@
 #include <unistd.h>
 
 static void * this;
-static Tuple deallocator = {.add = t_add,.sz = 0,.cap = 0};
 
 /* Typedefinations */
 typedef unsigned char i8;
@@ -18,7 +17,6 @@ typedef signed int s32;
 typedef signed long s64;
 typedef float f32;
 typedef double f64;
-
 /* Typedefinations */
 
 /* MACROS */
@@ -30,7 +28,6 @@ typedef double f64;
 #define fill(a, n, x) _fill((i8 *)a, n, (i8)x)
 #define alloc(x) ({ \
 void * k = malloc((int)(x)); \
-((Tuple)deallocator).add(&deallocator,k);\
 k;\
 })
 
@@ -87,13 +84,6 @@ void* (*next)(struct s_iter*);
 };
 typedef struct s_iter Iterator;
 
-struct timeval{
-long sec;
-long u_sec;
-} packed;
-typedef struct timeval Timeval;
-
-
 struct s_vector{
 i32 l,cap;
 i32 type;
@@ -103,18 +93,28 @@ void (*pop)(struct s_vector*);
 Iterator * (*iterator)(struct s_vector*);
 };
 
-static struct s_tuple{
+struct s_tuple{
 i16 sz,cap;
 void (*add)(struct s_tuple *,void *);
 void **data;
-}packed;
+};
 
 typedef struct s_tuple Tuple;
-
-
 typedef struct s_vector Vector;
 
 
+struct s_time{
+i16 seconds;
+i16 minutes;
+i16 hours;
+i16 days;
+i16 date_of_month;
+i8 weeks;
+i8 weekday;
+i8 month;
+i16 years;
+}packed;
+typedef struct s_time Time;
 
 
 #define DEFINE_NUM_SORT(TYPE,NAME)   \
@@ -273,17 +273,11 @@ typedef __builtin_va_list va_list;
 #define va_arg(ap, type) __builtin_va_arg(ap, type)
 #define va_end(ap) __builtin_va_end(ap)
 
-
-
 #define trash(arg,...) ((void)0)
 
 #ifndef IMP_DEF
 #define IMP_DEF
 
-
-constructor void init_deallocator(){
-this = &deallocator;
-}
 
 DEFINE_NUM_SORT(char, sort_i8)
 DEFINE_NUM_SORT(short, sort_i16)
@@ -551,29 +545,13 @@ res /= temp;}\
 return res;}
 
 DEFINE_SUM(double);
-DEFINE_SUM(int);
 DEFINE_SUB(double);
-DEFINE_SUB(int);
 DEFINE_MUL(double);
-DEFINE_MUL(int);
 DEFINE_DIV(double);
-DEFINE_DIV(int);
-DEFINE_SUM(float);
 DEFINE_SUM(long);
-DEFINE_SUB(float);
 DEFINE_SUB(long);
-DEFINE_MUL(float);
 DEFINE_MUL(long);
-DEFINE_DIV(float);
 DEFINE_DIV(long);
-DEFINE_SUM(short);
-DEFINE_SUM(char);
-DEFINE_SUB(short);
-DEFINE_SUB(char);
-DEFINE_MUL(short);
-DEFINE_MUL(char);
-DEFINE_DIV(short);
-DEFINE_DIV(char);
 
 
 #define sum(x,...) _Generic((x), \
@@ -713,4 +691,9 @@ public i8 _stoi8(i8*);
 public double _pow(double,int);
 public void FINALIZE();
 public long cur_time();
+public i64 ticks_elapsed();
+public i64 tick_freq();
+public i64 seconds_elapsed();
+public i8* fmttime(Time *);
+public Time * curr_time();
 /* Function Signatures */

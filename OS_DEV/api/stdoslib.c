@@ -304,19 +304,11 @@ else return 0;
 return ret;
 }
 
-
-
-
-
-public long cur_time(){
-
-}
-
 public Tuple * Tuple_init(void* _ ,...){
 va_list args;
 va_start(args,_);
 Tuple * t = (Tuple*)alloc(sizeof(Tuple));
-if (!t) return;
+if (!t) return(Tuple*)0;
 t->sz = 0;
 t->cap = 0;
 t->add = t_add;
@@ -341,5 +333,53 @@ for (int i = ((Tuple*)this)->sz - 1;i >= 0;i--){
     dealloc(((Tuple*)this)->data[i]);
 }
 dealloc(((Tuple*)this)->data);
+}
+
+
+public i64 ticks_elapsed(){
+i32 l,h;
+__asm__ volatile(
+"rdtsc":"=a"(l),"=d"(h)
+);
+return ((((i64)h) << 32) | l);
+}
+
+public i64 tick_freq(){
+i64 b = ticks_elapsed();
+sleep(1);
+i64 a = ticks_elapsed();
+return a - b;
+}
+
+public i64 seconds_elapsed(){
+return ticks_elapsed() / tick_freq();
+}
+
+public Time * curr_time(){
+i64 t = seconds_elapsed();
+Time * ts = (Time *)alloc(sizeof(Time));
+if (!t) return (Time *)0;
+ts->minutes = (i16)(t / 60);
+ts->hours = (i16)(t / 3600);
+ts->seconds = t % 60;
+ts->minutes %= 60;
+ts->days = (i16)(ts->hours / 24);
+ts->hours %= 60;
+ts->weeks = (i8)ts->days / 7;
+ts->month = (ts->days <= 31)?1:(ts->days <= 59)?2:(ts->days <= 90)?3:(ts->days <= 120)?4:(ts->days <= 151)?5:(ts->days <= 181)?6:(ts->days <= 212)?7:(ts->days <= 243)?8:(ts->days <= 273)?9:(ts->days <= 304)?10:(ts->days <= 334)?11:(ts->days <= 365)?12:0;
+ts->weekday = (i8)ts->days % 7;
+ts->hours %= 24;
+ts->years = (i16)ts->days / 365;
+ts->days %= 365;
+ts->date_of_month = (ts->days <= 31)?ts->days:(ts->days <= 59)?ts->days - 31:(ts->days <= 90)?ts->days - 59:(ts->days <= 120)?ts->days - 90:(ts->days <= 151)?ts->days - 120:(ts->days <= 181)?6:(ts->days <= 212)?ts->days - 181:(ts->days <= 243)?ts->days - 212:(ts->days <= 273)?ts->days - 243:(ts->days <= 304)?ts->days - 273:(ts->days <= 334)?ts->days - 304:(ts->days <= 365)?ts->days - 334:0;
+return ts;
+}
+
+public i8* fmttime(Time * ts){
+if (!ts) ts = curr_time();
+i8* buff = (i8*)alloc(50);
+if (!buff) return (i8*)0;
+snprintf(buff,49,"%s, %.02hu:%.02hu:%.02hu , %.02hu %s,%.04hu",(ts->weekday == 0)?"Monday":(ts->weekday ==1)?"Tuesday":(ts->weekday == 2)?"Wednesday":(ts->weekday == 3)?"Thursday":(ts->weekday == 4)?"Friday":(ts->weekday == 5)?"Saturday":(ts->weekday == 6)?"Sunday":"INVALID",ts->hours,ts->minutes,ts->seconds,ts->date_of_month,(ts->month == 1)?"January":(ts->month == 2)?"February":(ts->month == 3)?"March":(ts->month == 4)?"April":(ts->month == 5)?"May":(ts->month == 6)?"June":(ts->month == 7)?"July":(ts->month == 8)?"August":(ts->month == 9)?"September":(ts->month == 10)?"October":(ts->month == 11)?"November":(ts->month == 12)?"December":"INVALID",ts->years);
+return buff;
 }
 
