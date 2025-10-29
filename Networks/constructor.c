@@ -1,4 +1,4 @@
-#include "Ethernet.h"
+#include "Networks.h"
 extern i32 global_id;
 
 public Ip * init_ip(Type t,i8* s,i8* d,i16 id){
@@ -44,4 +44,14 @@ ether->src = *src;
 ether->dst = *dst;
 ether->payload = (Ip*)0;
 return ether;
+}
+
+public Bytestr* init_bytestr(i8* str,i16 n){
+if (!*str || !n) return (Bytestr*)0;
+Bytestr * bs = (Bytestr*)malloc(sizeof(Bytestr
+) + n);
+if (!bs) return (Bytestr*)0;
+bs->data = str;
+bs->len = n;
+return bs;
 }

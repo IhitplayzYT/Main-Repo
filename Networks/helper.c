@@ -1,4 +1,4 @@
-#include "Ethernet.h"
+#include "Networks.h"
 
 public void _copyn(i8 *a,i8 *b,i16 n,i8 z){
 if (!a || !b) return;
@@ -119,6 +119,34 @@ return ret;
 
 public void _usage(i8* name){
 fprintf(stderr,"Usage : %s <Dest_IP> [MSSG] [Mssg_len]\n",name);
+}
+
+public i8 hex2ascii(i8* s){
+i8 t = len(s) - 1;
+i8 ret=0,k=1;
+for (int i = t; i > -1 ;i--){
+if (s[i] >= 'A' && s[i] <= 'F'){ret += ((s[i] -'A'+10) * k);}
+else if(s[i] >= 'a' && s[i] <= 'f'){ret += ((s[i] -'a'+10) * k);}
+else{ ret += ((s[i] - '0') * k);}
+k *= 16;
+}
+return ret;
+}
+
+public i8* ascii2hex(i8 x){
+if (!x) return (i8*)0;
+i8* ret = (i8*)malloc(3);
+*ret = *(ret+1) = *(ret+2) = 0;
+if (!ret) return (i8*)0;
+while (x > 16) {
+i8 rem = x % 16;
+if (rem > 9) ret[1] = 'A' + (rem-10);
+else ret[1] = '0' + rem;
+x /= 16;
+}
+if (x > 9) ret[0] = 'A' + (x-10);
+else ret[0] = x + '0';
+return ret;
 }
 
 public i8 _strcomp(i8* a,i8* b){

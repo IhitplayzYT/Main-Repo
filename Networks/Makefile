@@ -1,6 +1,6 @@
 flags=-O2 -Wall -g -Wextra -pedantic -std=c2x -I.
 ldflags=
-objects = Networks.o helper.o constructor.o Ethernet.o
+objects = Networks.o helper.o constructor.o
 .PHONY: all clean cl run
 
 all:cl clean Networks 
@@ -11,13 +11,9 @@ cl:
 run: Networks
 	./$<
 
-
 Networks: $(objects)
 	gcc $(flags) $^ -o $@ $(ldflags)
 
-
-Ethernet.o: Ethernet.c Ethernet.h
-	gcc $(flags) -c $<
 Networks.o: Networks.c Networks.h 
 	gcc $(flags) -c $<
 helper.o:helper.c 
