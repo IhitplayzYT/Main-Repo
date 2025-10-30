@@ -84,7 +84,7 @@ if (!pkt) return 3;
 Ip* ip = init_ip(ICMP,(i8*)src,(i8*)dst,0);
 if (!ip) return 4;
 ip->payload = pkt;
-i32 sock = setup();
+i32 sock = setup_ip_sock();
 if (!sock) {close(sock);free(ip->payload);free(ip);return 5;}
 
 int x = send_ip(sock,ip);
@@ -244,7 +244,7 @@ if (ret < 0) return  0;
 return 1;
 }
 
-public i32 setup(){
+public i32 setup_ip_sock(){
 i32 one = 1;
 i32 s = socket(AF_INET,SOCK_RAW,1);
 if (s <= 2) return 0;
@@ -362,3 +362,14 @@ printf("\n--------------\n");
 }
 
 
+public void show_bs(Bytestr* bs,i8 flag){
+if (!bs) return;
+if (flag) printf("[%d]-",bs->len);
+printf("[%s]\n",bs->data);
+}
+
+
+public i32 setup_ether_sock(){
+i32 s = socket(AF_PACKET,SOCK_PACKET,1);
+if (s==-1) return 0;
+}

@@ -27,7 +27,8 @@ typedef unsigned long i64;
 Icmp*: show_icmp,        \
 Ip*:   show_ip,         \
 Mac*:show_mac,           \
-Ethernet*:show_ether   \
+Ethernet*:show_ether,   \
+Bytestr*:show_bs \
 )((x),(y))
 #define eval(x) _Generic((x),\
 Ip*:eval_ip,\
@@ -158,7 +159,7 @@ public i8* ipstr(i32);
 public Bytestr * eval_ip(Ip*);
 public int send_ip(i32,Ip*);
 public Ip * recv_ip(i32);
-public i32 setup();
+public i32 setup_ip_sock();
 public i8 hex2ascii(i8*);
 public i8* ascii2hex(i8);
 public void show_mac(Mac *,i8);
@@ -174,6 +175,8 @@ public i16 _len(i8*);
 public i16 _stoi(i8*);
 public i16 _pow(i16,i16);
 public i8 _strcomp(i8*,i8*);
+public void show_bs(Bytestr*,i8);
+public i32 setup_ether_sock();
 /* Function Signatures */
 public Icmp * init_icmp(Type,i8*,i16);
 public Ip * init_ip(Type,i8*,i8*,i16);

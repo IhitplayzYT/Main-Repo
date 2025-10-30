@@ -651,6 +651,9 @@ if (!ret) return (TYPE *)0;\
 return ret;\
 };
 
+
+
+
 /* Function Signatures */
 public void _fill(i8 *, i16, i8); /* Fills fixed no of bytes to input hex/char*/
 public void _copy(i8 *, i8 *); /* Copy contents from second to first string */
@@ -696,4 +699,9 @@ public i64 tick_freq();
 public i64 seconds_elapsed();
 public i8* fmttime(Time *);
 public Time * curr_time();
+public i8* strchar(i8*,i8);
+public s16 strcharidx(i8*,i8);
+public i8* strstrs(i8*,i8*);
+public s16 strstrsidx(i8*,i8*);
+public i8** tokenise(i8*,i8);
 /* Function Signatures */

@@ -383,3 +383,92 @@ snprintf(buff,49,"%s, %.02hu:%.02hu:%.02hu , %.02hu %s,%.04hu",(ts->weekday == 0
 return buff;
 }
 
+public i8* strchar(i8* s,i8 ch){
+if (!*s) return (i8*)0;
+i8* p = s;
+while(*p){
+if (*p == ch) return p;
+p++;
+}
+return (i8*)0;
+}
+
+public s16 strcharidx(i8* s,i8 ch){
+if (!*s) return (s16)-1;
+i8* p = s;
+while(*p){
+if (*p == ch) return p - s;
+p++;
+}
+return (s16)-1;
+}
+
+
+public i8* strstrs(i8* s,i8* str){
+if (!*s || !*str) return (i8*)0;
+i8 * p = s,*q;
+while (*p){
+q = str;
+if (*s == *p){
+i8 * m = p,*n = q;
+i8 f = 1; 
+while (f && *m && *n) {
+    if (*m != *n) {f = 0;}
+    m++;
+    n++;
+}
+if (f){return p;}
+}
+p++;
+}
+return (i8*)0;
+}
+
+public s16 strstrsidx(i8* s,i8* str){
+if (!*s || !*str) return (s16)-1;
+i8 * p = s,*q;
+while (*p){
+q = str;
+if (*s == *p){
+i8 * m = p,*n = q;
+i8 f = 1; 
+while (f && *m && *n) {
+    if (*m != *n) {f = 0;}
+    m++;
+    n++;
+}
+if (f){return p - s;}
+}
+p++;
+}
+return (s16)-1;
+}
+
+public i8** tokenise(i8* str,i8 ch){
+i8 ** ret = (i8**)malloc(sizeof(i8*));
+if (!ret) return (i8**)0;
+i8* p = str,*start = p;
+i16 k = 0;
+while (*p){
+if (*p == ch){
+ret[k] = (i8*)malloc(p - start+1);
+memcopy(ret[k],start,p - start);
+ret[k][p-start] = '\0';
+k++;
+ret = realloc(ret,(k+1)  * sizeof(i8*));
+
+start = ++p;
+}
+else ++p;
+}
+
+if (p != start){
+    ret[k] = (i8*)malloc(p - start + 1);
+    memcopy(ret[k], start, p - start);
+    ret[k][p - start] = '\0';
+    k++;
+    ret = (i8**)realloc(ret, (k + 1) * sizeof(i8*));
+}
+ret[k] = (i8*)0;
+return ret;
+}
