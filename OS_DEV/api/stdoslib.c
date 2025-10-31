@@ -1,6 +1,9 @@
 /* stdoslib.c */
 #include "stdoslib.h"
 
+extern void** DEALLOCATOR;
+extern i32 ALLOCED_OBJ;
+
 public void _copyn(i8 *a,i8 *b,i16 n,i8 z){
 if (!a || !b) return;
 if (z==1) for (;n;n--,a++,b++) *a = *b;
@@ -471,4 +474,27 @@ if (p != start){
 }
 ret[k] = (i8*)0;
 return ret;
+}
+
+
+public void * _alloc(i32 x){
+void * ret = malloc((i32)x);
+DEALLOCATOR[ALLOCED_OBJ++] = ret;
+return ret;
+}
+
+public void FINALISE(){
+    for (i32 i = ALLOCED_OBJ-1;i > -1;i--){
+        if (DEALLOCATOR[i]) dealloc(DEALLOCATOR[i]);
+        else ++i;
+    }
+}
+
+public void dealloc(void * p){
+    for (i32 i = ALLOCED_OBJ-1;i > -1;i--){
+    if (DEALLOCATOR[i] == p){
+        DEALLOCATOR[i] == NULL;
+        break;}
+    }
+    free(p);
 }

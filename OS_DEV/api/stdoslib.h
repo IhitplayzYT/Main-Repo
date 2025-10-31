@@ -3,9 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
+#define MAX_OBJECTS 2000
 static void * this;
-
+void* DEALLOCATOR[MAX_OBJECTS];
+i32 ALLOCED_OBJ = 0;
 /* Typedefinations */
 typedef unsigned char i8;
 typedef unsigned short i16;
@@ -25,14 +26,9 @@ typedef double f64;
 #define constructor __attribute__((constructor))
 #define private static
 #define packed __attribute__((packed))
+#define alloc(x) _alloc((i32)(x))
+
 #define fill(a, n, x) _fill((i8 *)a, n, (i8)x)
-#define alloc(x) ({ \
-void * k = malloc((int)(x)); \
-k;\
-})
-
-
-#define dealloc(x) free((x))
 #define strcopy(a, b) _copy((a), (b))
 #define copy(a, b, n) _copyn((i8 *)(a), (i8 *)(b), (n), 1)
 #define strncopy(a, b, n) _copyn((a), (b), (n), 0)
@@ -704,4 +700,8 @@ public s16 strcharidx(i8*,i8);
 public i8* strstrs(i8*,i8*);
 public s16 strstrsidx(i8*,i8*);
 public i8** tokenise(i8*,i8);
+public void FINALISE();
+public void * _alloc(i32);
+public void dealloc(void *);
+
 /* Function Signatures */
