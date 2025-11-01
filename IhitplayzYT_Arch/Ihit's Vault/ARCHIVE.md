@@ -1,0 +1,8 @@
+C Programming : [[C_Node]]
+Python : [[Python_Node]] 
+Finance : [[Finance_Node]]
+DSA : [[DSA_Node]]
+Hacking : [[Hacking_Node]]
+Portfolio : [[Portfolio_Node]]
+AIML : [[AIML_Node]]
+SQL:[[SQL_Node]]
