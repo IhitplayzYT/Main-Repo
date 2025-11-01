@@ -282,6 +282,21 @@ if (!fst){seterr(BAD_ARG);return;}
 printf("-----FILE-----\nSize: %d\nInode num: %d\n-----------\n",fst->size,fst->idx);
 }
 
+internal i8* eval_path(i8* path){
+if (!path) return '~';
+i32 l = len(path);
+i8** stack = (i8**)alloc(l+1);
+if (!stack) return '~';
+for (int i = 0 ; i <= l;i++) stack[i] = alloc(sizeof(i8)*MAX_FILE_NAME);
+
+/*USE TOKENISE*/
+
+for (int i = 0 ; i <= l ;i ++){
+dealloc(stack[i]);
+}
+dealloc(stack);
+}
+
 //TODO: Implement these two
 internal i16 openfiles(Disk * dd){
 return 0;
@@ -289,3 +304,4 @@ return 0;
 internal void closeallfiles(Disk * dd){
 return;
 }
+

@@ -29,6 +29,7 @@ typedef unsigned long i64;
 #define IndirPtrsperInode (8)
 #define PtrsperBlock (256)
 #define MAX_FS MAX_DD
+#define MAX_FILE_NAME 10
 /* Definations */
 typedef i16 ptr;
 typedef i8 Bootsector[500];
@@ -120,4 +121,5 @@ internal i8 validfname(Filename*,Type);  // Checks validity of Filename struct o
 internal File_stat* fsstat(Filesystem*,ptr);     // File_stat struct of a file
 internal void fstatshow(File_stat*);      // Displays fstat struct
 internal Filename * parse_name(i8*);       // Pareses the filename string to a s_Filename struct 
+internal i8* eval_path(i8*);
 /* Function Signatures */

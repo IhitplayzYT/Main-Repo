@@ -3,10 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#ifndef MAX_OBJECTS
 #define MAX_OBJECTS 2000
-static void * this;
-void* DEALLOCATOR[MAX_OBJECTS];
-i32 ALLOCED_OBJ = 0;
+#endif
 /* Typedefinations */
 typedef unsigned char i8;
 typedef unsigned short i16;
@@ -19,15 +18,15 @@ typedef signed long s64;
 typedef float f32;
 typedef double f64;
 /* Typedefinations */
-
+static void * this;
 /* MACROS */
 #define public __attribute__((visibility("default")))
 #define internal __attribute__((visibility("hidden")))
 #define constructor __attribute__((constructor))
 #define private static
 #define packed __attribute__((packed))
-#define alloc(x) _alloc((i32)(x))
-
+#define alloc(x) malloc((int)x)
+#define dealloc(x) free(x)
 #define fill(a, n, x) _fill((i8 *)a, n, (i8)x)
 #define strcopy(a, b) _copy((a), (b))
 #define copy(a, b, n) _copyn((i8 *)(a), (i8 *)(b), (n), 1)
@@ -36,9 +35,7 @@ typedef double f64;
 #define kprintf(f, args...) printf(f "\n", args)
 #define zero(a, n) _fill((i8 *)a, n, 0)
 #define strcomp(a, b) _strcomp((i8 *)(a), (i8 *)(b))
-#define MAX_OBJECTS (1024)
 static signed short _strcomp(i8 *, i8 *);
-
 #define compare(x, y) _compare((x), (y)) && ((x) == (y))
 #define _compare(x,y) _Generic((x),\
 signed char: _Generic((y), \
@@ -118,8 +115,8 @@ typedef struct s_time Time;
     if (n < 2)                                                                 \
       return;                                                                  \
     i16 mid = n / 2;                                                           \
-    TYPE *left = alloc(mid * sizeof(TYPE));                                    \
-    TYPE *right = alloc((n - mid) * sizeof(TYPE));                             \
+    TYPE *left = (TYPE*)alloc(mid * sizeof(TYPE));                                    \
+    TYPE *right = (TYPE*)alloc((n - mid) * sizeof(TYPE));                             \
     for (i16 i = 0; i < mid; i++)                                              \
       left[i] = arr[i];                                                        \
     for (i16 i = mid; i < n; i++)                                              \
@@ -145,8 +142,8 @@ typedef struct s_time Time;
 static inline void NAME(TYPE **arr, i16 n, i8 asc) {\
     if(n < 2) return;\
     i16 mid = n / 2;\
-    TYPE **left = alloc(mid * sizeof(TYPE*));\
-    TYPE **right = alloc((n-mid) * sizeof(TYPE*));\
+    TYPE **left = (TYPE**)alloc(mid * sizeof(TYPE*));\
+    TYPE **right = (TYPE**)alloc((n-mid) * sizeof(TYPE*));\
     for(i16 i=0;i<mid;i++) left[i]=arr[i];\
     for(i16 i=mid;i<n;i++) right[i-mid]=arr[i];\
     NAME(left, mid, asc);\
@@ -701,7 +698,7 @@ public i8* strstrs(i8*,i8*);
 public s16 strstrsidx(i8*,i8*);
 public i8** tokenise(i8*,i8);
 public void FINALISE();
-public void * _alloc(i32);
-public void dealloc(void *);
-
+public i8* ascii2hex(i8);
+public i8 hex2ascii(i8*);
 /* Function Signatures */
+

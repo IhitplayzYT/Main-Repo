@@ -1,7 +1,7 @@
 /* stdoslib.c */
 #include "stdoslib.h"
 
-extern void** DEALLOCATOR;
+extern void * DEALLOCATOR[];
 extern i32 ALLOCED_OBJ;
 
 public void _copyn(i8 *a,i8 *b,i16 n,i8 z){
@@ -139,7 +139,7 @@ return ret;
 }
 
 public i8* ipstr(i32 addr){
-i8 *buff = (i8*)malloc(16);
+i8 *buff = (i8*)alloc(16);
 zero(buff,16);
 i8 a[4];
 a[0] = (addr & 0xff000000) >> 24;
@@ -448,13 +448,13 @@ return (s16)-1;
 }
 
 public i8** tokenise(i8* str,i8 ch){
-i8 ** ret = (i8**)malloc(sizeof(i8*));
+i8 ** ret = (i8**)alloc(sizeof(i8*));
 if (!ret) return (i8**)0;
 i8* p = str,*start = p;
 i16 k = 0;
 while (*p){
 if (*p == ch){
-ret[k] = (i8*)malloc(p - start+1);
+ret[k] = (i8*)alloc((int)(p - start+1));
 memcopy(ret[k],start,p - start);
 ret[k][p-start] = '\0';
 k++;
@@ -466,20 +466,13 @@ else ++p;
 }
 
 if (p != start){
-    ret[k] = (i8*)malloc(p - start + 1);
+    ret[k] = (i8*)alloc((int)(p - start + 1));
     memcopy(ret[k], start, p - start);
     ret[k][p - start] = '\0';
     k++;
     ret = (i8**)realloc(ret, (k + 1) * sizeof(i8*));
 }
 ret[k] = (i8*)0;
-return ret;
-}
-
-
-public void * _alloc(i32 x){
-void * ret = malloc((i32)x);
-DEALLOCATOR[ALLOCED_OBJ++] = ret;
 return ret;
 }
 
@@ -490,11 +483,29 @@ public void FINALISE(){
     }
 }
 
-public void dealloc(void * p){
-    for (i32 i = ALLOCED_OBJ-1;i > -1;i--){
-    if (DEALLOCATOR[i] == p){
-        DEALLOCATOR[i] == NULL;
-        break;}
-    }
-    free(p);
+public i8 hex2ascii(i8* s){
+i8 t = len(s) - 1;
+i8 ret=0,k=1;
+for (int i = t; i > -1 ;i--){
+if (s[i] >= 'A' && s[i] <= 'F'){ret += ((s[i] -'A'+10) * k);}
+else if(s[i] >= 'a' && s[i] <= 'f'){ret += ((s[i] -'a'+10) * k);}
+else{ ret += ((s[i] - '0') * k);}
+k *= 16;
 }
+return ret;
+}
+
+public i8* ascii2hex(i8 x){
+if (!x) return (i8*)0;
+i8* ret = (i8*)alloc(3);
+*ret = *(ret+1) = *(ret+2) = 0;
+if (!ret) return (i8*)0;
+while (x > 16) {
+i8 rem = x % 16;
+if (rem > 9) ret[1] = 'A' + (rem-10);
+else ret[1] = '0' + rem;
+x /= 16;
+}
+}
+
+
