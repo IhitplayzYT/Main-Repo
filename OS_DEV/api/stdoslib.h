@@ -644,6 +644,10 @@ if (!ret) return (TYPE *)0;\
 return ret;\
 };
 
+struct s_Tok_ret{
+i8** ret;
+i16 n;
+};
 
 
 
@@ -696,9 +700,10 @@ public i8* strchar(i8*,i8);
 public s16 strcharidx(i8*,i8);
 public i8* strstrs(i8*,i8*);
 public s16 strstrsidx(i8*,i8*);
-public i8** tokenise(i8*,i8);
-public void FINALISE();
-public i8* ascii2hex(i8);
-public i8 hex2ascii(i8*);
+public void print_s_Tok_ret(struct s_Tok_ret*);
+public struct s_Tok_ret* tokenise(i8*,i8);  // Tokenises and return a array of string
+public void FINALISE();      /*  WORK IN PROGRESS  TODO:*/
+public i8* ascii2hex(i8);  // Converts a byte to hex
+public i8 hex2ascii(i8*);  // Converts a hex string into a singular ascii byte
 /* Function Signatures */
 

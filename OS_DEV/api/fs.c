@@ -283,10 +283,10 @@ printf("-----FILE-----\nSize: %d\nInode num: %d\n-----------\n",fst->size,fst->i
 }
 
 internal i8* eval_path(i8* path){
-if (!path) return '~';
+if (!path) return "~";
 i32 l = len(path);
 i8** stack = (i8**)alloc(l+1);
-if (!stack) return '~';
+if (!stack) return "~";
 for (int i = 0 ; i <= l;i++) stack[i] = alloc(sizeof(i8)*MAX_FILE_NAME);
 
 /*USE TOKENISE*/

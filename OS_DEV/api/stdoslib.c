@@ -447,33 +447,47 @@ p++;
 return (s16)-1;
 }
 
-public i8** tokenise(i8* str,i8 ch){
-i8 ** ret = (i8**)alloc(sizeof(i8*));
-if (!ret) return (i8**)0;
+
+public void print_s_Tok_ret(struct s_Tok_ret* x){
+printf("[");
+for (int i = 0 ; i < x->n;i++){
+printf("%s ",x->ret[i]);
+if (i != x->n-1) printf(",");
+}
+printf("]");
+}
+
+
+public struct s_Tok_ret* tokenise(i8* str,i8 ch){
+struct s_Tok_ret *res = (struct s_Tok_ret*)malloc(sizeof(struct s_Tok_ret));
+if (!res) return (struct s_Tok_ret*)0;
+
+res->ret = (i8**)alloc(sizeof(i8*));
+if (!res->ret) return (struct s_Tok_ret*)0;
 i8* p = str,*start = p;
 i16 k = 0;
 while (*p){
 if (*p == ch){
-ret[k] = (i8*)alloc((int)(p - start+1));
-memcopy(ret[k],start,p - start);
-ret[k][p-start] = '\0';
+res->ret[k] = (i8*)alloc((int)(p - start+1));
+memcopy(res->ret[k],start,p - start);
+res->ret[k][p-start] = '\0';
 k++;
-ret = realloc(ret,(k+1)  * sizeof(i8*));
-
+res->ret = realloc(res->ret,(k+1)  * sizeof(i8*));
 start = ++p;
 }
 else ++p;
 }
 
 if (p != start){
-    ret[k] = (i8*)alloc((int)(p - start + 1));
-    memcopy(ret[k], start, p - start);
-    ret[k][p - start] = '\0';
+    res->ret[k] = (i8*)alloc((int)(p - start + 1));
+    memcopy(res->ret[k], start, p - start);
+    res->ret[k][p - start] = '\0';
     k++;
-    ret = (i8**)realloc(ret, (k + 1) * sizeof(i8*));
+    res->ret = (i8**)realloc(res->ret, (k + 1) * sizeof(i8*));
 }
-ret[k] = (i8*)0;
-return ret;
+res->ret[k] = (i8*)0;
+res->n = k;
+return res;
 }
 
 public void FINALISE(){
