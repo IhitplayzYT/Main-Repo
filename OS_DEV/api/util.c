@@ -39,13 +39,17 @@ i8 iforce =  (force == 'y' || force == 'Y' )? 1 : 0;
 
 printf("Formatting Disk %s...\n",drivestr);
 dinit();
+printf("%d\n",drive);
 Disk *d = attach(drive);
 if (!d) {printf("Bad Disk\n");exit(-1);}
 Filesystem * fs = fsformat(d,0,iforce);
 if (!fs) {printf("Formatting Error\n");exit(-1);}
 printf("Disk Formatted!\n");
 ptr p = inode_alloc(fs);
-
+printf("User input :\n");
+i8 ret[MAX_PATH_LEN];
+scanf("%s",ret);
+printf("\n%s\n",eval_path(ret));
 
 detach(d);
 

@@ -4,12 +4,17 @@
 extern void * DEALLOCATOR[];
 extern i32 ALLOCED_OBJ;
 
-public void _copyn(i8 *a,i8 *b,i16 n,i8 z){
-if (!a || !b) return;
-if (z==1) for (;n;n--,a++,b++) *a = *b;
+public i16 _copyn(i8 *a,i8 *b,i16 n,i8 z){
+if (!a || !b) return 0;
+if (z==1) {
+    i16 t = n;
+    for (;n;n--,a++,b++) *a = *b;
+    return t;}
 else{
-for (;n && *a != '\0' && *b != '\0';n--,a++,b++)*a = *b;
+i16 t = 0;
+for (;n && *b != '\0';n--,a++,b++,t++)*a = *b;
 *a = '\0';
+return (i16)t;
 }
 }
 
@@ -28,10 +33,12 @@ printf("\n");
 }}
 
 
-public void _copy(i8 *a,i8 *b){
-if (!a || !b) return;
-for (;*b != '\0';a++,b++) *a = *b;
+public i16 _copy(i8 *a,i8 *b){
+if (!a || !b) return 0;
+i8 *p = a;
+for (;*b != '\0';a++,b++) {*a = *b;}
 *a = '\0';
+return (i16)(a-p);
 }
 
 public void _fill (i8*a,i16 l,i8 hx){
@@ -459,9 +466,8 @@ printf("]");
 
 
 public struct s_Tok_ret* tokenise(i8* str,i8 ch){
-struct s_Tok_ret *res = (struct s_Tok_ret*)malloc(sizeof(struct s_Tok_ret));
+struct s_Tok_ret *res = (struct s_Tok_ret*)alloc(sizeof(struct s_Tok_ret));
 if (!res) return (struct s_Tok_ret*)0;
-
 res->ret = (i8**)alloc(sizeof(i8*));
 if (!res->ret) return (struct s_Tok_ret*)0;
 i8* p = str,*start = p;
@@ -522,4 +528,23 @@ x /= 16;
 }
 }
 
+
+public i16 c_freq(i8* s,i8 ch){
+i16 ret = 0;
+while (*s != 0){
+    if (*s == ch) ret++;
+    s++;
+}
+return ret;
+}
+
+
+public i16 s_freq(i8* p,i8* q){
+i16 ret = 0;
+while (*p != 0){
+    if (strcomp(p,q)==0) ret++;
+    p++;
+}
+return ret;
+}
 

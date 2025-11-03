@@ -283,18 +283,40 @@ printf("-----FILE-----\nSize: %d\nInode num: %d\n-----------\n",fst->size,fst->i
 }
 
 internal i8* eval_path(i8* path){
-if (!path) return "~";
-i32 l = len(path);
-i8** stack = (i8**)alloc(l+1);
+if (!*path) return "~";
+i32 l = freq(path,(i8)'/');
+i8** stack = (i8**)alloc(sizeof(i8*) * (l+1));
+stack[l] = (i8*)0;
 if (!stack) return "~";
+i16 top = 0;
 for (int i = 0 ; i <= l;i++) stack[i] = alloc(sizeof(i8)*MAX_FILE_NAME);
-
-/*USE TOKENISE*/
-
-for (int i = 0 ; i <= l ;i ++){
-dealloc(stack[i]);
+struct s_Tok_ret *ret = tokenise(path,'/');
+for (int i = 0 ; i < ret->n;i++){
+if (!*ret->ret[i] || strcomp(ret->ret[i],".") == 0) continue;
+else if (strcomp(ret->ret[i],"..") == 0) (top == 0) ? top:--top;
+else stack[top++] = ret->ret[i];
 }
+
+
+stack = (i8**)realloc(stack,top * sizeof(i8*));
+i8 * simplified_path = (i8*)alloc(sizeof(i8) * MAX_PATH_LEN);
+i8 k = 0;
+if (!simplified_path) return "~";
+for (int i = 0 ; i < top;i++){
+if (i == 0 && strcomp(stack[i],"~") != 0) {
+    strcopy(simplified_path+k,"/home/IhitplayzYT/");
+    k += 18;
+    k += strcopy(simplified_path+k,stack[i])-1;
+    simplified_path[++k] = '/';
+    k++;
+}
+else if (i == 0)  k = strcopy(simplified_path+k,"/");
+else {k += (i16)strcopy(simplified_path + k,stack[i])-1;simplified_path[++k]='/';k++;}
+}
+simplified_path[k-1] = '\0';
+dealloc(ret);
 dealloc(stack);
+return simplified_path;
 }
 
 //TODO: Implement these two

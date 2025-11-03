@@ -30,6 +30,7 @@ typedef unsigned long i64;
 #define PtrsperBlock (256)
 #define MAX_FS MAX_DD
 #define MAX_FILE_NAME 10
+#define MAX_PATH_LEN 256
 /* Definations */
 typedef i16 ptr;
 typedef i8 Bootsector[500];

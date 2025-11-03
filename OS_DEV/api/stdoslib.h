@@ -109,6 +109,10 @@ i16 years;
 }packed;
 typedef struct s_time Time;
 
+#define freq(x,y) _Generic((y),\
+i8*:s_freq,\
+i8:c_freq\
+)(x,y)
 
 #define DEFINE_NUM_SORT(TYPE,NAME)   \
   static inline void NAME(TYPE *arr, i16 n, i8 asc) {                          \
@@ -653,8 +657,8 @@ i16 n;
 
 /* Function Signatures */
 public void _fill(i8 *, i16, i8); /* Fills fixed no of bytes to input hex/char*/
-public void _copy(i8 *, i8 *); /* Copy contents from second to first string */
-public void _copyn(i8 *, i8 *, i16, i8); /* Copy a 'N' chars from src to dest string*/
+public i16 _copy(i8 *, i8 *); /* Copy contents from second to first string */
+public i16 _copyn(i8 *, i8 *, i16, i8); /* Copy a 'N' chars from src to dest string*/
 public i8 *concat(i8 *, i8 *);
 public i16 floor_div(i16, i16);
 public i16 ceil_div(i16, i16);
@@ -707,3 +711,5 @@ public i8* ascii2hex(i8);  // Converts a byte to hex
 public i8 hex2ascii(i8*);  // Converts a hex string into a singular ascii byte
 /* Function Signatures */
 
+public i16 c_freq(i8*,i8);
+public i16 s_freq(i8*,i8*);

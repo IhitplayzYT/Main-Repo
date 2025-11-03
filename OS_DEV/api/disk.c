@@ -20,9 +20,8 @@ for (n = 1;n<=MAX_DD;n++) detach(DiskDescriptor[n-1]);
 }
 
 internal i8* numppend(i8 *a,i8 n){
-if (!n || n > 250 || n > 9) return 0;
+if (!n || n > 9) return 0;
 static char buff[256];
-
 zero(buff,255);
 strcopy(buff,a);
 int l = len(a);
@@ -69,4 +68,3 @@ close(dd->fd);
 dealloc(dd);
 dd = NULL;
 }
-
