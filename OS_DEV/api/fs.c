@@ -96,7 +96,7 @@ inode.validtype = DirType;
 inode.size = 0;
 zero((i8 *)&inode.name,11);
 inode.indirect = 0;
-zero((i8 *)inode.direct,sizeof(ptr) * IndirPtrsperInode);
+zero((i8 *)inode.direct,sizeof(ptr) * DirectPtrsperInode);
 super.magic[0] = magic_str1;
 super.magic[1] = magic_str2;
 super.inodes = 1;
@@ -112,7 +112,8 @@ memcopy((i8 *)x,(i8 *)&inode,sizeof(inode));
 if (!dwrite(dd,x,2)){dealloc(fs); seterr(DISK_IO_ERR);return (Filesystem*)0;}
 for (int i = 0 ;i < super.inodeblocks;i++)
 {zero((i8*)&fsb,BLOCK_SIZE);
-if (!dwrite(dd,(i8 *)&fsb,(i+3))) {dealloc(fs);seterr(DISK_IO_ERR);return (Filesystem*)0;}
+if (!dwrite(dd,(i8 *)&fsb,(i+3))) {dealloc(fs);seterr(DISK_IO_ERR);    
+return (Filesystem*)0;}
 }
 memcopy((i8*)&fs->metadata,(i8*)&super,BLOCK_SIZE);
 Bitmap *bm = mkbitmap(fs,0);
@@ -120,13 +121,8 @@ if (!bm){return (Filesystem*)0;}
 i16 size = 1+1+fs->metadata.inodeblocks;
 for (int i = 0 ;i < size;i++) setbit((i8*)bm,i);
 fs->bitmap = bm;
-ptr idx1 = create_inode(fs,parse_name("hello.txt"),FileType);
-ptr idx2 = create_inode(fs,parse_name("Dir"),DirType);
 
-print_inodes(fs);
 
-inode_dealloc(fs,idx1);
-inode_dealloc(fs,idx2);
 return fs;
 }
 
@@ -193,7 +189,16 @@ dealloc(fs);
 }
 
 internal i8 validfname(Filename* name,Type t){
-if (!name || !t) return 0;
+if (!name || !t || (t==DirType && *name->ext)) {seterr(BAD_ARG);return 0;}
+for (int i = 0; name->name[i] != '\0';i++){
+if (!validchar(name->name[i])) {seterr(BAD_FILE_NAME);return 0;}
+}
+
+if (t == FileType){
+for (int i = 0; name->ext[i] != '\0';i++){
+if (!validchar(name->ext[i])) {seterr(BAD_FILE_NAME);return 0;}
+}
+}
 return 1;
 }
 
@@ -283,11 +288,11 @@ printf("-----FILE-----\nSize: %d\nInode num: %d\n-----------\n",fst->size,fst->i
 }
 
 internal i8* eval_path(i8* path){
-if (!*path) return "~";
+if (!*path) {seterr(BAD_ARG);return "~";}
 i32 l = freq(path,(i8)'/');
 i8** stack = (i8**)alloc(sizeof(i8*) * (l+1));
 stack[l] = (i8*)0;
-if (!stack) return "~";
+if (!stack) {seterr(MEM_ERR);return "~";}
 i16 top = 0;
 for (int i = 0 ; i <= l;i++) stack[i] = alloc(sizeof(i8)*MAX_FILE_NAME);
 struct s_Tok_ret *ret = tokenise(path,'/');
@@ -301,7 +306,7 @@ else stack[top++] = ret->ret[i];
 stack = (i8**)realloc(stack,top * sizeof(i8*));
 i8 * simplified_path = (i8*)alloc(sizeof(i8) * MAX_PATH_LEN);
 i8 k = 0;
-if (!simplified_path) return "~";
+if (!simplified_path) {seterr(MEM_ERR);return "~";}
 for (int i = 0 ; i < top;i++){
 if (i == 0 && strcomp(stack[i],"~") != 0) {
     strcopy(simplified_path+k,"/home/IhitplayzYT/");
@@ -319,6 +324,90 @@ dealloc(stack);
 return simplified_path;
 }
 
+
+
+
+internal ptr read_dir(Filesystem* fs,ptr p,Filename* name){
+if (!fs || !p || !name) return 0;
+if (!validfname(name,DirType)){
+seterr(BAD_FILE_NAME);
+return 0;
+}
+Inode * inode = fetchinode(fs,p);
+if (!inode) {seterr(INODE_ERR);return 0;}
+if (inode->validtype != DirType) {dealloc(inode);seterr(TYPE_ERR);return 0;}
+ptr idx;
+name = toggle_fname_case(name,0);
+for (ptr i = 0 ; i < DirectPtrsperInode;i++) {
+    idx = inode->direct[i];
+    if (!idx) continue;
+    Inode * pointed = fetchinode(fs,idx);
+    if (!pointed) continue;
+    if (memcomp(name,(i8*)&pointed->name,11) == 0) {
+        dealloc(inode);
+        dealloc(pointed);
+        return idx; 
+    }
+dealloc(pointed);
+}
+
+if (!inode->indirect){dealloc(inode);seterr(INODE_ERR);return 0;}
+ptr bno = inode->indirect;
+FSblock block;
+if (!dread(fs->dd,&block,bno)) {dealloc(inode);seterr(DISK_IO_ERR);return 0;}
+for (ptr i = 0 ; i < Inodesperblock;i++) {
+    idx = block.ptrs[i];
+    if (!idx) continue;
+    Inode * pointed = fetchinode(fs,idx);
+    if (!pointed) continue;
+    if (memcomp(name,(i8*)&pointed->name,11) == 0) {
+        dealloc(inode);
+        dealloc(pointed);
+        return idx; 
+    }
+dealloc(pointed);
+}
+dealloc(inode);
+return 0;
+}
+
+internal Filename* toggle_fname_case(Filename* fn,i8 flag){
+if (!fn) {seterr(BAD_ARG);return (Filename*)0;}
+Filename * name = (Filename*)alloc(sizeof(Filename));
+if (!name) {seterr(MEM_ERR);return (Filename*)0;}
+if (flag == 0){
+memcopy(name->name,tolwrn(fn->name,8),8);
+memcopy(name->ext,tolwrn(fn->ext,3),3);
+}
+else{
+memcopy(name->name,toupprn(fn->name,8),8);
+memcopy(name->ext,tolwrn(fn->ext,3),3);
+}
+return name;
+}
+
+internal void show(void * arg,i8* s){
+if (!arg) {seterr(BAD_ARG);return;}
+if (strcomp(s,"inode") == 0) print_inodes((Filesystem*)arg);
+else if (strcomp(s,"bitmap") == 0) print_bitmap((Filesystem*)arg);
+else if (strcomp(s,"fstat") == 0) fstatshow((File_stat*)arg);
+else if (strcomp(s,"filesystem") == 0) fsshow((Filesystem*)arg);
+else if (strcomp(s,"filename") == 0) filename_show((Filename*)arg);
+else {seterr(BAD_ARG);return;}
+}
+
+internal void filename_show(Filename* fn){
+if (!fn) {seterr(BAD_ARG);return;}
+printf("Filename: %s.%s\n",fn->name,fn->ext);
+}
+
+internal i8 validchar(i8 c){
+i8 * p = VALID_VOCAB;
+for (;*p;p++){if (*p == c) return 1;}
+return 0;
+}
+
+
 //TODO: Implement these two
 internal i16 openfiles(Disk * dd){
 return 0;
@@ -326,4 +415,3 @@ return 0;
 internal void closeallfiles(Disk * dd){
 return;
 }
-

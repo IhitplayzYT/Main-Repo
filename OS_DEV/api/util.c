@@ -36,23 +36,23 @@ scanf("%c",&force);
 if (force != 'y' && force != 'Y') return;
 i8 iforce =  (force == 'y' || force == 'Y' )? 1 : 0;
 
-
 printf("Formatting Disk %s...\n",drivestr);
 dinit();
-printf("%d\n",drive);
 Disk *d = attach(drive);
 if (!d) {printf("Bad Disk\n");exit(-1);}
 Filesystem * fs = fsformat(d,0,iforce);
 if (!fs) {printf("Formatting Error\n");exit(-1);}
 printf("Disk Formatted!\n");
-ptr p = inode_alloc(fs);
-printf("User input :\n");
-i8 ret[MAX_PATH_LEN];
-scanf("%s",ret);
-printf("\n%s\n",eval_path(ret));
+//ptr p = inode_alloc(fs);
+ptr idx1 = create_inode(fs,parse_name("hello.txt"),FileType);
+ptr idx2 = create_inode(fs,parse_name("helog"),DirType);
+print_inodes(fs);
 
+
+
+inode_dealloc(fs,idx1);
+inode_dealloc(fs,idx2);
 detach(d);
-
 free(fs);
 return;
 }

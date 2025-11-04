@@ -538,6 +538,10 @@ while (*s != 0){
 return ret;
 }
 
+public i8 _memcomp(i8* a,i8* b,i16 n){
+for(;n;n--,a++,b++) if (*a != *b) return 0;
+return 1;
+}
 
 public i16 s_freq(i8* p,i8* q){
 i16 ret = 0;
@@ -548,3 +552,69 @@ while (*p != 0){
 return ret;
 }
 
+public i8* toupprn(i8* s,i16 n){
+if (!s) return (i8*)0;
+i8 * ret = (i8*)alloc(n);
+if (!ret) return (i8*)0;
+for (i16 i = 0; i < n;i++){
+if (s[i] >= 'a' && s[i] <= 'z') ret[i] =s[i]- 32;
+else ret[i] = s[i];
+}
+return ret;    
+}
+public i8* tolwrn(i8* s,i16 n){
+if (!s) return (i8*)0;
+i8 * ret = (i8*)alloc(n);
+if (!ret) return (i8*)0;
+for (i16 i = 0; i < n;i++){
+if (s[i] >= 'A' && s[i] <= 'Z') ret[i] = s[i]+ 32;
+else ret[i] = s[i];
+}
+return ret;
+}
+
+public i8* touppr(i8* s){
+if (!s) return (i8*)0;
+i8 * ret = (i8*)alloc(len(s));
+if (!ret) return (i8*)0;
+for (i16 i = 0; s[i] != '\0';i++){
+if (s[i] >= 'a' && s[i] <= 'z') ret[i] += 32;
+else ret[i] = s[i];
+}
+return ret;
+}
+
+
+public i8* tolwr(i8* s){
+if (!s) return (i8*)0;
+i8 * ret = (i8*)alloc(len(s));
+if (!ret) return (i8*)0;
+for (i16 i = 0; s[i] != '\0';i++){
+if (s[i] >= 'A' && s[i] <= 'Z') ret[i] -= 32;
+else ret[i] = s[i];
+}
+return ret;
+}
+
+public i8 isalphabetic(i8* s){
+for (int i = 0; s[i] != '\0';i++) if (s[i] >= '0' && s[i] <= '9') return 0;
+return 1;
+}
+public i8 isnumeric(i8* s){
+i8 c_e = 0,c_dec = 0,c_sign = 0;
+for (int i = 0 ; s[i] != '\0';i++){
+if (i == 0 && s[i] == '-' || s[i] == '+') {c_sign += 1;continue;}
+else if(c_sign > 2 && c_e == 0) return 0;
+else if (s[i] == ',') continue;
+else if (s[i] == 'e' || s[i] == 'E'){
+if (c_e > 1) return 0;
+else c_e += 1;
+} 
+else if (s[i] == '.'){
+if (c_dec > 1) return 0;
+else c_dec += 1;
+}
+else if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')) return 0;
+}
+return 1;
+}

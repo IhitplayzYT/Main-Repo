@@ -5,7 +5,7 @@
 #include "os.h"
 public i8 err_number = 0;
 public i8 INIT_FLAG = 0;
-public char err[][25] = {"No Errors","Bad/Invalid FD","I/O Error","Closed FD","Init not called","Buffer Overflow","Disk not mounted","Disk IO Error","Unclosed/Busy File","Memory Error","Invalid Argument(s)","Invalid File/Dir Name","Invalid Inode","Limit Reached","Network Error"};
+public char err[][25] = {"No Errors","Bad/Invalid FD","I/O Error","Closed FD","Init not called","Buffer Overflow","Disk not mounted","Disk IO Error","Unclosed/Busy File","Memory Error","Invalid Argument(s)","Invalid File/Dir Name","Invalid Inode","Limit Reached","Network Error","Invalid Directory","Mismatched Types"};
 
 public i8 latest_Err_idx = 0;
 public i8 ERR_BUFFER[ERR_BUF_SIZE];

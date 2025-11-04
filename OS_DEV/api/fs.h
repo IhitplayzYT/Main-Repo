@@ -26,11 +26,12 @@ typedef unsigned long i64;
 #define magic_str1 (0xfade)
 #define magic_str2 (0xaa55)
 #define Inodesperblock (16)
-#define IndirPtrsperInode (8)
+#define DirectPtrsperInode (8)
 #define PtrsperBlock (256)
 #define MAX_FS MAX_DD
 #define MAX_FILE_NAME 10
 #define MAX_PATH_LEN 256
+#define VALID_VOCAB "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_"
 /* Definations */
 typedef i16 ptr;
 typedef i8 Bootsector[500];
@@ -74,7 +75,7 @@ i8 validtype;               // Inode Type (Valid/File/Dir)  = 1 byte
 i16 size;                   // Size of file pointed by inode = 2 bytes
 Filename name;              // 11 byte filename
 ptr indirect;               // 2 byte indirect ptr
-ptr direct[IndirPtrsperInode];      //  2 * 8 = 16 bytes
+ptr direct[DirectPtrsperInode];      //  2 * 8 = 16 bytes
 }packed;
 typedef struct s_inode Inode;
 
@@ -123,4 +124,9 @@ internal File_stat* fsstat(Filesystem*,ptr);     // File_stat struct of a file
 internal void fstatshow(File_stat*);      // Displays fstat struct
 internal Filename * parse_name(i8*);       // Pareses the filename string to a s_Filename struct 
 internal i8* eval_path(i8*);
+internal ptr read_dir(Filesystem*,ptr,Filename*);
+internal Filename* toggle_fname_case(Filename*,i8);
+internal void filename_show(Filename*);
+internal void show(void *,i8*);
+internal i8 validchar(i8);
 /* Function Signatures */

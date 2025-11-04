@@ -34,6 +34,7 @@ static void * this;
 #define memcopy(a, b, n) _copyn((i8 *)(a), (i8 *)(b), (n), 1)
 #define kprintf(f, args...) printf(f "\n", args)
 #define zero(a, n) _fill((i8 *)a, n, 0)
+#define memcomp(x,y,z) _memcomp((i8*)x,(i8*)y,(i16)z)
 #define strcomp(a, b) _strcomp((i8 *)(a), (i8 *)(b))
 static signed short _strcomp(i8 *, i8 *);
 #define compare(x, y) _compare((x), (y)) && ((x) == (y))
@@ -425,6 +426,7 @@ if (*p < *q) return -1;
 p++;q++;}
 return (*p == *q)?0:(!*p)?-1:1;
 }
+
 DEFINE_STRING_SORT(char,_strsort)
 
 #define DEF_FIXED(TYPE,name) \
@@ -710,6 +712,12 @@ public void FINALISE();      /*  WORK IN PROGRESS  TODO:*/
 public i8* ascii2hex(i8);  // Converts a byte to hex
 public i8 hex2ascii(i8*);  // Converts a hex string into a singular ascii byte
 /* Function Signatures */
-
 public i16 c_freq(i8*,i8);
 public i16 s_freq(i8*,i8*);
+public i8 _memcomp(i8*,i8*,i16);
+public i8* touppr(i8*);
+public i8* tolwr(i8*);
+public i8* toupprn(i8*,i16);
+public i8* tolwrn(i8*,i16);
+public i8 isalphabetic(i8*);
+public i8 isnumeric(i8*);
