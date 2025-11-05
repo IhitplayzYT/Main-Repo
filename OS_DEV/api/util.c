@@ -48,6 +48,9 @@ ptr idx1 = create_inode(fs,parse_name("hello.txt"),FileType);
 ptr idx2 = create_inode(fs,parse_name("helog"),DirType);
 print_inodes(fs);
 
+// fix the show_path it not showing ext properly
+show(parse_name(".bashrc.txt"),"filename");
+show(init_path("/.bashrc.txt",fs),"path");
 
 
 inode_dealloc(fs,idx1);

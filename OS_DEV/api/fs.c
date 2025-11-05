@@ -140,22 +140,33 @@ internal Filename * parse_name(i8* str){
 if (!str) {seterr(BAD_ARG);return (Filename*)0;}
 Filename * fname = (Filename*)alloc(sizeof(Filename));
 if (!fname){seterr(MEM_ERR);return (Filename*)0;}
+if (strcomp(str,"..") == 0) {
+memcopy(fname->name,"..",2);
+memcopy(fname->ext,NULL,3);
+return fname;
+}
+if (strcomp(str,".") == 0) {
+memcopy(fname->name,".",1);
+memcopy(fname->ext,NULL,3);
+return fname;
+}
+
 i8 flag = 0;
 i8 m,n;
 m = n = 0;
 for (int i = 0 ; str[i] != '\0';i++){
-if (str[i] == '.'){flag = 1;continue;}
+if (str[i] == '.' && i != 0){flag = 1;continue;}
 if (flag){
-if (n == 3){break;}
+if (n == 3) break;
 fname->ext[n++] = str[i];
 }
 else{
-if (m == 8){break;}
+if (m == 8) break;
 fname->name[m++] = str[i];  
 }
 }
-return fname;
-}
+if (!n) memcopy(fname->ext,NULL,3);
+return fname;}
 
 internal Filesystem* fsmount(i8 drive){
 if (drive > MAX_FS){seterr(LIMIT_ERR);return (Filesystem*)0;}
@@ -393,12 +404,17 @@ else if (strcomp(s,"bitmap") == 0) print_bitmap((Filesystem*)arg);
 else if (strcomp(s,"fstat") == 0) fstatshow((File_stat*)arg);
 else if (strcomp(s,"filesystem") == 0) fsshow((Filesystem*)arg);
 else if (strcomp(s,"filename") == 0) filename_show((Filename*)arg);
+else if (strcomp(s,"path") == 0) show_path((Path*)arg);
+
 else {seterr(BAD_ARG);return;}
 }
 
 internal void filename_show(Filename* fn){
 if (!fn) {seterr(BAD_ARG);return;}
-printf("Filename: %s.%s\n",fn->name,fn->ext);
+if (*fn->ext)
+    printf("Filename: %s.%s\n",fn->name,fn->ext);
+else
+    printf("Dirname: %s\n",fn->name);
 }
 
 internal i8 validchar(i8 c){
@@ -407,6 +423,46 @@ for (;*p;p++){if (*p == c) return 1;}
 return 0;
 }
 
+
+/*
+struct s_path{
+Filesystem* fs;
+i8* target;
+struct s_Tok_ret * inter;
+};
+typedef struct s_path Path;
+*/
+
+internal Path * init_path(i8* path,Filesystem* fs){
+if (!path || !*path){seterr(BAD_ARG);return (Path *)0;}
+Path * ans = (Path*)alloc(sizeof(Path));
+if (!ans) {seterr(MEM_ERR);return (Path*)0;}
+struct s_Tok_ret * ret = tokenise(path,'/');
+if (!ret) {return (Path*)0;}
+if (fs) ans->fs = fs; 
+else
+ans->fs = FileDescriptors[(ret->ret[0][0] == 'd' || ret->ret[0][0] == 'D')?1:0];
+
+ans->target = parse_name(ret->ret[ret->n-1]);
+if (!ans->target){seterr(BAD_FILE_NAME);return(Path*)0;}
+ret->ret[--ret->n] = NULL; 
+ans->inter = ret;
+return ans;
+}
+
+internal void show_path(Path* p){
+if (!p) return;
+if (!*p->target->ext)
+printf("----Path----\nDisk: %s\nTarget Dir: %s\n",(p->fs->drive == 1)?"C":(p->fs->drive == 2)?"D":"None",p->target->name);
+else
+printf("----Path----\nDisk: %s\nTarget File: %s.%s\n",(p->fs->drive == 1)?"C":(p->fs->drive == 2)?"D":"None",p->target->name,p->target->ext);
+printf("Dirs: [");
+for (int i = 0 ; i < p->inter->n;i++){
+printf("%s",p->inter->ret[i]);
+if (i != p->inter->n-1) printf(", ");
+}
+printf("]\n-----------\n");
+}
 
 //TODO: Implement these two
 internal i16 openfiles(Disk * dd){

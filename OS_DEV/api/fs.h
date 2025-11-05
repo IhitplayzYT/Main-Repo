@@ -32,12 +32,12 @@ typedef unsigned long i64;
 #define MAX_FILE_NAME 10
 #define MAX_PATH_LEN 256
 #define VALID_VOCAB "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_"
+#define MAX_FILE_PER_DIR (DirectPtrsperInode + PtrsperBlock)
 /* Definations */
 typedef i16 ptr;
 typedef i8 Bootsector[500];
 internal packed enum e_type{InvalidType=0x00,FileType=0x01,DirType=0x03};
 typedef enum e_type Type;
-typedef i8 Path;
 
 typedef i8 Bitmap;
 
@@ -94,6 +94,14 @@ ptr idx;
 }packed;
 typedef struct s_file_info File_stat;
 
+internal struct s_path{
+Filesystem* fs;
+Filename *target;
+struct s_Tok_ret * inter;
+}packed;
+
+typedef struct s_path Path;
+
 #ifndef omsdhwr
 #define omsdhwr
 extern public Filesystem* FileDescriptors[MAX_FS];
@@ -126,7 +134,9 @@ internal Filename * parse_name(i8*);       // Pareses the filename string to a s
 internal i8* eval_path(i8*);
 internal ptr read_dir(Filesystem*,ptr,Filename*);
 internal Filename* toggle_fname_case(Filename*,i8);
+internal Path * init_path(i8*,Filesystem*);
 internal void filename_show(Filename*);
 internal void show(void *,i8*);
+internal void show_path(Path*);
 internal i8 validchar(i8);
 /* Function Signatures */

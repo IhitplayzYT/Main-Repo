@@ -1,5 +1,7 @@
 /* os.h */
 #pragma once
+#include "fs.h"
+#include "stdoslib.h"
 /* Defines */
 #define public __attribute__((visibility("default")))
 #define internal __attribute__((visibility("hidden")))
@@ -34,12 +36,26 @@ latest_Err_idx ++; \
 } while(0);
 /* Error Number Implem */
 
+struct s_dir{
+Filesystem * fs;
+ptr idx;
+Filename * name;
+i16 entrys;
+} packed;
+typedef struct s_dir Dir;
 
+struct s_file_entry{
+ptr idx;
+Filename * name;
+i16 size;
+Type filetype;
+} packed;
+typedef struct s_file_entry File_entry;
 
 /* Error Number defs */
 extern i8 ERR_BUFFER[ERR_BUF_SIZE];
 extern public i8 latest_Err_idx;
-public enum{NO_ERR,BAD_FD,IO_ERR,CLOSED_FD,NO_INIT_ERR,BUFF_OVRFLW,NOT_MOUNT_ERR,DISK_IO_ERR,BUSY_ERR,MEM_ERR,BAD_ARG,BAD_FILE_NAME,INODE_ERR,LIMIT_ERR,NET_ERR,BAD_DIR,TYPE_ERR};
+public enum{NO_ERR,BAD_FD,IO_ERR,CLOSED_FD,NO_INIT_ERR,BUFF_OVRFLW,NOT_MOUNT_ERR,DISK_IO_ERR,BUSY_ERR,MEM_ERR,BAD_ARG,BAD_FILE_NAME,INODE_ERR,LIMIT_ERR,NET_ERR,BAD_DIR,TYPE_ERR,PATH_ERR,FILE_NOT_FOUND};
 /* Error Number defs */
 
 /*Function Signatures */
@@ -51,4 +67,6 @@ public void dinit(); /* Initialises the disk/drive*/
 public i8 get_errno();  /* Returns the Err_Number */
 public void print_err();  /* Prints Err_Number with Description */
 public void print_err_buff();  /* Print our last ERR_BUFF_SIZE errors that occured */
+public Dir *open_dir(i8*);
+public File_entry *init_filelist(Filesystem*,Inode*);
 /* Function Signatures */

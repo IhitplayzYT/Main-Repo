@@ -472,14 +472,19 @@ res->ret = (i8**)alloc(sizeof(i8*));
 if (!res->ret) return (struct s_Tok_ret*)0;
 i8* p = str,*start = p;
 i16 k = 0;
+
 while (*p){
 if (*p == ch){
+if (p-start > 0){
 res->ret[k] = (i8*)alloc((int)(p - start+1));
 memcopy(res->ret[k],start,p - start);
 res->ret[k][p-start] = '\0';
 k++;
 res->ret = realloc(res->ret,(k+1)  * sizeof(i8*));
+start = ++p;}
+else{
 start = ++p;
+}
 }
 else ++p;
 }

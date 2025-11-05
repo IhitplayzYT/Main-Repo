@@ -1,7 +1,7 @@
 /* Disk.c */
 
 #include "disk.h"
-// TODO: REPLACE FREE WITH OUR FREE AND MALLOC VARIATIONS 
+
 
 internal i8 attached;
 public Disk* DiskDescriptor[MAX_DD];
@@ -59,7 +59,6 @@ dd->blocks = (buf.st_blocks - 1);
 attached |= d_no;
 return dd;
 }
-
 
 internal void detach(Disk *dd){
 if (!dd) return;
