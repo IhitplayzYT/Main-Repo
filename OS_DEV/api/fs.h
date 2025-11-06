@@ -102,6 +102,31 @@ struct s_Tok_ret * inter;
 
 typedef struct s_path Path;
 
+struct s_file_entry{
+ptr idx;
+Filename name;
+i16 size;
+Type filetype;
+} packed;
+typedef struct s_file_entry File_entry;
+
+struct s_ls{
+i16 count;
+File_entry *arr[];
+}packed;
+typedef struct s_ls Ls;
+
+struct s_dir{
+Filesystem * fs;
+ptr idx;
+Filename name;
+Ls* entrys;
+} packed;
+typedef struct s_dir Dir;
+
+
+
+
 #ifndef omsdhwr
 #define omsdhwr
 extern public Filesystem* FileDescriptors[MAX_FS];
@@ -139,4 +164,7 @@ internal void filename_show(Filename*);
 internal void show(void *,i8*);
 internal void show_path(Path*);
 internal i8 validchar(i8);
+internal void show_ls(Ls*);
+internal Dir *open_dir(i8*);
+internal Ls* listfiles(Filesystem*,Inode*);
 /* Function Signatures */

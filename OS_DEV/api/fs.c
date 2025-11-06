@@ -1,6 +1,5 @@
 /*  fs.h  */
 #include "fs.h"
-
 public Filesystem *FileDescriptors[MAX_FS];
 
 
@@ -49,7 +48,7 @@ if (!fs) {seterr(BAD_ARG);return (Inode *)0;}
 FSblock buff;
 Inode * ret = (Inode*)alloc(sizeof(Inode));
 if (!ret) {seterr(MEM_ERR);return (Inode*)0;}
-i16 bl = (i16)idx/Inodesperblock;
+i16 bl = floor_div(idx,Inodesperblock);
 i16 jump = idx % Inodesperblock;
 if (!dread(fs->dd,(i8*)&buff.data,bl+2)) {seterr(DISK_IO_ERR);return ret;}
 memcopy((i8*)ret,(i8*)&(buff.inodes[jump]),sizeof(Inode));
@@ -59,7 +58,7 @@ return ret;
 
 internal void fsshow(Filesystem*fs){
 if (!fs) {seterr(BAD_ARG);return;}
-printf("-----FileSystem-----\nDrive- \\%c\nPath: %s\nBlockSize= %d\nMagicString (0x%.04x) (0x%.04x)\nNo of Blocks: [%d]\nNo of Inodes-> %d\nNo of Inode Blocks->[%d]\n--------------------\n",(fs->drive == 1) ? 'C':(fs->drive == 2)?'D':'?',numppend(Basepath,fs->drive),fs->dd->blocks,fs->metadata.magic[0],fs->metadata.magic[1],fs->metadata.blocks,fs->metadata.inodes,fs->metadata.inodeblocks);
+printf("-----FileSystem-----\nDrive- \\%c\nPath: %s\nBlocks= %d\nMagicString (0x%.04x) (0x%.04x)\nNo of Blocks: [%d]\nNo of Inodes-> %d\nNo of Inode Blocks->[%d]\n--------------------\n",(fs->drive == 1) ? 'C':(fs->drive == 2)?'D':'?',numppend(Basepath,fs->drive),fs->dd->blocks,fs->metadata.magic[0],fs->metadata.magic[1],fs->metadata.blocks,fs->metadata.inodes,fs->metadata.inodeblocks);
 }
 
 internal void print_bitmap(Filesystem*fs){
@@ -121,8 +120,6 @@ if (!bm){return (Filesystem*)0;}
 i16 size = 1+1+fs->metadata.inodeblocks;
 for (int i = 0 ;i < size;i++) setbit((i8*)bm,i);
 fs->bitmap = bm;
-
-
 return fs;
 }
 
@@ -136,10 +133,12 @@ strcopy(buff + len(n->name)+1 ,n->ext);
 return buff;
 }
 
+// Fix SOME ERROR
 internal Filename * parse_name(i8* str){
 if (!str) {seterr(BAD_ARG);return (Filename*)0;}
 Filename * fname = (Filename*)alloc(sizeof(Filename));
 if (!fname){seterr(MEM_ERR);return (Filename*)0;}
+zero(fname,sizeof(Filename));
 if (strcomp(str,"..") == 0) {
 memcopy(fname->name,"..",2);
 memcopy(fname->ext,NULL,3);
@@ -150,6 +149,7 @@ memcopy(fname->name,".",1);
 memcopy(fname->ext,NULL,3);
 return fname;
 }
+
 
 i8 flag = 0;
 i8 m,n;
@@ -166,6 +166,7 @@ fname->name[m++] = str[i];
 }
 }
 if (!n) memcopy(fname->ext,NULL,3);
+
 return fname;}
 
 internal Filesystem* fsmount(i8 drive){
@@ -298,6 +299,7 @@ if (!fst){seterr(BAD_ARG);return;}
 printf("-----FILE-----\nSize: %d\nInode num: %d\n-----------\n",fst->size,fst->idx);
 }
 
+// TODO: DECIDE WHETHER TO APPEND HOME/IHITPLAYZYT TO 
 internal i8* eval_path(i8* path){
 if (!*path) {seterr(BAD_ARG);return "~";}
 i32 l = freq(path,(i8)'/');
@@ -319,15 +321,16 @@ i8 * simplified_path = (i8*)alloc(sizeof(i8) * MAX_PATH_LEN);
 i8 k = 0;
 if (!simplified_path) {seterr(MEM_ERR);return "~";}
 for (int i = 0 ; i < top;i++){
-if (i == 0 && strcomp(stack[i],"~") != 0) {
-    strcopy(simplified_path+k,"/home/IhitplayzYT/");
-    k += 18;
-    k += strcopy(simplified_path+k,stack[i])-1;
-    simplified_path[++k] = '/';
-    k++;
-}
-else if (i == 0)  k = strcopy(simplified_path+k,"/");
-else {k += (i16)strcopy(simplified_path + k,stack[i])-1;simplified_path[++k]='/';k++;}
+// if (strcomp(stack[i],"c:") == 0 || strcomp(stack[i],"C:") == 0 || strcomp(stack[i],"d:") == 0 || strcomp(stack[i],"D:") == 0){k += (i16)strcopy(simplified_path + k,stack[i])-1;simplified_path[++k]='/';k++;}
+// else if (i == 1 && strcomp(stack[i],"~") != 0) {
+//     strcopy(simplified_path+k,"/home/IhitplayzYT/");
+//     k += 18;
+//     k += strcopy(simplified_path+k,stack[i])-1;
+//     simplified_path[++k] = '/';
+//     k++;
+// }
+// else if (i == 1)  k = strcopy(simplified_path+k,"/");
+k += (i16)strcopy(simplified_path + k,stack[i])-1;simplified_path[++k]='/';k++;
 }
 simplified_path[k-1] = '\0';
 dealloc(ret);
@@ -405,14 +408,14 @@ else if (strcomp(s,"fstat") == 0) fstatshow((File_stat*)arg);
 else if (strcomp(s,"filesystem") == 0) fsshow((Filesystem*)arg);
 else if (strcomp(s,"filename") == 0) filename_show((Filename*)arg);
 else if (strcomp(s,"path") == 0) show_path((Path*)arg);
-
+else if (strcomp(s,"ls") == 0) show_ls((Ls*)arg);
 else {seterr(BAD_ARG);return;}
 }
 
 internal void filename_show(Filename* fn){
 if (!fn) {seterr(BAD_ARG);return;}
 if (*fn->ext)
-    printf("Filename: %s.%s\n",fn->name,fn->ext);
+    printf("Filename: %s.%.3s\n",fn->name,fn->ext);
 else
     printf("Dirname: %s\n",fn->name);
 }
@@ -423,27 +426,21 @@ for (;*p;p++){if (*p == c) return 1;}
 return 0;
 }
 
-
-/*
-struct s_path{
-Filesystem* fs;
-i8* target;
-struct s_Tok_ret * inter;
-};
-typedef struct s_path Path;
-*/
+///  ///  massive seg fault here
 
 internal Path * init_path(i8* path,Filesystem* fs){
 if (!path || !*path){seterr(BAD_ARG);return (Path *)0;}
+path = eval_path(path);
 Path * ans = (Path*)alloc(sizeof(Path));
 if (!ans) {seterr(MEM_ERR);return (Path*)0;}
 struct s_Tok_ret * ret = tokenise(path,'/');
 if (!ret) {return (Path*)0;}
+i8 drive = ret->ret[0][0] - 0x62;
 if (fs) ans->fs = fs; 
 else
-ans->fs = FileDescriptors[(ret->ret[0][0] == 'd' || ret->ret[0][0] == 'D')?1:0];
-
+ans->fs = FileDescriptors[drive -1];
 ans->target = parse_name(ret->ret[ret->n-1]);
+if (strcomp(ans->target,"c:")==0||strcomp(ans->target,"C:")==0||strcomp(ans->target,"d:")==0||strcomp(ans->target,"D:")==0 ) ans->target = parse_name("/");
 if (!ans->target){seterr(BAD_FILE_NAME);return(Path*)0;}
 ret->ret[--ret->n] = NULL; 
 ans->inter = ret;
@@ -455,7 +452,7 @@ if (!p) return;
 if (!*p->target->ext)
 printf("----Path----\nDisk: %s\nTarget Dir: %s\n",(p->fs->drive == 1)?"C":(p->fs->drive == 2)?"D":"None",p->target->name);
 else
-printf("----Path----\nDisk: %s\nTarget File: %s.%s\n",(p->fs->drive == 1)?"C":(p->fs->drive == 2)?"D":"None",p->target->name,p->target->ext);
+printf("----Path----\nDisk: %s\nTarget File: %s.%.3s\n",(p->fs->drive == 1)?"C":(p->fs->drive == 2)?"D":"None",p->target->name,p->target->ext);
 printf("Dirs: [");
 for (int i = 0 ; i < p->inter->n;i++){
 printf("%s",p->inter->ret[i]);
@@ -463,6 +460,95 @@ if (i != p->inter->n-1) printf(", ");
 }
 printf("]\n-----------\n");
 }
+
+internal void show_ls(Ls* ls){
+if (!ls) return;
+for (i16 i = 0 ;i < ls->count;i++ ){
+if(!ls) continue;
+if (!ls->arr[i]->name.ext) printf("%d. %s | %s | %d bytes ",i+1,(ls->arr[i]->filetype == DirType)?"Dir":(ls->arr[i]->filetype == FileType)?"File":"None",ls->arr[i]->name.name,ls->arr[i]->size);
+else printf("%d. %s | %s.%s | %d bytes ",i+1,(ls->arr[i]->filetype == DirType)?"Dir":(ls->arr[i]->filetype == FileType)?"File":"None",ls->arr[i]->name.name,ls->arr[i]->name.ext,ls->arr[i]->size);
+}
+
+}
+
+
+internal Dir *open_dir(i8* str){
+if (!str){seterr(BAD_ARG);return (Dir*)0;}
+Dir * dir = (Dir*)alloc(sizeof(Dir));
+if (!dir) {seterr(MEM_ERR);return (Dir*)0;}
+Path * path = init_path(str,(Filesystem*)0);
+if (!path){seterr(PATH_ERR);return (Dir*)0;}
+Inode * ino = fetchinode(path->fs,0);
+if (!ino) {dealloc(path);seterr(INODE_ERR);return (Dir*)0;}  
+ptr x;
+ptr dirptr = 1;
+for (i16 i = 0 ; i < path->inter->n;i++){
+Filename * name = parse_name(path->inter->ret[i]);
+if (name) {seterr(BAD_FILE_NAME);return (Dir*)0;}
+x = read_dir(path->fs,dirptr,name);
+if (x){dealloc(path);dealloc(ino);seterr(PATH_ERR);return (Dir*)0;}
+dirptr = x;
+}
+x = read_dir(path->fs,dirptr,path->target);
+if (!x) {dealloc(path);dealloc(ino);seterr(PATH_ERR);return (Dir*)0;}
+dirptr = x;
+ino = fetchinode(path->fs,dirptr);
+if (!ino) {dealloc(path);seterr(FILE_NOT_FOUND);return (Dir*)0;}
+if (ino->validtype != DirType){dealloc(ino);dealloc(path);seterr(FILE_NOT_FOUND);return (Dir*)0;}
+dir->fs = path->fs;
+memcopy(&dir->name,path->target,sizeof(Filename));
+dir->idx = x;
+Ls * filelist = listfiles(dir->fs,ino);
+if (!filelist){seterr(PATH_ERR);dealloc(ino);dealloc(path);return (Dir*)0;}
+dir->entrys = filelist;
+dealloc(ino);
+return dir;
+}
+
+
+internal Ls* listfiles(Filesystem* fs,Inode* dir){
+if (!fs || !dir){seterr(BAD_ARG);return(Ls*)0;} 
+i16 c = 0;
+File_entry arr[MAX_FILE_PER_DIR];
+Inode *inode;
+FSblock block;
+ptr iptr;
+for (int i = 0 ; i < DirectPtrsperInode;i++){
+iptr = dir->direct[i];
+inode = fetchinode(fs,iptr);
+if (!inode || !inode->validtype)continue;
+c++;
+arr[c-1].idx = iptr;
+memcopy(&arr[c-1].name,&inode->name,sizeof(Filename));
+arr[c-1].size = inode->size;
+arr[c-1].filetype = inode->validtype;
+free(inode);
+}
+
+if (dir->indirect){
+zero(&block,BLOCK_SIZE);
+iptr = dir->indirect;
+if (!dread(fs->dd,&block,iptr)){seterr(DISK_IO_ERR);return (Ls*)0;}
+for (int i = 0 ; i < PtrsperBlock;i++){
+iptr = block.ptrs[i];
+if (!iptr) continue;
+inode = fetchinode(fs,iptr);
+if (!inode) continue;
+c++;
+arr[c-1].idx = iptr;
+memcopy(&arr[c-1].name,&inode->name,sizeof(Filename));
+arr[c-1].size = inode->size;
+arr[c-1].filetype = inode->validtype;
+free(inode);
+}
+}
+Ls * ret = (Ls*)alloc(sizeof(Ls));
+for (int i = 0 ; i < c;i++)ret->arr[i] = (File_entry*)alloc(sizeof(File_entry*));
+ret->count = c;
+copy(ret->arr,arr,sizeof(File_entry)*(c-1));
+return ret;
+}
+
 
 //TODO: Implement these two
 internal i16 openfiles(Disk * dd){

@@ -31,28 +31,28 @@ drive = (drivestr[0] == 'c' || drivestr[0] == 'C')? 1 :(drivestr[0] == 'd' || dr
 if (drive == -1 ) usage_format("diskutil");
 if (bootable) {fprintf(stderr,"Boot not supported\n");exit(-1);}
 i8 force;
-printf("This will format the Disk %s erase all data.Proceed?[y/N]\n",drivestr);
+printf("This will format the Disk %c erase all data.Proceed?[y/N]\n",drivestr[0]);
 scanf("%c",&force);
 if (force != 'y' && force != 'Y') return;
 i8 iforce =  (force == 'y' || force == 'Y' )? 1 : 0;
 
-printf("Formatting Disk %s...\n",drivestr);
+printf("Formatting Disk %c...\n",drivestr[0]);
 dinit();
 Disk *d = attach(drive);
 if (!d) {printf("Bad Disk\n");exit(-1);}
 Filesystem * fs = fsformat(d,0,iforce);
+
 if (!fs) {printf("Formatting Error\n");exit(-1);}
 printf("Disk Formatted!\n");
-//ptr p = inode_alloc(fs);
-ptr idx1 = create_inode(fs,parse_name("hello.txt"),FileType);
+ptr idx1 = create_inode(fs,parse_name("hello.bat"),FileType);
 ptr idx2 = create_inode(fs,parse_name("helog"),DirType);
-print_inodes(fs);
 
-// fix the show_path it not showing ext properly
-show(parse_name(".bashrc.txt"),"filename");
-show(init_path("/.bashrc.txt",fs),"path");
+// Fix this
+// Dir * dir = open_dir("c:/helog");
 
-
+// Fix this shows way too many inodes;
+Ls * ls = listfiles(fs,fetchinode(fs,0));
+printf("%d\n",ls->count);
 inode_dealloc(fs,idx1);
 inode_dealloc(fs,idx2);
 detach(d);
