@@ -120,6 +120,7 @@ if (!bm){return (Filesystem*)0;}
 i16 size = 1+1+fs->metadata.inodeblocks;
 for (int i = 0 ;i < size;i++) setbit((i8*)bm,i);
 fs->bitmap = bm;
+ptr o = create_inode(fs,parse_name("/"),DirType);
 return fs;
 }
 
@@ -402,13 +403,14 @@ return name;
 
 internal void show(void * arg,i8* s){
 if (!arg) {seterr(BAD_ARG);return;}
-if (strcomp(s,"inode") == 0) print_inodes((Filesystem*)arg);
+if (strcomp(s,"inodes") == 0) print_inodes((Filesystem*)arg);
 else if (strcomp(s,"bitmap") == 0) print_bitmap((Filesystem*)arg);
 else if (strcomp(s,"fstat") == 0) fstatshow((File_stat*)arg);
 else if (strcomp(s,"filesystem") == 0) fsshow((Filesystem*)arg);
 else if (strcomp(s,"filename") == 0) filename_show((Filename*)arg);
 else if (strcomp(s,"path") == 0) show_path((Path*)arg);
 else if (strcomp(s,"ls") == 0) show_ls((Ls*)arg);
+else if (strcomp(s,"inode") == 0) show_inode((Inode*)arg);
 else {seterr(BAD_ARG);return;}
 }
 
@@ -549,6 +551,43 @@ copy(ret->arr,arr,sizeof(File_entry)*(c-1));
 return ret;
 }
 
+internal void show_inode(Inode * ino){
+printf("----Inode----\nName: %s\nType: %s\nSize: %d\n\tPointers:\n",filestr(&ino->name),(ino->validtype==DirType)?"Directory":(ino->validtype==FileType)?"File":"None",ino->size);
+if (!ino->indirect) printf("Indir: %hu\n",ino->indirect);
+printf("Direct: [");
+for (int i = 0 ; i < DirectPtrsperInode;i++){
+printf(" %hu",ino->direct[i]);
+}
+printf(" ]\n");
+}
+
+internal i8* filetostr(Filename * fn){
+if (!fn) return (i8*)0;
+i8 * str = (i8*)alloc(sizeof(i8) * 11);
+if (!str) return (i8*)0;
+memcopy(str,fn->name,8);
+if (!*fn->ext) return str;
+else {
+i16 l = len(str);
+str[l-1] = '.';
+memcopy(str+l,fn->ext,3);
+}
+return str;
+}
+
+internal void wipe_fs(Filesystem *fs){
+i8 buff[512] = {0};
+for (int i = 0 ; i < fs->dd->blocks+2;i++){
+if (!dwrite(fs->dd,buff,0)){seterr(DISK_IO_ERR);return;}
+}
+}
+
+internal void wipe_disk(Disk *dd){
+i8 buff[512] = {0};
+for (int i = 0 ; i < dd->blocks+2;i++){
+if (!dwrite(dd,buff,0)){seterr(DISK_IO_ERR);return;}
+}
+}
 
 //TODO: Implement these two
 internal i16 openfiles(Disk * dd){

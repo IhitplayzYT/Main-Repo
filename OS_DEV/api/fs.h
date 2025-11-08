@@ -156,6 +156,7 @@ internal i8 validfname(Filename*,Type);  // Checks validity of Filename struct o
 internal File_stat* fsstat(Filesystem*,ptr);     // File_stat struct of a file
 internal void fstatshow(File_stat*);      // Displays fstat struct
 internal Filename * parse_name(i8*);       // Pareses the filename string to a s_Filename struct 
+internal i8* filetostr(Filename *);
 internal i8* eval_path(i8*);
 internal ptr read_dir(Filesystem*,ptr,Filename*);
 internal Filename* toggle_fname_case(Filename*,i8);
@@ -167,4 +168,7 @@ internal i8 validchar(i8);
 internal void show_ls(Ls*);
 internal Dir *open_dir(i8*);
 internal Ls* listfiles(Filesystem*,Inode*);
+internal void show_inode(Inode *);
+internal void wipe_fs(Filesystem *);
+internal void wipe_disk(Disk *);
 /* Function Signatures */
