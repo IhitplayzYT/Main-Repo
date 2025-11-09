@@ -1,5 +1,5 @@
 **Transaction** : Sequence of steps executed
-**Schedule** : Sequence and ordering of Transcations
+**Schedule** : Sequence and ordering of Transactions
 Transaction has only two result commit and abort
 
 **Active** - State the txn stays in during execution
@@ -23,8 +23,7 @@ Isolation: Intermediate results of the txn shouldn't show up and affect the valu
 Two schedules are equivalent is the values of varib A,B,C,... are equal AND the sum of all of them is also equal.
 
 If sum preserved but value not equal txn is Non-equivalent.
-
-##### Why concurrent preffered?
+##### Why concurrent preferred?
 1. Increased disk and processor utilization
 2. Reduce avg response time
 
@@ -34,9 +33,8 @@ If sum preserved but value not equal txn is Non-equivalent.
 3. Incorrect Summary problem
 4. Unrepeatable Read problem
 
-
 ##### Dirty Read Problem
-T2 takes intermediary value from T1 but T1 aborts so T1 should rollback and the value of variables should also ,BUT T2 ihas already started using the incorrect old failed txn value resulting in a failing the Atomicity property.
+T2 takes intermediary value from T1 but T1 aborts so T1 should rollback and the value of variables should also ,BUT T2 has already started using the incorrect old failed txn value resulting in a failing the Atomicity property.
 eg:
 		T1   |   T2
 		...
@@ -82,7 +80,7 @@ eg :
 
 
 ##### Serializability:
-Ability to convert a concurren tschedule to a serial schedule.
+Ability to convert a concurrent schedule to a serial schedule.
 
 #### Conflict Serializablity Methods
 1. Conflict Instruction Method
@@ -98,26 +96,24 @@ R(A) W(B)
 W(A) W(B)
 
 #### Conflict Instruction Method
-We can swap adjacent non-conflicting pairs
+We can swap adjacent non-conflicting pairs if schedule after swap is serial it is said to be conflict serializable.
 (a  )  -> (b  ) 
 (  b)     (  a) 
 
 #### Precedence Graph
 Create Nodes for each Txn.
 Then we go according to schedule for operation in Tx we check for conflict pairs possible in entirety of remaining Ty  where y != x.
-If conflict pair possible we draw an edge.If any cycle or loop in schedule then it is NOT conflict Serialisable.
-
+If conflict pair possible we draw an edge.If any cycle or loop in schedule then it is NOT conflict Serializable. As we proceed in txn we cancel out the previous operations.
 
 ## View Serializability:
-IF conflict serializability fails txn can still be serialisable by view serialisability.
+If conflict serializability fails txn can still be serializable by view serialisability.
 
 For view serializability we just swap two operations between txns and then take sample output and see if it produces the same output.
-If same output then txn is serialisable.
+If same output then txn is serializable.
 
 # Concurrent Control
 
 Lock is a mechanism to control concurrent access to a data item.
-
 ##### Locked Modes
 1. Exclusive(X) - Both read and write
 2. Shared(S) - Only read
@@ -128,11 +124,11 @@ Lock Compatibility Matrix
 S  true  false
 X  false false
 
-A lock is granted to txn only if the ock it already has from other txn is compatible with the lock being givenm to it.
+A lock is granted to txn only if the lock it already has from other txn is compatible with the lock being given to it.
 
 A txn can have any number of Shared locks, but if a txn hold  exclusive lock no other txn can hold any lock on that item.
 
-Locking Protocol -  Set of rules to be followed by all txns when requesting and releasing locks. This ensures conflict serialisable schedules.
+Locking Protocol -  Set of rules to be followed by all txns when requesting and releasing locks. This ensures conflict serializable schedules.
 
 Phase 1: Growing phase 
 Txn may obtain locks but may not release locks.
@@ -145,10 +141,12 @@ After commit and abort all locks are removed
 
 Two phase locking is required for conflict serializability.
 Lock conversions:
+
 Phase 1:
 Lock-s
 Lock-x
 Upgrade of Lock-s to Lock-x
+
 Phase 2:
 Unlock-s
 Unlock-x
@@ -177,11 +175,10 @@ else:
 		write(X)
 end
 
-Lock manager manages a DS called lock table inorder to manage and grant txns with locks.
-
+Lock manager manages a DS called lock table in order to manage and grant txns with locks.
 
 Timestamp based protocols:
-Each txn give a timestamp on entering system
+Each txn gives a timestamp on entering system
 if Ti older then Tj then TS(Ti) < TS(Tj)
 
 Concurrent execution managed such that TS determine serialisability order.
@@ -191,8 +188,8 @@ Concurrent execution managed such that TS determine serialisability order.
 
 Identify txn and if it rollbacks or commits:
 	A B C ... (varibs)
-RTS 0 0 0
-WTS 0 0 0
+RTS 0 0 0 ...
+WTS 0 0 0 ...
 
 if Ti does read(a) :
 	if WTS(a) > TS(Ti):
@@ -206,7 +203,7 @@ if Ti does write(a):
 	else:
 		WTS(A) = max(WTS(A),TS(Ti))
 
-The timestamp ordering protocol guarentees serializibility
+The timestamp ordering protocol guarentees serializability
 since all the arcs in precedence graphs are of type:
 
 	  TXN    ------>    TXN
@@ -223,4 +220,3 @@ Solution:
 - All writes are atomic,no txn must execute while txn being written.
 - Txn that aborts restarted with a new TS
 - Limited form of locking,wait for data to be committed before reading.
-

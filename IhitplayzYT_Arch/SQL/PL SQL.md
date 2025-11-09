@@ -1,18 +1,17 @@
 ##### Basic Block
 ```sql
 BEGIN
-DECLARE
 END;
 /
 ```
 ##### Declaration,Printing and User Input
 
 ```sql
-BEGIN
+DECLARE
 x INT;
 y Student.Roll%TYPE;
 z Student%ROWTYPE;
-DECLARE
+BEGIN
 x := &input_val_of_x;
 DBMS_OUTPUT.PUT_LINE("Ans : " || x);
 END;
@@ -21,9 +20,8 @@ END;
 
 ##### If-else ladder
 ```sql
-
-IF COND THEN
-ELSIF COND THEN
+IF <COND> THEN
+ELSIF <COND> THEN
 ELSE
 END IF;
 ```
@@ -39,15 +37,17 @@ END LOOP;
 FOR I IN [REVERSE] LL..UL LOOP
 END LOOP;
 
+EXIT -- Equivalent to break
+
 GOTO hello
 <<hello>>
 ```
 
 ##### Exceptions
 ```sql
-BEGIN
-myexcep Exception;
 DECLARE
+myexcep Exception;
+BEGIN
 THROW myexcep;
 EXCEPTION
 WHEN excep1 THEN
@@ -73,29 +73,28 @@ END;
 -- Implicit cursors
 BEGIN
 DELETE FROM Student WHERE dept = dname;
-
 IF SQL%FOUND THEN
 ELSIF SQL%NOTFOUND THEN
+	EXIT -- Equivalent to break
 END IF;
-
 END;
 /
 
 -- Explicit Cursors
-BEGIN
+DECLARE
 Cursor c1 is select a,b,c from emp;  -- Normal Cursora
 Cursor c2(x int) is select a,b,c from emp where emp.x = x;
 val emp%rowtype;
-DECLARE
-
+BEGIN
 open c1;
 loop
-fetch c1 into val
-exit when c1%notfound
+fetch c1 into val;
+exit when c1%notfound;
+-- Processing
 end loop
 close c1
 
-for i in c1(x) loop
+for i in c2(x) loop
 end loop;
 
 END;
@@ -113,10 +112,9 @@ END;
 -- Output field modifyable but value passed out is zeroed out
 -- Modifyable field but whatever value provided will be used
 
-
-
 CREATE OR REPLACE FUNCTION fxn_name(x INT,y FLOAT) RETURN INT IS 
 BEGIN
+RETURN x;
 END;
 /
 
@@ -131,8 +129,3 @@ END;
 /
 -- :old & :new give access to varib before and after the DML command would be carried out
 ```
-
-
-
-
-

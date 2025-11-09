@@ -8,7 +8,7 @@
 - If a foreign key is referencing a primary key parent table the child table has to be dropped first in comparison to parent.
 - Foreign keys can also have an additional behavior attribute connected to them that describes the behavior on deletion of foreign key entry.
 	- ON DELETE CASCADE : When a tuple from parent table gets deleted this also causes the deletion tuples containing the value of primary key deleted in all it's child tables.
-	- ON DELETE SET NULL : When a tuple from parent table is deleted it causes ONLY the foreign key attributes of child tables to be NULL.
+	- ON DELETE SET NULL : When a tuple from parent table is deleted it causes ONLY the foreign key attributes of child tables to be set to NULL.
 
 ##### Usage :
 eg:-

@@ -8,7 +8,6 @@ Fail-stop assumption: Non-volatile storage contents assumed to not be corrupted.
 
 Disk Failure:Head or similar disk crash that destroys all or part of the storage. Destruction is assumed to be detectable using checksums and parity bits.
 
-
 Recovery Algorithms steps:
 1. Actions/steps done in txn
 2. Actions to be taken afterwards recover DB contents to ensure ACID property.
@@ -18,7 +17,6 @@ Physical Blocks - Blocks on disk
 Buffer Blocks - Temporary blocks residing in main memory.
 input(a) - Moves physical block B to main memory
 output(a) - Moves main memory block B to physical memory
-
 
 #### Log based Recovery:
 Log is kept on stable storage
@@ -33,7 +31,7 @@ Two approaches based om Logs:
 2. Immediate Database modification
 
 #### Immediate Database Modification:
-Updates of uncommited txns made to buff or disk before txn commits.
+Updates of uncommitted txns made to buff or disk before txn commits.
 Update log record before db is written to 
 
 #### Deffered Database Modification:
@@ -62,12 +60,4 @@ Undo/Redo are time consuming hence to streamline we use checkpoints concept `<ch
 
 During recovery we consider the most recent txn before checkpoint and all txn after the checkpoint 
 
-The operation that caused system failure need to be undo, the txn before failure causing ops and checkpoint need to be redone and any txns before checkpoint dont need to be touched.
-
-
-
-
-
-
-
-
+The operation that caused system failure need to be undo, the txn before failure causing ops and checkpoint need to be redone and any txns before checkpoint don't need to be touched.

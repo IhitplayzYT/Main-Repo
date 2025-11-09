@@ -5,6 +5,7 @@
 - **IPO(Initial Public Offer)** : The First time the Company is opening it's shares to the general public in order to raise funds.
 
 - **SEBI(Securities and Exchange Board of India)** : Regulatory body of capital markets in India.
+- **IRDAI(Insurance Regulatory and Development Authority of India)** : Regulatory body for insurance in India.
 
 - **Overdraft** : It is facility to withdraw more money then what is in in your bank account right now, this overdraft amount is decided based on credit score,account type,etc and is usually used to prevent bouncing of a Check
 
@@ -72,7 +73,7 @@
 
 - **Stressed Asset** : An asset giving flags or details of it becoming into a NPA
 
-- **FOREX(Foreign Exchange Services)** : Market where currencies of different countries are bought and sold. eg : 1$ = 87.46 INR/87.49 INR . Here the two values indicate the buying price of the currency for bank and selling price value for bank.
+- **FOREX(Foreign Exchange Services)** : Market where currencies of different countries are bought and sold. eg : 1$ = 87.46 INR/87.49 INR . Here the two values indicate the buying price of the currency for bank and selling price value for bank. Bid is price at which you sell. Ask is price for you to buy currency.Ask > Bid most of the times.
 
 - **NBFC(Non-Banking Financial Cooperation)** : An NBFC is a financial institution that offers banking-related services but does NOT have a full banking license
 

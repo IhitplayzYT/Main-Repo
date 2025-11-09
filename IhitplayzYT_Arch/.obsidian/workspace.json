@@ -4,56 +4,25 @@
     "type": "split",
     "children": [
       {
-        "id": "12c2bc1393d95ae4",
+        "id": "75278c648d6207a5",
         "type": "tabs",
         "children": [
           {
-            "id": "0e2bff2a1b6618f2",
+            "id": "e81151eaf40c7546",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SQL/SQL_Node.md",
+                "file": "SQL/Transactions.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
               },
               "icon": "lucide-file",
-              "title": "SQL_Node"
-            }
-          },
-          {
-            "id": "d15f8ad839597a1f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SQL/SQL_Node.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "SQL_Node"
-            }
-          },
-          {
-            "id": "4ed2bd018187527d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SQL/Normalization.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
-              },
-              "icon": "lucide-file",
-              "title": "Normalization"
+              "title": "Transactions"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -199,47 +168,47 @@
       "workspaces:Manage workspace layouts": false
     }
   },
-  "active": "4ed2bd018187527d",
+  "active": "e81151eaf40c7546",
   "lastOpenFiles": [
     "SQL/Indexing.md",
-    "SQL/Pasted image 20251101143452.png",
-    "SQL/Pasted image 20251101143044.png",
-    "SQL/Pasted image 20251101142447.png",
-    "SQL/Pasted image 20251101142439.png",
-    "SQL/Recovery Systems.md",
-    "SQL/SQL_Node.md",
-    "SQL/Set Operations.md",
-    "SQL/Transactions.md",
+    "Pasted image 20251108135715.png",
+    "Finance/IBPCM.md",
+    "SQL/Pasted image 20251108094626.png",
+    "SQL/Pasted image 20251108093854.png",
+    "SQL/Pasted image 20251108092807.png",
     "SQL/Normalization.md",
+    "SQL/Recovery Systems.md",
+    "SQL/Transactions.md",
+    "Finance/Pasted image 20251107155943.png",
+    "Finance/Terms.md",
+    "Finance/Pasted image 20251107170431.png",
+    "Finance/Pasted image 20251107170414.png",
+    "Finance/Pasted image 20251107170355.png",
+    "Finance/Pasted image 20251107170334.png",
+    "Finance/Pasted image 20251107165902.png",
     "SQL/PL SQL.md",
-    "Ihit's Vault/CYBERSEC SESSION.md",
-    "SQL/ER Model.md",
     "SQL/Basics.md",
-    "SQL/Relational Model.md",
-    "SQL/Relational Algebra.md",
-    "SQL/Correlation Queries.md",
-    "SQL/DEFAULT.md",
-    "SQL/Constraint_keyword.md",
-    "SQL/Constraint.md",
-    "SQL/CHECK.md",
-    "SQL/Cartesian Products and Joins.md",
-    "SQL/Screenshot_20250828_162813.png",
-    "SQL/Screenshot_20250828_163258.png",
-    "SQL/String Operators.md",
-    "SQL/Terms & Terminology.md",
+    "SQL/Aggregate Functions.md",
+    "SQL/Abstraction Levels.md",
     "SQL/Variables.md",
     "SQL/UNIQUE.md",
+    "SQL/Terms & Terminology.md",
+    "SQL/String Operators.md",
+    "SQL/SQL_Node.md",
+    "SQL/Set Operations.md",
+    "SQL/Relational Algebra.md",
     "SQL/PRIMARY_KEYS.md",
     "SQL/NOT NULL.md",
     "SQL/Nested Queries.md",
+    "SQL/Logical Operators in SQL.md",
+    "SQL/FOREIGN_KEYS.md",
+    "SQL/ER Model.md",
+    "SQL/DEFAULT.md",
+    "SQL/Correlation Queries.md",
     "AIML",
     "Untitled 2.base",
     "Untitled 1.base",
     "Untitled.base",
-    "Finance/Screenshot_20250904_150032.png",
-    "Finance/Screenshot_20250904_150032 1.png",
-    "SQL/Screenshot_20250828_163430.png",
-    "Finance/20250824_150621.jpg",
     "Finance",
     "SQL",
     "Ihit's Vault",

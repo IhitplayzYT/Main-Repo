@@ -51,7 +51,7 @@ D<sup>+</sup> = D
 
 Set of  KEY = {A,AB,AC,AD,ABC,ABD...}
 SET OF CANDIDATE KEYS = {A} (Since candidate key is minimal)
-prime_attrib = {A}
+prime_attrib = {} -- since prime_attrib != CK
 - Since if attrib is candidate key then all the combinations containing candidate key also form a candidate key.
 
 - Any attribute whose closure contains all the attributes of the relation is called as a candidate key.
@@ -119,9 +119,3 @@ BCNF - Relation must be in 3NF & Determinant in FD must be candidate key.
 #### To make BCNF:
 1. Table must be in 3NF
 2. All FD:X -> Y ,X must be SK/CK
-
-
-
-
-
-
