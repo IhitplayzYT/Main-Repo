@@ -124,6 +124,14 @@ Ls* entrys;
 } packed;
 typedef struct s_dir Dir;
 
+struct s_file_meta{
+Time create,modify;
+i8 perm:3;
+i16 size;
+Path * path;
+Ls * subdirs;
+}packed;
+typedef struct s_file_meta File_Metadata;
 
 
 

@@ -226,11 +226,11 @@ Inode * ino = (Inode*)alloc(sizeof(Inode));
 if (!ino){seterr(MEM_ERR);return 0;}
 if (!ino) {seterr(INODE_ERR);return 0;}
 zero(ino,sizeof(Inode));
-
 ino->validtype = t;
 ino->size = 0;
 memcopy(&(ino->name),name,sizeof(Filename));
 if (!save_inode(fs,ino,idx)){seterr(INODE_ERR);dealloc(ino);return 0;}
+
 
 return idx;
 } 
@@ -588,6 +588,27 @@ for (int i = 0 ; i < dd->blocks+2;i++){
 if (!dwrite(dd,buff,0)){seterr(DISK_IO_ERR);return;}
 }
 }
+
+
+internal Inode* get_inode(i8 * path,Filesystem* fs){
+if (!path || !*path) return (Inode*)0;
+Inode* ino;
+Path * p = init_path(path,(!fs)?FileDescriptors[0]:fs);
+if (!path) return (Inode*)0;
+Inode * inode = fetchinode(p->fs,0);
+for (int i  = 0 ; i < p->inter->n;i++){
+
+
+
+
+
+}
+
+
+return ino;
+}
+
+
 
 //TODO: Implement these two
 internal i16 openfiles(Disk * dd){

@@ -48,11 +48,12 @@ printf("Disk Formatted!\n");
 ptr idx1 = create_inode(fs,parse_name("hello.bat"),FileType);
 ptr idx2 = create_inode(fs,parse_name("helog"),DirType);
 
+show(fs,"bitmap");
 // Fix this
 // Dir * dir = open_dir("c:/helog");
 
 // Fix this shows way too many inodes and many were empty
-show(fetchinode(fs,1),"inode");
+//show(fetchinode(fs,1),"inode");
 // Ls * ls = listfiles(fs,fetchinode(fs,0));
 // printf("%d\n",ls->count);
 inode_dealloc(fs,idx1);
