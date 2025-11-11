@@ -2,7 +2,6 @@
 
 First the nested query followed by the outer queries.
 - Used with **Where** and **In**
-
 ##### Usage :
 ```sql
 Select salary from emp where emp.salary > (select avg(salary) from emp);

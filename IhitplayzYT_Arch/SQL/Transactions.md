@@ -5,7 +5,7 @@ Transaction has only two result commit and abort
 **Active** - State the txn stays in during execution
 **Partially Committed** - After the final statement of the txn executed.
 **Failed** - After discovery that normal execution can't take place
-**Aborted** - After txn is rollbacked it can either be restarted or killed/skipped.
+**Aborted** - After txn is roll backed it can either be restarted or killed/skipped.
 **Committed** - After successive execution
 
 write & commit both write the changes to the DB
@@ -154,7 +154,7 @@ Downgrade of Lock-x to Lock-s
 
 **Reading**:
 
-if T has lock-s:
+if T has lock-s or lock-x:
 	read(X)
 else:
 	Wait until no txn has Lock-x on X:
@@ -197,10 +197,12 @@ if Ti does read(a) :
 	else:
 		exec read(a)
 		RTS(A) = max(RTS(A),TS(Ti))
+		
 if Ti does write(a):
 	if RTS(A) > TS(Ti) OR WTS(A) > TS(Ti)
 		rollback Ti
 	else:
+		exec write(a)
 		WTS(A) = max(WTS(A),TS(Ti))
 
 The timestamp ordering protocol guarentees serializability

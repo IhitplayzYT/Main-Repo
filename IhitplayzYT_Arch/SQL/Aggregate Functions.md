@@ -17,7 +17,7 @@ SELECT COUNT(salary) FROM employees;
 
 SELECT department_id, AVG(salary) FROM employees GROUP BY department_id; --Counts the avg salary of each department
 
-SELECT department_id, COUNT(*) AS num_employees FROM employees GROUP BY department_id HAVING COUNT(*) > 5;
+SELECT department_id, COUNT(*) AS num_employees FROM employees [OPTIONAL WHERE CLAUSE] GROUP BY department_id HAVING COUNT(*) > 5;
 -- Counts the number of employess from each department but only prints those with the count greater then 5.
 
 ```

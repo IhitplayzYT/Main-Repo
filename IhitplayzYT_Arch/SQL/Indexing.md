@@ -10,7 +10,7 @@ Ordered Index : Sorted on the search-key
 
 Primary Index/Clustering Index : Index whose search-key describes the sequential order of the file.i.e key points to a row sequentially `Direct Indexing into a row since tree is sorted`
 
-Secondary Index/Non-clustering Index : Index whose search-key describes the diff order then the sequential order of the file.i.e key points to pointer that points to a non-sequential entry in table
+Secondary Index/Non-clustering Index : Index whose search-key describes the diff order then the sequential order of the file.i.e key points to pointer that points to a non-sequential entry in table.
 `Indexes into a lookup table to get a attrib which alows to index into tuple,done for unsorted`
 
 ```
@@ -29,18 +29,23 @@ Index record for every search-key value in the file.
 #### Sparse Index Files:
 Index record only for few search-key value in file. This is possible as the some of the indexes can be omitted since the row and sequentially ordered in the file.To find a key we find a the largest record that is smaller then our search key and then start searching for it sequentially. They take less space and less overhead for insertion and deletion, but are slower for finding records. Basically points to a block and the contents of block might point to another block or maybe row index. Helps speed up lookup time in comparison to linear search lookup in primary index
 
-Good tradeoff: Spare index for each block in which we have to search for our key in that block.
+Good trade off: Sparse index for each block in which we have to search for our key in that block.
 
 #### Secondary Indices:
-Key points to buckets which contain a list of indexes that point to unorder entries in the table. Secondary indexes have to be dense.
+Key points to blocks which contain a list of indexes that point to in order entries in the table. Secondary indexes have to be dense.
 
-#### Primary Index:
-Points directly to tulple in table.Sorted.Memory Intensive.Fast search
+![[10-11-2025==15-56_1.png]]
+Here each index points addresses(buckets) which when followed point to the table.The table is sorted but the buckets are not.
+Here the white table is secondary index.
+
+#### Primary Indices:
+Points directly to table.Sorted.Memory Intensive.Fast search
 Secondary : Points to primary key which then point to row.Unsorted
 
 #### Multilevel Index:
 Outer index - Sparse index to primary indexes
 Inner index - primary index
+
 ![[Pasted image 20251108092807.png]]
 
 # Types of Indexes
@@ -65,13 +70,13 @@ eg:
 Primary table have 0,101,201... where 0 points to secondary table having indexes 0,11,21,... and these indexes point to tuples in their respective ranges.
 Secondary indexes have to be dense.
 ```
-		/   Secondary idx table  - Data
-								\ Data
+		/                 bucket  - Data
+								 \ Data
 		
-Primary                        / Data
-Index    __ Secondary idx table - Data
+secondary                        / Data
+Index    __              bucket - Data
 Table                           \ Data
-	    \    Secondary idx table
+	    \      bucket
 
 primary index table is sparse but each secondary index table is dense. Data can be unordered or ordered here.
 
@@ -139,9 +144,8 @@ n - Max no of children a node can have
 1. Each non-root and non-leaf node has between n/2(Rule imposed on M-way tree to avoid growing linearly and making lookup linear) and n children
 2. A leaf node has between (n-1)/2 and (n-1) values.
 3. All paths from root to leaf are same(Height balanced)
-4. Height = log<sub>n</sub> N
-5. If root not leaf it has min 2 children
-6. If root node is leaf it can have 0 to n-1 values in it.
+4. If root not leaf it has min 2 children
+5. If root node is leaf it can have 0 to n-1 values in it.
 
 For k search key pairs and out degree of each node being n(Note n children means n-1 keys in parent node) the maximum height of the B+ tree if log<sub>n/2</sub> (k) 
 
@@ -162,14 +166,13 @@ Typically the size of one node is same as size of a block(4KiB) , each index ent
 
 If duplicates present in B tree we can guarentee k0 <= k1 <= ....
 
+B<sup>+</sup> trees solve index file degradation and data file degradation when used in file organisation but there are much less records in a node then the pointers in the node.
 
-B<sup>+</sup> trees solve index file degredation and data file degredation when used in file organsation but there are much less records in a node then the pointers in the node.
+B trees are like B+ trees except that as we see the record itself doesn't repeat in the sub-tree and an additional record pointer for each key is needed. Insertion and deletion is B tree is harder. B+ tree is preferred over B tree due to less overhead and easier to program.
 
-
-B trees are like B+ trees except that as we see the record itself doesn't repeat in the subtree and an additional record pointer for each key is needed. Insertion and deletion is B tree is harder. B+ tree is preffered over B tree due to less overhead and easier to program.
 ![[Pasted image 20251108135715.png]]
 
-B tree has a record pointer for all nodes in at each and every level.B+ tree has record pointer only at the leaf nodes. Making B+ tree be perfect for implementing multileveled indexing.
+B tree has a record pointer for all nodes in at each and every level.B+ tree has record pointer only at the leaf nodes. Making B+ tree be perfect for implementing multi-leveled indexing.
 
 B-tree have advantage that they may use less nodes then B+ tree and it is possible to find key value ptr before reaching the leaf node.
 
@@ -182,19 +185,17 @@ eg : select * from x where x.a = a and x.b = b;
 Using simple indexes means retrieving all entries with x.a = a and then manual searching for x.b = b  or x.b = b then manual searching for x.a = a.
 
 Composite index returns the exact conditions in the query making it more efficient.
-
 #### Covering index:
 Add extra attribs to index so that some queries can avoid retrieving the actual record entries (useful for secondary indices)
-
 
 # Hashing
 
 ### Static Hashing
 Fixed no of buckets
 
-Bad hashing fxn map to single bucket a ideal hashing fxn distribs the attrib uniformly and is random, the hash fxn usually works on the inner binary representation of the key.
+Bad hashing fxn map to single bucket a ideal hashing fxn distributes the attrib uniformly and is random, the hash fxn usually works on the inner binary representation of the key.
 
-##### Bucket overflow
+##### Reasons for Bucket overflow
 1. Less buckets
 2. Skew in data
 	1. Bad hash fxn
@@ -216,17 +217,15 @@ To fix shortcomings of the static hashing we allow the buckets to be modified dy
 
 ### Dynamic Hashing
 Hash fxn modified dynamically and the struct based on this modified hash.
-1. Extendable Hashing: Generates n-bit number use only prefix of hash to index into table of bucket entries.
-
+1. Extendable Hashing: Generates n-bit number use only prefix of i bits to hash to index into table of bucket entries.
 
 We use h(k) = 101010001....
 we use the first i bits for indexing into the bucket address table then follow the ptr from the bucket address table to bucket where we search sequentially.
 
-When the bucket gets filled or overflow happens we either increment i or split a bucket into two and use another bit to distinguish the two.
+When the bucket gets filled or overflow happens we either increment i(local < global) or split a bucket into two and use another bit to distinguish the two(when local order == global order).
 
 ## Ordered indexing vs Hashing
-
-- Cost over periodic re-organisation
-- Freq of insert and deletion
-- Desirable to optimize best case at expense of worst case
+- Cost over periodic re-organisation(B+ does rebalencing and incase of extendable hashing bucket splitting)
+- Freq of insert and deletion(B+ handle high freq better)
+- Desirable to optimize best case at expense of worst case(B+ has logN but extendible has worst O(n)(To many collisions) and best O(1))
 - Hashing better for a specific value of key but ordered index is better for range of values of key

@@ -712,11 +712,10 @@ Set of formal and standardized rules to enable transfer of value between end-use
 
 ##### 4. Settlement: Funds transferred to recipients and payers accounts
 
-
 ## 3.Payment Arrangements:
 Set of Operational functionalities which support end-user of payment service providers when e-payments are used managed by the governing body on relevant conditions for payment to be executed.
 
-
+--- 
 ## 1. Payment Instruments
 _What customers use to make payments_
 - **Cards**: Credit cards, debit cards, prepaid cards, forex cards Savings account, current account, Paytm wallet, PhonePe wallet, Google Pay balance, **Cash**: Physical currency notes and coins, **Cheques**: Paper-based payment orders
@@ -778,7 +777,8 @@ NEFT(National Electronic Funds Transfer) : Popular electronic payments system al
 # Payment Gateway:
 
 Technology that facilitates processing of online payments acting as intermediary between merchant,customer and the financial institution.
-Payment gateway of India is Billdesk
+
+##### Payment gateway of India is Billdesk
 
 ## Large Value Payment Systems(LVPS):
 Used to settle larger payments between banks. They can be client ,interbank or payments for settlement from retail payment systems.eg : SWIFT
@@ -816,11 +816,11 @@ Acquirer/Acquiring Bank - Bank of the merchant
 **NeoBanks** : Fully digital
 ### Neobanks vs Challenger Banks
 1. Neo are mostly unlicensed ,challenger banks are all licensed
-2. Neo are in partnership with licenced banks whereas Challenger are regulated by financial authorities
+2. Neo are in partnership with licensed banks whereas Challenger are regulated by financial authorities
 3. Focus on tech-driven simplified banking services whereas challenger provide traditional services with a tech overlay.
 4. Neo operate digitally only challenger may have physical banks
-5. Niche target liek freelancers,millenials , Challenger serve a broader market.
-6. Freyo and IDFC First banks arte examples of both respectively.
+5. Niche target like freelancers,millenials , Challenger serve a broader market.
+6. Freyo and IDFC First banks are examples of both respectively.
 7. Focus on modern technology ,focus on integrating digital tools into traditional technology.
 
 First digit of credit card signifies card network:
@@ -838,7 +838,6 @@ It is an endpoint URL that server or app provides to payment processor.
 ![[Pasted image 20251107165435.png]]
 
 NFC(Near Field Communication) : Wireless that allow devices to communicate in close proximity.
-
 
 PAN(Primary Account Number) : No at front of credit,debit or postpaid cards.
 
@@ -878,10 +877,9 @@ RBI acts as banker to the government.
 
 - RBI
 - SEBI
-- IRDAI
+- IRDAI(Insurance Regulatory and Development Authority of India)
 - SIDBI
 - MCA(Ministry of Corporate Affairs)
-
 
 ### Department of banking supervision
 Enforces the Banking regulation act by using the foreign exchange management act
@@ -890,6 +888,7 @@ Enforces the Banking regulation act by using the foreign exchange management act
 - Core principles
 - Corporate Governance
 - Initiatives and Directions,Circulars
+
 #### Critical Directives
 - Bank can lend to individuals and groups limited to 15% and 30% respectively with some exceptions.
 - Sectors given lending priority are small finance groups like small enterprises,agriculture low-earning or less-privileged.

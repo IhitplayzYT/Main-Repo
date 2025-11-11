@@ -38,7 +38,5 @@ r(R) - Denotes a relation r on relational schema R (Table).
 Instructor.dept_id  ───────►  Department.dept_id
     (Foreign Key)                (Primary Key)
 
-
-
 [[Relational Algebra]]
 [[SQL_Node]] : Return to  SQL Root Node.

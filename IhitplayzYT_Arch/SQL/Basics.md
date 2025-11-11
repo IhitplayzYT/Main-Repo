@@ -96,7 +96,7 @@ ALTER TABLE child_table ADD CONSTRAINT fk_name FOREIGN KEY (child_column) REFERE
 update emp set attrib = <val> where (Condition);
 ```
 
-`View are virtual tables wiht fast access`
+`View are virtual tables with fast access`
 
 ##### Creating a view
 ```sql

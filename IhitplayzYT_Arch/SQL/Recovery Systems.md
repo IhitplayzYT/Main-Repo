@@ -26,7 +26,7 @@ When Txn starts `<Ti start>log record`
 When write on X `<Ti,X,old_val,new_val>`
 When end `<Ti commit>`
 
-Two approaches based om Logs:
+Two approaches based on Logs:
 1. Deferred Database modification
 2. Immediate Database modification
 
@@ -34,14 +34,12 @@ Two approaches based om Logs:
 Updates of uncommitted txns made to buff or disk before txn commits.
 Update log record before db is written to 
 
-#### Deffered Database Modification:
+#### Deferred Database Modification:
 Updates to the buffer/disk only at time of txn commit.
 
 Txn said to be committed when the commit log is output to a stable storage.
 
-In concurrent txns all the txns share a single disk buffer and log.
-
-Log records of two or more txns might be interweaved in the log.
+In concurrent txns all the txns share a single disk buffer and log hence log records of two or more txns might be inter-weaved in the log.
 
 undo(Ti) - All values affected by Ti are restored to the their old values
  
