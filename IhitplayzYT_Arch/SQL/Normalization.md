@@ -112,7 +112,8 @@ BCNF - Relation must be in 3NF & Determinant in FD must be candidate key.
 2. No transitive dependency
 3. (
 		for all FD: X->Y
-	 1. X has to be a SK or CK
+	 1. X has to be a SK or CK  
+	   **OR**
      2. Every attrib of Y is prime(Part of some CK)
     )
 

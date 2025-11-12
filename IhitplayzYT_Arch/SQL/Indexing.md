@@ -65,7 +65,7 @@ Ptr to blocks(i.e index table will have 1,11,21,..) meaning 1 points to entries 
 #### Clustering
 Table contains duplicate on key so lets say key with val 1 are clustered together into a single block. Primary index is also a clustering and sparse index 
 #### Secondary
-Index table pointing to another index table that finally points to the database data.
+Index table pointing to another index table that finally points to the database data.Unordered
 eg:
 Primary table have 0,101,201... where 0 points to secondary table having indexes 0,11,21,... and these indexes point to tuples in their respective ranges.
 Secondary indexes have to be dense.
@@ -76,7 +76,7 @@ Secondary indexes have to be dense.
 secondary                        / Data
 Index    __              bucket - Data
 Table                           \ Data
-	    \      bucket
+	    \                  bucket
 
 primary index table is sparse but each secondary index table is dense. Data can be unordered or ordered here.
 
@@ -120,7 +120,7 @@ Space complexity : 2700
 Time : log<sub>2</sub> 200 + 1 
 ##### Sparse:
 Index for each block (Total no of record blocks = 2500)
-Blocks for all indexes(Total no of indexes/Index per block) = 2500 / (1000 / 20) = 50
+Blocks for all indexes(Total no of indexes/Index per block) = 2500 * 20 / 1000  = 50
 Total blocks for sparse = 2500+50 = 2550
 Time : log<sub>2</sub> 50 + 1
 
@@ -153,7 +153,7 @@ For k search key pairs and out degree of each node being n(Note n children means
 Pi are child ptrs and Ki are search key values
 
 #### Leaf level:
-Pi are sorted and point to file records.Assuming n is max no of values a node holds Pn point to the node starting with Pn+1 and so on. Basically left leaf node point to right one soon and so forth.
+Pi are sorted and point to file records for Ki. Assuming n is max no of values a node holds Pn point to the node starting with Pn+1 and so on. Basically left leaf node point to right one soon and so forth.
 
 #### Non-leaf level:
 Non leaf nodes form a multi level sparse index on the leaf nodes. 
@@ -225,7 +225,7 @@ we use the first i bits for indexing into the bucket address table then follow t
 When the bucket gets filled or overflow happens we either increment i(local < global) or split a bucket into two and use another bit to distinguish the two(when local order == global order).
 
 ## Ordered indexing vs Hashing
-- Cost over periodic re-organisation(B+ does rebalencing and incase of extendable hashing bucket splitting)
+- Cost over periodic re-organisation(B+ does re-balancing and incase of extendable hashing bucket splitting)
 - Freq of insert and deletion(B+ handle high freq better)
-- Desirable to optimize best case at expense of worst case(B+ has logN but extendible has worst O(n)(To many collisions) and best O(1))
+- Desirable to optimize best case at expense of worst case(B+ has log N but extendable has worst O(n)(To many collisions) and best O(1))
 - Hashing better for a specific value of key but ordered index is better for range of values of key

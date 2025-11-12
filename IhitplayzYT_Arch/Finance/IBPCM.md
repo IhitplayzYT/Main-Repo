@@ -128,8 +128,8 @@ Intangible assets are non-physical assets such as:
 3. Copyrights
 4. Goodwill
 5. Software licenses
-`Intangible assets also lose value as time passes or as they get used up.`
 
+`Intangible assets also lose value as time passes or as they get used up.`
 ##### Why do companies do a buyback?
 - To reduce the number of shares outstanding in the market.
 - This can increase the earnings per share (EPS) because the same profit is spread over fewer shares.
@@ -326,7 +326,8 @@ The business in inheritable. Members of the family in a HUF are called **coparce
 - Mutual Funds
 - Treasury Operations : Treasury operations involve the **planning, organizing, and controlling of cash, investments, borrowing, and risk** for an organization, typically handled by a **Treasury Department**. 
 - **Wealth management solutions** : are comprehensive financial services provided to **individuals, families, or businesses** to help them **grow, protect, and transfer wealth** effectively. These solutions go beyond just investing — they offer **customized advice, planning, and execution** to meet the unique financial goals of each client.
-
+- Executor of wills
+- 
 `Investments in the real estate sector, government bonds, securities, gold and debentures also acquire a significant space in the banking models for income. Additionally, many banks have AMCs as subsidiaries which operate mutual funds. Banks earn money from commissions and expense ratios on these investments.Banks charge fees,penalities and annual service charges for accounts,etc`
 
 **Specialist Banks** : Operating in Niche Markets
@@ -467,6 +468,7 @@ Like Call option but now the seller basically has to buy from me the stock at a 
 
 ---
 
+
 **Underwriter** : In investment banking , charges a fee and himself subscribes to an IPO, done to meet the subscription threshold for listing or to advertise the stock with high subscription.
 
 **Lien** : If you take a loan and pledge something (like a house, car, or shares), the lender places a **lien** on that asset. You can use it, but you **cannot sell or transfer it freely** until the lien is cleared (loan repaid).
@@ -575,18 +577,17 @@ Money from the accumulated annuity can be claimed in two ways:
 
 # Principal of Insurance
 - Foundational rules that ensure fairness, trust and effective risk-sharing between insurers and insured.
-## Principal of Utmost Good Faith:
-
-Both insurer and the insured have to disclose all necessary material and details truthfully. Concealment and misrepresentation can void the contract.
 
 Subject matter of Insurance: Asset being insured by the insurance policy.
 
+## Principal of Utmost Good Faith:
+Both insurer and the insured have to disclose all necessary material and details truthfully. Concealment and misrepresentation can void the contract.
 ## Principal of Insurable Interest:
 Insured must have legal or financial stake in thing being insured to enter a insurance contract.
 ## Principal of Indemnity:
 Insurance should restore the issuer to original financial position not to profit them.
 ## Principal of Subrogation:
-After the insurer settles the claim they have legal rights to to recover amount from the liable third party from the loss.
+After the insurer settles the claim they have legal rights to recover amount from the liable third party from the loss.
 ## Principal of Contribution:
 If property insured with multiple insurers each insurer will equally contribute toward the claim.
 ## Principal of Proximate Cause:
@@ -644,12 +645,12 @@ In between commodity like salt,cattle and grain were used.
 
 Paper money created in China during Tang Dynasty
 
-This is also the start of concept of fidiciary money rose where value from trust rather than the intrinsic value.
+This is also the start of concept of fiduciary money rose where value from trust rather than the intrinsic value.
 
 #### Knights Templar:
 Each templar had house had strongboxes that can only be opened by the owner or the party who had permission from the owner. To avoid carrying large amount of heavy and precious metals for money Letters of credit were used where if you deposit in templar house of one place and showed up with the LOC to another templar house you can withdraw money from there.
 
-Cheques introduced by bankers of London.First printed cheques made by british banker Lawrence childs.
+Cheques introduced by bankers of London.First printed cheques made by british banker Lawrence Childs.
 
 1959 - Invention of Magnetic Ink Character Recognization(MICR) for reading and printing cheques made them more secure
 
@@ -712,7 +713,8 @@ Set of formal and standardized rules to enable transfer of value between end-use
 
 ##### 4. Settlement: Funds transferred to recipients and payers accounts
 
-## 3.Payment Arrangements:
+## 3. Payment Arrangements:
+
 Set of Operational functionalities which support end-user of payment service providers when e-payments are used managed by the governing body on relevant conditions for payment to be executed.
 
 --- 
@@ -754,12 +756,14 @@ _The organizational structures and relationships enabling payments_
 - RBI's settlement systems
 - Foreign banks maintaining accounts with Indian banks for cross-border payments
 
+`Payment Aggregators like Razorpay, PayU,Cashfree,CCAvenue,Instamojo,Paytm Payment Gateway are example of payment aggregators tey charge the merchant a small fees for processing the txn on the webpage`
+
 # Payment Systems
-eg: UPI,RTGS,DNS,NEFT,INMPS
+eg: UPI,RTGS,DNS,NEFT,IMPS
 
 RTGS(Real Time Gross Settlement) : Large fund transfer and txns are processed and settled immediately on individual basis without being batched.
 
-DNS(Deferred Net Settlement) : Payment orders are cumulated through out the day and at end of day(or multiple times a day) using RTGS the net funds are transferred.
+DNS(Deferred Net Settlement) : Payment orders are cumalated through out the day and at end of day(or multiple times a day) using RTGS the net funds are transferred.
 
 NEFT(National Electronic Funds Transfer) : Popular electronic payments system allowing individual,business and institutions to transfer money in secure and efficient ways. Smaller value transactions and uses batch processing where multiple batches of txns are processed instead of individual.
 
@@ -781,7 +785,7 @@ Technology that facilitates processing of online payments acting as intermediary
 ##### Payment gateway of India is Billdesk
 
 ## Large Value Payment Systems(LVPS):
-Used to settle larger payments between banks. They can be client ,interbank or payments for settlement from retail payment systems.eg : SWIFT
+Used to settle larger payments between banks. They can be client ,interbank or payments for settlement from retail payment systems. eg : SWIFT
 
 ## Retail Payments Systems(RPS):
 Retail payments like payments from household and stores are settles. eg : NEFT
@@ -795,13 +799,13 @@ Advantages:
 1. Centralized Clearing
 2. Reduced Complexity
 3. Faster Settlement
-Basically i pay directly 100 to someone else
+Basically i pay directly 100 to someone else. Customer pays → Funds are debited and credited instantly between accounts. eg: IMPS,UPI,RTGS,etc
 
 ## Double settlements Payments:
-Transaction goes through two steps authorization and (finalizing & transferring) .Eg: Pay my bank 1k to buy from seller for 1k. When direct payments not required or currency conversion or bank verification it adds layer of security.
+Transaction goes through two steps authorization and (finalizing & transferring) .Eg: Pay my bank 1k to buy from seller for 1k. When direct payments not required or currency conversion or bank verification it adds layer of security. You swipe a **debit card** → transaction is authorised instantly → the actual money moves from your bank to merchant’s bank later in batch settlement (end of day).
 
 ## Triple Settlements Payments:
-There is authorizing,clearing and settlement. eg: RTGS,SWIFT
+There is authorizing,clearing and settlement. eg: RTGS,SWIFT,credit cards.
 
 # Card Payments
 Issuer/Issuing Bank - Issues the cards for the customer.
@@ -809,7 +813,6 @@ Acquirer/Acquiring Bank - Bank of the merchant
 
 ![[Pasted image 20251107155943.png]]
 ![[Pasted image 20251107160007.png]]
-
 
 **Challenger Banks** : New generation of Banks for digital or tech driven banks that offer services without need of physical branch(But may have them).
 
@@ -835,6 +838,7 @@ First digit of credit card signifies card network:
 - A payment gateway is a service that acts as link between business and payment processor.
 # Webhook Endpoint:
 It is an endpoint URL that server or app provides to payment processor.
+
 ![[Pasted image 20251107165435.png]]
 
 NFC(Near Field Communication) : Wireless that allow devices to communicate in close proximity.
@@ -894,13 +898,14 @@ Enforces the Banking regulation act by using the foreign exchange management act
 - Sectors given lending priority are small finance groups like small enterprises,agriculture low-earning or less-privileged.
 - Willfully defaulting on loans may be prosecuted
 - Cash Reserve Ratio(CRR): Min 4.5% of Net demand and time liabilities(NDTL) have to kept as cash.
-- Statutory Liquidity Ratio(SLR): 18% pf NDTL in form of gold,cash or approved forms of securities have to kept always
-- Provisioning for NPAs
+- Statutory Liquidity Ratio(SLR): 18% of NDTL in form of gold,cash or approved forms of securities have to kept always
+- Provisioning for NPAs(Setting aside a certain percentage of a bank’s profits to cover losses from loans that may or have become NPA)
 - New Banking Licensing Norms
 
 #### Parent ecosystem Critical Directives:
 - Adhere to Payment & Settlements act
 - Regulation and supervision of Financial Market Infrastructure (FMI) like RTGS,SSS(Security Settlement Systems),CCIL(Clearing corporation of India Ltd).
+
 - Guidelines on regulation of payment aggregators and payment gateways:
 	- Payment aggregators and gateways to adopt newer technology
 	- Min Net worth criteria to be maintained or the business will be taken down.
@@ -935,6 +940,7 @@ Identify Risk -> Assess Risk -> Review Controls -> Control Risk
 - **Avoidance** : Avoid causes of risk.
 - **Mitigation** : Decrease financial affected by risk by lowering possibility of risk occurring.
 - **Acceptance** : Forced to take risk, option only possible if business has contingencies to mitigate the impact of the risk that could occur.
+
 ### Why they fall short:
 - Bank's Internal Governance
 - Risk Culture

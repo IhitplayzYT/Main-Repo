@@ -1,10 +1,11 @@
 - **GMP(Grey Market premium)** : The extra premium that the IPO is being sold at in the Grey Market(Unofficial , Over-the-Counter , Unregulated by SEBI)
 
-- **Kostak Rate** : The premium to by the application of an IPO regardless of whether it is allotted to you or not.
+- **Kostak Rate** : The premium to buy the application of an IPO regardless of whether it is allotted to you or not.
 
 - **IPO(Initial Public Offer)** : The First time the Company is opening it's shares to the general public in order to raise funds.
 
 - **SEBI(Securities and Exchange Board of India)** : Regulatory body of capital markets in India.
+
 - **IRDAI(Insurance Regulatory and Development Authority of India)** : Regulatory body for insurance in India.
 
 - **Overdraft** : It is facility to withdraw more money then what is in in your bank account right now, this overdraft amount is decided based on credit score,account type,etc and is usually used to prevent bouncing of a Check

@@ -52,7 +52,7 @@ Txn needs to be redo if log of txn contains start and also commit or abort.
 If txn undoes and then redoes it called repeating history.
 
 If both start and commit/abort present we do a redo
-if only start there no ending tags we do an undo
+If only start there no ending tags we do an undo
 
 Undo/Redo are time consuming hence to streamline we use checkpoints concept `<checkpoint L>` onto stable storage where L is list of txns active at time of checkpoint.
 
