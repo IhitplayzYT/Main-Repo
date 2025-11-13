@@ -109,7 +109,7 @@ If conflict pair possible we draw an edge.If any cycle or loop in schedule then 
 If conflict serializability fails txn can still be serializable by view serialisability.
 
 For view serializability we just swap two operations between txns and then take sample output and see if it produces the same output.
-If same output then txn is serializable.
+If same output then txn is serializable. Make sure to swap in such a way that none of the 4 problems with concurrent can occur.
 
 # Concurrent Control
 

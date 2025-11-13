@@ -36,6 +36,7 @@
 
 **Mutual Funds : Bank takes funds from multiple users and puts it together in a large pool which is invested into a highly researched portfolio to generate the interest amount. Mutual funds are riskier then FDs or Bonds but safer then stocks or derivatives.**
 
+ **Prevention of Money Laundering act (PMLA)** : Whoever who directly or indirectly indulges or related to the party or  assist or provides aid to such party's who proceeds with the crime of and projecting it as untainted property shall be guilty of offense of money laundering.
 ##### Types of Risk in Derivative and contracts : 
 1. Default Risk : The risk of a user defaulting from a contract.
 2. Counterparty Risk: The risk of cheating or not upholding of a contract by the counterparty.
@@ -768,6 +769,8 @@ DNS(Deferred Net Settlement) : Payment orders are cumalated through out the day 
 NEFT(National Electronic Funds Transfer) : Popular electronic payments system allowing individual,business and institutions to transfer money in secure and efficient ways. Smaller value transactions and uses batch processing where multiple batches of txns are processed instead of individual.
 
 `NEFT is a payment system/method whereas DNS is settlement method of Banks.`
+
+IMPS(Immediate Payment System) : It is a net settlement.Similar to RTGS but has no minimum but has a max limit of 5 lakh.
 
 ### RTGS vs NEFT
 1. RTGS real time individual fund settlement, NEFT is batch settlement 

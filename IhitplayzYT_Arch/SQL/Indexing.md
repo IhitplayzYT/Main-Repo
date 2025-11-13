@@ -35,7 +35,7 @@ Good trade off: Sparse index for each block in which we have to search for our k
 Key points to blocks which contain a list of indexes that point to in order entries in the table. Secondary indexes have to be dense.
 
 ![[10-11-2025==15-56_1.png]]
-Here each index points addresses(buckets) which when followed point to the table.The table is sorted but the buckets are not.
+Here each index points addresses(buckets) which when followed point to the table.The table is sorted on id NOT ON SALARY.
 Here the white table is secondary index.
 
 #### Primary Indices:
@@ -84,7 +84,7 @@ primary index table is sparse but each secondary index table is dense. Data can 
 
 Indexing has many benefits for searching,but db modification has to update every index.
 
-Sequential scan with primary index is efficient but seq scan on secondary expensive.(Primary has ranges,secondary is dense for each entry)
+Sequential scan with primary index is efficient but seq scan on secondary expensive.(Primary has ranges,secondary is dense for each entry on unsorted key)
 
 Indexing has issues like when deletion is to occur the index entries for both dense and sparse have a overhead. Periodic reorganization of the file and performance degredation as the file grows have made the B+ - trees an alternative to indexed-sequential files.B & B+ trees are M-way tree with self balancing and expanding features added just by a few simple rules on a M-way tree.
 
@@ -141,7 +141,7 @@ Space Overhead
 ### Properties of B+ trees:
 n - Max no of children a node can have
 
-1. Each non-root and non-leaf node has between n/2(Rule imposed on M-way tree to avoid growing linearly and making lookup linear) and n children
+1. Each non-root and non-leaf node has between n/2 to n keys(Rule imposed on M-way tree to avoid growing linearly and making lookup linear) and n children
 2. A leaf node has between (n-1)/2 and (n-1) values.
 3. All paths from root to leaf are same(Height balanced)
 4. If root not leaf it has min 2 children
@@ -156,15 +156,11 @@ Pi are child ptrs and Ki are search key values
 Pi are sorted and point to file records for Ki. Assuming n is max no of values a node holds Pn point to the node starting with Pn+1 and so on. Basically left leaf node point to right one soon and so forth.
 
 #### Non-leaf level:
-Non leaf nodes form a multi level sparse index on the leaf nodes. 
-
-Each node in B tree can hold n ptrs and n-1 keys.i.e n children and n-1 search keys in the node itself.
-
-For total of K entrys the max height is log<sub>n/2</sub> k
-
-Typically the size of one node is same as size of a block(4KiB) , each index entry is 40 bytes so roughly 100 is the span of one node.
-
-If duplicates present in B tree we can guarentee k0 <= k1 <= ....
+- Non leaf nodes form a multi level sparse index on the leaf nodes. 
+- Each node in B+ tree can hold n ptrs and n-1 keys.i.e n children and n-1 search keys in the node itself.
+- For total of K entrys the max height is log<sub>n/2</sub> k
+- Typically the size of one node is same as size of a block(4KiB) , each index entry is 40 bytes so roughly 100 is the span of one node.
+- If duplicates present in B tree we can guarentee k0 <= k1 <= ....
 
 B<sup>+</sup> trees solve index file degradation and data file degradation when used in file organisation but there are much less records in a node then the pointers in the node.
 
