@@ -61,7 +61,9 @@
 - **Money Laundering** : Mixing fake money with real money.
 
 - **Prevention of Money Laundering act (PMLA)** : Whoever who directly or indirectly indulges or related to the party or  assist or provides aid to such party's who proceeds with the crime of and projecting it as untainted property shall be guilty of offense of money laundering.
+
 - **ASBA(Application Supported by Blocked Amount)** :  Usually when you apply for an IPO the amount gets blocked(You can't use it until the application has been processed.`)
+
 - **KYC (Know-your-customer)** : Used by financial institutions and other regulated entities to verify the identity of their clients. Required proof of identity is passport or pancard or aadhar card and required proof of address like utility bill or bank statement or government correspondence a passport-sized photograph and signature.
 
 - **Covenants** : Covenants are conditions or clauses written into a loan agreement (or bond indenture) that the borrower must agree to and comply with during the term of the loan.
@@ -118,7 +120,7 @@
 
 - **Moratorium Period** : The time period you took a break from paying loans
 
-- **Hypothecation**  : **Process where a borrower pledges an asset as security for a loan without giving up possession** of that asset.
+- **Hypothecation**  : **Process where a borrower pledges an movable asset as security for a loan without giving up possession** of that asset.
 
 - **Calumny** : Printing media like newspapers,etc.
 

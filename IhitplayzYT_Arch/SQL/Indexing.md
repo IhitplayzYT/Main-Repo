@@ -34,7 +34,7 @@ Good trade off: Sparse index for each block in which we have to search for our k
 #### Secondary Indices:
 Key points to blocks which contain a list of indexes that point to in order entries in the table. Secondary indexes have to be dense.
 
-![[10-11-2025==15-56_1.png]]
+![[10-11-2025==15-56_1 1.png]]
 Here each index points addresses(buckets) which when followed point to the table.The table is sorted on id NOT ON SALARY.
 Here the white table is secondary index.
 
@@ -173,6 +173,8 @@ B tree has a record pointer for all nodes in at each and every level.B+ tree has
 B-tree have advantage that they may use less nodes then B+ tree and it is possible to find key value ptr before reaching the leaf node.
 
 B-tree disadvantage is non-leaf nodes are larger,so less fan out and hence are more deeper.Insertion deletion and implementation of B trees is also harder.
+
+![[Pasted image 20251113110224.png]]
 
 Composite search key - Search key containing more then one attrib and there is lexicographic ordering in the composite key.
 

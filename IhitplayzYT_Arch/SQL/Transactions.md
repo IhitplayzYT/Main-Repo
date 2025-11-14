@@ -175,7 +175,8 @@ else:
 		write(X)
 end
 
-Lock manager manages a DS called lock table in order to manage and grant txns with locks.
+Lock manager is a separate process to which txns send lock and unlock requests and replies to mssg by sending a lock grant mssg or ask txn to rollback incase of deadlock.Lock table is hash table indexed on name of data being locked. Lock manager manages a DS called lock table in order to manage and grant txns with locks.
+
 
 Timestamp based protocols:
 Each txn gives a timestamp on entering system

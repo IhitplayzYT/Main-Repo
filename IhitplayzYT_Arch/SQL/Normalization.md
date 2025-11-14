@@ -21,22 +21,6 @@ FD : X -> Y means that for every tuple with X being same (tuple1.X == tuple2.X )
 2. R1 intesection R2 != Null
 3. R1 or R2 or both have to have candidate key in them.
 
-#### Matrix method to find if lossy or loss-less
-1. Make a matrix of rows(R1 AND R2) and cols members of R (A,B,C,D,...).
-2. Fill all the attrib in related daughter tables in matrix
-3. Use the FD relation, if the determinant column is fully filled then the discriminant col can also be fully filled.
-4. If any row is full filled then it is Loss-less.
-
-eg : R(A,B,C,D,E) ->  R1(A,B,C) & R2(BCD) & R3(CDF)
-FD:{AB -> CD , A -> E ,C -> D}
-
-		A  B  C  D  E
-	R1  x  x  x  o
-	R2     x  x  x
-	R3        x  x  x
-
-So it is lossy.
-
 ### Normalization
 1. The join has to be lossless
 2. The functional dependency has to be preserved.

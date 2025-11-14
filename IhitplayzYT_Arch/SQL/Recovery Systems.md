@@ -59,3 +59,5 @@ Undo/Redo are time consuming hence to streamline we use checkpoints concept `<ch
 During recovery we consider the most recent txn before checkpoint and all txn after the checkpoint 
 
 The operation that caused system failure need to be undo, the txn before failure causing ops and checkpoint need to be redone and any txns before checkpoint don't need to be touched.
+
+![[Pasted image 20251113114159.png]]

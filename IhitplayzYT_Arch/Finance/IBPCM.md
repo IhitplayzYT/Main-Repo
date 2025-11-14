@@ -328,7 +328,7 @@ The business in inheritable. Members of the family in a HUF are called **coparce
 - Treasury Operations : Treasury operations involve the **planning, organizing, and controlling of cash, investments, borrowing, and risk** for an organization, typically handled by a **Treasury Department**. 
 - **Wealth management solutions** : are comprehensive financial services provided to **individuals, families, or businesses** to help them **grow, protect, and transfer wealth** effectively. These solutions go beyond just investing — they offer **customized advice, planning, and execution** to meet the unique financial goals of each client.
 - Executor of wills
-- 
+
 `Investments in the real estate sector, government bonds, securities, gold and debentures also acquire a significant space in the banking models for income. Additionally, many banks have AMCs as subsidiaries which operate mutual funds. Banks earn money from commissions and expense ratios on these investments.Banks charge fees,penalities and annual service charges for accounts,etc`
 
 **Specialist Banks** : Operating in Niche Markets
@@ -353,7 +353,7 @@ The business in inheritable. Members of the family in a HUF are called **coparce
 - Current/Short Term Asset : Any asset that can be converted to cash within 1 year.
 - Fixed/Long Term Asset : Provide benefit for more then a year.
 
-`Frequent change in business model isn't good since no time to adapt to o the changes made to the business.`
+`Frequent change in business model isn't good since no time to adapt to the changes made to the business.`
 
 **Capital** : Initial money given to the business by the owner.
 
@@ -465,7 +465,7 @@ Like Call option but now the seller basically has to buy from me the stock at a 
 
 - If MP goes higher then or equal to strike price you incur of loss of premium, to reduce loss best not exercise the option.
 
-- If MP drops lower then strike price then you profit from exercising option.
+- If MP drops lower then strike price then you profit or reduce your losses from exercising option.
 
 ---
 
@@ -488,17 +488,12 @@ Like Call option but now the seller basically has to buy from me the stock at a 
 - A **GTD order** lets you **set a buy/sell order at a chosen price** and keep it active until a **specific date** (validity).
 - If the stock reaches that price **anytime before the expiry date**, the order will execute automatically.
 - If not, the order is cancelled on the expiry date.
-
-`Derivatives apart from forwards are sold on the Exchange credit derivatives market`
-
-`In capital markets equity backed securities and long term debt is bought and sold`
-
+--- 
+- `Derivatives apart from forwards are sold on the Exchange credit derivatives market`
+- `In capital markets equity backed securities and long term debt is bought and sold`
 - `Short term debt is bought and sold in money markets.`
-
 - `The secondary market, also called the stock/securities exchange`
-
 - `The primary market creates financial assets, and the secondary market makes them marketable`
-
 ---
 #        Introduction to Insurance
 
@@ -509,7 +504,6 @@ Like Call option but now the seller basically has to buy from me the stock at a 
 2. **Insured / Policyholder** : The person or entity who purchases the insurance policy.Pays premiums to the insurer. Has the right to claim compensation if a covered loss occurs
 3. **Reinsurer** : Also take risk along with insurer to reduce affect of risk.
 4. **Claim Adjuster / Loss Assessor** : Works on behalf of the insurer to investigate and settle claims.
-
 
 `On road cost it is the cost of owning and using a personal vehicle on roads like taxes,tolls,RTO,etc`
 
@@ -538,7 +532,7 @@ Can be indemnity based where reimbursement upto a limit or fixed benefit based w
 
 - Whistle blower for fraud: Person who brings to the attention of the higher ups any wrongdoing or violation of regulations.
 
-**Loan Shield Policy** : type of insurance designed to repay your outstanding loan in case of unforeseen events such as death, disability, or critical illness.
+**Loan Shield Policy** : Type of insurance designed to repay your outstanding loan in case of unforeseen events such as death, disability, or critical illness.
 
 `Indirect loss caused due to peril is called Consequential Loss`
 #### Property Insurance:
@@ -609,7 +603,7 @@ Insured must take reasonable steps to minimize the loss of damage or property.
 3. Accessibility : Who can access,Where can access,what needed to access.
 4. Technology : peer to peer
 
-- Replicating the anonymity associated with physical notes is hard to do fro digital currency and need sophisticated cryptography protocols and techniques to enforce.
+- Replicating the anonymity associated with physical notes is hard to do for digital currency and need sophisticated cryptography protocols and techniques to enforce.
 
 - Cryptographic methods are techniques used to secure the  information by transforming it in such a way that a person without a key or authorization isn't able to read it.
 
@@ -757,7 +751,7 @@ _The organizational structures and relationships enabling payments_
 - RBI's settlement systems
 - Foreign banks maintaining accounts with Indian banks for cross-border payments
 
-`Payment Aggregators like Razorpay, PayU,Cashfree,CCAvenue,Instamojo,Paytm Payment Gateway are example of payment aggregators tey charge the merchant a small fees for processing the txn on the webpage`
+`Payment Aggregators like Razorpay, PayU,Cashfree,CCAvenue,Instamojo,Paytm Payment Gateway are example of payment aggregators they charge the merchant a small fees for processing the txn on the webpage`
 
 # Payment Systems
 eg: UPI,RTGS,DNS,NEFT,IMPS
@@ -776,13 +770,13 @@ IMPS(Immediate Payment System) : It is a net settlement.Similar to RTGS but has 
 1. RTGS real time individual fund settlement, NEFT is batch settlement 
 2. RTGS is immediate,NEFT delayed
 3. Minimum 2 Lakh for RTGS ,NEFT no minimum
-4. Operating hours for RTGS is 9:00 AM and 4:30 PM whereas NEFT is 24/7
-5. RTGS for high value urgent payments, NEFT for low value non-urgent payments
-6. Gross settlement vs Net settlement
-7. Higher fees vs Lower fees
+4. No upper limit for both
+5. Operating hours for RTGS is 9:00 AM and 4:30 PM whereas NEFT is 24/7
+6. RTGS for high value urgent payments, NEFT for low value non-urgent payments
+7. Gross settlement vs Net settlement
+8. Higher fees vs Lower fees
 
 # Payment Gateway:
-
 Technology that facilitates processing of online payments acting as intermediary between merchant,customer and the financial institution.
 
 ##### Payment gateway of India is Billdesk
@@ -791,7 +785,7 @@ Technology that facilitates processing of online payments acting as intermediary
 Used to settle larger payments between banks. They can be client ,interbank or payments for settlement from retail payment systems. eg : SWIFT
 
 ## Retail Payments Systems(RPS):
-Retail payments like payments from household and stores are settles. eg : NEFT
+Retail payments like payments from household and stores are settles. eg : NEFT,UPI
 
 ### LVPS vs RPS:
 LVPS associated with RTGS and RPS related to DNS.
@@ -808,7 +802,7 @@ Basically i pay directly 100 to someone else. Customer pays → Funds are debite
 Transaction goes through two steps authorization and (finalizing & transferring) .Eg: Pay my bank 1k to buy from seller for 1k. When direct payments not required or currency conversion or bank verification it adds layer of security. You swipe a **debit card** → transaction is authorised instantly → the actual money moves from your bank to merchant’s bank later in batch settlement (end of day).
 
 ## Triple Settlements Payments:
-There is authorizing,clearing and settlement. eg: RTGS,SWIFT,credit cards.
+There is authorizing,clearing and settlement. eg: ,SWIFT,credit cards,Stock exchange,Fund transfer between banks.
 
 # Card Payments
 Issuer/Issuing Bank - Issues the cards for the customer.

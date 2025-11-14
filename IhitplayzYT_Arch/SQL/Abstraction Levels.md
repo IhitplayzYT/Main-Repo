@@ -9,6 +9,8 @@
 ### Data independence 
 Any modifications made to one data level won't change the other higher data levels.
 
+![[Pasted image 20251113111050.png]]
+
 [[Terms & Terminology]]
 [[Constraint]]
 [[SQL_Node]] : Return to  SQL Root Node.

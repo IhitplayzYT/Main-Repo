@@ -6,7 +6,7 @@
 
 **Constraints** : A **[[Constraint]]** is a rule applied to columns to ensure data integrity.
 
-**DML** : Is the query written to interact and get data or set data in a database.
+**DML** : Is the query written to interact,access and manipulate and get data or set data in a data model.
 - **Procedural** : User specifies what data and how to get.	
 - **Declarative(Non-Procedural)** : Specifies what data but not how to get it.
 
@@ -14,13 +14,29 @@
 
 - A data base must have high **ACID ( Atomisity, Consistency, Isolation & Durability)**.
 
-**Atomisity** : Either all steps must be done or none.
+**Atomisity** : Either all steps 
+must be done or none.
+
+DDL compiler generates table templates stored in a data dictionary. The data dictionary also consists of table metadata.
 
 **Parent Table/Referenced Table** : Table containing the primary key that is being referenced by another table's foreign key.
 
 **Child Table/Referencing Table** : Table containing the foreign key.
 
 `Physical Data Independence – The ability to modify the physical schema without changing the logical schema`
+
+
+## Why not use files for data storage
+
+1. Data inconsistency and redundancy.
+2. Difficult to access data
+3. Data isolation
+4. Integrity problems: Hard to add constraints and checks
+5. Atomicity of updates(Partial updates make database inconsistent )
+6. Concurrency issues
+7. Security problems: Hard to provide access.
+
+
 ## Example:
 
 | EmployeeID | Name        | Age | Department | Salary |
