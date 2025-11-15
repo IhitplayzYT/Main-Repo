@@ -1,0 +1,43 @@
+-- IHIT R ACHARYA LAB-1
+-- CREATING THE TABLE employee
+COLUMN EMP_NAME    FORMAT A10
+COLUMN EMP_NO      FORMAT 999999
+COLUMN EMP_ADDRESS FORMAT A15
+
+CREATE TABLE employee (
+    emp_no NUMBER(8,0),
+    emp_name VARCHAR(100),
+    emp_address VARCHAR(50)
+);
+-- INSERTING 5 DIFFERENT/UNIQUE INDIVIDUALS INTO TABLES
+INSERT into employee values(111111,'A','MANIPAL');
+INSERT into employee values(222222,'B','MANGALORE');
+INSERT into employee values(333333,'C','MUMBAI');
+INSERT into employee values(444444,'E','MANGALORE');
+INSERT into employee values(555555,'F','MANIPAL');
+--PRINTING ALL employee
+SELECT emp_name,emp_no,emp_address FROM employee;
+-- PROINTING ONLY THOSE EMPLOYEE WITH ADDRESS AS MANIPAL
+SELECT emp_name FROM employee WHERE employee.emp_address = 'MANIPAL';
+-- ADDING A SALARY COLOUMN TO TABELE
+ALTER TABLE employee add salary NUMBER(8,2);
+-- UPDATING THE NEWLY ADDED SALARY COLOUMN FOR ALL EMPLOYEE
+UPDATE employee SET salary = 60000 WHERE emp_no = 111111;
+UPDATE employee SET salary = 50000 WHERE emp_no = 222222;
+UPDATE employee SET salary = 40000 WHERE emp_no = 333333;
+UPDATE employee SET salary = 30000 WHERE emp_no = 444444;
+UPDATE employee SET salary = 20000 WHERE emp_no = 555555;
+--PRINTING THE TABLE
+SELECT * FROM employee;
+--PRINTING THE SKELETON/STRUCTURE OF THE TABLE
+DESC employee;
+-- DELETING EMPLOYEE FROM MANGALORE
+DELETE from employee WHERE employee.emp_address ='MANGALORE';
+--PRINTING REMAINING EMPLOYEE
+SELECT emp_name FROM employee;
+--RENAMING THE TABLE
+RENAME employee TO employees;
+--DROPPING/DELETING THE ENTITE TABLE
+DROP table employees;
+
+
