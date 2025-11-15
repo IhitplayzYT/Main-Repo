@@ -179,4 +179,6 @@ internal Ls* listfiles(Filesystem*,Inode*);
 internal void show_inode(Inode *);
 internal void wipe_fs(Filesystem *);
 internal void wipe_disk(Disk *);
+internal ptr search_subdir(Filesystem*,Inode*,i8*);
+internal ptr get_ptr(i8*,Filesystem*);
 /* Function Signatures */

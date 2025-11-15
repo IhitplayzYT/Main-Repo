@@ -590,6 +590,49 @@ if (!dwrite(dd,buff,0)){seterr(DISK_IO_ERR);return;}
 }
 
 
+//TODO: Working on this and its helper fxn
+internal ptr get_ptr(i8 * s,Filesystem* fs){
+if (!s || !*s) {seterr(BAD_ARG);return 0;}
+if (!fs) fs = FileDescriptors[0];
+Inode * ino = fetchinode(fs,0);
+for (i16 i = 0 ; i < DirectPtrsperInode;i++){
+Inode * t = fetchinode(fs,ino->direct[i]);
+if (!t || t->validtype == InvalidType) continue;
+if (strcomp(filestr(&t->name),s) == 0){dealloc(t);dealloc(ino);return ino->direct[i];}
+ptr x = search_subdir(fs,t,s);
+dealloc(t);
+}
+Inode * t = fetchinode(fs,ino->indirect);
+if (!t) {seterr(INODE_ERR);return 0;}
+if (strcomp(filestr(&t->name),s) == 0){dealloc(t);ptr y = ino->indirect;dealloc(ino);return y;}
+ptr x = search_subdir(fs,t,s);
+dealloc(t);
+dealloc(ino);
+return x;
+}
+
+internal ptr search_subdir(Filesystem* fs,Inode * inode,i8 * s){
+if (!inode) return 0;
+i16 k = 0;
+for (i16 i = 0 ; i < DirectPtrsperInode;i++){
+Inode * t = fetchinode(fs,inode->direct[i]);
+if (!t) continue;
+
+if (t->validtype == DirType || t->validtype == FileType){k += 1;}
+else continue;
+
+if (strcomp(filestr(&t->name),s) == 0){dealloc(t);dealloc(inode);return inode->direct[i];}
+return search_subdir(fs,t,s);
+dealloc(t);
+}
+Inode * t = fetchinode(fs,inode->indirect);
+if (!t) {return 0;}
+if (strcomp(filestr(&t->name),s) == 0){dealloc(t);ptr y = inode->indirect;dealloc(inode);return y;}
+return search_subdir(fs,t,s);
+}
+
+
+
 internal Inode* get_inode(i8 * path,Filesystem* fs){
 if (!path || !*path) return (Inode*)0;
 Inode* ino;
