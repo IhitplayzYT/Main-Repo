@@ -721,3 +721,5 @@ public i8* toupprn(i8*,i16);
 public i8* tolwrn(i8*,i16);
 public i8 isalphabetic(i8*);
 public i8 isnumeric(i8*);
+public i8* invert_bits(i8 * ,i32);
+public i8 flip_byte(i8 );
