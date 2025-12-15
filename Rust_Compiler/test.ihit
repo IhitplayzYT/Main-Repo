@@ -1,7 +1,0 @@
-let mut x : i32 = 56;
-if (a >= b) {
-x = "hello";
-}
-else{
-x = 0
-}
