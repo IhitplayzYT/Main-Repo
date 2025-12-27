@@ -1,61 +1,68 @@
 /* Hotreload.c */
 #include "Hotreload.h"
+#include <dlfcn.h>
+#include "shared.h"
 
-public int _load_f(const char *varib_name, float new_val, const char *fname) {
-  if (!fname || !varib_name)
-    return 0;
-  void *new_handle = dlopen(fname, RTLD_NOW);
-  if (!new_handle) {
-    fprintf(stderr, "FILE ERR");
-    return 0;
-  }
-  dlerror();
-  void *sym = dlsym(new_handle, varib_name);
-  if (!sym) {
-    fprintf(stderr, "SYMBOL ERR");
-    dlclose(new_handle);
-    return 0;
-  }
-  dlerror();
-  *(float *)sym = new_val;
-  return 1;
+void * handle;
+i8 update_handle(char * file){
+handle = dlopen(file, RTLD_NOW);
+return 1;
 }
-public int _load_i(const char *varib_name, int new_val, const char *fname) {
-  if (!fname || !varib_name)
-    return 0;
-  void *new_handle = dlopen(fname, RTLD_NOW);
-  if (!new_handle) {
-    fprintf(stderr, "FILE ERR");
-    return 0;
-  }
-  dlerror();
-  void *sym = dlsym(new_handle, varib_name);
-  if (!sym) {
-    fprintf(stderr, "SYMBOL ERR");
-    dlclose(new_handle);
-    return 0;
-  }
-  dlerror();
-  *(int *)sym = new_val;
-  return 1;
+i8 init_handle(char * file) {
+    handle = dlopen(file,RTLD_NOW);
+    return 1;
+}
+void clean_handle() {
+    dlclose(handle);
+    handle = NULL;
+}
+void usage() {
+fprintf(stderr,"Usage : [update/init]_handle -> RELOAD");
+exit(-1);
+}
+void * sig_handler(int x){ 
+if (handle) dlclose(handle);
+return (void *)0;
+}
+void reload_float(char * f,f64 v){
+    if (!handle) {usage();return;}
+    void * addr = dlsym(handle,f);
+    if (!addr) return;
+    *(f64 *)addr = v; 
+}
+void reload_int(char * f,i64 v){
+    if (!handle) {usage();return;}
+    void * addr = dlsym(handle,f);
+    if (!addr) return;
+    *(i64 *)addr = v; 
+}
+void reload_string(char * f ,char * v){
+    if (!handle) {usage();return;}
+    void * addr = dlsym(handle,f);
+    if (!addr) return;
+    *(char ** )addr = v;
+}
+void reload_byte(char * f,byte v){
+    if (!handle) {usage();return;}
+    void * addr = dlsym(handle,f);
+    if (!addr) return;
+    *(byte *)addr = v; 
+}
+void reload_struct(char * f, void * v,size_t l){
+    if (!handle) {usage();return;}
+    void * addr = dlsym(handle,f); 
+    if (!addr) return;
+    memcpy(addr,v,l);
 }
 
-public int _load_s(const char *varib_name, char *new_val, const char *fname) {
-  if (!fname || !varib_name)
-    return 0;
-  void *new_handle = dlopen(fname, RTLD_NOW);
-  if (!new_handle) {
-    fprintf(stderr, "FILE ERR");
-    return 0;
-  }
-  dlerror();
-  void *sym = dlsym(new_handle, varib_name);
-  if (!sym) {
-    fprintf(stderr, "SYMBOL ERR");
-    dlclose(new_handle);
-    return 0;
-  }
-  dlerror();
-  *(char **)sym = strdup(new_val);
-  return 1;
+int main(int argc, char *argv[]) {
+if (argc != 2) return -1;
+init_handle(argv[1]);
+RELOAD("val",2);
+void (*print)() = dlsym(handle,"print_val");
+while (1) {
+print();
+}
+dlclose(handle);
+return 0;
 }

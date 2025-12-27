@@ -1,25 +1,25 @@
 flags=-O2 -Wall -g -Wextra -pedantic -std=c2x
+ldflags=
 
 .PHONY: all clean cl run
 
-all:cl clean shared Hotreload.o  main_rl 
+all:cl clean shared.so Hotreload 
 
 cl:
 	clear
 
-run:main
+run:Hotreload
 	./$<
 
+shared.so : shared.c
+	gcc -fPIC -shared -ldl shared.c -o shared.so
 
-shared: shared_varibs.c
-	gcc -fPIC -shared $^ -o shared.so
+Hotreload: Hotreload.o shared.so
+	gcc $(flags) $^ -o $@ $(ldflags)
 
 Hotreload.o: Hotreload.c Hotreload.h
 	gcc $(flags) -c $<
 
-main_rl: main.c Hotreload.o 
-	gcc $(flags) $< -ldl -o main 
-
 clean:
-	rm -rf *.o main *.so
+	rm -rf *.o Hotreload
 
