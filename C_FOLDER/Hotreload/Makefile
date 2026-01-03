@@ -1,25 +1,26 @@
-flags=-O2 -Wall -g -Wextra -pedantic -std=c2x
+CC      := gcc
+CFLAGS  := -O2 -Wall -Wextra -pedantic -std=c2x -g
+LDFLAGS := -ldl
 
-.PHONY: all clean cl run
+TARGET  := Hotreload
+SHARED  := shared.so
 
-all:cl clean shared Hotreload.o  main_rl 
+.PHONY: all clean run
 
-cl:
-	clear
+all: $(TARGET) $(SHARED)
 
-run:main
-	./$<
+run: $(TARGET)
+	./$(TARGET) ./$(SHARED)
 
-
-shared: shared_varibs.c
-	gcc -fPIC -shared $^ -o shared.so
+$(TARGET): Hotreload.o
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 Hotreload.o: Hotreload.c Hotreload.h
-	gcc $(flags) -c $<
+	$(CC) $(CFLAGS) -c $< -o $@
 
-main_rl: main.c Hotreload.o 
-	gcc $(flags) $< -ldl -o main 
+$(SHARED): shared.c
+	$(CC) -fPIC -shared $(CFLAGS) $< -o $@
 
 clean:
-	rm -rf *.o main *.so
+	rm -f *.o $(TARGET) $(SHARED)
 

@@ -623,3 +623,14 @@ else if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')) return 0;
 }
 return 1;
 }
+
+public i8 flip_byte(i8 ch){
+return ~ch;
+}
+
+public i8* invert_bits(i8 * s,i32 n){
+i8 * ret = (i8*)alloc(n);
+if (!ret) return (i8*)0;
+for (i32 i = 0;i < n;i++) ret[i] = flip_byte(s[i]);
+return ret;
+}
