@@ -1,5 +1,6 @@
 /* stdoslib.h */
 #pragma once
+#include <cstdint>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -423,6 +424,8 @@ DEF_PRINT_ARGS(f64, print_f64, "%lf ");
       char: print_chars)(x, __VA_ARGS__, NULL)
 
 static signed short _strcomp(i8 *a, i8 *b) {
+  if (!a || !*a) return -1;
+  if (!b || !*b) return 1;
   i8 *p = a, *q = b;
   while (*p && *q) {
     if (*p > *q)

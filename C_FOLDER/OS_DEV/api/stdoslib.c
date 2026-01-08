@@ -338,13 +338,6 @@ if (((Tuple *)t)->sz == ((Tuple*)t)->cap){
 ((Tuple*)t)->data[((Tuple*)t)->sz++] = data;
 }
 
-public void FINALIZE(){
-for (int i = ((Tuple*)this)->sz - 1;i >= 0;i--){
-    dealloc(((Tuple*)this)->data[i]);
-}
-dealloc(((Tuple*)this)->data);
-}
-
 
 public i64 ticks_elapsed(){
 i32 l,h;
@@ -465,40 +458,75 @@ printf("]");
 }
 
 
-public struct s_Tok_ret* tokenise(i8* str,i8 ch){
-struct s_Tok_ret *res = (struct s_Tok_ret*)alloc(sizeof(struct s_Tok_ret));
-if (!res) return (struct s_Tok_ret*)0;
-res->ret = (i8**)alloc(sizeof(i8*));
-if (!res->ret) return (struct s_Tok_ret*)0;
-i8* p = str,*start = p;
-i16 k = 0;
-
-while (*p){
-if (*p == ch){
-if (p-start > 0){
-res->ret[k] = (i8*)alloc((int)(p - start+1));
-memcopy(res->ret[k],start,p - start);
-res->ret[k][p-start] = '\0';
-k++;
-res->ret = realloc(res->ret,(k+1)  * sizeof(i8*));
-start = ++p;}
-else{
-start = ++p;
-}
-}
-else ++p;
-}
-
-if (p != start){
-    res->ret[k] = (i8*)alloc((int)(p - start + 1));
-    memcopy(res->ret[k], start, p - start);
-    res->ret[k][p - start] = '\0';
-    k++;
-    res->ret = (i8**)realloc(res->ret, (k + 1) * sizeof(i8*));
-}
-res->ret[k] = (i8*)0;
-res->n = k;
-return res;
+public struct s_Tok_ret* tokenise(i8* str, i8 ch) {
+    if (!str) return (struct s_Tok_ret*)0;
+    struct s_Tok_ret *res = (struct s_Tok_ret*)alloc(sizeof(struct s_Tok_ret));
+    if (!res) return (struct s_Tok_ret*)0;
+    i16 capacity = 16;
+    res->ret = (i8**)alloc(capacity * sizeof(i8*));
+    if (!res->ret) {
+        free(res);
+        return (struct s_Tok_ret*)0;
+    }
+    i8* p = str,* start = p;
+    i16 k = 0;
+    while (*p) {
+        if (*p == ch) {
+            if (p - start > 0) {
+                if (k >= capacity) {
+                    capacity *= 2;
+                    i8** new_ret = (i8**)realloc(res->ret, capacity * sizeof(i8*));
+                    if (!new_ret) {
+                        for (i16 i = 0; i < k; i++) free(res->ret[i]);
+                        free(res->ret);
+                        free(res);
+                        return (struct s_Tok_ret*)0;
+                    }
+                    res->ret = new_ret;
+                }
+                res->ret[k] = (i8*)alloc((int)(p - start + 1));
+                if (!res->ret[k]) {
+                    for (i16 i = 0; i < k; i++) free(res->ret[i]);
+                    free(res->ret);
+                    free(res);
+                    return (struct s_Tok_ret*)0;
+                }
+                memcopy(res->ret[k], start, p - start);
+                res->ret[k][p - start] = '\0';
+                k++;
+            }
+            start = p + 1;
+            p++;
+        } else {
+            p++;
+        }
+    }
+    if (p != start && p - start > 0) {
+        if (k >= capacity) {
+            capacity++;
+            i8** new_ret = (i8**)realloc(res->ret, capacity * sizeof(i8*));
+            if (!new_ret) {
+                for (i16 i = 0; i < k; i++) free(res->ret[i]);
+                free(res->ret);
+                free(res);
+                return (struct s_Tok_ret*)0;
+            }
+            res->ret = new_ret;
+        }
+        res->ret[k] = (i8*)alloc((int)(p - start + 1));
+        if (!res->ret[k]) {
+            for (i16 i = 0; i < k; i++) free(res->ret[i]);
+            free(res->ret);
+            free(res);
+            return (struct s_Tok_ret*)0;
+        }
+        memcopy(res->ret[k], start, p - start);
+        res->ret[k][p - start] = '\0';
+        k++;
+    }
+    res->ret[k] = (i8*)0;
+    res->n = k;
+    return res;
 }
 
 public void FINALISE(){

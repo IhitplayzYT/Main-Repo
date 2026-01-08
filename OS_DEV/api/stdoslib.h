@@ -1,5 +1,6 @@
 /* stdoslib.h */
 #pragma once
+#include <cstdint>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -17,10 +18,15 @@ typedef signed int s32;
 typedef signed long s64;
 typedef float f32;
 typedef double f64;
+typedef unsigned char byte;
+typedef unsigned char boolean;
 /* Typedefinations */
-static void *this;
 /* MACROS */
-#define mut const
+#define true 1
+#define True 1
+#define false 0
+#define False 0
+#define unmut const
 #define public __attribute__((visibility("default")))
 #define internal __attribute__((visibility("hidden")))
 #define constructor __attribute__((constructor))
@@ -418,6 +424,8 @@ DEF_PRINT_ARGS(f64, print_f64, "%lf ");
       char: print_chars)(x, __VA_ARGS__, NULL)
 
 static signed short _strcomp(i8 *a, i8 *b) {
+  if (!a || !*a) return -1;
+  if (!b || !*b) return 1;
   i8 *p = a, *q = b;
   while (*p && *q) {
     if (*p > *q)

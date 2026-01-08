@@ -78,9 +78,9 @@ void cmd_format(i8 *s1, i8 *s2) {
   print_hex(dir, sizeof(Dir));
 
   //  Fix this shows way too many inodes and many were empty
-  //  show(fetchinode(fs,1),"inode");
-  //  Ls * ls = listfiles(fs,fetchinode(fs,0));
-  //  printf("%d\n",ls->count);
+   show(fetchinode(fs,1),"inode");
+   Ls * ls = listfiles(fs,fetchinode(fs,0));
+   printf("%d\n",ls->count);
   inode_dealloc(fs, idx1);
   inode_dealloc(fs, idx2);
   detach(d);

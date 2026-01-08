@@ -1,5 +1,7 @@
 /*  fs.h  */
 #include "fs.h"
+#include "disk.h"
+#include "os.h"
 #include "stdoslib.h"
 public Filesystem *FileDescriptors[MAX_FS];
 
@@ -216,49 +218,56 @@ internal i8 *filestr(Filename *n) {
 
 // Fix SOME ERROR [DONOT ADD c: IN THIS START FROM ROOT]
 internal Filename *parse_name(i8 *str) {
-  if (!str) {
-    seterr(BAD_ARG);
-    return (Filename *)0;
-  }
-  Filename *fname = (Filename *)alloc(sizeof(Filename));
-  if (!fname) {
-    seterr(MEM_ERR);
-    return (Filename *)0;
-  }
-  zero(fname, sizeof(Filename));
-  if (strcomp(str, "..") == 0) {
-    memcopy(fname->name, "..", 2);
-    memcopy(fname->ext, NULL, 3);
-    return fname;
-  }
-  if (strcomp(str, ".") == 0) {
-    memcopy(fname->name, ".", 1);
-    memcopy(fname->ext, NULL, 3);
-    return fname;
-  }
-
-  i8 flag = 0;
-  i8 m, n;
-  m = n = 0;
-  for (int i = 0; str[i] != '\0'; i++) {
-    if (str[i] == '.' && i != 0) {
-      flag = 1;
-      continue;
+    if (!str || !*str) {
+        seterr(BAD_ARG);
+        return (Filename *)0;
     }
-    if (flag) {
-      if (n == 3)
-        break;
-      fname->ext[n++] = str[i];
-    } else {
-      if (m == 8)
-        break;
-      fname->name[m++] = str[i];
+    Filename *fname = (Filename *)alloc(sizeof(Filename));
+    if (!fname) {
+        seterr(MEM_ERR);
+        return (Filename *)0;
     }
-  }
-  if (!n)
-    memcopy(fname->ext, NULL, 3);
-  return fname;
+    zero(fname, sizeof(Filename));
+    if (strcomp(str, ".") == 0 || strcomp(str, "..") == 0) {
+        i8 i = 0;
+        while (str[i] && i < 8) {
+            fname->name[i] = str[i];
+            i++;
+        }
+        fname->name[i] = 0;
+        return fname;
+    }
+    if (str[0] == '.') {
+        i8 i = 0;
+        while (str[i] && i < 8) {
+            fname->name[i] = str[i];
+            i++;
+        }
+        fname->name[i] = 0;
+        return fname;
+    }
+    i8 i = 0, n = 0, e = 0;
+    i8 seen_dot = 0;
+    while (str[i]) {
+        if (str[i] == '.' && !seen_dot) {
+            seen_dot = 1;
+            i++;
+            continue;
+        }
+        if (!seen_dot) {
+            if (n < 8)
+                fname->name[n++] = str[i];
+        } else {
+            if (e < 3)
+                fname->ext[e++] = str[i];
+        }
+        i++;
+    }
+    fname->name[n] = 0;
+    fname->ext[e] = 0;
+    return fname;
 }
+
 
 internal Filesystem *fsmount(i8 drive) {
   if (drive > MAX_FS) {
@@ -477,65 +486,69 @@ internal void fstatshow(File_stat *fst) {
          fst->idx);
 }
 
-// TODO: DECIDE WHETHER TO APPEND HOME/IHITPLAYZYT TO
 internal i8 *eval_path(i8 *path) {
-  if (!*path) {
-    seterr(BAD_ARG);
-    return "/";
-  }
-  i32 l = freq(path, (i8)'/');
-  i8 **stack = (i8 **)alloc(sizeof(i8 *) * (l + 1));
-  if (!stack) {
-    seterr(MEM_ERR);
-    return "/";
-  }
-  stack[l] = (i8 *)0;
-  i16 top = 0;
-  for (int i = 0; i <= l; i++)
-    stack[i] = alloc(sizeof(i8) * MAX_FILE_NAME);
-  struct s_Tok_ret *ret = tokenise(path, '/');
-  for (int i = 0; i < ret->n; i++) {
-    if (!*ret->ret[i] || strcomp(ret->ret[i], ".") == 0)
-      continue;
-    else if (strcomp(ret->ret[i], "..") == 0)
-      (top == 0) ? top : --top;
-    else if (strcomp(ret->ret[i], "c:") == 0 ||
-             strcomp(ret->ret[i], "d:") == 0 ||
-             strcomp(ret->ret[i], "C:") == 0 || strcomp(ret->ret[i], "D:") == 0)
-      continue;
-    else
-      stack[top++] = ret->ret[i];
-  }
+    if (!path || !*path) {
+        seterr(BAD_ARG);
+        return (i8 *)"/";
+    }
 
-  stack = (i8 **)realloc(stack, top * sizeof(i8 *));
-  i8 *simplified_path = (i8 *)alloc(sizeof(i8) * MAX_PATH_LEN);
-  i8 k = 0;
-  if (!simplified_path) {
-    seterr(MEM_ERR);
-    return "~";
-  }
-  for (int i = 0; i < top; i++) {
-    // if (strcomp(stack[i],"c:") == 0 || strcomp(stack[i],"C:") == 0 ||
-    // strcomp(stack[i],"d:") == 0 || strcomp(stack[i],"D:") == 0){k +=
-    // (i16)strcopy(simplified_path +
-    // k,stack[i])-1;simplified_path[++k]='/';k++;} else if (i == 1 &&
-    // strcomp(stack[i],"~") != 0) {
-    //     strcopy(simplified_path+k,"/home/IhitplayzYT/");
-    //     k += 18;
-    //     k += strcopy(simplified_path+k,stack[i])-1;
-    //     simplified_path[++k] = '/';
-    //     k++;
-    // }
-    // else if (i == 1)  k = strcopy(simplified_path+k,"/");
-    k += (i16)strcopy(simplified_path + k, stack[i]) - 1;
-    simplified_path[++k] = '/';
-    k++;
-  }
-  simplified_path[k - 1] = '\0';
-  dealloc(ret);
-  dealloc(stack);
-  return simplified_path;
+    i32 l = freq(path, (i8)'/');
+    i8 **stack = (i8 **)alloc(sizeof(i8 *) * (l + 1));
+    if (!stack) {
+        seterr(MEM_ERR);
+        return (i8 *)"/";
+    }
+    i16 top = 0;
+    struct s_Tok_ret *ret = tokenise(path, '/');
+    if (!ret) {
+        dealloc(stack);
+        seterr(MEM_ERR);
+        return (i8 *)"/";
+    }
+    for (i32 i = 0; i < ret->n; i++) {
+        i8 *tok = ret->ret[i];
+        if (!*tok || strcomp(tok, ".") == 0)
+            continue;
+        if (strcomp(tok, "..") == 0) {
+            if (top > 0) top--;
+            continue;
+        }
+        if (strcomp(tok, "c:") == 0 || strcomp(tok, "d:") == 0 ||
+            strcomp(tok, "C:") == 0 || strcomp(tok, "D:") == 0)
+            continue;
+
+        stack[top] = (i8 *)alloc(MAX_FILE_NAME);
+        if (!stack[top]) {
+            seterr(MEM_ERR);
+            goto cleanup;
+        }
+        strcopy(stack[top], tok);
+        top++;
+    }
+
+    i8 *simplified_path = (i8 *)alloc(MAX_PATH_LEN);
+    if (!simplified_path) {
+        seterr(MEM_ERR);
+        goto cleanup;
+    }
+    i32 k = 0;
+    simplified_path[k++] = '/';
+    for (i16 i = 0; i < top; i++) {
+        i32 len = strcopy(simplified_path + k, stack[i]);
+        k += len;
+        if (i != top - 1)
+            simplified_path[k++] = '/';
+    }
+    simplified_path[k] = '\0';
+
+cleanup:
+    for (i16 i = 0; i < top; i++)
+        dealloc(stack[i]);
+    dealloc(stack);
+    dealloc(ret);
+    return simplified_path;
 }
+
 
 internal ptr read_dir(Filesystem *fs, ptr p, Filename *name) {
   if (!fs || !p || !name)
@@ -685,23 +698,12 @@ internal Path *init_path(i8 *path, Filesystem *fs) {
   if (!ret) {
     return (Path *)0;
   }
-  i8 drive = ret->ret[0][0] - 0x62;
+  i8 drive = DiskDescriptor[0]->drive_no;
   if (fs)
     ans->fs = fs;
   else
-    ans->fs = FileDescriptors[0];
-
-  return 0;
-  if (ans->fs) {
-    //   HUGE ERROR CAUSED BY THIS FIX :TODO
-    ans->target = parse_name(ret->ret[ret->n - 1]);
-    //
-  }
-  return 0;
-  show(ans->target, "filename");
-  if (strcomp(ans->target, "c:") == 0 || strcomp(ans->target, "C:") == 0 ||
-      strcomp(ans->target, "d:") == 0 || strcomp(ans->target, "D:") == 0)
-    printf("Issue"); // ans->target = parse_name("/");
+    ans->fs = fsmount(2);
+  ans->target = parse_name(ret->ret[ret->n - 1]);
   if (!ans->target) {
     seterr(BAD_FILE_NAME);
     return (Path *)0;
@@ -770,12 +772,18 @@ internal Dir *open_dir(i8 *str) {
     seterr(PATH_ERR);
     return (Dir *)0;
   }
+
+   //  -- ERROR HERE  :TODO FIX:   path->fs is null ?? 
   Inode *ino = fetchinode(path->fs, 0);
+  show(path->fs,"filesystem");
   if (!ino) {
     dealloc(path);
     seterr(INODE_ERR);
     return (Dir *)0;
   }
+  //  -- ERROR HERE
+
+
   ptr x;
   ptr dirptr = 1;
 
