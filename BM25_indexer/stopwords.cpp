@@ -1,9 +1,6 @@
-#include <string>
-#include <unordered_set>
-#include <vector>
-#include <sstream>
+#include "stopwords.h"
 using std::unordered_set,std::string;
-const unordered_set<string> STOPWORDS = {
+const unordered_set<string> stopword_set = {
     // Articles
     "a", "an", "the",
     // Pronouns
@@ -110,11 +107,11 @@ const unordered_set<string> STOPWORDS = {
     "near", "outside", "regarding", "toward", "underneath", "unlike", "onto"};
 
 
-std::vector<std::string> filter_stopwords(string &str){
+std::vector<std::string> filter_stopwords(std::string &str){
 std::istringstream s(str);
 std::vector<std::string> ret;
 for (std::string x ; s >> x;) {
-if (STOPWORDS.find(x) != STOPWORDS.end()){
+if (stopword_set.find(x) == stopword_set.end()){
 ret.push_back(x);}
 }
 return ret;
