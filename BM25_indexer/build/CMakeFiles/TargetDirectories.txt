@@ -1,0 +1,3 @@
+/home/IhitplayzYT/BM25_indexer/build/CMakeFiles/main.dir
+/home/IhitplayzYT/BM25_indexer/build/CMakeFiles/edit_cache.dir
+/home/IhitplayzYT/BM25_indexer/build/CMakeFiles/rebuild_cache.dir

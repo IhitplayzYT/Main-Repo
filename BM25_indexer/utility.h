@@ -15,3 +15,9 @@ typedef unsigned long long i64;
 
 bool is_vowel(char &c);
 bool ends_with(const std::string &,const std::string &);
+int measure(const std::string &);
+int r1(std::string &);
+int r2(std::string &,int);
+bool double_consonant(const std::string &);
+bool cvc(const std::string &);
+bool contains_vowel(const std::string &);

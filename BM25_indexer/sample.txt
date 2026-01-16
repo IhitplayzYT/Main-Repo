@@ -1,20 +1,3 @@
-Natural language processing is a subfield of artificial intelligence
-that focuses on the interaction between computers and human language.
-In many practical applications, the goal is to extract useful
-information from large collections of text.
+The runners were running quickly, and they had prepared their datasets carefully. 
+By filtering out the stopwords, the analysis became clearer and more efficient.
 
-When building search engines or document classification systems,
-it is often necessary to preprocess the text before feeding it
-into a machine learning model. This preprocessing step may include
-tokenization, stop word removal, stemming, and normalization.
-
-Stop words are common words such as "the", "is", "and", or "to" that
-appear very frequently in text but usually carry little semantic
-meaning. Removing these words can reduce noise and improve the
-performance of classical information retrieval techniques.
-
-However, stop word removal is not always beneficial. In tasks like
-sentiment analysis or question answering, words such as "not" or
-"never" can be crucial for understanding the true meaning of a
-sentence. Therefore, the choice of preprocessing techniques should
-depend on the specific problem being solved.
