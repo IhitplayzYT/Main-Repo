@@ -5,6 +5,8 @@
 
 
 
+
+// TODO:
 std::vector<std::string> Lanchaster::stem_input() {
   std::vector<std::string> ret;
   /*
@@ -88,40 +90,33 @@ bool applied = false;
   r1_ = r1(s);
   r2_ = r2(s, r1_);
 
-  auto closure = [&](std::string &suf) {
-    return ((int)s.size() - (int)suf.size() >= r2_) && ends_with(s, suf);
-  };
-
   std::vector<std::string> suffixes = {
       "al",   "ance", "ence", "er",  "ic",  "able", "ible", "ant", "ement",
       "ment", "ent",  "ism",  "ate", "iti", "ous",  "ive",  "ize"};
 
 bool f = 0;
   for (std::string &suf : suffixes) {
-    if (closure(suf)) {
-        f = 1;
-      s.erase(s.size() - suf.size());
+    if (ends_with(s,suf) && (int)s.size()-(int)suf.size()>=r2_ && s.size()>suf.size()) {
+      s.erase(s.size()-suf.size());
+      f = true;
       break;
+      }
     }
-  }
-if (!f){
-  auto clos = [&](const std::string &suf) {
-    return ((int)s.size() - (int)suf.size() >= r2_) && ends_with(s, suf);
-  };
 
-  if (clos("ion")) {
-    char c = s[s.size() - 4];
-    if (c == 's' || c == 't')
-      s.erase(s.size() - 3);
-  }
-}
+  if (!f && ends_with(s,"ion") && (int)s.size()-3>=r2_) { 
+    char c = s[s.size()-4];
+    if (c=='s' || c=='t')
+      s.erase(s.size()-3);    
+    }
+
 
   r1_ = r1(s);
   r2_ = r2(s, r1_);
 
   if (ends_with(s, "e")) {
-    int pos = s.length() - 1;
-    if (pos >= r2_ || (pos >= r1_ && !cvc(s))) {
+    std::string stem = s.substr(0,s.size()-1);
+    int pos = stem.size();
+    if (pos >= r2_ || (pos >= r1_ && !cvc(stem))) {
       s.pop_back();
     }
   }
@@ -135,6 +130,3 @@ if (!f){
 return ret;
 }
 
-std::vector<std::string> common_stages(std::vector<std::string> vec) {
-  return vec;
-}

@@ -1,27 +1,67 @@
 #include "main.h"
 #include "Stemmer.h"
-void usage(string x) {
-  cout << "Usage " << x << " [-OPTIMISE=0/1] <FILEPATH> " << endl;
-}
+#include "errors.h"
+#include <utility>
+
+Debug GLOBAL_DEBUG_STRUCT;
+
+
+
 void process_file(string &x,char optimise){
 std::ifstream file(x);
 if (!file) {exit(-1);}
 std::stringstream buff;
 buff << file.rdbuf();
 string text = buff.str();
-std::copy_if(text.begin(),text.end(),text.begin(),[] (char c) {return c != '"' && c != '\'' && c != ',' && c != '.';});
-std::transform(text.begin(),text.end(),text.begin(),[] (char c) {return std::tolower(c);});
-auto filtered_wordlist = filter_stopwords(text);
-Snowball stemmer(filtered_wordlist);
-auto ret = stemmer.stem_input();
+text = preprocess(text);
+GLOBAL_DEBUG_STRUCT.t_stopword = (optimise >> 1) ?"Aggresive":"Non-Aggresive";
+auto filtered_wordlist = filter_stopwords(text,optimise >> 1);
+GLOBAL_DEBUG_STRUCT.stop_prog = 1;
+//   REMOVE
+for (auto &s:filtered_wordlist) {
+  cout << s << " ";
+}
+cout << endl;
+//   REMOVE
+
+
+std::vector<string> ret;
+if (!(optimise & 1))
+{Snowball stemmer(filtered_wordlist);
+GLOBAL_DEBUG_STRUCT.t_stemmer = "Snowball";
+ret = stemmer.stem_input();
+GLOBAL_DEBUG_STRUCT.stem_prog = 1;
+}
+else{
+Lanchaster stemmer(filtered_wordlist);
+GLOBAL_DEBUG_STRUCT.t_stemmer = "Lanchaster";
+ret = stemmer.stem_input();
+GLOBAL_DEBUG_STRUCT.stem_prog = 1;
+}
+
+//   REMOVE
 for (auto &s:ret) {
   cout << s << " ";
 }
 cout << endl;
+//   REMOVE
+
+
 }
 
 
 void process_dirs(string &x,char optimise){
+//  TODO: OPEN AND GET DIRS ,NAMES,AND ALSO MAYBE CREATE SOME STRUCT THAT HOLD THE FILENAME ARRAY AND ALSO ACCORDINGL MAKES AN CORPUS ARRAY
+
+Corpus root_dir;
+
+//
+std::vector<std::pair<string, double>> ret;
+std::sort(ret.begin(),ret.end(),[](auto &a,auto &b){return a.second > b.second;});
+
+//  DISPLAY TOP TEN RESULTS AND MAKE IT SIMILAR TO HOW FZF WORKS ACTIVELY
+
+
 }
 
 void  valid_file(string &input_path,char optimise) {
@@ -48,23 +88,24 @@ std::pair<string,char> get_input(int argc,char ** argv){
     std::error_code ec;
     if (!std::filesystem::exists(input_path, ec))
         throw PathError("Path does not exist: " + input_path);
-
      }
+
   else{
     string s(argv[1]);
     string opt[2] = {"-OPTIMISE=","-O"};
     if (s.find(opt[0]) == string::npos && s.find(opt[1]) == string::npos){
       usage(argv[0]);
-      throw InvalidArgs("Invalid Token found instead of Optimise");
+      throw InvalidArgs("Invalid Flag [" + s +  "] found instead of OPTIMISE");
     }
-    optimise = (s[s.length() - 1] == '1' || s[s.length() - 1] == '0') ? s[s.length() - 1] : 3;
-    if (optimise == 3) {usage(argv[0]);exit(-1);}
+    int l(s.length());
+    optimise = (s[l - 1] == '0' || s[l-1] == '1' || s[l-1]== '2' || s[l-1] == '3' ) ? s[l-1] - '0': 4;
+    if (optimise == 4) {usage(argv[0]);exit(-1);}
     input_path = argv[2];
     std::error_code ec;
     if (!std::filesystem::exists(input_path, ec))
         throw PathError("Path does not exist: " + input_path+"\n");
 
-     }
+}
 input_path = (!input_path.empty()) ? input_path : "/"; 
 return {input_path,optimise};
 }

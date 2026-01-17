@@ -1,6 +1,22 @@
 #include "stopwords.h"
 using std::unordered_set,std::string;
-const unordered_set<string> stopword_set = {
+
+const unordered_set<string> stopword_set_non_aggr = {
+    "a","an","the",
+    "i","me","my","we","our","you","your","he","him","his",
+    "she","her","it","its","they","them","their",
+    "this","that","these","those",
+    "is","are","was","were","be","been","being",
+    "have","has","had","do","does","did",
+    "of","to","in","for","with","on","at","by","from",
+    "and","or","but","if","because","as","until","while",
+    "not","no","nor",
+    "all","any","both","each","few","more","most","some",
+    "such","only","own","same","so","than","too","very",
+    "can","will","just","should","now"
+};
+
+const unordered_set<string> stopword_set_aggr = {
     // Articles
     "a", "an", "the",
     // Pronouns
@@ -107,13 +123,21 @@ const unordered_set<string> stopword_set = {
     "near", "outside", "regarding", "toward", "underneath", "unlike", "onto"};
 
 
-std::vector<std::string> filter_stopwords(std::string &str){
+std::vector<std::string> filter_stopwords(std::string &str,bool b){
 std::istringstream s(str);
 std::vector<std::string> ret;
+if (b == 1){
 for (std::string x ; s >> x;) {
-if (stopword_set.find(x) == stopword_set.end()){
+if (stopword_set_aggr.find(x) == stopword_set_aggr.end()){
 ret.push_back(x);}
 }
+}else{
+for (std::string x ; s >> x;) {
+if (stopword_set_non_aggr.find(x) == stopword_set_non_aggr.end()){
+ret.push_back(x);}
+}
+}
+
 return ret;
 }
 

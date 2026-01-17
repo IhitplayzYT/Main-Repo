@@ -70,3 +70,25 @@ bool contains_vowel(const std::string &s) {
   }
   return false;
 }
+
+
+
+std::string preprocess(std::string &text){
+std::transform(text.begin(),text.end(),text.begin(),[] (char c) {return std::tolower(c);});
+std::string ret("");
+for (char c:text){
+if ( c != '"' && c != '\'' && c != ',' && c != '.' && c != ';' && c != ':' && c != '`' && c !='\\' && c != '/' && c != '\t' && c != '\n')
+ret += c;
+} 
+return ret;
+}
+
+
+void usage(std::string x) {
+  std::cout << "Usage " << x << " [-OPTIMISE=0/1/2 | -O[0/1/2]] <FILEPATH> " << std::endl << "\t -OPTIMIZE VALUES:" << std::endl <<
+  "\t\t 0: Non Aggressive stopword removal && Snowball Stemmer(Reliable Search)" << std::endl <<
+  "\t\t 1: Non Aggressive stopword removal && Lanchaster Stemmer(Quick Search)" << std::endl <<
+  "\t\t 2: Aggressive stopword removal && Snowball Stemmer(Reliable Search)" << std::endl << 
+  "\t\t 3: Aggressive stopword removal && Lanchaster Stemmer(Quick Search)" << std::endl;
+}
+

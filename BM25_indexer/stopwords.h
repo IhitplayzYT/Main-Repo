@@ -8,5 +8,5 @@
 #include "utility.h"
 #endif
 
-std::vector<std::string> filter_stopwords(std::string &);
+std::vector<std::string> filter_stopwords(std::string &,bool);
 

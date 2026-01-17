@@ -9,4 +9,6 @@ main.cpp
 Stemmer.cpp
 stopwords.cpp
 utility.cpp
+bm25.cpp
+errors.cpp
 )
