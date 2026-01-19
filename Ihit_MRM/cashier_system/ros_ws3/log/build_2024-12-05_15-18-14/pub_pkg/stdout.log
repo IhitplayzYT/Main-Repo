@@ -1,0 +1,2 @@
+Consolidate compiler generated dependencies of target pub_node
+[ 50%] Building CXX object CMakeFiles/pub_node.dir/src/pub_node.cpp.o

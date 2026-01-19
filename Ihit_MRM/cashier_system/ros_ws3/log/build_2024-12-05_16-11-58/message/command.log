@@ -1,0 +1,2 @@
+Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/message': /usr/bin/cmake /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/message -DCMAKE_INSTALL_PREFIX=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/message
+Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/message' returned '1': /usr/bin/cmake /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/message -DCMAKE_INSTALL_PREFIX=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/message

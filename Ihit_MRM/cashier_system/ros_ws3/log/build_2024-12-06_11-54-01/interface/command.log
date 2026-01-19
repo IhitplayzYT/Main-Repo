@@ -1,0 +1,2 @@
+Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/interface': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/interface -DCMAKE_INSTALL_PREFIX=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/interface
+Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/interface' returned '1': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/interface -DCMAKE_INSTALL_PREFIX=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/interface

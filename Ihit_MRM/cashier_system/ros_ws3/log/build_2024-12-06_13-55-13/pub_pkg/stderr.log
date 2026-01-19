@@ -1,0 +1,22 @@
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:[m[K In member function ‘[01m[Kvoid Publisher::publish_bill()[m[K’:
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:26:28:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+   26 |         tutorial_interfaces[01;31m[K.[m[Kbill_no = count;
+      |                            [01;31m[K^[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:27:28:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+   27 |         tutorial_interfaces[01;31m[K.[m[Ktime = "2024-12-06 12:00:00";
+      |                            [01;31m[K^[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:28:28:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+   28 |         tutorial_interfaces[01;31m[K.[m[Kunit_no = units;
+      |                            [01;31m[K^[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:29:28:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+   29 |         tutorial_interfaces[01;31m[K.[m[Kunit_price = price;
+      |                            [01;31m[K^[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:30:28:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+   30 |         tutorial_interfaces[01;31m[K.[m[Ktotal = units*price
+      |                            [01;31m[K^[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:34:49:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K)[m[K’ token
+   34 |         publisher_ ->publish(tutorial_interfaces[01;31m[K)[m[K;
+      |                                                 [01;31m[K^[m[K
+gmake[2]: *** [CMakeFiles/pub_node.dir/build.make:76: CMakeFiles/pub_node.dir/src/pub_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/pub_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

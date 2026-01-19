@@ -1,0 +1,61 @@
+[0.015s] Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/message': /usr/bin/cmake /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/message -DCMAKE_INSTALL_PREFIX=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/message
+[0.071s] -- The C compiler identification is GNU 11.4.0
+[0.126s] -- The CXX compiler identification is GNU 11.4.0
+[0.135s] -- Detecting C compiler ABI info
+[0.210s] -- Detecting C compiler ABI info - done
+[0.221s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.221s] -- Detecting C compile features
+[0.221s] -- Detecting C compile features - done
+[0.224s] -- Detecting CXX compiler ABI info
+[0.308s] -- Detecting CXX compiler ABI info - done
+[0.314s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.314s] -- Detecting CXX compile features
+[0.314s] -- Detecting CXX compile features - done
+[0.315s] -- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.449s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.517s] -- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+[0.519s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.522s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.547s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.698s] [31mCMake Error at /opt/ros/humble/share/rosidl_adapter/cmake/rosidl_adapt_interfaces.cmake:59 (message):
+[0.698s]   execute_process(/usr/bin/python3 -m rosidl_adapter --package-name message
+[0.698s]   --arguments-file
+[0.699s]   /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/message/rosidl_adapter__arguments__message.json
+[0.699s]   --output-dir
+[0.699s]   /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/message/rosidl_adapter/message
+[0.699s]   --output-file
+[0.699s]   /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/message/rosidl_adapter/message.idls)
+[0.699s]   returned error code 1:
+[0.699s] 
+[0.699s]   Traceback (most recent call last):
+[0.699s] 
+[0.699s]     File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+[0.699s]       return _run_code(code, main_globals, None,
+[0.699s]     File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+[0.699s]       exec(code, run_globals)
+[0.699s]     File "/opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_adapter/__main__.py", line 19, in <module>
+[0.699s]       sys.exit(main())
+[0.699s]     File "/opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_adapter/main.py", line 53, in main
+[0.699s]       abs_idl_file = convert_to_idl(
+[0.699s]     File "/opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_adapter/__init__.py", line 19, in convert_to_idl
+[0.699s]       return convert_msg_to_idl(
+[0.699s]     File "/opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_adapter/msg/__init__.py", line 28, in convert_msg_to_idl
+[0.699s]       msg = parse_message_string(package_name, input_file.stem, content)
+[0.699s]     File "/opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_adapter/parser.py", line 544, in parse_message_string
+[0.699s]       msg = MessageSpecification(pkg_name, msg_name, fields, constants)
+[0.699s]     File "/opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_adapter/parser.py", line 388, in __init__
+[0.699s]       self.base_type = BaseType(
+[0.699s]     File "/opt/ros/humble/local/lib/python3.10/dist-packages/rosidl_adapter/parser.py", line 205, in __init__
+[0.699s]       raise InvalidResourceName(
+[0.699s] 
+[0.699s]   rosidl_adapter.parser.InvalidResourceName: 'bill' is an invalid message
+[0.700s]   name.  It should have the pattern '^[A-Z][A-Za-z0-9]*$'
+[0.700s] 
+[0.700s] Call Stack (most recent call first):
+[0.700s]   /opt/ros/humble/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:130 (rosidl_adapt_interfaces)
+[0.700s]   CMakeLists.txt:16 (rosidl_generate_interfaces)
+[0.700s] 
+[0.700s] [0m
+[0.700s] -- Configuring incomplete, errors occurred!
+[0.700s] See also "/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/message/CMakeFiles/CMakeOutput.log".
+[0.708s] Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/message' returned '1': /usr/bin/cmake /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/message -DCMAKE_INSTALL_PREFIX=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/message

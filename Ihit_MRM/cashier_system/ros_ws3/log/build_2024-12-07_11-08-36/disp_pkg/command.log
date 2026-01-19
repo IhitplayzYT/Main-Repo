@@ -1,0 +1,2 @@
+Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg -DCMAKE_INSTALL_PREFIX=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg
+Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg' returned '1': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg -DCMAKE_INSTALL_PREFIX=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg

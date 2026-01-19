@@ -1,0 +1,37 @@
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:[m[K In constructor ‘[01m[KPublisher::Publisher()[m[K’:
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:20:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kpublisher__[m[K’ was not declared in this scope; did you mean ‘[01m[KPublisher[m[K’?
+   20 |   [01;31m[Kpublisher__[m[K = this->create_publisher<int>("topic",10);
+      |   [01;31m[K^~~~~~~~~~~[m[K
+      |   [32m[KPublisher[m[K
+In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/topic_statistics/subscription_topic_statistics.hpp:31[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/subscription.hpp:50[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:25[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:2[m[K:
+/opt/ros/humble/include/rclcpp/rclcpp/publisher.hpp: In instantiation of ‘[01m[Kclass rclcpp::Publisher<int, std::allocator<void> >[m[K’:
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/publisher_factory.hpp:80:18:[m[K   required from ‘[01m[Krclcpp::PublisherFactory rclcpp::create_publisher_factory(const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&) [with MessageT = int; AllocatorT = std::allocator<void>; PublisherT = rclcpp::Publisher<int, std::allocator<void> >][m[K’
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/create_publisher.hpp:67:71:[m[K   required from ‘[01m[Kstd::shared_ptr<PublisherT> rclcpp::detail::create_publisher(NodeParametersT&, NodeTopicsT&, const string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&) [with MessageT = int; AllocatorT = std::allocator<void>; PublisherT = rclcpp::Publisher<int, std::allocator<void> >; NodeParametersT = rclcpp::Node; NodeTopicsT = rclcpp::Node; std::string = std::__cxx11::basic_string<char>][m[K’
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/create_publisher.hpp:103:68:[m[K   required from ‘[01m[Kstd::shared_ptr<PublisherT> rclcpp::create_publisher(NodeT&&, const string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&) [with MessageT = int; AllocatorT = std::allocator<void>; PublisherT = rclcpp::Publisher<int, std::allocator<void> >; NodeT = rclcpp::Node&; std::string = std::__cxx11::basic_string<char>][m[K’
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/node_impl.hpp:78:68:[m[K   required from ‘[01m[Kstd::shared_ptr<PublisherT> rclcpp::Node::create_publisher(const string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&) [with MessageT = int; AllocatorT = std::allocator<void>; PublisherT = rclcpp::Publisher<int, std::allocator<void> >; std::string = std::__cxx11::basic_string<char>][m[K’
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:20:44:[m[K   required from here
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/publisher.hpp:81:47:[m[K [01;31m[Kerror: [m[Kstatic assertion failed: given message type is not compatible with ROS and cannot be used with a Publisher
+   81 |     rclcpp::is_ros_compatible_type<MessageT>::[01;31m[Kvalue[m[K,
+      |                                               [01;31m[K^~~~~[m[K
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/publisher.hpp:81:47:[m[K [01;36m[Knote: [m[K‘[01m[Krclcpp::is_ros_compatible_type<int>::value[m[K’ evaluates to false
+In file included from [01m[K/usr/include/c++/11/future:47[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:18[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:2[m[K:
+[01m[K/usr/include/c++/11/bits/std_function.h:[m[K At global scope:
+[01m[K/usr/include/c++/11/bits/std_function.h:435:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kstd::function<_Res(_ArgTypes ...)>::function(_Functor&&) [with _Functor = rclcpp::create_publisher_factory<int, std::allocator<void>, rclcpp::Publisher<int, std::allocator<void> > >(const rclcpp::PublisherOptionsWithAllocator<std::allocator<void> >&)::<lambda(rclcpp::node_interfaces::NodeBaseInterface*, const string&, const rclcpp::QoS&)>; _Constraints = void; _Res = std::shared_ptr<rclcpp::PublisherBase>; _ArgTypes = {rclcpp::node_interfaces::NodeBaseInterface*, const std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, const rclcpp::QoS&}][m[K’, declared using local type ‘[01m[Krclcpp::create_publisher_factory<int, std::allocator<void>, rclcpp::Publisher<int, std::allocator<void> > >(const rclcpp::PublisherOptionsWithAllocator<std::allocator<void> >&)::<lambda(rclcpp::node_interfaces::NodeBaseInterface*, const string&, const rclcpp::QoS&)>[m[K’, is used but never defined [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-fpermissive-fpermissive]8;;[m[K]
+  435 |         [01;31m[Kfunction[m[K(_Functor&& __f)
+      |         [01;31m[K^~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/pub_node.dir/build.make:76: CMakeFiles/pub_node.dir/src/pub_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/pub_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

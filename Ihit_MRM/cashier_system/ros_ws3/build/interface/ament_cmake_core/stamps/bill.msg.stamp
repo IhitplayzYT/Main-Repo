@@ -1,0 +1,8 @@
+#Bill.msg
+
+int64 billno
+string timestamp
+int64 units
+float64 unitprice
+float64 total
+

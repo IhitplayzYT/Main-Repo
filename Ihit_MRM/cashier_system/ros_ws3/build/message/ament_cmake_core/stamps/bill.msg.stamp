@@ -1,0 +1,6 @@
+
+int32 billno
+int32 qntity
+float32 price
+float32 total
+string time

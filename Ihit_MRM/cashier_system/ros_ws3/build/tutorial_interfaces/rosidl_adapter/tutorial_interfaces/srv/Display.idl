@@ -1,0 +1,25 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from tutorial_interfaces/srv/Display.srv
+// generated code does not contain a copyright notice
+
+
+module tutorial_interfaces {
+  module srv {
+    struct Display_Request {
+      int32 number;
+    };
+    struct Display_Response {
+      int32 bill_no;
+
+      string time;
+
+      uint8 unit_type;
+
+      int32 unit_no;
+
+      float unit_price;
+
+      float total;
+    };
+  };
+};

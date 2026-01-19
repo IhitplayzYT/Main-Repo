@@ -1,0 +1,38 @@
+[0.012s] Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg -- -j12 -l12
+[0.054s] [35m[1mConsolidate compiler generated dependencies of target disp_node[0m
+[0.071s] [ 50%] [32mBuilding CXX object CMakeFiles/disp_node.dir/src/disp_node.cpp.o[0m
+[1.739s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:17:5:[m[K [01;31m[Kerror: [m[Ktemporary of non-literal type ‘[01m[Krclcpp::Node[m[K’ in a constant expression
+[1.739s]    17 |   : [01;31m[KNode("BILL")[m[K;
+[1.739s]       |     [01;31m[K^~~~~~~~~~~~[m[K
+[1.739s] In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+[1.740s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+[1.740s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+[1.740s]                  from [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:2[m[K:
+[1.740s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:77:7:[m[K [01;36m[Knote: [m[K‘[01m[Krclcpp::Node[m[K’ is not literal because:
+[1.740s]    77 | class [01;36m[KNode[m[K : public std::enable_shared_from_this<Node>
+[1.740s]       |       [01;36m[K^~~~[m[K
+[1.740s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:77:7:[m[K [01;36m[Knote: [m[K  ‘[01m[Krclcpp::Node[m[K’ has a non-trivial destructor
+[1.740s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:17:16:[m[K [01;31m[Kerror: [m[KISO C++ forbids declaration of ‘[01m[Ktype name[m[K’ with no type [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-fpermissive-fpermissive]8;;[m[K]
+[1.740s]    17 |   : Node("BILL"[01;31m[K)[m[K;
+[1.740s]       |                [01;31m[K^[m[K
+[1.740s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:17:16:[m[K [01;31m[Kerror: [m[Kwidth of bit-field ‘[01m[K<anonymous>[m[K’ has non-integral type ‘[01m[Krclcpp::Node[m[K’
+[1.740s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:19:3:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id before ‘[01m[K{[m[K’ token
+[1.741s]    19 |   [01;31m[K{[m[K
+[1.741s]       |   [01;31m[K^[m[K
+[1.741s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:[m[K In member function ‘[01m[Kvoid Bill::display_func()[m[K’:
+[1.741s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:29:57:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Krclcpp::Parameter::as_double[m[K’ from type ‘[01m[Kdouble (rclcpp::Parameter::)() const[m[K’ to type ‘[01m[Kdouble[m[K’
+[1.741s]    29 |   double income = this -> get_parameter("TOTAL_INCOME").[01;31m[Kas_double[m[K;
+[1.741s]       |                                                         [01;31m[K^~~~~~~~~[m[K
+[1.741s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:30:56:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Krclcpp::Parameter::as_double[m[K’ from type ‘[01m[Kdouble (rclcpp::Parameter::)() const[m[K’ to type ‘[01m[Kint[m[K’
+[1.741s]    30 |   int inventorya = this -> get_parameter("INVENTORYA").[01;31m[Kas_double[m[K;
+[1.741s]       |                                                        [01;31m[K^~~~~~~~~[m[K
+[1.741s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:31:56:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Krclcpp::Parameter::as_double[m[K’ from type ‘[01m[Kdouble (rclcpp::Parameter::)() const[m[K’ to type ‘[01m[Kint[m[K’
+[1.741s]    31 |   int inventoryb = this -> get_parameter("INVENTORYB").[01;31m[Kas_double[m[K;
+[1.742s]       |                                                        [01;31m[K^~~~~~~~~[m[K
+[1.742s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:32:56:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Krclcpp::Parameter::as_double[m[K’ from type ‘[01m[Kdouble (rclcpp::Parameter::)() const[m[K’ to type ‘[01m[Kint[m[K’
+[1.742s]    32 |   int inventoryc = this -> get_parameter("INVENTORYC").[01;31m[Kas_double[m[K;
+[1.742s]       |                                                        [01;31m[K^~~~~~~~~[m[K
+[2.051s] gmake[2]: *** [CMakeFiles/disp_node.dir/build.make:76: CMakeFiles/disp_node.dir/src/disp_node.cpp.o] Error 1
+[2.052s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/disp_node.dir/all] Error 2
+[2.052s] gmake: *** [Makefile:146: all] Error 2
+[2.055s] Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg' returned '2': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg -- -j12 -l12

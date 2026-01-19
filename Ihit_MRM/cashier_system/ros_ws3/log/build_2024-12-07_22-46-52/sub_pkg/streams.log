@@ -1,0 +1,35 @@
+[0.015s] Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg': CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg:/opt/ros/humble /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg -- -j12 -l12
+[0.071s] [35m[1mConsolidate compiler generated dependencies of target sub_node[0m
+[0.092s] [ 50%] [32mBuilding CXX object CMakeFiles/sub_node.dir/src/sub_node.cpp.o[0m
+[1.867s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:[m[K In member function ‘[01m[Kvoid Subscriber::request(std::shared_ptr<tutorial_interfaces::srv::Display_Request_<std::allocator<void> > >, std::shared_ptr<tutorial_interfaces::srv::Display_Response_<std::allocator<void> > >)[m[K’:
+[1.867s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:83:80:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Krequest[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[1.867s]    83 | [01;35m[Kstd::shared_ptr<tutorial_interfaces::srv::Display::Request> request[m[K,std::shared_ptr<tutorial_interfaces::srv::Display::Response> response)
+[1.868s]       | [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~[m[K
+[1.868s] 
+[1.868s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:83:149:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kresponse[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[1.868s]    83 | ,[01;35m[Kstd::shared_ptr<tutorial_interfaces::srv::Display::Response> response[m[K)
+[1.868s]       |  [01;35m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~[m[K
+[1.868s] 
+[6.507s] [100%] [32m[1mLinking CXX executable sub_node[0m
+[6.835s] [100%] Built target sub_node
+[6.846s] Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg' returned '0': CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg:/opt/ros/humble /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg -- -j12 -l12
+[6.858s] Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg': CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg:/opt/ros/humble /usr/bin/cmake --install /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg
+[6.865s] -- Install configuration: ""
+[6.865s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/lib/sub_pkg/sub_node
+[6.868s] -- Set runtime path of "/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/lib/sub_pkg/sub_node" to ""
+[6.868s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/ament_index/resource_index/package_run_dependencies/sub_pkg
+[6.868s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/ament_index/resource_index/parent_prefix_path/sub_pkg
+[6.868s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/ament_prefix_path.sh
+[6.868s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/ament_prefix_path.dsv
+[6.869s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/path.sh
+[6.869s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/path.dsv
+[6.869s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.bash
+[6.869s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.sh
+[6.869s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.zsh
+[6.870s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.dsv
+[6.870s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/package.dsv
+[6.870s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/ament_index/resource_index/packages/sub_pkg
+[6.870s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/cmake/sub_pkgConfig.cmake
+[6.870s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/cmake/sub_pkgConfig-version.cmake
+[6.870s] -- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/package.xml
+[6.871s] Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg' returned '0': CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg:/opt/ros/humble /usr/bin/cmake --install /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg

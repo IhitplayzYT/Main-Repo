@@ -1,0 +1,26 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/include/**",
+        "/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/include/**",
+        "/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/include/**",
+        "/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/tutorial_interfaces/include/**",
+        "include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

@@ -1,0 +1,26 @@
+[0.012s] Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg -- -j12 -l12
+[0.059s] [35m[1mConsolidate compiler generated dependencies of target pub_node[0m
+[0.078s] [ 50%] [32mBuilding CXX object CMakeFiles/pub_node.dir/src/pub_node.cpp.o[0m
+[1.772s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:[m[K In member function ‘[01m[Kvoid Publisher::publish_bill()[m[K’:
+[1.772s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:26:28:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+[1.772s]    26 |         tutorial_interfaces[01;31m[K.[m[Kbill_no = count;
+[1.772s]       |                            [01;31m[K^[m[K
+[1.772s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:27:28:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+[1.772s]    27 |         tutorial_interfaces[01;31m[K.[m[Ktime = "2024-12-06 12:00:00";
+[1.772s]       |                            [01;31m[K^[m[K
+[1.772s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:28:28:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+[1.772s]    28 |         tutorial_interfaces[01;31m[K.[m[Kunit_no = units;
+[1.773s]       |                            [01;31m[K^[m[K
+[1.773s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:29:28:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+[1.773s]    29 |         tutorial_interfaces[01;31m[K.[m[Kunit_price = price;
+[1.773s]       |                            [01;31m[K^[m[K
+[1.773s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:30:28:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K.[m[K’ token
+[1.773s]    30 |         tutorial_interfaces[01;31m[K.[m[Ktotal = units*price
+[1.773s]       |                            [01;31m[K^[m[K
+[1.773s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:34:49:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K)[m[K’ token
+[1.773s]    34 |         publisher_ ->publish(tutorial_interfaces[01;31m[K)[m[K;
+[1.773s]       |                                                 [01;31m[K^[m[K
+[2.338s] gmake[2]: *** [CMakeFiles/pub_node.dir/build.make:76: CMakeFiles/pub_node.dir/src/pub_node.cpp.o] Error 1
+[2.339s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/pub_node.dir/all] Error 2
+[2.339s] gmake: *** [Makefile:146: all] Error 2
+[2.341s] Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg' returned '2': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg -- -j12 -l12

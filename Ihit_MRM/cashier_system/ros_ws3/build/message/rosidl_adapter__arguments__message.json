@@ -1,0 +1,6 @@
+{
+  "package_name": "message",
+  "non_idl_tuples": [
+    "/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/message:src/bill.msg"
+  ]
+}

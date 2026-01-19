@@ -1,0 +1,7 @@
+{
+  "package_name": "tutorial_interfaces",
+  "non_idl_tuples": [
+    "/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/tutorial_interfaces:msg/Num.msg",
+    "/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/tutorial_interfaces:srv/Display.srv"
+  ]
+}

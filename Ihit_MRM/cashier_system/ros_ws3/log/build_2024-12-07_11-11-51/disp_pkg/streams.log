@@ -1,0 +1,49 @@
+[0.021s] Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg -DCMAKE_INSTALL_PREFIX=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg
+[0.036s] -- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.153s] -- Found rclcpp: 16.0.10 (/opt/ros/humble/share/rclcpp/cmake)
+[0.173s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.174s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.178s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.185s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.193s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.214s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.215s] -- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.318s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.354s] -- Found tutorial_interfaces: 0.0.0 (/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/share/tutorial_interfaces/cmake)
+[0.390s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.452s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.452s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/include>
+[0.452s] -- Configured cppcheck exclude dirs and/or files: 
+[0.453s] -- Added test 'lint_cmake' to check CMake code style
+[0.455s] -- Added test 'uncrustify' to check C / C++ code style
+[0.455s] -- Configured uncrustify additional arguments: 
+[0.456s] -- Added test 'xmllint' to check XML markup files
+[0.458s] -- Configuring done
+[0.472s] -- Generating done
+[0.476s] -- Build files have been written to: /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg
+[0.484s] Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg' returned '0': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg -DCMAKE_INSTALL_PREFIX=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg
+[0.487s] Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg -- -j12 -l12
+[0.556s] [ 50%] [32mBuilding CXX object CMakeFiles/disp_node.dir/src/disp_node.cpp.o[0m
+[0.599s] [100%] [32m[1mLinking CXX executable disp_node[0m
+[0.691s] [100%] Built target disp_node
+[0.706s] Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg' returned '0': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg -- -j12 -l12
+[0.721s] Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg
+[0.730s] -- Install configuration: ""
+[0.730s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/lib/disp_pkg/disp_node
+[0.731s] -- Set runtime path of "/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/lib/disp_pkg/disp_node" to ""
+[0.731s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/ament_index/resource_index/package_run_dependencies/disp_pkg
+[0.731s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/ament_index/resource_index/parent_prefix_path/disp_pkg
+[0.731s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/environment/ament_prefix_path.sh
+[0.731s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/environment/ament_prefix_path.dsv
+[0.731s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/environment/path.sh
+[0.732s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/environment/path.dsv
+[0.732s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/local_setup.bash
+[0.732s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/local_setup.sh
+[0.732s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/local_setup.zsh
+[0.732s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/local_setup.dsv
+[0.732s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/package.dsv
+[0.732s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/ament_index/resource_index/packages/disp_pkg
+[0.733s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/cmake/disp_pkgConfig.cmake
+[0.733s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/cmake/disp_pkgConfig-version.cmake
+[0.733s] -- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/package.xml
+[0.735s] Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg' returned '0': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg

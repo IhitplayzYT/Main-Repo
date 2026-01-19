@@ -1,0 +1,10 @@
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg/CMakeFiles/uninstall.dir
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg/CMakeFiles/pub_pkg_uninstall.dir
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg/CMakeFiles/pub_node.dir
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg/CMakeFiles/test.dir
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg/CMakeFiles/edit_cache.dir
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg/CMakeFiles/rebuild_cache.dir
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg/CMakeFiles/list_install_components.dir
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg/CMakeFiles/install.dir
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg/CMakeFiles/install/local.dir
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg/CMakeFiles/install/strip.dir

@@ -1,0 +1,77 @@
+[0.000000] (-) TimerEvent: {}
+[0.000723] (-) JobUnselected: {'identifier': 'sub_pkg'}
+[0.000894] (-) JobUnselected: {'identifier': 'tutorial_interfaces'}
+[0.000938] (pub_pkg) JobQueued: {'identifier': 'pub_pkg', 'dependencies': OrderedDict([('tutorial_interfaces', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces')])}
+[0.001031] (pub_pkg) JobStarted: {'identifier': 'pub_pkg'}
+[0.009153] (pub_pkg) JobProgress: {'identifier': 'pub_pkg', 'progress': 'cmake'}
+[0.009616] (pub_pkg) JobProgress: {'identifier': 'pub_pkg', 'progress': 'build'}
+[0.010262] (pub_pkg) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg', '--', '-j12', '-l12'], 'cwd': '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'ihitexe'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ihitexe'), ('OLDPWD', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/tutorial_interfaces/msg'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '4277'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ihitexe'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ihitexe'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ihitexe:@/tmp/.ICE-unix/4060,unix/ihitexe:/tmp/.ICE-unix/4060'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/9411f9e3_829b_4d00_a9f7_16b6239e154d'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_IN'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.HLMKY2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.133'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/home/ihitexe/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble')]), 'shell': False}
+[0.051862] (pub_pkg) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target pub_node\x1b[0m\n'}
+[0.072821] (pub_pkg) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/pub_node.dir/src/pub_node.cpp.o\x1b[0m\n'}
+[0.099942] (-) TimerEvent: {}
+[0.200347] (-) TimerEvent: {}
+[0.300705] (-) TimerEvent: {}
+[0.401172] (-) TimerEvent: {}
+[0.501583] (-) TimerEvent: {}
+[0.601952] (-) TimerEvent: {}
+[0.702291] (-) TimerEvent: {}
+[0.802649] (-) TimerEvent: {}
+[0.903074] (-) TimerEvent: {}
+[1.003436] (-) TimerEvent: {}
+[1.103799] (-) TimerEvent: {}
+[1.204168] (-) TimerEvent: {}
+[1.304553] (-) TimerEvent: {}
+[1.405006] (-) TimerEvent: {}
+[1.505450] (-) TimerEvent: {}
+[1.605912] (-) TimerEvent: {}
+[1.706297] (-) TimerEvent: {}
+[1.784328] (pub_pkg) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/logging.hpp:24\x1b[m\x1b[K,\n'}
+[1.784583] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40\x1b[m\x1b[K,\n'}
+[1.784681] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24\x1b[m\x1b[K,\n'}
+[1.784786] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20\x1b[m\x1b[K,\n'}
+[1.784885] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25\x1b[m\x1b[K,\n'}
+[1.784968] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18\x1b[m\x1b[K,\n'}
+[1.785048] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20\x1b[m\x1b[K,\n'}
+[1.785129] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37\x1b[m\x1b[K,\n'}
+[1.785210] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25\x1b[m\x1b[K,\n'}
+[1.785291] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21\x1b[m\x1b[K,\n'}
+[1.785371] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155\x1b[m\x1b[K,\n'}
+[1.785473] (pub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:2\x1b[m\x1b[K:\n'}
+[1.785560] (pub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Publisher::publish_bill()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.785643] (pub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:32:198:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kexpected primary-expression before \xe2\x80\x98\x1b[01m\x1b[K.\x1b[m\x1b[K\xe2\x80\x99 token\n'}
+[1.785733] (pub_pkg) StderrLine: {'line': b'   32 | t costing %f\\nYour total amount is : %f",tutorial_interfaces\x1b[01;31m\x1b[K.\x1b[m\x1b[Kbill_no, tutorial_interfaces.time.c_str(), tutorial_interfaces.unit_no,ch,tutorial_interfaces.unit_price, tutorial_interfaces.total);\n'}
+[1.785832] (pub_pkg) StderrLine: {'line': b'      |                                                             \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[1.785915] (pub_pkg) StderrLine: {'line': b'\n'}
+[1.785999] (pub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:32:227:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kexpected primary-expression before \xe2\x80\x98\x1b[01m\x1b[K.\x1b[m\x1b[K\xe2\x80\x99 token\n'}
+[1.786083] (pub_pkg) StderrLine: {'line': b'   32 | nt is : %f",tutorial_interfaces.bill_no, tutorial_interfaces\x1b[01;31m\x1b[K.\x1b[m\x1b[Ktime.c_str(), tutorial_interfaces.unit_no,ch,tutorial_interfaces.unit_price, tutorial_interfaces.total);\n'}
+[1.786168] (pub_pkg) StderrLine: {'line': b'      |                                                             \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[1.786256] (pub_pkg) StderrLine: {'line': b'\n'}
+[1.786341] (pub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:32:261:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kexpected primary-expression before \xe2\x80\x98\x1b[01m\x1b[K.\x1b[m\x1b[K\xe2\x80\x99 token\n'}
+[1.786428] (pub_pkg) StderrLine: {'line': b'   32 | ll_no, tutorial_interfaces.time.c_str(), tutorial_interfaces\x1b[01;31m\x1b[K.\x1b[m\x1b[Kunit_no,ch,tutorial_interfaces.unit_price, tutorial_interfaces.total);\n'}
+[1.786512] (pub_pkg) StderrLine: {'line': b'      |                                                             \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[1.786593] (pub_pkg) StderrLine: {'line': b'\n'}
+[1.789601] (pub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:32:270:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kch\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope\n'}
+[1.789837] (pub_pkg) StderrLine: {'line': b'   32 | torial_interfaces.time.c_str(), tutorial_interfaces.unit_no,\x1b[01;31m\x1b[Kch\x1b[m\x1b[K,tutorial_interfaces.unit_price, tutorial_interfaces.total);\n'}
+[1.789936] (pub_pkg) StderrLine: {'line': b'      |                                                             \x1b[01;31m\x1b[K^~\x1b[m\x1b[K\n'}
+[1.790038] (pub_pkg) StderrLine: {'line': b'\n'}
+[1.790123] (pub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:32:292:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kexpected primary-expression before \xe2\x80\x98\x1b[01m\x1b[K.\x1b[m\x1b[K\xe2\x80\x99 token\n'}
+[1.790205] (pub_pkg) StderrLine: {'line': b'   32 | .c_str(), tutorial_interfaces.unit_no,ch,tutorial_interfaces\x1b[01;31m\x1b[K.\x1b[m\x1b[Kunit_price, tutorial_interfaces.total);\n'}
+[1.790286] (pub_pkg) StderrLine: {'line': b'      |                                                             \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[1.790366] (pub_pkg) StderrLine: {'line': b'\n'}
+[1.790445] (pub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:32:324:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kexpected primary-expression before \xe2\x80\x98\x1b[01m\x1b[K.\x1b[m\x1b[K\xe2\x80\x99 token\n'}
+[1.790524] (pub_pkg) StderrLine: {'line': b'   32 | .unit_no,ch,tutorial_interfaces.unit_price, tutorial_interfaces\x1b[01;31m\x1b[K.\x1b[m\x1b[Ktotal);\n'}
+[1.790603] (pub_pkg) StderrLine: {'line': b'      |                                                                \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[1.790682] (pub_pkg) StderrLine: {'line': b'\n'}
+[1.806553] (-) TimerEvent: {}
+[1.906967] (-) TimerEvent: {}
+[2.007402] (-) TimerEvent: {}
+[2.107889] (-) TimerEvent: {}
+[2.208214] (-) TimerEvent: {}
+[2.308599] (-) TimerEvent: {}
+[2.405744] (pub_pkg) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/pub_node.dir/build.make:76: CMakeFiles/pub_node.dir/src/pub_node.cpp.o] Error 1\n'}
+[2.406001] (pub_pkg) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/pub_node.dir/all] Error 2\n'}
+[2.406237] (pub_pkg) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[2.409049] (pub_pkg) CommandEnded: {'returncode': 2}
+[2.409565] (-) TimerEvent: {}
+[2.422906] (pub_pkg) JobEnded: {'identifier': 'pub_pkg', 'rc': 2}
+[2.433733] (-) EventReactorShutdown: {}

@@ -1,0 +1,29 @@
+[0.010s] Invoking command in '/home/ihitexe/rover_ws/build/gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/ihitexe/rover_ws/build/gazebo -- -j12 -l12
+[0.054s] Invoked command in '/home/ihitexe/rover_ws/build/gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/ihitexe/rover_ws/build/gazebo -- -j12 -l12
+[0.062s] Invoking command in '/home/ihitexe/rover_ws/build/gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/ihitexe/rover_ws/build/gazebo
+[0.069s] -- Install configuration: ""
+[0.069s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch
+[0.069s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch/.vscode
+[0.070s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch/.vscode/settings.json
+[0.070s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch/.vscode/c_cpp_properties.json
+[0.070s] -- Installing: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch/gazebo_launch.py
+[0.070s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/model
+[0.070s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/model/rover.gazebo
+[0.070s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/model/world.world
+[0.070s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/model/rover.xacro
+[0.070s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/ament_index/resource_index/package_run_dependencies/gazebo
+[0.070s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/ament_index/resource_index/parent_prefix_path/gazebo
+[0.070s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/environment/ament_prefix_path.sh
+[0.071s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/environment/ament_prefix_path.dsv
+[0.071s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/environment/path.sh
+[0.071s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/environment/path.dsv
+[0.071s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/local_setup.bash
+[0.071s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/local_setup.sh
+[0.071s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/local_setup.zsh
+[0.071s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/local_setup.dsv
+[0.071s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/package.dsv
+[0.071s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/ament_index/resource_index/packages/gazebo
+[0.071s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/cmake/gazeboConfig.cmake
+[0.072s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/cmake/gazeboConfig-version.cmake
+[0.072s] -- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/package.xml
+[0.073s] Invoked command in '/home/ihitexe/rover_ws/build/gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/ihitexe/rover_ws/build/gazebo

@@ -1,0 +1,18 @@
+[35m[1mConsolidate compiler generated dependencies of target disp_node[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/disp_node.dir/src/disp_node.cpp.o[0m
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:[m[K In member function ‘[01m[Kvoid Bill::display_func()[m[K’:
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:28:57:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Krclcpp::Parameter::as_double[m[K’ from type ‘[01m[Kdouble (rclcpp::Parameter::)() const[m[K’ to type ‘[01m[Kdouble[m[K’
+   28 |   double income = this -> get_parameter("TOTAL_INCOME").[01;31m[Kas_double[m[K;
+      |                                                         [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:29:56:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rclcpp::Parameter[m[K’ has no member named ‘[01m[Kas_long_int[m[K’
+   29 |   int inventorya = this -> get_parameter("INVENTORYA").[01;31m[Kas_long_int[m[K;
+      |                                                        [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:30:56:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rclcpp::Parameter[m[K’ has no member named ‘[01m[Kas_long_int[m[K’
+   30 |   int inventoryb = this -> get_parameter("INVENTORYB").[01;31m[Kas_long_int[m[K;
+      |                                                        [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:31:56:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rclcpp::Parameter[m[K’ has no member named ‘[01m[Kas_long_int[m[K’
+   31 |   int inventoryc = this -> get_parameter("INVENTORYC").[01;31m[Kas_long_int[m[K;
+      |                                                        [01;31m[K^~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/disp_node.dir/build.make:76: CMakeFiles/disp_node.dir/src/disp_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/disp_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

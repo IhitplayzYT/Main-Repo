@@ -1,0 +1,20 @@
+[0.017s] Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg -- -j12 -l12
+[0.070s] [35m[1mConsolidate compiler generated dependencies of target disp_node[0m
+[0.086s] [ 50%] [32mBuilding CXX object CMakeFiles/disp_node.dir/src/disp_node.cpp.o[0m
+[1.760s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:[m[K In member function ‘[01m[Kvoid Bill::display_func()[m[K’:
+[1.760s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:28:57:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Krclcpp::Parameter::as_double[m[K’ from type ‘[01m[Kdouble (rclcpp::Parameter::)() const[m[K’ to type ‘[01m[Kdouble[m[K’
+[1.760s]    28 |   double income = this -> get_parameter("TOTAL_INCOME").[01;31m[Kas_double[m[K;
+[1.760s]       |                                                         [01;31m[K^~~~~~~~~[m[K
+[1.760s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:29:56:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Krclcpp::Parameter::as_int[m[K’ from type ‘[01m[Kint64_t (rclcpp::Parameter::)() const[m[K’ {aka ‘[01m[Klong int (rclcpp::Parameter::)() const[m[K’} to type ‘[01m[Kint[m[K’
+[1.760s]    29 |   int inventorya = this -> get_parameter("INVENTORYA").[01;31m[Kas_int[m[K;
+[1.760s]       |                                                        [01;31m[K^~~~~~[m[K
+[1.760s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:30:56:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Krclcpp::Parameter::as_int[m[K’ from type ‘[01m[Kint64_t (rclcpp::Parameter::)() const[m[K’ {aka ‘[01m[Klong int (rclcpp::Parameter::)() const[m[K’} to type ‘[01m[Kint[m[K’
+[1.761s]    30 |   int inventoryb = this -> get_parameter("INVENTORYB").[01;31m[Kas_int[m[K;
+[1.761s]       |                                                        [01;31m[K^~~~~~[m[K
+[1.761s] [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:31:56:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Krclcpp::Parameter::as_int[m[K’ from type ‘[01m[Kint64_t (rclcpp::Parameter::)() const[m[K’ {aka ‘[01m[Klong int (rclcpp::Parameter::)() const[m[K’} to type ‘[01m[Kint[m[K’
+[1.761s]    31 |   int inventoryc = this -> get_parameter("INVENTORYC").[01;31m[Kas_int[m[K;
+[1.761s]       |                                                        [01;31m[K^~~~~~[m[K
+[2.077s] gmake[2]: *** [CMakeFiles/disp_node.dir/build.make:76: CMakeFiles/disp_node.dir/src/disp_node.cpp.o] Error 1
+[2.077s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/disp_node.dir/all] Error 2
+[2.077s] gmake: *** [Makefile:146: all] Error 2
+[2.080s] Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg' returned '2': AMENT_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg -- -j12 -l12

@@ -1,0 +1,41 @@
+[0.010s] Invoking command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg -- -j12 -l12
+[0.057s] Consolidate compiler generated dependencies of target pub_node
+[0.078s] [ 50%] Building CXX object CMakeFiles/pub_node.dir/src/pub_node.cpp.o
+[1.748s] /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp: In constructor ‘Publisher::Publisher()’:
+[1.748s] /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:20:3: error: ‘publisher__’ was not declared in this scope; did you mean ‘Publisher’?
+[1.748s]    20 |   publisher__ = this->create_publisher<int>("topic",10);
+[1.748s]       |   ^~~~~~~~~~~
+[1.748s]       |   Publisher
+[1.975s] In file included from /opt/ros/humble/include/rclcpp/rclcpp/topic_statistics/subscription_topic_statistics.hpp:31,
+[1.975s]                  from /opt/ros/humble/include/rclcpp/rclcpp/subscription.hpp:50,
+[1.975s]                  from /opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:25,
+[1.975s]                  from /opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25,
+[1.975s]                  from /opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18,
+[1.975s]                  from /opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20,
+[1.975s]                  from /opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37,
+[1.975s]                  from /opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25,
+[1.975s]                  from /opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21,
+[1.975s]                  from /opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155,
+[1.975s]                  from /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:2:
+[1.976s] /opt/ros/humble/include/rclcpp/rclcpp/publisher.hpp: In instantiation of ‘class rclcpp::Publisher<int, std::allocator<void> >’:
+[1.976s] /opt/ros/humble/include/rclcpp/rclcpp/publisher_factory.hpp:80:18:   required from ‘rclcpp::PublisherFactory rclcpp::create_publisher_factory(const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&) [with MessageT = int; AllocatorT = std::allocator<void>; PublisherT = rclcpp::Publisher<int, std::allocator<void> >]’
+[1.976s] /opt/ros/humble/include/rclcpp/rclcpp/create_publisher.hpp:67:71:   required from ‘std::shared_ptr<PublisherT> rclcpp::detail::create_publisher(NodeParametersT&, NodeTopicsT&, const string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&) [with MessageT = int; AllocatorT = std::allocator<void>; PublisherT = rclcpp::Publisher<int, std::allocator<void> >; NodeParametersT = rclcpp::Node; NodeTopicsT = rclcpp::Node; std::string = std::__cxx11::basic_string<char>]’
+[1.976s] /opt/ros/humble/include/rclcpp/rclcpp/create_publisher.hpp:103:68:   required from ‘std::shared_ptr<PublisherT> rclcpp::create_publisher(NodeT&&, const string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&) [with MessageT = int; AllocatorT = std::allocator<void>; PublisherT = rclcpp::Publisher<int, std::allocator<void> >; NodeT = rclcpp::Node&; std::string = std::__cxx11::basic_string<char>]’
+[1.976s] /opt/ros/humble/include/rclcpp/rclcpp/node_impl.hpp:78:68:   required from ‘std::shared_ptr<PublisherT> rclcpp::Node::create_publisher(const string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&) [with MessageT = int; AllocatorT = std::allocator<void>; PublisherT = rclcpp::Publisher<int, std::allocator<void> >; std::string = std::__cxx11::basic_string<char>]’
+[1.976s] /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:20:44:   required from here
+[1.976s] /opt/ros/humble/include/rclcpp/rclcpp/publisher.hpp:81:47: error: static assertion failed: given message type is not compatible with ROS and cannot be used with a Publisher
+[1.976s]    81 |     rclcpp::is_ros_compatible_type<MessageT>::value,
+[1.976s]       |                                               ^~~~~
+[1.976s] /opt/ros/humble/include/rclcpp/rclcpp/publisher.hpp:81:47: note: ‘rclcpp::is_ros_compatible_type<int>::value’ evaluates to false
+[2.160s] In file included from /usr/include/c++/11/future:47,
+[2.160s]                  from /opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:18,
+[2.160s]                  from /opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155,
+[2.160s]                  from /home/ihitexe/mrm_ros_union_dir/ros_ws3/src/pub_pkg/src/pub_node.cpp:2:
+[2.160s] /usr/include/c++/11/bits/std_function.h: At global scope:
+[2.160s] /usr/include/c++/11/bits/std_function.h:435:9: error: ‘std::function<_Res(_ArgTypes ...)>::function(_Functor&&) [with _Functor = rclcpp::create_publisher_factory<int, std::allocator<void>, rclcpp::Publisher<int, std::allocator<void> > >(const rclcpp::PublisherOptionsWithAllocator<std::allocator<void> >&)::<lambda(rclcpp::node_interfaces::NodeBaseInterface*, const string&, const rclcpp::QoS&)>; _Constraints = void; _Res = std::shared_ptr<rclcpp::PublisherBase>; _ArgTypes = {rclcpp::node_interfaces::NodeBaseInterface*, const std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, const rclcpp::QoS&}]’, declared using local type ‘rclcpp::create_publisher_factory<int, std::allocator<void>, rclcpp::Publisher<int, std::allocator<void> > >(const rclcpp::PublisherOptionsWithAllocator<std::allocator<void> >&)::<lambda(rclcpp::node_interfaces::NodeBaseInterface*, const string&, const rclcpp::QoS&)>’, is used but never defined [-fpermissive]
+[2.161s]   435 |         function(_Functor&& __f)
+[2.161s]       |         ^~~~~~~~
+[2.221s] gmake[2]: *** [CMakeFiles/pub_node.dir/build.make:76: CMakeFiles/pub_node.dir/src/pub_node.cpp.o] Error 1
+[2.221s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/pub_node.dir/all] Error 2
+[2.222s] gmake: *** [Makefile:146: all] Error 2
+[2.225s] Invoked command in '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg' returned '2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ihitexe/mrm_ros_union_dir/ros_ws3/build/pub_pkg -- -j12 -l12

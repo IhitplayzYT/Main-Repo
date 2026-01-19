@@ -1,0 +1,16 @@
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/lib/pub_pkg/pub_node
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/ament_index/resource_index/package_run_dependencies/pub_pkg
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/ament_index/resource_index/parent_prefix_path/pub_pkg
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/environment/ament_prefix_path.sh
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/environment/ament_prefix_path.dsv
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/environment/path.sh
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/environment/path.dsv
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/local_setup.bash
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/local_setup.sh
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/local_setup.zsh
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/local_setup.dsv
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/package.dsv
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/ament_index/resource_index/packages/pub_pkg
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/cmake/pub_pkgConfig.cmake
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/cmake/pub_pkgConfig-version.cmake
+/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/package.xml

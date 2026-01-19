@@ -1,0 +1,36 @@
+[35m[1mConsolidate compiler generated dependencies of target disp_node[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/disp_node.dir/src/disp_node.cpp.o[0m
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:17:5:[m[K [01;31m[Kerror: [m[Ktemporary of non-literal type ‘[01m[Krclcpp::Node[m[K’ in a constant expression
+   17 |   : [01;31m[KNode("BILL")[m[K;
+      |     [01;31m[K^~~~~~~~~~~~[m[K
+In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:2[m[K:
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:77:7:[m[K [01;36m[Knote: [m[K‘[01m[Krclcpp::Node[m[K’ is not literal because:
+   77 | class [01;36m[KNode[m[K : public std::enable_shared_from_this<Node>
+      |       [01;36m[K^~~~[m[K
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:77:7:[m[K [01;36m[Knote: [m[K  ‘[01m[Krclcpp::Node[m[K’ has a non-trivial destructor
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:17:16:[m[K [01;31m[Kerror: [m[KISO C++ forbids declaration of ‘[01m[Ktype name[m[K’ with no type [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-fpermissive-fpermissive]8;;[m[K]
+   17 |   : Node("BILL"[01;31m[K)[m[K;
+      |                [01;31m[K^[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:17:16:[m[K [01;31m[Kerror: [m[Kwidth of bit-field ‘[01m[K<anonymous>[m[K’ has non-integral type ‘[01m[Krclcpp::Node[m[K’
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:19:3:[m[K [01;31m[Kerror: [m[Kexpected unqualified-id before ‘[01m[K{[m[K’ token
+   19 |   [01;31m[K{[m[K
+      |   [01;31m[K^[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:[m[K In member function ‘[01m[Kvoid Bill::display_func()[m[K’:
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:29:57:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Krclcpp::Parameter::as_double[m[K’ from type ‘[01m[Kdouble (rclcpp::Parameter::)() const[m[K’ to type ‘[01m[Kdouble[m[K’
+   29 |   double income = this -> get_parameter("TOTAL_INCOME").[01;31m[Kas_double[m[K;
+      |                                                         [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:30:56:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rclcpp::Parameter[m[K’ has no member named ‘[01m[Kas_long_int[m[K’
+   30 |   int inventorya = this -> get_parameter("INVENTORYA").[01;31m[Kas_long_int[m[K;
+      |                                                        [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:31:56:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rclcpp::Parameter[m[K’ has no member named ‘[01m[Kas_long_int[m[K’
+   31 |   int inventoryb = this -> get_parameter("INVENTORYB").[01;31m[Kas_long_int[m[K;
+      |                                                        [01;31m[K^~~~~~~~~~~[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:32:56:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rclcpp::Parameter[m[K’ has no member named ‘[01m[Kas_long_int[m[K’
+   32 |   int inventoryc = this -> get_parameter("INVENTORYC").[01;31m[Kas_long_int[m[K;
+      |                                                        [01;31m[K^~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/disp_node.dir/build.make:76: CMakeFiles/disp_node.dir/src/disp_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/disp_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

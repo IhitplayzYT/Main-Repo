@@ -1,0 +1,21 @@
+[ 50%] [32mBuilding CXX object CMakeFiles/pub_node.dir/src/pub_node.cpp.o[0m
+[100%] [32m[1mLinking CXX executable pub_node[0m
+[100%] Built target pub_node
+-- Install configuration: ""
+-- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/lib/pub_pkg/pub_node
+-- Set runtime path of "/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/lib/pub_pkg/pub_node" to ""
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/ament_index/resource_index/package_run_dependencies/pub_pkg
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/ament_index/resource_index/parent_prefix_path/pub_pkg
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/environment/ament_prefix_path.sh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/environment/path.sh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/environment/path.dsv
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/local_setup.bash
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/local_setup.sh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/local_setup.zsh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/local_setup.dsv
+-- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/package.dsv
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/ament_index/resource_index/packages/pub_pkg
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/cmake/pub_pkgConfig.cmake
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/cmake/pub_pkgConfig-version.cmake
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg/share/pub_pkg/package.xml

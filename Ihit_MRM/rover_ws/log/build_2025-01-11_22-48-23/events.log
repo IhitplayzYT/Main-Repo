@@ -1,0 +1,129 @@
+[0.000000] (-) TimerEvent: {}
+[0.000336] (gazebo) JobQueued: {'identifier': 'gazebo', 'dependencies': OrderedDict()}
+[0.000380] (gazebo) JobStarted: {'identifier': 'gazebo'}
+[0.007538] (gazebo) JobProgress: {'identifier': 'gazebo', 'progress': 'cmake'}
+[0.008803] (gazebo) JobProgress: {'identifier': 'gazebo', 'progress': 'build'}
+[0.008972] (gazebo) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ihitexe/rover_ws/build/gazebo', '--', '-j12', '-l12'], 'cwd': '/home/ihitexe/rover_ws/build/gazebo', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'ihitexe'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ihitexe'), ('OLDPWD', '/home/ihitexe'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '3750'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/ihitexe/rover_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ihitexe'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ihitexe'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ihitexe:@/tmp/.ICE-unix/3512,unix/ihitexe:/tmp/.ICE-unix/3512'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/8f2509f7_21f0_4daf_bcab_7fa1a9b623e7'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_IN'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.GKL4Z2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.381'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/ihitexe/rover_ws/install/gazebo:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ihitexe/rover_ws/build/gazebo'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/home/ihitexe/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/ihitexe/rover_ws/install/gazebo:/opt/ros/humble')]), 'shell': False}
+[0.053658] (gazebo) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.099094] (-) TimerEvent: {}
+[0.188309] (gazebo) StdoutLine: {'line': b'-- Found rclcpp: 16.0.11 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.199245] (-) TimerEvent: {}
+[0.251824] (gazebo) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.257026] (gazebo) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.268149] (gazebo) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.283892] (gazebo) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.299348] (-) TimerEvent: {}
+[0.304001] (gazebo) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.358574] (gazebo) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.361525] (gazebo) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.399458] (-) TimerEvent: {}
+[0.482637] (gazebo) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.499567] (-) TimerEvent: {}
+[0.528277] (gazebo) StdoutLine: {'line': b'-- Found sensor_msgs: 4.2.4 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[0.560744] (gazebo) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[0.599656] (-) TimerEvent: {}
+[0.623526] (gazebo) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[0.623795] (gazebo) StdoutLine: {'line': b'-- Configured cppcheck include dirs: \n'}
+[0.623909] (gazebo) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[0.624418] (gazebo) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[0.625140] (gazebo) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[0.625719] (gazebo) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257\n"}
+[0.626748] (gazebo) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[0.626993] (gazebo) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[0.627243] (gazebo) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[0.628906] (gazebo) StdoutLine: {'line': b'-- Configuring done\n'}
+[0.649232] (gazebo) StdoutLine: {'line': b'-- Generating done\n'}
+[0.654863] (gazebo) StdoutLine: {'line': b'-- Build files have been written to: /home/ihitexe/rover_ws/build/gazebo\n'}
+[0.699787] (-) TimerEvent: {}
+[0.701927] (gazebo) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/sensor.dir/src/sensors.cpp.o\x1b[0m\n'}
+[0.799898] (-) TimerEvent: {}
+[0.900277] (-) TimerEvent: {}
+[1.000779] (-) TimerEvent: {}
+[1.101152] (-) TimerEvent: {}
+[1.201534] (-) TimerEvent: {}
+[1.301902] (-) TimerEvent: {}
+[1.402285] (-) TimerEvent: {}
+[1.502730] (-) TimerEvent: {}
+[1.603110] (-) TimerEvent: {}
+[1.703561] (-) TimerEvent: {}
+[1.803989] (-) TimerEvent: {}
+[1.904543] (-) TimerEvent: {}
+[2.004942] (-) TimerEvent: {}
+[2.105449] (-) TimerEvent: {}
+[2.205843] (-) TimerEvent: {}
+[2.306307] (-) TimerEvent: {}
+[2.406631] (-) TimerEvent: {}
+[2.507004] (-) TimerEvent: {}
+[2.607519] (-) TimerEvent: {}
+[2.707939] (-) TimerEvent: {}
+[2.808335] (-) TimerEvent: {}
+[2.908621] (-) TimerEvent: {}
+[3.008911] (-) TimerEvent: {}
+[3.109225] (-) TimerEvent: {}
+[3.209648] (-) TimerEvent: {}
+[3.309935] (-) TimerEvent: {}
+[3.410254] (-) TimerEvent: {}
+[3.510608] (-) TimerEvent: {}
+[3.610955] (-) TimerEvent: {}
+[3.711369] (-) TimerEvent: {}
+[3.811770] (-) TimerEvent: {}
+[3.912170] (-) TimerEvent: {}
+[4.012645] (-) TimerEvent: {}
+[4.113001] (-) TimerEvent: {}
+[4.213440] (-) TimerEvent: {}
+[4.313809] (-) TimerEvent: {}
+[4.414259] (-) TimerEvent: {}
+[4.514648] (-) TimerEvent: {}
+[4.615013] (-) TimerEvent: {}
+[4.715400] (-) TimerEvent: {}
+[4.815771] (-) TimerEvent: {}
+[4.916137] (-) TimerEvent: {}
+[5.016605] (-) TimerEvent: {}
+[5.116951] (-) TimerEvent: {}
+[5.217406] (-) TimerEvent: {}
+[5.317732] (-) TimerEvent: {}
+[5.418102] (-) TimerEvent: {}
+[5.518485] (-) TimerEvent: {}
+[5.618844] (-) TimerEvent: {}
+[5.719239] (-) TimerEvent: {}
+[5.819750] (-) TimerEvent: {}
+[5.845004] (gazebo) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable sensor\x1b[0m\n'}
+[5.919884] (-) TimerEvent: {}
+[6.020255] (-) TimerEvent: {}
+[6.120637] (-) TimerEvent: {}
+[6.161319] (gazebo) StdoutLine: {'line': b'[100%] Built target sensor\n'}
+[6.182697] (gazebo) CommandEnded: {'returncode': 0}
+[6.183528] (gazebo) JobProgress: {'identifier': 'gazebo', 'progress': 'install'}
+[6.195592] (gazebo) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/ihitexe/rover_ws/build/gazebo'], 'cwd': '/home/ihitexe/rover_ws/build/gazebo', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'ihitexe'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ihitexe'), ('OLDPWD', '/home/ihitexe'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '3750'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/ihitexe/rover_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ihitexe'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ihitexe'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ihitexe:@/tmp/.ICE-unix/3512,unix/ihitexe:/tmp/.ICE-unix/3512'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/8f2509f7_21f0_4daf_bcab_7fa1a9b623e7'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_IN'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.GKL4Z2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.381'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/ihitexe/rover_ws/install/gazebo:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ihitexe/rover_ws/build/gazebo'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/home/ihitexe/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/ihitexe/rover_ws/install/gazebo:/opt/ros/humble')]), 'shell': False}
+[6.205782] (gazebo) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[6.206016] (gazebo) StdoutLine: {'line': b'-- Installing: /home/ihitexe/rover_ws/install/gazebo/lib/gazebo/sensor\n'}
+[6.208726] (gazebo) StdoutLine: {'line': b'-- Set runtime path of "/home/ihitexe/rover_ws/install/gazebo/lib/gazebo/sensor" to ""\n'}
+[6.209009] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch\n'}
+[6.209132] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch/.vscode\n'}
+[6.209200] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch/.vscode/settings.json\n'}
+[6.209233] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch/.vscode/c_cpp_properties.json\n'}
+[6.209471] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch/rviz_launch.py\n'}
+[6.209554] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/launch/gazebo_launch.py\n'}
+[6.209680] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/model\n'}
+[6.209747] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/model/rover.gazebo\n'}
+[6.209812] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/model/world.world\n'}
+[6.209888] (gazebo) StdoutLine: {'line': b'-- Installing: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/model/rover.xacro\n'}
+[6.210325] (gazebo) StdoutLine: {'line': b'-- Installing: /home/ihitexe/rover_ws/install/gazebo/share/ament_index/resource_index/package_run_dependencies/gazebo\n'}
+[6.210544] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/ament_index/resource_index/parent_prefix_path/gazebo\n'}
+[6.210739] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/environment/ament_prefix_path.sh\n'}
+[6.210848] (gazebo) StdoutLine: {'line': b'-- Installing: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/environment/ament_prefix_path.dsv\n'}
+[6.210999] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/environment/path.sh\n'}
+[6.211066] (gazebo) StdoutLine: {'line': b'-- Installing: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/environment/path.dsv\n'}
+[6.211188] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/local_setup.bash\n'}
+[6.211245] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/local_setup.sh\n'}
+[6.211300] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/local_setup.zsh\n'}
+[6.211356] (gazebo) StdoutLine: {'line': b'-- Installing: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/local_setup.dsv\n'}
+[6.211509] (gazebo) StdoutLine: {'line': b'-- Installing: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/package.dsv\n'}
+[6.211821] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/ament_index/resource_index/packages/gazebo\n'}
+[6.211887] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/cmake/gazeboConfig.cmake\n'}
+[6.211945] (gazebo) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/cmake/gazeboConfig-version.cmake\n'}
+[6.212006] (gazebo) StdoutLine: {'line': b'-- Installing: /home/ihitexe/rover_ws/install/gazebo/share/gazebo/package.xml\n'}
+[6.214517] (gazebo) CommandEnded: {'returncode': 0}
+[6.220704] (-) TimerEvent: {}
+[6.233045] (gazebo) JobEnded: {'identifier': 'gazebo', 'rc': 0}
+[6.233965] (-) EventReactorShutdown: {}

@@ -1,0 +1,123 @@
+[0.000000] (-) TimerEvent: {}
+[0.000600] (-) JobUnselected: {'identifier': 'pub_pkg'}
+[0.000701] (-) JobUnselected: {'identifier': 'tutorial_interfaces'}
+[0.000735] (sub_pkg) JobQueued: {'identifier': 'sub_pkg', 'dependencies': OrderedDict([('tutorial_interfaces', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces')])}
+[0.000770] (sub_pkg) JobStarted: {'identifier': 'sub_pkg'}
+[0.010442] (sub_pkg) JobProgress: {'identifier': 'sub_pkg', 'progress': 'cmake'}
+[0.011344] (sub_pkg) JobProgress: {'identifier': 'sub_pkg', 'progress': 'build'}
+[0.011436] (sub_pkg) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg', '--', '-j12', '-l12'], 'cwd': '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'ihitexe'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ihitexe'), ('OLDPWD', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '5229'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ihitexe'), ('DESKTOP_AUTOSTART_ID', '10dfb4507651430e02173354039574489700000052290016'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ihitexe'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ihitexe:@/tmp/.ICE-unix/5229,unix/ihitexe:/tmp/.ICE-unix/5229'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/b9f62110_07f0_485b_ae73_d4d89d7006fc'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_IN'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.63OAY2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.86'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/home/ihitexe/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg:/opt/ros/humble')]), 'shell': False}
+[0.054524] (sub_pkg) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target sub_node\x1b[0m\n'}
+[0.071562] (sub_pkg) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/sub_node.dir/src/sub_node.cpp.o\x1b[0m\n'}
+[0.099589] (-) TimerEvent: {}
+[0.200061] (-) TimerEvent: {}
+[0.300537] (-) TimerEvent: {}
+[0.401024] (-) TimerEvent: {}
+[0.501466] (-) TimerEvent: {}
+[0.601955] (-) TimerEvent: {}
+[0.702416] (-) TimerEvent: {}
+[0.802805] (-) TimerEvent: {}
+[0.903256] (-) TimerEvent: {}
+[1.003718] (-) TimerEvent: {}
+[1.104184] (-) TimerEvent: {}
+[1.204657] (-) TimerEvent: {}
+[1.305117] (-) TimerEvent: {}
+[1.405578] (-) TimerEvent: {}
+[1.506051] (-) TimerEvent: {}
+[1.606504] (-) TimerEvent: {}
+[1.706953] (-) TimerEvent: {}
+[1.803751] (sub_pkg) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/logging.hpp:24\x1b[m\x1b[K,\n'}
+[1.804000] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40\x1b[m\x1b[K,\n'}
+[1.804094] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24\x1b[m\x1b[K,\n'}
+[1.804195] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20\x1b[m\x1b[K,\n'}
+[1.804285] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25\x1b[m\x1b[K,\n'}
+[1.804366] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18\x1b[m\x1b[K,\n'}
+[1.804447] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20\x1b[m\x1b[K,\n'}
+[1.804527] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37\x1b[m\x1b[K,\n'}
+[1.804607] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25\x1b[m\x1b[K,\n'}
+[1.804687] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21\x1b[m\x1b[K,\n'}
+[1.804766] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155\x1b[m\x1b[K,\n'}
+[1.804845] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:2\x1b[m\x1b[K:\n'}
+[1.804925] (sub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Subscriber::stock(tutorial_interfaces::msg::Num_<std::allocator<void> >::SharedPtr)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.805016] (sub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:64:39:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kformat \xe2\x80\x98\x1b[01m\x1b[K%d\x1b[m\x1b[K\xe2\x80\x99 expects argument of type \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99, but argument 5 has type \xe2\x80\x98\x1b[01m\x1b[Ktutorial_interfaces::msg::Num_<std::allocator<void> >::_bill_no_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat=\x07-Wformat=\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.805104] (sub_pkg) StderrLine: {'line': b'   64 |       RCLCPP_INFO(this->get_logger(), \x1b[01;35m\x1b[K"Transaction successful:\\nBillnumber : %d\\nTotal : %f"\x1b[m\x1b[K, \x1b[32m\x1b[Kmsg->bill_no\x1b[m\x1b[K, msg->total);\n'}
+[1.805196] (sub_pkg) StderrLine: {'line': b'      |                                       \x1b[01;35m\x1b[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K  \x1b[32m\x1b[K~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.805280] (sub_pkg) StderrLine: {'line': b'      |                                                                                                    \x1b[32m\x1b[K|\x1b[m\x1b[K\n'}
+[1.805361] (sub_pkg) StderrLine: {'line': b'      |                                                                                                    \x1b[32m\x1b[Ktutorial_interfaces::msg::Num_<std::allocator<void> >::_bill_no_type {aka long int}\x1b[m\x1b[K\n'}
+[1.805442] (sub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:64:79:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kformat string is defined here\n'}
+[1.805522] (sub_pkg) StderrLine: {'line': b'   64 | this->get_logger(), "Transaction successful:\\nBillnumber : \x1b[01;36m\x1b[K%d\x1b[m\x1b[K\\nTotal : %f", msg->bill_no, msg->total);\n'}
+[1.805602] (sub_pkg) StderrLine: {'line': b'      |                                                            \x1b[01;36m\x1b[K~^\x1b[m\x1b[K\n'}
+[1.805681] (sub_pkg) StderrLine: {'line': b'      |                                                             \x1b[01;36m\x1b[K|\x1b[m\x1b[K\n'}
+[1.805760] (sub_pkg) StderrLine: {'line': b'      |                                                             \x1b[01;36m\x1b[Kint\x1b[m\x1b[K\n'}
+[1.805839] (sub_pkg) StderrLine: {'line': b'      |                                                            \x1b[32m\x1b[K%ld\x1b[m\x1b[K\n'}
+[1.807201] (-) TimerEvent: {}
+[1.907675] (-) TimerEvent: {}
+[2.008135] (-) TimerEvent: {}
+[2.108604] (-) TimerEvent: {}
+[2.209040] (-) TimerEvent: {}
+[2.309494] (-) TimerEvent: {}
+[2.409937] (-) TimerEvent: {}
+[2.510400] (-) TimerEvent: {}
+[2.610853] (-) TimerEvent: {}
+[2.711241] (-) TimerEvent: {}
+[2.811664] (-) TimerEvent: {}
+[2.912071] (-) TimerEvent: {}
+[3.012501] (-) TimerEvent: {}
+[3.112976] (-) TimerEvent: {}
+[3.213416] (-) TimerEvent: {}
+[3.313888] (-) TimerEvent: {}
+[3.414338] (-) TimerEvent: {}
+[3.514810] (-) TimerEvent: {}
+[3.615255] (-) TimerEvent: {}
+[3.715615] (-) TimerEvent: {}
+[3.816108] (-) TimerEvent: {}
+[3.916486] (-) TimerEvent: {}
+[4.016940] (-) TimerEvent: {}
+[4.117393] (-) TimerEvent: {}
+[4.217872] (-) TimerEvent: {}
+[4.318351] (-) TimerEvent: {}
+[4.418798] (-) TimerEvent: {}
+[4.519260] (-) TimerEvent: {}
+[4.619606] (-) TimerEvent: {}
+[4.719975] (-) TimerEvent: {}
+[4.820392] (-) TimerEvent: {}
+[4.920792] (-) TimerEvent: {}
+[5.021295] (-) TimerEvent: {}
+[5.121631] (-) TimerEvent: {}
+[5.222092] (-) TimerEvent: {}
+[5.322464] (-) TimerEvent: {}
+[5.422899] (-) TimerEvent: {}
+[5.523445] (-) TimerEvent: {}
+[5.623791] (-) TimerEvent: {}
+[5.724175] (-) TimerEvent: {}
+[5.824567] (-) TimerEvent: {}
+[5.924961] (-) TimerEvent: {}
+[6.025404] (-) TimerEvent: {}
+[6.053693] (sub_pkg) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable sub_node\x1b[0m\n'}
+[6.125532] (-) TimerEvent: {}
+[6.225910] (-) TimerEvent: {}
+[6.326398] (-) TimerEvent: {}
+[6.353421] (sub_pkg) StdoutLine: {'line': b'[100%] Built target sub_node\n'}
+[6.369308] (sub_pkg) CommandEnded: {'returncode': 0}
+[6.370762] (sub_pkg) JobProgress: {'identifier': 'sub_pkg', 'progress': 'install'}
+[6.385294] (sub_pkg) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg'], 'cwd': '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'ihitexe'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ihitexe'), ('OLDPWD', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '5229'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ihitexe'), ('DESKTOP_AUTOSTART_ID', '10dfb4507651430e02173354039574489700000052290016'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ihitexe'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ihitexe:@/tmp/.ICE-unix/5229,unix/ihitexe:/tmp/.ICE-unix/5229'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/b9f62110_07f0_485b_ae73_d4d89d7006fc'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_IN'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.63OAY2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.86'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/home/ihitexe/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg:/opt/ros/humble')]), 'shell': False}
+[6.393004] (sub_pkg) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[6.393241] (sub_pkg) StdoutLine: {'line': b'-- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/lib/sub_pkg/sub_node\n'}
+[6.395518] (sub_pkg) StdoutLine: {'line': b'-- Set runtime path of "/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/lib/sub_pkg/sub_node" to ""\n'}
+[6.395734] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/ament_index/resource_index/package_run_dependencies/sub_pkg\n'}
+[6.395830] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/ament_index/resource_index/parent_prefix_path/sub_pkg\n'}
+[6.395918] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/ament_prefix_path.sh\n'}
+[6.396000] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/ament_prefix_path.dsv\n'}
+[6.396082] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/path.sh\n'}
+[6.396187] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/path.dsv\n'}
+[6.396278] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.bash\n'}
+[6.396366] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.sh\n'}
+[6.396456] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.zsh\n'}
+[6.396538] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.dsv\n'}
+[6.396623] (sub_pkg) StdoutLine: {'line': b'-- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/package.dsv\n'}
+[6.396712] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/ament_index/resource_index/packages/sub_pkg\n'}
+[6.396942] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/cmake/sub_pkgConfig.cmake\n'}
+[6.397129] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/cmake/sub_pkgConfig-version.cmake\n'}
+[6.397244] (sub_pkg) StdoutLine: {'line': b'-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/package.xml\n'}
+[6.398291] (sub_pkg) CommandEnded: {'returncode': 0}
+[6.410662] (sub_pkg) JobEnded: {'identifier': 'sub_pkg', 'rc': 0}
+[6.411472] (-) EventReactorShutdown: {}

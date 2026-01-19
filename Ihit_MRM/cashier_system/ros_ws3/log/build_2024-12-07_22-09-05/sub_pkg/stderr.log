@@ -1,0 +1,38 @@
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:[m[K In member function ‘[01m[Kvoid Subscriber::stock(tutorial_interfaces::msg::Num_<std::allocator<void> >::SharedPtr)[m[K’:
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:76:1:[m[K [01;31m[Kerror: [m[K‘[01m[Kclient[m[K’ was not declared in this scope
+   76 | [01;31m[Kclient[m[K = this->create_client<tutorial_interfaces::srv>
+      | [01;31m[K^~~~~~[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:76:16:[m[K [01;31m[Kerror: [m[Kparse error in template argument list
+   76 | client = this->[01;31m[Kcreate_client<tutorial_interfaces::srv>[m[K
+      |                [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:97:5:[m[K [01;31m[Kerror: [m[K‘[01m[Knode[m[K’ was not declared in this scope
+   97 |     [01;31m[Knode[m[K->create_client<tutorial_interfaces::srv::Display>("DISPLAY");
+      |     [01;31m[K^~~~[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:97:58:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K>[m[K’ token
+   97 |     node->create_client<tutorial_interfaces::srv::Display[01;31m[K>[m[K("DISPLAY");
+      |                                                          [01;31m[K^[m[K
+In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/logging.hpp:24[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:2[m[K:
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:104:45:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%s[m[K’ expects argument of type ‘[01m[Kchar*[m[K’, but argument 6 has type ‘[01m[Ktutorial_interfaces::srv::Display_Response_<std::allocator<void> >::_time_type[m[K’ {aka ‘[01m[Kstd::__cxx11::basic_string<char>[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat=-Wformat=]8;;[m[K]
+  104 |   RCLCPP_INFO(rclcpp::get_logger("rclcpp"), [01;35m[K"Last bill is : \nBill_no : %d\nTimestamp : %s\nUnit_type : %c\nUnit_no : %d\nUnit_price : %f\nTotal : %f"[m[K, result.get()->bill_no,result.get()->time,result.get()->unit_type,result.get()->unit_no,result.get()->unit_price,result.get()->total);
+      |                                             [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:104:90:[m[K [01;36m[Knote: [m[Kformat string is defined here
+  104 | ger("rclcpp"), "Last bill is : \nBill_no : %d\nTimestamp : [01;36m[K%s[m[K\nUnit_type : %c\nUnit_no : %d\nUnit_price : %f\nTotal : %f", result.get()->bill_no,result.get()->time,result.get()->unit_type,result.get()->unit_no,result.get()->unit_price,result.get()->total);
+      |                                                            [01;36m[K~^[m[K
+      |                                                             [01;36m[K|[m[K
+      |                                                             [01;36m[Kchar*[m[K
+
+gmake[2]: *** [CMakeFiles/sub_node.dir/build.make:76: CMakeFiles/sub_node.dir/src/sub_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/sub_node.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

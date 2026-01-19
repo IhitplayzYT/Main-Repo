@@ -1,0 +1,68 @@
+[0.000000] (-) TimerEvent: {}
+[0.000876] (-) JobUnselected: {'identifier': 'pub_pkg'}
+[0.000894] (-) JobUnselected: {'identifier': 'sub_pkg'}
+[0.000905] (-) JobUnselected: {'identifier': 'tutorial_interfaces'}
+[0.000916] (disp_pkg) JobQueued: {'identifier': 'disp_pkg', 'dependencies': OrderedDict([('tutorial_interfaces', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces')])}
+[0.000930] (disp_pkg) JobStarted: {'identifier': 'disp_pkg'}
+[0.009252] (disp_pkg) JobProgress: {'identifier': 'disp_pkg', 'progress': 'cmake'}
+[0.009533] (disp_pkg) JobProgress: {'identifier': 'disp_pkg', 'progress': 'build'}
+[0.009993] (disp_pkg) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg', '--', '-j12', '-l12'], 'cwd': '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'ihitexe'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ihitexe'), ('OLDPWD', '/home/ihitexe/mrm_ros_union_dir'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '3162'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ihitexe'), ('DESKTOP_AUTOSTART_ID', '10feaa02dcaad6e96e173356152259962600000031620016'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ihitexe'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ihitexe:@/tmp/.ICE-unix/3162,unix/ihitexe:/tmp/.ICE-unix/3162'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/4b238f66_797b_4e6e_9a41_9026b1c12e78'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_IN'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.7PXEY2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.85'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/disp_pkg'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/home/ihitexe/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble')]), 'shell': False}
+[0.056855] (disp_pkg) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target disp_node\x1b[0m\n'}
+[0.074054] (disp_pkg) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/disp_node.dir/src/disp_node.cpp.o\x1b[0m\n'}
+[0.099973] (-) TimerEvent: {}
+[0.200440] (-) TimerEvent: {}
+[0.300914] (-) TimerEvent: {}
+[0.401397] (-) TimerEvent: {}
+[0.501881] (-) TimerEvent: {}
+[0.602344] (-) TimerEvent: {}
+[0.702827] (-) TimerEvent: {}
+[0.803301] (-) TimerEvent: {}
+[0.903800] (-) TimerEvent: {}
+[1.004268] (-) TimerEvent: {}
+[1.104799] (-) TimerEvent: {}
+[1.205301] (-) TimerEvent: {}
+[1.305901] (-) TimerEvent: {}
+[1.406250] (-) TimerEvent: {}
+[1.506645] (-) TimerEvent: {}
+[1.607117] (-) TimerEvent: {}
+[1.707490] (-) TimerEvent: {}
+[1.749717] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:17:5:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Ktemporary of non-literal type \xe2\x80\x98\x1b[01m\x1b[Krclcpp::Node\x1b[m\x1b[K\xe2\x80\x99 in a constant expression\n'}
+[1.750022] (disp_pkg) StderrLine: {'line': b'   17 |   : \x1b[01;31m\x1b[KNode("BILL")\x1b[m\x1b[K;\n'}
+[1.750144] (disp_pkg) StderrLine: {'line': b'      |     \x1b[01;31m\x1b[K^~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.750247] (disp_pkg) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28\x1b[m\x1b[K,\n'}
+[1.750348] (disp_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22\x1b[m\x1b[K,\n'}
+[1.750452] (disp_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155\x1b[m\x1b[K,\n'}
+[1.750760] (disp_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:2\x1b[m\x1b[K:\n'}
+[1.750932] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:77:7:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Krclcpp::Node\x1b[m\x1b[K\xe2\x80\x99 is not literal because:\n'}
+[1.751038] (disp_pkg) StderrLine: {'line': b'   77 | class \x1b[01;36m\x1b[KNode\x1b[m\x1b[K : public std::enable_shared_from_this<Node>\n'}
+[1.751136] (disp_pkg) StderrLine: {'line': b'      |       \x1b[01;36m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[1.751233] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:77:7:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Krclcpp::Node\x1b[m\x1b[K\xe2\x80\x99 has a non-trivial destructor\n'}
+[1.751331] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:17:16:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[KISO C++ forbids declaration of \xe2\x80\x98\x1b[01m\x1b[Ktype name\x1b[m\x1b[K\xe2\x80\x99 with no type [\x1b[01;31m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-fpermissive\x07-fpermissive\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.751448] (disp_pkg) StderrLine: {'line': b'   17 |   : Node("BILL"\x1b[01;31m\x1b[K)\x1b[m\x1b[K;\n'}
+[1.751555] (disp_pkg) StderrLine: {'line': b'      |                \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[1.751660] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:17:16:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kwidth of bit-field \xe2\x80\x98\x1b[01m\x1b[K<anonymous>\x1b[m\x1b[K\xe2\x80\x99 has non-integral type \xe2\x80\x98\x1b[01m\x1b[Krclcpp::Node\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.751755] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:19:3:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kexpected unqualified-id before \xe2\x80\x98\x1b[01m\x1b[K{\x1b[m\x1b[K\xe2\x80\x99 token\n'}
+[1.751854] (disp_pkg) StderrLine: {'line': b'   19 |   \x1b[01;31m\x1b[K{\x1b[m\x1b[K\n'}
+[1.751945] (disp_pkg) StderrLine: {'line': b'      |   \x1b[01;31m\x1b[K^\x1b[m\x1b[K\n'}
+[1.752033] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Bill::display_func()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.752127] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:29:57:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kcannot convert \xe2\x80\x98\x1b[01m\x1b[Krclcpp::Parameter::as_double\x1b[m\x1b[K\xe2\x80\x99 from type \xe2\x80\x98\x1b[01m\x1b[Kdouble (rclcpp::Parameter::)() const\x1b[m\x1b[K\xe2\x80\x99 to type \xe2\x80\x98\x1b[01m\x1b[Kdouble\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.752231] (disp_pkg) StderrLine: {'line': b'   29 |   double income = this -> get_parameter("TOTAL_INCOME").\x1b[01;31m\x1b[Kas_double\x1b[m\x1b[K;\n'}
+[1.752324] (disp_pkg) StderrLine: {'line': b'      |                                                         \x1b[01;31m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[1.752416] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:30:56:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kcannot convert \xe2\x80\x98\x1b[01m\x1b[Krclcpp::Parameter::as_int\x1b[m\x1b[K\xe2\x80\x99 from type \xe2\x80\x98\x1b[01m\x1b[Kint64_t (rclcpp::Parameter::)() const\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong int (rclcpp::Parameter::)() const\x1b[m\x1b[K\xe2\x80\x99} to type \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.752511] (disp_pkg) StderrLine: {'line': b'   30 |   int inventorya = this -> get_parameter("INVENTORYA").\x1b[01;31m\x1b[Kas_int\x1b[m\x1b[K;\n'}
+[1.752620] (disp_pkg) StderrLine: {'line': b'      |                                                        \x1b[01;31m\x1b[K^~~~~~\x1b[m\x1b[K\n'}
+[1.752726] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:31:56:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kcannot convert \xe2\x80\x98\x1b[01m\x1b[Krclcpp::Parameter::as_int\x1b[m\x1b[K\xe2\x80\x99 from type \xe2\x80\x98\x1b[01m\x1b[Kint64_t (rclcpp::Parameter::)() const\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong int (rclcpp::Parameter::)() const\x1b[m\x1b[K\xe2\x80\x99} to type \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.752818] (disp_pkg) StderrLine: {'line': b'   31 |   int inventoryb = this -> get_parameter("INVENTORYB").\x1b[01;31m\x1b[Kas_int\x1b[m\x1b[K;\n'}
+[1.752906] (disp_pkg) StderrLine: {'line': b'      |                                                        \x1b[01;31m\x1b[K^~~~~~\x1b[m\x1b[K\n'}
+[1.752997] (disp_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/disp_pkg/src/disp_node.cpp:32:56:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kcannot convert \xe2\x80\x98\x1b[01m\x1b[Krclcpp::Parameter::as_int\x1b[m\x1b[K\xe2\x80\x99 from type \xe2\x80\x98\x1b[01m\x1b[Kint64_t (rclcpp::Parameter::)() const\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong int (rclcpp::Parameter::)() const\x1b[m\x1b[K\xe2\x80\x99} to type \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99\n'}
+[1.753113] (disp_pkg) StderrLine: {'line': b'   32 |   int inventoryc = this -> get_parameter("INVENTORYC").\x1b[01;31m\x1b[Kas_int\x1b[m\x1b[K;\n'}
+[1.753210] (disp_pkg) StderrLine: {'line': b'      |                                                        \x1b[01;31m\x1b[K^~~~~~\x1b[m\x1b[K\n'}
+[1.807728] (-) TimerEvent: {}
+[1.908128] (-) TimerEvent: {}
+[2.008555] (-) TimerEvent: {}
+[2.066544] (disp_pkg) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/disp_node.dir/build.make:76: CMakeFiles/disp_node.dir/src/disp_node.cpp.o] Error 1\n'}
+[2.066911] (disp_pkg) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/disp_node.dir/all] Error 2\n'}
+[2.067151] (disp_pkg) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[2.069455] (disp_pkg) CommandEnded: {'returncode': 2}
+[2.077465] (disp_pkg) JobEnded: {'identifier': 'disp_pkg', 'rc': 2}
+[2.088029] (-) EventReactorShutdown: {}

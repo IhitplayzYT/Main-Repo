@@ -1,0 +1,46 @@
+[35m[1mConsolidate compiler generated dependencies of target sub_node[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/sub_node.dir/src/sub_node.cpp.o[0m
+In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/logging.hpp:24[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:2[m[K:
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:[m[K In member function ‘[01m[Kvoid Subscriber::stock(tutorial_interfaces::msg::Num_<std::allocator<void> >::SharedPtr)[m[K’:
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:33:41:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%d[m[K’ expects argument of type ‘[01m[Kint[m[K’, but argument 5 has type ‘[01m[Ktutorial_interfaces::msg::Num_<std::allocator<void> >::_bill_no_type[m[K’ {aka ‘[01m[Klong int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat=-Wformat=]8;;[m[K]
+   33 |         RCLCPP_INFO(this->get_logger(), [01;35m[K"Transaction successful:\nBillnumber : %d\nTotal : %f"[m[K, [32m[Kmsg->bill_no[m[K, msg->total);
+      |                                         [01;35m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K  [32m[K~~~~~~~~~~~~[m[K
+      |                                                                                                      [32m[K|[m[K
+      |                                                                                                      [32m[Ktutorial_interfaces::msg::Num_<std::allocator<void> >::_bill_no_type {aka long int}[m[K
+[01m[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:33:81:[m[K [01;36m[Knote: [m[Kformat string is defined here
+   33 | this->get_logger(), "Transaction successful:\nBillnumber : [01;36m[K%d[m[K\nTotal : %f", msg->bill_no, msg->total);
+      |                                                            [01;36m[K~^[m[K
+      |                                                             [01;36m[K|[m[K
+      |                                                             [01;36m[Kint[m[K
+      |                                                            [32m[K%ld[m[K
+[100%] [32m[1mLinking CXX executable sub_node[0m
+[100%] Built target sub_node
+-- Install configuration: ""
+-- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/lib/sub_pkg/sub_node
+-- Set runtime path of "/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/lib/sub_pkg/sub_node" to ""
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/ament_index/resource_index/package_run_dependencies/sub_pkg
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/ament_index/resource_index/parent_prefix_path/sub_pkg
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/ament_prefix_path.sh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/path.sh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/environment/path.dsv
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.bash
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.sh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.zsh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/local_setup.dsv
+-- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/package.dsv
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/ament_index/resource_index/packages/sub_pkg
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/cmake/sub_pkgConfig.cmake
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/cmake/sub_pkgConfig-version.cmake
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg/share/sub_pkg/package.xml

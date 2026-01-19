@@ -1,0 +1,84 @@
+[0.000000] (-) TimerEvent: {}
+[0.000134] (-) JobUnselected: {'identifier': 'disp_pkg'}
+[0.000152] (-) JobUnselected: {'identifier': 'pub_pkg'}
+[0.000161] (-) JobUnselected: {'identifier': 'tutorial_interfaces'}
+[0.000171] (sub_pkg) JobQueued: {'identifier': 'sub_pkg', 'dependencies': OrderedDict([('tutorial_interfaces', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces')])}
+[0.000773] (sub_pkg) JobStarted: {'identifier': 'sub_pkg'}
+[0.015228] (sub_pkg) JobProgress: {'identifier': 'sub_pkg', 'progress': 'cmake'}
+[0.015468] (sub_pkg) JobProgress: {'identifier': 'sub_pkg', 'progress': 'build'}
+[0.016164] (sub_pkg) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg', '--', '-j12', '-l12'], 'cwd': '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'ihitexe'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ihitexe'), ('OLDPWD', '/home/ihitexe/mrm_ros_union_dir'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('SYSTEMD_EXEC_PID', '4261'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ihitexe'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ihitexe'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ihitexe:@/tmp/.ICE-unix/4042,unix/ihitexe:/tmp/.ICE-unix/4042'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ff759a73_a249_4cb0_858b_2ca7843510bd'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_IN'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.ZTQIY2'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.86'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/build/sub_pkg'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/home/ihitexe/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/tutorial_interfaces:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/sub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/pub_pkg:/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg:/opt/ros/humble')]), 'shell': False}
+[0.070386] (sub_pkg) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target sub_node\x1b[0m\n'}
+[0.089715] (sub_pkg) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/sub_node.dir/src/sub_node.cpp.o\x1b[0m\n'}
+[0.099697] (-) TimerEvent: {}
+[0.200046] (-) TimerEvent: {}
+[0.300376] (-) TimerEvent: {}
+[0.400688] (-) TimerEvent: {}
+[0.501015] (-) TimerEvent: {}
+[0.601334] (-) TimerEvent: {}
+[0.701695] (-) TimerEvent: {}
+[0.802087] (-) TimerEvent: {}
+[0.902367] (-) TimerEvent: {}
+[1.002646] (-) TimerEvent: {}
+[1.103083] (-) TimerEvent: {}
+[1.203454] (-) TimerEvent: {}
+[1.303833] (-) TimerEvent: {}
+[1.404225] (-) TimerEvent: {}
+[1.504616] (-) TimerEvent: {}
+[1.605031] (-) TimerEvent: {}
+[1.705380] (-) TimerEvent: {}
+[1.805846] (-) TimerEvent: {}
+[1.838064] (sub_pkg) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/logging.hpp:24\x1b[m\x1b[K,\n'}
+[1.838324] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40\x1b[m\x1b[K,\n'}
+[1.838420] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24\x1b[m\x1b[K,\n'}
+[1.838507] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20\x1b[m\x1b[K,\n'}
+[1.838587] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25\x1b[m\x1b[K,\n'}
+[1.838671] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18\x1b[m\x1b[K,\n'}
+[1.838755] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20\x1b[m\x1b[K,\n'}
+[1.838838] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37\x1b[m\x1b[K,\n'}
+[1.838921] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25\x1b[m\x1b[K,\n'}
+[1.839018] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21\x1b[m\x1b[K,\n'}
+[1.839249] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155\x1b[m\x1b[K,\n'}
+[1.839347] (sub_pkg) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:2\x1b[m\x1b[K:\n'}
+[1.839435] (sub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:\x1b[m\x1b[K In function \xe2\x80\x98\x1b[01m\x1b[Kint main(int, char**)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.839531] (sub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:103:45:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kformat \xe2\x80\x98\x1b[01m\x1b[K%s\x1b[m\x1b[K\xe2\x80\x99 expects argument of type \xe2\x80\x98\x1b[01m\x1b[Kchar*\x1b[m\x1b[K\xe2\x80\x99, but argument 6 has type \xe2\x80\x98\x1b[01m\x1b[Ktutorial_interfaces::srv::Display_Response_<std::allocator<void> >::_time_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Kstd::__cxx11::basic_string<char>\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wformat=\x07-Wformat=\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.839619] (sub_pkg) StderrLine: {'line': b'  103 |   RCLCPP_INFO(rclcpp::get_logger("rclcpp"), \x1b[01;35m\x1b[K"Last bill is : \\nBill_no : %d\\nTimestamp : %s\\nUnit_type : %c\\nUnit_no : %d\\nUnit_price : %f\\nTotal : %f"\x1b[m\x1b[K, result.get()->bill_no,result.get()->time,result.get()->unit_type,result.get()->unit_no,result.get()->unit_price,result.get()->total);\n'}
+[1.839701] (sub_pkg) StderrLine: {'line': b'      |                                             \x1b[01;35m\x1b[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[1.839779] (sub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:103:90:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kformat string is defined here\n'}
+[1.839860] (sub_pkg) StderrLine: {'line': b'  103 | ger("rclcpp"), "Last bill is : \\nBill_no : %d\\nTimestamp : \x1b[01;36m\x1b[K%s\x1b[m\x1b[K\\nUnit_type : %c\\nUnit_no : %d\\nUnit_price : %f\\nTotal : %f", result.get()->bill_no,result.get()->time,result.get()->unit_type,result.get()->unit_no,result.get()->unit_price,result.get()->total);\n'}
+[1.839941] (sub_pkg) StderrLine: {'line': b'      |                                                            \x1b[01;36m\x1b[K~^\x1b[m\x1b[K\n'}
+[1.840040] (sub_pkg) StderrLine: {'line': b'      |                                                             \x1b[01;36m\x1b[K|\x1b[m\x1b[K\n'}
+[1.840124] (sub_pkg) StderrLine: {'line': b'      |                                                             \x1b[01;36m\x1b[Kchar*\x1b[m\x1b[K\n'}
+[1.840202] (sub_pkg) StderrLine: {'line': b'\n'}
+[1.840277] (sub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:104:1:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kcout\x1b[m\x1b[K\xe2\x80\x99 was not declared in this scope; did you mean \xe2\x80\x98\x1b[01m\x1b[Kstd::cout\x1b[m\x1b[K\xe2\x80\x99?\n'}
+[1.840353] (sub_pkg) StderrLine: {'line': b'  104 | \x1b[01;31m\x1b[Kcout\x1b[m\x1b[K << "sent";\n'}
+[1.840428] (sub_pkg) StderrLine: {'line': b'      | \x1b[01;31m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[1.840513] (sub_pkg) StderrLine: {'line': b'      | \x1b[32m\x1b[Kstd::cout\x1b[m\x1b[K\n'}
+[1.840590] (sub_pkg) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/ihitexe/mrm_ros_union_dir/ros_ws3/src/sub_pkg/src/sub_node.cpp:1\x1b[m\x1b[K:\n'}
+[1.840665] (sub_pkg) StderrLine: {'line': b'\x1b[01m\x1b[K/usr/include/c++/11/iostream:61:18:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kstd::cout\x1b[m\x1b[K\xe2\x80\x99 declared here\n'}
+[1.840742] (sub_pkg) StderrLine: {'line': b'   61 |   extern ostream \x1b[01;36m\x1b[Kcout\x1b[m\x1b[K;          /// Linked to standard output\n'}
+[1.840820] (sub_pkg) StderrLine: {'line': b'      |                  \x1b[01;36m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[1.906017] (-) TimerEvent: {}
+[2.006415] (-) TimerEvent: {}
+[2.106792] (-) TimerEvent: {}
+[2.207198] (-) TimerEvent: {}
+[2.307564] (-) TimerEvent: {}
+[2.408045] (-) TimerEvent: {}
+[2.508411] (-) TimerEvent: {}
+[2.608897] (-) TimerEvent: {}
+[2.709323] (-) TimerEvent: {}
+[2.809815] (-) TimerEvent: {}
+[2.910203] (-) TimerEvent: {}
+[3.010673] (-) TimerEvent: {}
+[3.111157] (-) TimerEvent: {}
+[3.211622] (-) TimerEvent: {}
+[3.312080] (-) TimerEvent: {}
+[3.412480] (-) TimerEvent: {}
+[3.512950] (-) TimerEvent: {}
+[3.613318] (-) TimerEvent: {}
+[3.713834] (-) TimerEvent: {}
+[3.775180] (sub_pkg) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/sub_node.dir/build.make:76: CMakeFiles/sub_node.dir/src/sub_node.cpp.o] Error 1\n'}
+[3.775592] (sub_pkg) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/sub_node.dir/all] Error 2\n'}
+[3.775842] (sub_pkg) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[3.777745] (sub_pkg) CommandEnded: {'returncode': 2}
+[3.789137] (sub_pkg) JobEnded: {'identifier': 'sub_pkg', 'rc': 2}
+[3.799665] (-) EventReactorShutdown: {}

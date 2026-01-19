@@ -1,0 +1,9 @@
+int32 number
+---
+int64 bill_no
+string time
+char unit_type
+int64 unit_no
+float64 unit_price
+float64 total
+

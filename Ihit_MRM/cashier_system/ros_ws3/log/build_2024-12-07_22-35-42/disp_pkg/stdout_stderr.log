@@ -1,0 +1,21 @@
+[ 50%] [32mBuilding CXX object CMakeFiles/disp_node.dir/src/disp_node.cpp.o[0m
+[100%] [32m[1mLinking CXX executable disp_node[0m
+[100%] Built target disp_node
+-- Install configuration: ""
+-- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/lib/disp_pkg/disp_node
+-- Set runtime path of "/home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/lib/disp_pkg/disp_node" to ""
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/ament_index/resource_index/package_run_dependencies/disp_pkg
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/ament_index/resource_index/parent_prefix_path/disp_pkg
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/environment/ament_prefix_path.sh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/environment/path.sh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/environment/path.dsv
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/local_setup.bash
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/local_setup.sh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/local_setup.zsh
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/local_setup.dsv
+-- Installing: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/package.dsv
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/ament_index/resource_index/packages/disp_pkg
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/cmake/disp_pkgConfig.cmake
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/cmake/disp_pkgConfig-version.cmake
+-- Up-to-date: /home/ihitexe/mrm_ros_union_dir/ros_ws3/install/disp_pkg/share/disp_pkg/package.xml
