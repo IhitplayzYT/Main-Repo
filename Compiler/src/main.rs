@@ -17,6 +17,7 @@ mod Ident_table;
 mod Tokeniser;
 mod Errors;
 mod Compiler;
+mod printer;
 use std::env;
 
 use crate::Helper::utilities::read_file;

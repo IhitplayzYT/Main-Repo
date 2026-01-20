@@ -246,25 +246,6 @@ pub mod PARSER {
             }
         }
 
-        fn binding_pow(tok : &LTOK) -> (i32,i32){ 
-            match *tok {
-                LTOK::LPAREN => (0,100),
-                LTOK::RPAREN => (100,0),
-                LTOK::BANG | LTOK::TILDA | LTOK::MODULO  => (0,99),
-                LTOK::DIV | LTOK::STAR => (60,61),
-                LTOK::PLUS | LTOK::MINUS => (50,51),
-                LTOK::LSHIFT | LTOK::RSHIFT => (45,46),
-                LTOK::AMP => (40, 41),
-                LTOK::CARET => (39, 40),
-                LTOK::PIPE => (38, 39),
-                LTOK::EQ | LTOK::N_EQ | LTOK::GT | LTOK::GT_EQ | LTOK::LT_EQ | LTOK::LT => (30, 31),
-                LTOK::ANDAND => (20, 21),
-                LTOK::OROR => (10, 11),
-                LTOK::S_AMP | LTOK::S_PIPE | LTOK::S_CARET |LTOK::S_PLUS |LTOK::S_MULT |LTOK::S_MINUS |LTOK::S_DIV |LTOK::S_MOD | LTOK::ASSGN => (0,1),
-                _ => (-1,-1),
-            }
-
-        }
 
         fn eval_return(&mut self) -> Parser_ret<Statmnt> {
             self.consume(&LTOK::RETURN)?;
@@ -370,17 +351,17 @@ pub mod PARSER {
     }
         
     fn eval_logical_and(&mut self) -> Parser_ret<Expr>{
-        let mut left = self.eval_logical_and()?;
+        let mut left = self.eval_equality()?;
 
         while self.match_token(&[LTOK::ANDAND]){
-            let right = self.eval_equaility()?;
+            let right = self.eval_equality()?;
             left = Expr::Binary_op{op:BIN_OP::And, left:Box::new(left), right:Box::new(right) };
         }
         Ok(left)
     }
 
 
-    fn eval_equaility(&mut self) -> Parser_ret<Expr>{
+    fn eval_equality(&mut self) -> Parser_ret<Expr>{
         let mut left = self.eval_comparator()?;
         while let Some(op) = self.match_eq_neq(){
             let right = self.eval_comparator()?;
@@ -410,7 +391,7 @@ pub mod PARSER {
     }
 
     fn match_comparison(&mut self) -> Option<BIN_OP>{
-        match self.next() {
+        match self.peek() {
             LTOK::LT => {self.next();Some(BIN_OP::Lt)},
             LTOK::LT_EQ => {self.next();Some(BIN_OP::Lt_eq)},
             LTOK::GT => {self.next();Some(BIN_OP::Gt)},
@@ -436,7 +417,6 @@ pub mod PARSER {
         }
     }
 
-
     fn parse_factor(&mut self) -> Parser_ret<Expr>{
         let mut left = self.eval_unary()?;
         while let Some(op) = self.match_factor_op(){
@@ -447,7 +427,7 @@ pub mod PARSER {
     }
 
     fn match_factor_op(&mut self) -> Option<BIN_OP>{
-        match self.next(){
+        match self.peek(){
         LTOK::STAR => {self.next();Some(BIN_OP::Mul)},
         LTOK::DIV => {self.next();Some(BIN_OP::Div)},
         LTOK::MODULO => {self.next();Some(BIN_OP::Mod)},
@@ -467,10 +447,64 @@ pub mod PARSER {
             self.next();
             let operand= self.eval_unary()?;
             Ok(Expr::Unary_op { op:UN_OP::Bang, operand: Box::new(operand) })
+        },LTOK::TILDA => {
+            self.next();
+            let operand= self.eval_unary()?;
+            Ok(Expr::Unary_op { op:UN_OP::Tilda, operand: Box::new(operand) })
         },
-        _ => Err(ParserError::Invalid_Code),
+        _ => self.eval_fxn_call(),
         }    
     }
+
+    fn eval_fxn_call(&mut self) -> Parser_ret<Expr>{
+        let mut expr = self.eval_primary()?;
+        loop {
+            match self.peek() {
+                LTOK::LPAREN => {
+                    self.next();
+                    let args = self.eval_args()?;
+                    self.consume(&LTOK::RPAREN)?;
+                    if let Expr::Ident(x) = expr{
+                        expr = Expr::Fxn_call { name:x, args:args };
+                    }else{
+                        return Err(ParserError::Invalid_Code);
+                    }
+
+                }
+                _ => break,
+            }
+
+        }
+        Ok(expr)
+    }
+
+    fn eval_args(&mut self) -> Parser_ret<Vec<Expr>> {
+        let mut ret = Vec::new();
+        if !self.check(&LTOK::RPAREN){
+            loop{
+                ret.push(self.eval_expr()?);
+                if !self.match_token(&[LTOK::COMMA]){
+                    break;
+                }
+            }
+        };
+        Ok(ret)
+    }
+    fn eval_primary(&mut self) -> Parser_ret<Expr> {
+        match self.next() {
+            LTOK::INT(x) => Ok(Expr::Int(x)),
+            LTOK::FLOAT(x) => Ok(Expr::Float(x)),
+            LTOK::STRING(x) => Ok(Expr::String(x)),
+            LTOK::LPAREN => {
+                let expr = self.eval_expr()?;
+                self.consume(&LTOK::RPAREN);
+                Ok(expr)
+            }
+            _ => Err(ParserError::Invalid_Code),
+
+        }
+    }
+
 
 
 //TODO: NEED TO ADD SHORTHAND OPERTAORS AS BINARY OPERATORS
