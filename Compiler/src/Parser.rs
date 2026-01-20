@@ -87,7 +87,7 @@ pub mod PARSER {
 
         let name = match self.next(){
             LTOK::IDENT(x) => x,
-            tok => {return Err(ParserError::UnexpectedToken{expected:"Fxn name".to_string(),got:format!("{:?}",tok)});}};
+            tok => {return Err(ParserError::UnexpectedToken{expected:"Function name".to_string(),got:format!("{:?}",tok)});}};
 
         self.consume(&LTOK::LPAREN)?;
 
@@ -110,7 +110,7 @@ pub mod PARSER {
             loop{
                 let name = match self.next() {
                     LTOK::IDENT(x) => x,
-                    t => {return Err(ParserError::UnexpectedToken { expected: "Parameter".to_string(), got: format!("{:?}", t) })}
+                    t => {return Err(ParserError::UnexpectedToken { expected: "Identifier".to_string(), got: format!("{:?}", t) })}
                 };
                 self.consume(&LTOK::COLON)?;
                 let type_varib = self.eval_type()?;
@@ -130,7 +130,7 @@ pub mod PARSER {
         let mutable = self.match_token(&[LTOK::MUT]);
         let name: String = match self.next() {
             LTOK::IDENT(x) => x,
-            t => return Err(ParserError::UnexpectedToken { expected: "VARIB_NAME".to_string(), got:  format!("{:?}",t)})
+            t => return Err(ParserError::UnexpectedToken { expected: "Identifier".to_string(), got:  format!("{:?}",t)})
         };
         let annot = if self.match_token(&[LTOK::COLON]) {
             Some(self.eval_type()?)
@@ -149,7 +149,7 @@ pub mod PARSER {
             self.consume(&LTOK::CONST)?;
             let name: String = match self.next() {
             LTOK::IDENT(x) => x,
-            t => return Err(ParserError::UnexpectedToken { expected: "VARIB_NAME".to_string(), got:  format!("{:?}",t)})
+            t => return Err(ParserError::UnexpectedToken { expected: "Identifier".to_string(), got:  format!("{:?}",t)})
             };
             let annot = if self.match_token(&[LTOK::COLON]) {
                 Some(self.eval_type()?)
@@ -202,9 +202,9 @@ pub mod PARSER {
             self.consume(&LTOK::FOR)?;
             let var_name = match self.next() {
                 LTOK::IDENT(x) => x,
-                _ => return Err(ParserError::Invalid_Code),
+                _ => return Err(ParserError::Custom("Provide an identifier to store iterator results".to_string())),
             };
-            
+            self.consume(&LTOK::IN)?;
             let lb = self.eval_expr()?;
             let rb = self.eval_expr()?;
             self.consume(&LTOK::LBRACE)?;
@@ -245,7 +245,6 @@ pub mod PARSER {
                 z => Err(ParserError::UnexpectedToken { expected: "INT|FLOAT|STRING".to_string(), got:  format!("{:?}",z)})
             }
         }
-
 
         fn eval_return(&mut self) -> Parser_ret<Statmnt> {
             self.consume(&LTOK::RETURN)?;
@@ -301,7 +300,7 @@ pub mod PARSER {
                     self.consume(&LTOK::RBRACE)?;
                     Ok(Statmnt::Block(blk))
                 },
-                _ => self.eval_reassign(),
+                _ => self.eval_assign(),
 
             }  
         }
@@ -318,21 +317,20 @@ pub mod PARSER {
 
     /* ******************************** EXPRESSIONS ********************************  */
 
-        fn eval_reassign(&mut self) -> Parser_ret<Statmnt> {
-            let expr = self.eval_expr()?;
-            if self.match_token(&[LTOK::ASSGN]){
-                if let Expr::Ident(name)  = expr{
+    fn eval_assign(&mut self) -> Parser_ret<Statmnt> {
+        let expr = self.eval_expr()?;
+        if let Some(op) = self.match_assignment(){
+            if let Expr::Ident(name) = expr{
                 let val = self.eval_expr()?;
                 self.consume(&LTOK::SEMICOLON)?;
-                return Ok(Statmnt::Assignment { name, val });
-                } else{
-                    return Err(ParserError::Custom("Invalid Syntax".to_string()));
-                }
-            }else{
-                self.consume(&LTOK::SEMICOLON)?;
-                return Ok(Statmnt::Expr(expr));
+                return Ok(Statmnt::Assignment { name, op, val });
+            } else{
+            return Err(ParserError::Custom("Invalid assignment\n".to_string()))
             }
         }
+        self.consume(&LTOK::SEMICOLON)?;
+        Ok(Statmnt::Expr(expr))
+   }
 
 
     fn eval_expr(&mut self) -> Parser_ret<Expr>{
@@ -365,7 +363,7 @@ pub mod PARSER {
         let mut left = self.eval_comparator()?;
         while let Some(op) = self.match_eq_neq(){
             let right = self.eval_comparator()?;
-            left = Expr::Binary_op { op:BIN_OP::Eq, left: Box::new(left), right:Box::new(right)};
+            left = Expr::Binary_op { op, left: Box::new(left), right:Box::new(right)};
         }
         Ok(left)
     }
@@ -399,6 +397,50 @@ pub mod PARSER {
             _ => None,
         }
     }
+
+    fn match_assignment(&mut self) -> Option<Option<BIN_OP>>{
+    match self.peek(){
+        LTOK::ASSGN => {
+            self.next();
+            Some(None)
+        },
+        LTOK::S_PLUS => {
+            self.next();
+            Some(Some(BIN_OP::Add))
+        },
+        LTOK::S_MINUS => {
+            self.next();
+            Some(Some(BIN_OP::Sub))
+        },    
+        LTOK::S_MULT => {
+            self.next();
+            Some(Some(BIN_OP::Mul))
+        },    
+        LTOK::S_DIV => {
+            self.next();
+            Some(Some(BIN_OP::Div))
+        },
+        LTOK::S_MOD => {
+            self.next();
+            Some(Some(BIN_OP::Mod))
+        },
+        LTOK::S_AMP => {
+            self.next();
+            Some(Some(BIN_OP::Amp))
+        },    
+        LTOK::S_PIPE => {
+            self.next();
+            Some(Some(BIN_OP::Pipe))
+        },    
+        LTOK::S_CARET => {
+            self.next();
+            Some(Some(BIN_OP::Xor))
+        },
+        _ => None,
+    }
+    }
+
+
 
     fn parse_term(&mut self) ->Parser_ret<Expr>{
         let mut left = self.parse_factor()?;
@@ -504,13 +546,6 @@ pub mod PARSER {
 
         }
     }
-
-
-
-//TODO: NEED TO ADD SHORTHAND OPERTAORS AS BINARY OPERATORS
-
-
-
 
    
     /* ******************************** EXPRESSIONS ********************************  */

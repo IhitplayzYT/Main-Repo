@@ -10,7 +10,7 @@
 pub mod Tokeniser {
     use crate::Lexer_Tok::Lex_Tok::LTOK;
     use once_cell::sync::Lazy;
-    use std::{collections::HashMap, process::exit};
+    use std::{collections::HashMap, fs, ops::Index, process::exit};
 
     pub static ALLOWED_KEYWORDS: Lazy<HashMap<&'static str, LTOK>> = Lazy::new(|| {
         HashMap::from([
@@ -45,6 +45,7 @@ pub mod Tokeniser {
             ("string",LTOK::STRING_TYPE),
             ("str",LTOK::STRING_TYPE),
             ("String",LTOK::STRING_TYPE),
+            ("in",LTOK::IN)
         ])
     });
 
@@ -55,8 +56,9 @@ pub mod Tokeniser {
 
     impl Lexer {
         pub fn new(v: String) -> Self {
+            let file = fs::read_to_string(v).unwrap();
             Self {
-                text: v,
+                text:file.replace("..", " ; "),
                 Lexer_Output: Vec::new(),
             }
         }
@@ -69,8 +71,8 @@ pub mod Tokeniser {
             if v.is_empty() {
                 return None;
             }
-            if let Some(v) = ALLOWED_KEYWORDS.get(v) {
-                return Some(v.clone());
+            if let Some(y) = ALLOWED_KEYWORDS.get(v) {
+                return Some(y.clone());
             } else {
                 if v.chars().all(|c| c.is_ascii_digit() || c == '.') {
                     let count = v.chars().filter(|&c| c == '.').count();
@@ -82,7 +84,7 @@ pub mod Tokeniser {
                         return Some(LTOK::STRING(v.to_string()));
                     }
                 }
-                Some(match v {
+               Some(match v {
                     "+" => LTOK::PLUS,
                     "-" => LTOK::MINUS,
                     "/" => LTOK::DIV,

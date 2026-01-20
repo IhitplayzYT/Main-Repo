@@ -59,13 +59,16 @@ i16 rd_len;
 } RR_field;
 
 
+typedef struct s_q{
+i16 qtype,qclass;
+}Q_flags;
 
 
 /* Function Signatures */
 int main(int, char **);
 void usage(char *);
 void panic();
-DNS * init_packet();
+void init_packet(char *);
 char * rle_encode(char *);
 char * rle_decode(char *);
 /* Function Signatures */

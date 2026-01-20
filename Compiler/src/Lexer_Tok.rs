@@ -18,6 +18,8 @@ pub mod Lex_Tok {
         WHILE,          // -> (Conditional Loop over Iterable)
         LOOP,           // -> (Unconditional Infinite Loop over Iterable)
         FOR,            // ->  (Iterative Loop over Iterable)
+        IN,             // -> Used in for loop syntax
+        RANGE,          // -> Used for 0..n sytntax Ident ,range, ident for easy parsing
         FN,             // -> (Function Declaration Keyword supporting both C and Rust based loops)
         BREAK,          // -> Standard break 
         CONTINUE,       // -> Standard continue

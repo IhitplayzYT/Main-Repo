@@ -88,6 +88,7 @@ pub mod AST {
         },
         Assignment{
             name:String,
+            op : Option<BIN_OP>,
             val: Expr,
         },
         While {
