@@ -28,40 +28,43 @@ typedef unsigned long i64;
 /* Definations */
 #define IP "127.0.0.1"
 #define PORT 80
-#define ERR_STR "Error %d : %s"
+#define ERR_STR "[%d]Error %d : %s"
 #define BUFF_SIZE 256
+#define DNS_QR(f)      (((f) >> 15) & 0x1)
+#define DNS_OPCODE(f) (((f) >> 11) & 0xF)
+#define DNS_AA(f)      (((f) >> 10) & 0x1)
+#define DNS_TC(f)      (((f) >> 9)  & 0x1)
+#define DNS_RD(f)      (((f) >> 8)  & 0x1)
+#define DNS_RA(f)      (((f) >> 7)  & 0x1)
+#define DNS_Z(f)       (((f) >> 6)  & 0x1)
+#define DNS_AD(f)      (((f) >> 5)  & 0x1)
+#define DNS_CD(f)      (((f) >> 4)  & 0x1)
+#define DNS_RCODE(f)   ((f) & 0xF)
+
 /* Definations */
 
 
-typedef struct packed s_dns{
+typedef struct s_dns{
 i16 txn_id;
-i8 qr:1;
-i8 opcode:4;
-i8 aa:1;
-i8 tc:1;
-i8 rd:1;
-i8 ra:1;
-i8 z:1;
-i8 ad:1;
-i8 cd:1;
-i8 rcode:4;
+i16 flags;
 i16 q_no;
 i16 ans_no;
 i16 authority_rr;
 i16 additional_authority_rr;
-} DNS;
+} packed DNS;
 
 typedef struct rr_fields{
 i16 type;
 i16 class_;
 i32 ttl;
 i16 rd_len;
-} RR_field;
+}packed RR_field;
 
 
 typedef struct s_q{
-i16 qtype,qclass;
-}Q_flags;
+i16 qtype;
+i16 qclass;
+}packed Q_flags;
 
 
 /* Function Signatures */
@@ -69,6 +72,14 @@ int main(int, char **);
 void usage(char *);
 void panic();
 void init_packet(char *);
-char * rle_encode(char *);
+int rle_encode(char *,char *);
 char * rle_decode(char *);
+void parse_result(char *);
+void get_dns(char *);
+void show_dns(DNS *);
+void init_q_flags(char *,int);
+i8 * skip_name(i8 *);
+void parse_rr(char *,i8 **);
+int read_name(char *,i8 *,char *);
+char * read_nstr(char *,char *);
 /* Function Signatures */
