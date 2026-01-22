@@ -33,10 +33,10 @@ void cmd_format(i8 *s1, i8 *s2) {
     } else
       usage_format((i8 *)"diskutil");
   }
-
-  drive = (drivestr[0] == 'c' || drivestr[0] == 'C')   ? 1
-          : (drivestr[0] == 'd' || drivestr[0] == 'D') ? 2
-                                                       : 2;
+  drive = (strcomp(drivestr,"c") == 0 || strcomp(drivestr,"C") == 0)   ? 2
+          : ((strcomp(drivestr,"d")==0) || strcomp(drivestr,"D") == 0) ? 1
+                                                       : 3;
+                                              
   if (drive == 3)
     usage_format((i8 *)"diskutil");
   if (bootable) {
@@ -58,7 +58,6 @@ void cmd_format(i8 *s1, i8 *s2) {
     printf("Bad Disk\n");
     exit(-1);
   }
-  wipe_disk(d);
   Filesystem *fs = fsformat(d, 0, iforce);
   ptr root = inode_alloc(fs);
   if (!fs) {
@@ -69,14 +68,18 @@ void cmd_format(i8 *s1, i8 *s2) {
   show(fs, (i8 *)"filesystem");
   ptr idx1 = create_inode(fs, parse_name((i8 *)"hello.bat"), FileType);
   ptr idx2 = create_inode(fs, parse_name((i8 *)"helog"), DirType);
+
+//   NO ERRORS BEFORE THIS POINTS
+
   // Fix this
   Dir *dir = open_dir((i8 *)"c:/helog");
   if (!dir) {
     print_err();
     return;
   }
-  print_hex(dir, sizeof(Dir));
+  print_hex(dir, sizeof(Dir)); 
 
+return ; 
   //  Fix this shows way too many inodes and many were empty
    show(fetchinode(fs,1),(i8 *)"inode");
    Ls * ls = listfiles(fs,fetchinode(fs,0));
