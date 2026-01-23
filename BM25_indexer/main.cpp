@@ -1,30 +1,31 @@
 #include "main.h"
 #include "Stemmer.h"
 #include "errors.h"
-#include <utility>
+#include "utility.h"
+#include <filesystem>
+#include <fstream>
 
+
+extern const std::unordered_set<std::string> allowed_extensions;
+// HOLDS INFO OF THE MOST RECENT STATUS OF REGIME
 Debug GLOBAL_DEBUG_STRUCT;
 
+bool is_valid_file(const std::filesystem::directory_entry& e) {
+    if (!e.is_regular_file()) return false;
+    auto ext = e.path().extension().string();
+    return allowed_extensions.find(ext) != allowed_extensions.end();
+}
 
-
-void process_file(string &x,char optimise){
+Doc process_file(const std::filesystem::path &x,char optimise){
 std::ifstream file(x);
 if (!file) {exit(-1);}
-std::stringstream buff;
+std::ostringstream buff;
 buff << file.rdbuf();
 string text = buff.str();
 text = preprocess(text);
 GLOBAL_DEBUG_STRUCT.t_stopword = (optimise >> 1) ?"Aggresive":"Non-Aggresive";
 auto filtered_wordlist = filter_stopwords(text,optimise >> 1);
 GLOBAL_DEBUG_STRUCT.stop_prog = 1;
-//   REMOVE
-for (auto &s:filtered_wordlist) {
-  cout << s << " ";
-}
-cout << endl;
-//   REMOVE
-
-
 std::vector<string> ret;
 if (!(optimise & 1))
 {Snowball stemmer(filtered_wordlist);
@@ -38,36 +39,35 @@ GLOBAL_DEBUG_STRUCT.t_stemmer = "Lanchaster";
 ret = stemmer.stem_input();
 GLOBAL_DEBUG_STRUCT.stem_prog = 1;
 }
-
-//   REMOVE
-for (auto &s:ret) {
-  cout << s << " ";
-}
-cout << endl;
-//   REMOVE
-
-
+return std::pair(x,ret);
 }
 
+void traverse(std::filesystem::path &path,Corpus &corp,char optimise){
+for (auto &file: std::filesystem::recursive_directory_iterator(path)){
+if (!is_valid_file(file))  continue;
+auto &p = file.path();
+Doc doc = process_file(p,optimise);
+if (!doc.second.empty()) corp.push_back(doc);
+}
+}
 
-void process_dirs(string &x,char optimise){
-//  TODO: OPEN AND GET DIRS ,NAMES,AND ALSO MAYBE CREATE SOME STRUCT THAT HOLD THE FILENAME ARRAY AND ALSO ACCORDINGL MAKES AN CORPUS ARRAY
+void process_dirs(string &path,char optimise){
+Corpus corp;
+std::filesystem::path p(path);
+traverse(p,corp,optimise);
+int avgdl = avg_doc_len(corp);
+int N = corp.size();
 
-Corpus root_dir;
 
-//
+
 std::vector<std::pair<string, double>> ret;
 std::sort(ret.begin(),ret.end(),[](auto &a,auto &b){return a.second > b.second;});
-
-//  DISPLAY TOP TEN RESULTS AND MAKE IT SIMILAR TO HOW FZF WORKS ACTIVELY
-
-
 }
 
-void  valid_file(string &input_path,char optimise) {
-     if (std::filesystem::is_regular_file(input_path)){
-      process_file(input_path,optimise);
-     }else if (std::filesystem::is_directory(input_path)){
+
+
+void eval_file(string &input_path,char optimise) {
+     if (std::filesystem::is_directory(input_path)){
       process_dirs(input_path,optimise);
      }else{
       throw InvalidIO("Invalid file type\n");
@@ -75,8 +75,6 @@ void  valid_file(string &input_path,char optimise) {
 
 }
 
-
-// MAKE IT CHECK FOR TOKEN OPTIMISE= :TODO:
 std::pair<string,char> get_input(int argc,char ** argv){
   if (argc < 2) {usage(argv[0]);exit(-1);}
   if (argc > 3) {usage(argv[0]);exit(-1);}
@@ -89,7 +87,6 @@ std::pair<string,char> get_input(int argc,char ** argv){
     if (!std::filesystem::exists(input_path, ec))
         throw PathError("Path does not exist: " + input_path);
      }
-
   else{
     string s(argv[1]);
     string opt[2] = {"-OPTIMISE=","-O"};
@@ -104,22 +101,18 @@ std::pair<string,char> get_input(int argc,char ** argv){
     std::error_code ec;
     if (!std::filesystem::exists(input_path, ec))
         throw PathError("Path does not exist: " + input_path+"\n");
-
-}
+      }
 input_path = (!input_path.empty()) ? input_path : "/"; 
 return {input_path,optimise};
 }
-
-
-
-
 
 int main(int argc, char *argv[]) {
   cout << endl;
 auto [input_path,optimise] = get_input(argc,argv);
   try{
-  valid_file(input_path,optimise);
-  } catch (const InvalidIO &e){
+  eval_file(input_path,optimise);
+  } 
+  catch (const InvalidIO &e){
     cout << e.what();
     return -1;
   } catch (const PathError &e){
@@ -127,8 +120,6 @@ auto [input_path,optimise] = get_input(argc,argv);
     return -1;
   }
 
-
-
-  
+  show_n(N_BEST);
   return 0;
 }

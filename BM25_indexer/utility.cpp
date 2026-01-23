@@ -1,4 +1,5 @@
 #include "utility.h"
+#include "errors.h"
 
 bool is_vowel(char &c){
     return c =='a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
@@ -71,7 +72,36 @@ bool contains_vowel(const std::string &s) {
   return false;
 }
 
-
+std::pair<std::string,char> get_input(int argc,char ** argv){
+  if (argc < 2) {usage(argv[0]);exit(-1);}
+  if (argc > 3) {usage(argv[0]);exit(-1);}
+  std::string input_path;
+  char optimise = 0;
+  if (argc == 2) {
+    input_path = argv[1];
+    optimise = 0;
+    std::error_code ec;
+    if (!std::filesystem::exists(input_path, ec))
+        throw PathError("Path does not exist: " + input_path);
+     }
+  else{
+    std::string s(argv[1]);
+    std::string opt[2] = {"-OPTIMISE=","-O"};
+    if (s.find(opt[0]) == std::string::npos && s.find(opt[1]) == std::string::npos){
+      usage(argv[0]);
+      throw InvalidArgs("Invalid Flag [" + s +  "] found instead of OPTIMISE");
+    }
+    int l(s.length());
+    optimise = (s[l - 1] == '0' || s[l-1] == '1' || s[l-1]== '2' || s[l-1] == '3' ) ? s[l-1] - '0': 4;
+    if (optimise == 4) {usage(argv[0]);exit(-1);}
+    input_path = argv[2];
+    std::error_code ec;
+    if (!std::filesystem::exists(input_path, ec))
+        throw PathError("Path does not exist: " + input_path+"\n");
+      }
+  input_path = (!input_path.empty()) ? input_path : "/"; 
+  return {input_path,optimise};
+}
 
 std::string preprocess(std::string &text){
 std::transform(text.begin(),text.end(),text.begin(),[] (char c) {return std::tolower(c);});
