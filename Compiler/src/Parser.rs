@@ -14,11 +14,12 @@ pub mod PARSER {
     pub struct Parser {
         pub input: Vec<LTOK>,
         pub idx:usize,
+        pub ast:Option<Code>,
     }
     impl Parser{
         /* ******************************** CONSTRUCTOR ********************************  */
         pub fn new(v:Vec<LTOK>) -> Self{
-            Self{input:v,idx:0}
+            Self{input:v,idx:0,ast:None}
         }
         /* ******************************** CONSTRUCTOR ********************************  */
 
@@ -29,7 +30,8 @@ pub mod PARSER {
             while !self.check(&LTOK::EOF){
                 ret.push(self.eval_declare()?);
             }
-            Ok(Code { Program: ret })
+            self.ast = Some(Code{Program:ret.clone()});
+            Ok(Code { Program: ret})
         }
         /* ******************************** MAIN ********************************  */
 
@@ -39,8 +41,10 @@ pub mod PARSER {
             if self.input.is_empty() || self.idx == self.input.len() {
                 return LTOK::EOF;
             }
+            let tok = self.input[self.idx].clone();
             self.idx += 1;
-            self.peek().clone()}
+            tok
+        }
 
 
         fn peek(&self) -> &LTOK{
@@ -77,7 +81,7 @@ pub mod PARSER {
         fn eval_declare(&mut self) -> Parser_ret<Declare>{
             match self.peek(){
             LTOK::FN => self.eval_fxn(),
-                _ => {return Err(ParserError::Invalid_Code);}
+                _ => {return Err(ParserError::Custom("Expected Declaration".to_string()));}
             }
 
         }         
@@ -283,13 +287,13 @@ pub mod PARSER {
                 
                 LTOK::BREAK => {
                 self.next();
-                self.consume(&LTOK::SEMICOLON);
+                self.consume(&LTOK::SEMICOLON)?;
                 Ok(Statmnt::Break)
                 },
 
                 LTOK::CONTINUE =>{
                 self.next();
-                self.consume(&LTOK::SEMICOLON);
+                self.consume(&LTOK::SEMICOLON)?;
                 Ok(Statmnt::Continue)
                 },
 
@@ -494,7 +498,7 @@ pub mod PARSER {
             let operand= self.eval_unary()?;
             Ok(Expr::Unary_op { op:UN_OP::Tilda, operand: Box::new(operand) })
         },
-        _ => self.eval_fxn_call(),
+        t => {println!("{:?}",t);self.eval_fxn_call()},
         }    
     }
 
@@ -539,10 +543,11 @@ pub mod PARSER {
             LTOK::STRING(x) => Ok(Expr::String(x)),
             LTOK::LPAREN => {
                 let expr = self.eval_expr()?;
-                self.consume(&LTOK::RPAREN);
+                self.consume(&LTOK::RPAREN)?;
                 Ok(expr)
             }
-            _ => Err(ParserError::Invalid_Code),
+            // 
+            _ => Err(ParserError::Custom("TYPE was required".to_string())),
 
         }
     }

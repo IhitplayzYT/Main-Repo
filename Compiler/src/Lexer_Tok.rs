@@ -74,6 +74,5 @@ pub mod Lex_Tok {
         INT_TYPE,       // -> i64_type
         FLOAT_TYPE,     // -> f64_type
         STRING_TYPE,    // -> string_type
-        SPECIAL_TOK     // -> Special token used by Parser to report succesful parse of tokens 
     }
 }

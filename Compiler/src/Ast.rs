@@ -111,6 +111,7 @@ pub mod AST {
         Block(Vec<Statmnt>)
 
     }
+    #[derive(Debug)]
     pub struct Code{
         pub Program: Vec<Declare>,
     }

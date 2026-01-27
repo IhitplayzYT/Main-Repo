@@ -20,17 +20,21 @@ mod Compiler;
 mod printer;
 use std::env;
 
-use crate::Helper::utilities::read_file;
+use crate::{Helper::utilities::read_file, printer::printer::Components};
 
 fn main() {
     let arguments: Vec<String> = env::args().collect();
     if arguments.len() != 2 {
         std::process::exit(0);
     }
-    let file = read_file(&arguments[1]).unwrap_or_else(|_e| std::process::exit(0));
-    let file= file.replace(".."," ; ");
 
-    let mut LEXER = Tokeniser::Tokeniser::Lexer::new(file);
+    let mut LEXER = Tokeniser::Tokeniser::Lexer::new(arguments[1].clone());
     LEXER.Tokenise();
-    println!("{:?}", LEXER.Lexer_Output);
+    LEXER.print_tok();
+    println!();
+    println!();
+    let mut PARSER = Parser::PARSER::Parser::new(LEXER.Lexer_Output);
+    let t = PARSER.Parse();
+    println!("{:?}",t);
+    println!("{:?}: {:?}",PARSER.idx,PARSER.input[PARSER.idx]);
 }

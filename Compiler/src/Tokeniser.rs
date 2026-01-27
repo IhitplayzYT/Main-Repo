@@ -57,10 +57,18 @@ pub mod Tokeniser {
     impl Lexer {
         pub fn new(v: String) -> Self {
             let file = fs::read_to_string(v).unwrap();
+            let t = file.replace("..", ";");
             Self {
-                text:file.replace("..", " ; "),
+                text:t,
                 Lexer_Output: Vec::new(),
             }
+        }
+
+        pub fn print_tok(&self){
+            if (!self.is_lexed()){
+             println!("Use Tokeniser before printing!");      
+            }
+            println!("{:?}",self.Lexer_Output);
         }
 
         pub fn is_lexed(&self) -> bool {
