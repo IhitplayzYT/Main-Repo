@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+var ret map[string][]string
+
 type i8 int8
 type i16 int16
 type i32 int32
@@ -20,12 +22,6 @@ type f64 float64
 const True bool = true
 const False bool = false
 
-// Placeholder
-func usage(str string) {
-	fmt.Println("Usage : ", str, " [-d] <KEYWORD>")
-	return
-}
-
 func print_map(s map[string][]string) {
 	for k, v := range s {
 		fmt.Print("[%v]:", k)
@@ -39,7 +35,7 @@ func print_map(s map[string][]string) {
 
 // TODO:
 
-func search(str string, flag bool) {
+func search(str string, flag i8) {
 
 	for _, v := range website_list {
 		parse_html(v)
@@ -47,20 +43,24 @@ func search(str string, flag bool) {
 
 }
 
-func parse_args(args []string) (string, bool) {
-	keyword, deep_flag := "", false
+func parse_args(args []string) (string, i8) {
+	var keyword string = ""
+	var deep_flag i8 = 0
 	l := len(args)
 	if l < 2 || l > 3 {
 		usage(args[0])
-		return "", false
+		return "", 0
 	} else if l == 2 {
 		keyword = args[1]
 	} else {
-		if args[1] != "-d" {
+		if args[1] == "-d" {
+			deep_flag = 1
+		} else if args[1] == "-D" {
+			deep_flag = 2
+		} else {
 			usage(args[0])
-			return "", false
+			return "", 0
 		}
-		deep_flag = true
 		keyword = args[2]
 	}
 	return keyword, deep_flag
@@ -68,11 +68,11 @@ func parse_args(args []string) (string, bool) {
 
 func main() {
 	args := os.Args
-	keyword, deep_flag := parse_args(args)
+	keyword, flag := parse_args(args)
 	if keyword == "" {
 		return
 	}
-	search(keyword, deep_flag)
+	search(keyword, flag)
 	print_map(ret)
 	return
 }

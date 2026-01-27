@@ -2,12 +2,6 @@ package main
 
 import "fmt"
 
-var assetExt = map[string]bool{
-	".jpg": true, ".jpeg": true, ".png": true, ".gif": true, ".webp": true,
-	".mp4": true, ".webm": true, ".mp3": true, ".wav": true, ".ogg": true,
-	".pdf": true, ".zip": true, ".tar": true, ".gz": true,
-}
-
 type Data struct {
 	link  [][]string
 	text  [][]string
