@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+if ! [ -e ./disk ]; then
+    >&2 echo "./disk: Not Found.Run sudo dd if=/dev/[sda/nvmeon1p1] of=disk bs=512 count=1"
+    exit 1
+fi
+
+rm -rf ./temp1 ./temp2 2> /dev/null
+dd if=bootloader of=temp1 bs=1 count=$((0x1be))
+dd if=disk of=temp2 bs=1 skip=$((0x1be))
+cat temp1 temp2 > bootloader
+
