@@ -2,8 +2,58 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 )
+
+type i8 int8
+type i16 int16
+type i32 int32
+type i64 int64
+type s8 uint8
+type s16 uint16
+type s32 uint32
+type s64 uint64
+type f32 float32
+type f64 float64
+
+const True bool = true
+const False bool = false
+
+func print_map(s map[string][]string) {
+	for k, v := range s {
+		fmt.Printf("[%v]:", k)
+		z, y := len(k), len(v)
+		for i := 0; i < y; i++ {
+			fmt.Println(strings.Repeat(" ", z+2), v[i])
+		}
+		fmt.Println()
+	}
+}
+
+func parse_args(args []string) (string, i8) {
+	var keyword string = ""
+	var deep_flag i8 = 0
+	l := len(args)
+	if l < 2 || l > 3 {
+		usage(args[0])
+		return "", 0
+	} else if l == 2 {
+		keyword = args[1]
+		deep_flag = 1
+	} else {
+		if args[1] == "-d" {
+			deep_flag = 2
+		} else if args[1] == "-D" {
+			deep_flag = 3
+		} else {
+			usage(args[0])
+			return "", 0
+		}
+		keyword = args[2]
+	}
+	return keyword, deep_flag
+}
 
 func match_longest_any(to_be_found, to_be_searched string) (int, int) {
 	lf, ls := len(to_be_found), len(to_be_searched)
@@ -73,7 +123,12 @@ func match_full(to_be_found, to_be_searched string) int {
 }
 
 func usage(argv string) {
-	fmt.Println("Usage: ", argv, " [-d | -D] <KEYWORD>")
+	sidx := strings.LastIndex(argv, "/")
+	s := argv[sidx:]
+	fmt.Print("Usage: .", s, " [-d | -D] <KEYWORD>\n")
+	fmt.Println("FLAGS:\n  -d -> Deep Unfiltered Search\n  -D -> Download Flag")
+	fmt.Println("NOTE: Passing no flag resorts to Safe Search WITHOUT Downloads")
+	os.Exit(1)
 }
 
 func get_extention(s string) string {
@@ -96,4 +151,14 @@ func get_category(s string) (ret Media_Type) {
 		ret = Misc_T
 	}
 	return
+}
+
+func boost_wlist() {
+	for i := 0; i < len(website_list); i++ {
+		website_list = append(website_list, (website_list[i] + "/search?q=" + KEYWORD))
+		website_list = append(website_list, (website_list[i] + "/search?query=" + KEYWORD))
+		website_list = append(website_list, (website_list[i] + "/?s=" + KEYWORD))
+		website_list = append(website_list, (website_list[i] + "/search?keyword=" + KEYWORD))
+	}
+
 }

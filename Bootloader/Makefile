@@ -2,7 +2,7 @@ exec := bootloader
 obj :=
 ldflags := -T bootloader.ld -m elf_i386
 flags := -f elf 
-.PHONY: clean 
+.PHONY: clean qemu
 
 all:clean bootloader
 
@@ -18,6 +18,9 @@ bootloader.elf: bootloader.o
 
 bootloader.o: bootloader.asm
 	nasm $(flags) $^ -o $@
+
+qemu:bootloader
+	qemu-system-i386 -nographic -hda $^ -m 512 
 
 
 clean:

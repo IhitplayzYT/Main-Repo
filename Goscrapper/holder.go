@@ -3,11 +3,11 @@ package main
 import "fmt"
 
 type Data struct {
-	link  [][]string
-	text  [][]string
-	image [][]string
-	video [][]string
-	audio [][]string
+	link  map[string]string
+	text  map[string]string
+	image map[string]string
+	video map[string]string
+	audio map[string]string
 }
 
 type Data_interface interface {
@@ -19,33 +19,29 @@ type Data_interface interface {
 }
 
 func (s *Data) print_image() {
-	l := len(s.image)
 	fmt.Println("Image Files: ")
-	for i := 0; i < l; i++ {
-		fmt.Println("\t%v : %v", s.image[i][0], s.image[i][1])
+	for k, v := range s.image {
+		fmt.Printf("\t%v : %v\n", k, v)
 	}
 }
 
 func (s *Data) print_audio() {
-	l := len(s.audio)
 	fmt.Println("Audio Files: ")
-	for i := 0; i < l; i++ {
-		fmt.Println("\t%v : %v", s.audio[i][0], s.audio[i][1])
+	for k, v := range s.audio {
+		fmt.Printf("\t%v : %v\n", k, v)
 	}
 }
 
 func (s *Data) print_text() {
-	l := len(s.text)
 	fmt.Println("Text Snippets: ")
-	for i := 0; i < l; i++ {
-		fmt.Println("\t%v : %v", s.text[i][0], s.audio[i][1])
+	for k, v := range s.text {
+		fmt.Printf("\t%v : %v\n", k, v)
 	}
 }
 
 func (s *Data) print_video() {
-	l := len(s.video)
 	fmt.Println("Video Files: ")
-	for i := 0; i < l; i++ {
-		fmt.Println("\t%v : %v", s.video[i][0], s.audio[i][1])
+	for k, v := range s.video {
+		fmt.Printf("\t%v : %v\n", k, v)
 	}
 }
