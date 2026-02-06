@@ -1,5 +1,8 @@
-#include "utility.h"
-#include "errors.h"
+#include "includes/utility.h"
+#include "includes/errors.h"
+#include <vector>
+#include <cstdlib>
+#include <cstring>
 
 bool is_vowel(char &c){
     return c =='a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
@@ -78,6 +81,10 @@ std::pair<std::string,char> get_input(int argc,char ** argv){
   std::string input_path;
   char optimise = 0;
   if (argc == 2) {
+    if (strcmp(argv[1],"-h") == 0 || strcmp(argv[1],"-H") == 0){
+      usage(argv[0]);
+      exit(-1);
+    }
     input_path = argv[1];
     optimise = 0;
     std::error_code ec;
@@ -115,10 +122,11 @@ return ret;
 
 
 void usage(std::string x) {
-  std::cout << "Usage " << x << " [-OPTIMISE=0/1/2 | -O[0/1/2]] <FILEPATH> " << std::endl << "\t -OPTIMIZE VALUES:" << std::endl <<
+  std::cout << "Usage " << x << " [ -h | -OPTIMISE=0/1/2/3 | -O[0/1/2/3]] <FILEPATH> " << std::endl << "\t -OPTIMIZE VALUES:" << std::endl <<
   "\t\t 0: Non Aggressive stopword removal && Snowball Stemmer(Reliable Search)" << std::endl <<
   "\t\t 1: Non Aggressive stopword removal && Lanchaster Stemmer(Quick Search)" << std::endl <<
   "\t\t 2: Aggressive stopword removal && Snowball Stemmer(Reliable Search)" << std::endl << 
-  "\t\t 3: Aggressive stopword removal && Lanchaster Stemmer(Quick Search)" << std::endl;
+  "\t\t 3: Aggressive stopword removal && Lanchaster Stemmer(Quick Search)" << std::endl <<
+  "Show Help : " <<  x << " -h" << std::endl;
 }
 

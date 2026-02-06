@@ -11,4 +11,5 @@ stopwords.cpp
 utility.cpp
 bm25.cpp
 errors.cpp
+fzf_tui.cpp
 )

@@ -1,5 +1,5 @@
-#include "Stemmer.h"
-#include "utility.h"
+#include "includes/Stemmer.h"
+#include "includes/utility.h"
 #include <utility>
 #include <vector>
 

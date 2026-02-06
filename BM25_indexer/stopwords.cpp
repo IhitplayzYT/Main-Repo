@@ -1,4 +1,4 @@
-#include "stopwords.h"
+#include "includes/stopwords.h"
 using std::unordered_set,std::string;
 
 const unordered_set<string> stopword_set_non_aggr = {
@@ -126,19 +126,27 @@ const unordered_set<string> stopword_set_aggr = {
 std::vector<std::string> filter_stopwords(std::string &str,bool b){
 std::istringstream s(str);
 std::vector<std::string> ret;
-if (b == 1){
+if (b){
 for (std::string x ; s >> x;) {
-if (stopword_set_aggr.find(x) == stopword_set_aggr.end()){
-ret.push_back(x);}
+if (stopword_set_aggr.find(x) == stopword_set_aggr.end())
+    ret.push_back(x);
 }
 }else{
 for (std::string x ; s >> x;) {
-if (stopword_set_non_aggr.find(x) == stopword_set_non_aggr.end()){
-ret.push_back(x);}
+if (stopword_set_non_aggr.find(x) == stopword_set_non_aggr.end())
+    ret.push_back(x);
 }
 }
-
 return ret;
 }
 
+std::vector<std::string> tokenize_ws(const std::string& s)
+{
+    std::istringstream iss(s);
+    std::vector<std::string> tokens;
 
+    for (std::string word; iss >> word; )
+        tokens.push_back(word);
+
+    return tokens;
+}

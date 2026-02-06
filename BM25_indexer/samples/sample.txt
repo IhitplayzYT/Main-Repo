@@ -1,0 +1,3 @@
+The runners were running quickly, and they had prepared their datasets carefully. 
+By filtering out the stopwords, the analysis became clearer and more efficient.
+
