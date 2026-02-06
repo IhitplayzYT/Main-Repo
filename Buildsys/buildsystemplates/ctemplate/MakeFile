@@ -1,0 +1,19 @@
+flags=-O0 -Wall -g -Wextra -pedantic -std=c2x -I/include
+ldflags= -lm -lncurses
+
+.PHONY: all clean cl
+
+all: clean PROJ_NAME cl
+
+PROJ_NAME: PROJ_NAME.o
+	gcc $(flags) $^ -o $@ $(ldflags)
+
+PROJ_NAME.o: PROJ_NAME.c PROJ_NAME.h
+	gcc $(flags) -c $<
+
+cl:
+	rm -rf *.o
+
+clean:
+	rm -rf *.o PROJ_NAME
+
