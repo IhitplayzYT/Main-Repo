@@ -12,14 +12,14 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 )
 
 var KEYWORD string
-var link_map sync.Map
-var visited map[string]bool = make(map[string]bool)
-var mutex sync.Mutex
+var visited, link_map sync.Map
+var wg sync.WaitGroup
 
 type Media_Type int
 
@@ -31,6 +31,13 @@ const (
 	Files_T
 	Misc_T
 )
+
+var client = &http.Client{
+	Timeout: 10 * time.Second,
+	Transport: &http.Transport{
+		MaxIdleConnsPerHost: 10,
+	},
+}
 
 // Returns the entire html for a link
 func get_html(link string) string {
@@ -47,10 +54,6 @@ func get_html(link string) string {
 }
 
 func parse_html(link string) {
-	if visited[link] {
-		return
-	}
-	visited[link] = true
 	html := get_html(link)
 	if len(html) == 0 {
 		return
@@ -83,7 +86,8 @@ func parse_html_helper(link string, html string) {
 				append_to_lmap(link, urlpath)
 			}
 		}
-		parse_html(urlpath)
+		add_job(urlpath)
+
 	})
 
 	doc.Find("img[src]").Each(func(i int, s *goquery.Selection) {
@@ -207,7 +211,7 @@ func install(src string, M_type Media_Type) {
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
-		fmt.Println("Download Failed", err)
+		fmt.Println("Download Failed")
 	}
 
 }

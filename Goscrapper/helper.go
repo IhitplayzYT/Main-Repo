@@ -52,7 +52,7 @@ func parse_args(args []string) (string, i8) {
 		}
 		keyword = args[2]
 	}
-	return keyword, deep_flag
+	return strings.Trim(keyword, " "), deep_flag
 }
 
 func match_longest_any(to_be_found, to_be_searched string) (int, int) {
@@ -151,14 +151,4 @@ func get_category(s string) (ret Media_Type) {
 		ret = Misc_T
 	}
 	return
-}
-
-func boost_wlist() {
-	for i := 0; i < len(website_list); i++ {
-		website_list = append(website_list, (website_list[i] + "/search?q=" + KEYWORD))
-		website_list = append(website_list, (website_list[i] + "/search?query=" + KEYWORD))
-		website_list = append(website_list, (website_list[i] + "/?s=" + KEYWORD))
-		website_list = append(website_list, (website_list[i] + "/search?keyword=" + KEYWORD))
-	}
-
 }

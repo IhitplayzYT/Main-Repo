@@ -5,6 +5,17 @@ import (
 	"os"
 )
 
+func boost_wlist() {
+	l := len(website_list)
+	for i := 0; i < l; i++ {
+		website_list = append(website_list, (website_list[i] + "/search?q=" + KEYWORD))
+		website_list = append(website_list, (website_list[i] + "/search?query=" + KEYWORD))
+		website_list = append(website_list, (website_list[i] + "/?s=" + KEYWORD))
+		website_list = append(website_list, (website_list[i] + "/search?keyword=" + KEYWORD))
+	}
+
+}
+
 func init_wlist() {
 	f, err := os.Open("majestic_million.csv")
 	if err != nil {
@@ -39,4 +50,4 @@ func init_wlist() {
 
 }
 
-var website_list []string = []string{}
+var website_list []string = []string{"https://www.instagram.com/"}

@@ -5,20 +5,27 @@ import (
 )
 
 var data Data
+var JobQueue chan Job
 
-//func search(flag i8) {
-//	for _, v := range website_list {
-//		parse_html(v)
-//
-//	}
-//}
+func fn(s string) {
+}
 
 func main() {
 	KEYWORD, flag := parse_args(os.Args)
-	init_wlist()
-	boost_wlist()
-	init_pool(flag)
 	if flag == 0 {
 		return
 	}
+	init_pool(flag)
+	init_wlist()
+	boost_wlist()
+	for i, url := range website_list {
+		if i == 50 {
+			break
+		}
+		add_job(url)
+	}
+	start_workers()
+	wg.Wait()
+	close(JobQueue)
+	fn(KEYWORD)
 }

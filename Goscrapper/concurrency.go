@@ -1,27 +1,34 @@
 package main
 
-import "sync"
-
-var WORKER_COUNT i32 = 100
+var WORKER_COUNT i32 = 50
 
 type Job struct {
 	url string
 }
 
-func worker(id int, jobs <-chan Job, wg *sync.WaitGroup) {
-	defer wg.Done()
+func worker(jobs <-chan Job) {
 	for job := range jobs {
 		parse_html(job.url)
+		wg.Done()
 	}
 
 }
 
-func init_pool(flag bool) chan Job {
-	jobs := make(chan Job, 1000)
-	var wg sync.WaitGroup
-	for i := 0; i < int(WORKER_COUNT); i++ {
-		wg.Add(1)
-		go worker(i, jobs, &wg)
+func init_pool(flag i8) {
+	JobQueue = make(chan Job, 100)
+}
+
+func add_job(link string) {
+	if _, loaded := visited.LoadOrStore(link, true); loaded {
+		return
 	}
-	return jobs
+	wg.Add(1)
+	JobQueue <- Job{url: link}
+
+}
+
+func start_workers() {
+	for i := 0; i < int(WORKER_COUNT); i++ {
+		go worker(JobQueue)
+	}
 }
