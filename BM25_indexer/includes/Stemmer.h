@@ -31,4 +31,12 @@ public:
 
 
 
+typedef struct s_Lanchaster{
+std::string suffix; 
+bool intact_flag = false;
+int pop_cnt = 0;
+std::string to_append;
+bool continue_flag = false;
+} Lanch_Rules;
 
+void show_rules();

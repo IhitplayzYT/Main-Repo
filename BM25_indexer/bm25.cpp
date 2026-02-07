@@ -7,6 +7,8 @@
 #include <unordered_set>
 #include <vector>
 
+extern Corpus CORPUS;
+
 double avg_doc_len(Corpus& c){
 if (!c.size()){
     return 0.0;
@@ -68,20 +70,33 @@ return ret;
 }
 
 std::vector<int> rank_corpus(Corpus &corp,std::vector<std::string> &query){
+std::vector<int> ret;
+if (query.size() == 0) return ret;
 int N = corp.size();
 double avgdl = avg_doc_len(corp);
+// No issue spotted till here
+
 auto map = DF(corp);
 std::vector<std::pair<double,int>> scored;
 for (int i = 0 ; i < N ; i++) {
 Doc &doc = corp[i];
 double score = BM25_score(doc,map,avgdl,N,query);
+std::cout << score << std::endl;
 scored.emplace_back(score,i);
 }
 std::sort(scored.begin(),scored.end(),[](auto &a,auto &b){return a.first > b.first;});
-std::vector<int> ret;
 for (int i = 0 ; i < (int)scored.size();i++){
 ret.push_back(scored[i].second);
 }
 return ret;
 }
+
+void show_corpus(){
+for (Doc & doc : CORPUS) {
+std::cout << doc.first << ": " << std::endl;
+for (std::string &word: doc.second) std::cout <<  word << " ";
+std::cout << std::endl;
+}
+}
+
 

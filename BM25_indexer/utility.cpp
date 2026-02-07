@@ -1,6 +1,6 @@
 #include "includes/utility.h"
 #include "includes/errors.h"
-#include <vector>
+#include <cctype>
 #include <cstdlib>
 #include <cstring>
 
@@ -99,7 +99,7 @@ std::pair<std::string,char> get_input(int argc,char ** argv){
       throw InvalidArgs("Invalid Flag [" + s +  "] found instead of OPTIMISE");
     }
     int l(s.length());
-    optimise = (s[l - 1] == '0' || s[l-1] == '1' || s[l-1]== '2' || s[l-1] == '3' ) ? s[l-1] - '0': 4;
+    optimise = (s[l - 1] == '0' || s[l-1] == '1' || s[l-1]== '2' || s[l-1] == '3' || s[l-1] == 'f' || s[l-1] == 's' || s[l-1] == 'x' ) ? s[l-1] - '0': 4;
     if (optimise == 4) {usage(argv[0]);exit(-1);}
     input_path = argv[2];
     std::error_code ec;
@@ -114,19 +114,28 @@ std::string preprocess(std::string &text){
 std::transform(text.begin(),text.end(),text.begin(),[] (char c) {return std::tolower(c);});
 std::string ret("");
 for (char c:text){
-if ( c != '"' && c != '\'' && c != ',' && c != '.' && c != ';' && c != ':' && c != '`' && c !='\\' && c != '/' && c != '\t' && c != '\n')
-ret += c;
-} 
+if (c != '"' && c != '\''  && c != ';' && c != ':' && c != '`' && c !='\\' && c != '/' && c != '\t'){
+  if (c == ' ' || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) ret += c;
+  if (c == '\n' || c == '.' || c == ',') ret += ' ';
+}
+}
+
 return ret;
 }
 
+bool is_alphabetic(char c) {return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'z'));}
+bool is_alphanumeric(char c) {return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'));}
+bool is_numeric(char c) { return (c >= '0' && c <= '9');}
 
 void usage(std::string x) {
-  std::cout << "Usage " << x << " [ -h | -OPTIMISE=0/1/2/3 | -O[0/1/2/3]] <FILEPATH> " << std::endl << "\t -OPTIMIZE VALUES:" << std::endl <<
-  "\t\t 0: Non Aggressive stopword removal && Snowball Stemmer(Reliable Search)" << std::endl <<
-  "\t\t 1: Non Aggressive stopword removal && Lanchaster Stemmer(Quick Search)" << std::endl <<
-  "\t\t 2: Aggressive stopword removal && Snowball Stemmer(Reliable Search)" << std::endl << 
-  "\t\t 3: Aggressive stopword removal && Lanchaster Stemmer(Quick Search)" << std::endl <<
+  std::cout << "Usage " << x << " [ -h | -OPTIMISE=0/1/2/3/s/f/x | -O[0/1/2/3/s/f/x]] <FILEPATH> " << std::endl << "\t -OPTIMIZE VALUES:" << std::endl <<
+  "\t\t 0: Non Aggressive Stopword Removal && Snowball Stemmer(Reliable Search)" << std::endl <<
+  "\t\t 1: Non Aggressive Stopword Removal && Lanchaster Stemmer(Quick Search)" << std::endl <<
+  "\t\t 2: Aggressive Stopword Removal && Snowball Stemmer(Reliable Search)" << std::endl << 
+  "\t\t 3: Aggressive Stopword Removal && Lanchaster Stemmer(Quick Search)" << std::endl <<
+  "\t\t s: No Stopword Removal && USE (default)Snowball Stemmer" << std::endl <<
+  "\t\t f: Stopword Removal && NO Stemming" << std::endl <<
+  "\t\t x: NO Stopword Removal && NO Stemming" << std::endl <<
   "Show Help : " <<  x << " -h" << std::endl;
 }
 

@@ -57,7 +57,6 @@ return "[No Match]";
 void draw(std::string & query,Corpus& corp,vector<int> matches,int select){
 clear();
 cout << "Query: " << query << "\n\n";
-cout << matches.size() << endl;
 for (int i  = 0 ; i < (int)matches.size(); i++){
 if (i == select) {
     cout <<  "\x1b[7m";;

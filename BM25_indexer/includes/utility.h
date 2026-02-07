@@ -93,3 +93,6 @@ bool cvc(const std::string &);
 bool contains_vowel(const std::string &);
 std::pair<std::string,char> get_input(int argc,char ** argv);
 std::string preprocess(std::string&);
+bool is_alphabetic(char c);
+bool is_alphanumeric(char c);
+bool is_numeric(char c); 

@@ -10,7 +10,6 @@
 #include <string>
 #include <vector>
 
-
 extern const std::unordered_set<std::string> allowed_extensions;
 Debug GLOBAL_DEBUG_STRUCT;
 Corpus CORPUS;
@@ -29,11 +28,24 @@ std::ostringstream buff;
 buff << file.rdbuf();
 string text = buff.str();
 text = preprocess(text);
-GLOBAL_DEBUG_STRUCT.t_stopword = (optimise >> 1) ?"Aggresive":"Non-Aggresive";
-auto filtered_wordlist = filter_stopwords(text,optimise >> 1);
+vector<string> filtered_wordlist;
+if (optimise == 'f' || optimise == 'x') {
+GLOBAL_DEBUG_STRUCT.t_stopword = "No filter";
+filtered_wordlist = tokenize_ws(text);
+}else{
+GLOBAL_DEBUG_STRUCT.t_stopword = (!(optimise == 's') || optimise >> 1) ?"Aggresive":"Non-Aggresive";
+filtered_wordlist = filter_stopwords(text,(optimise == 's') ? 0: optimise >> 1);
+}
 GLOBAL_DEBUG_STRUCT.stop_prog = 1;
 std::vector<string> ret;
-if (!(optimise & 1))
+if (optimise == 'x' || optimise == 's'){
+GLOBAL_DEBUG_STRUCT.t_stemmer = "No Stemmer";
+ret = filtered_wordlist; 
+GLOBAL_DEBUG_STRUCT.stem_prog = 1;
+}
+else{
+
+if (optimise == 'f' || ! (optimise & 1))
 {Snowball stemmer(filtered_wordlist);
 GLOBAL_DEBUG_STRUCT.t_stemmer = "Snowball";
 ret = stemmer.stem_input();
@@ -44,6 +56,7 @@ Lanchaster stemmer(filtered_wordlist);
 GLOBAL_DEBUG_STRUCT.t_stemmer = "Lanchaster";
 ret = stemmer.stem_input();
 GLOBAL_DEBUG_STRUCT.stem_prog = 1;
+}
 }
 return std::pair(x,ret);
 }
@@ -89,14 +102,6 @@ catch (const InvalidIO &e){
   return -1;
 }
 
-//for (Doc &doc : CORPUS){
-//cout << doc.first << ":" << endl;
-//for (string &z:doc.second) cout << z << " ";
-//cout << endl;
-//}
-//int temp;
-//cin >> temp;
-
 string input;
 vector<string> ret;
 vector<int> matches;
@@ -118,8 +123,17 @@ else if (k == KEY_DOWN && selected < (int)matches.size() - 1){
   selected ++;
 }else if (c >= 32 && c <= 126){input.push_back(c);}
 input = preprocess(input);
-auto filtered_wordlist = tokenize_ws(input);
-if (!(optimise & 1))
+
+vector<string> filtered_wordlist;
+if (optimise == 'f' || optimise == 'x') {
+GLOBAL_DEBUG_STRUCT.t_stopword = "No filter";
+filtered_wordlist = tokenize_ws(input);
+}else{
+GLOBAL_DEBUG_STRUCT.t_stopword = (!(optimise == 's') || optimise >> 1) ?"Aggresive":"Non-Aggresive";
+filtered_wordlist = filter_stopwords(input,(optimise == 's') ? 0: optimise >> 1);
+}
+
+if (optimise == 'f' || !(optimise & 1))
 {Snowball stemmer(filtered_wordlist);
 ret = stemmer.stem_input();
 }
@@ -127,8 +141,8 @@ else{
 Lanchaster stemmer(filtered_wordlist);
 ret = stemmer.stem_input();
 }
+
 matches = rank_corpus(CORPUS,ret);
-for (auto & match :matches) cout << match << endl;
 draw(input, CORPUS,matches,selected);
 }
   return 0;
