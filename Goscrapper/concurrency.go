@@ -1,6 +1,6 @@
 package main
 
-var WORKER_COUNT i32 = 50
+var WORKER_COUNT i32 = 100
 
 type Job struct {
 	url string
@@ -14,8 +14,8 @@ func worker(jobs <-chan Job) {
 
 }
 
-func init_pool(flag i8) {
-	JobQueue = make(chan Job, 100)
+func init_pool() {
+	JobQueue = make(chan Job, 1000)
 }
 
 func add_job(link string) {
@@ -24,7 +24,6 @@ func add_job(link string) {
 	}
 	wg.Add(1)
 	JobQueue <- Job{url: link}
-
 }
 
 func start_workers() {

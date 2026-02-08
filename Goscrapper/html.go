@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"crypto/sha1"
 	"encoding/hex"
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"os"
@@ -17,7 +19,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-var KEYWORD string
 var visited, link_map sync.Map
 var wg sync.WaitGroup
 
@@ -35,26 +36,56 @@ const (
 var client = &http.Client{
 	Timeout: 10 * time.Second,
 	Transport: &http.Transport{
-		MaxIdleConnsPerHost: 10,
+		Proxy:                 http.ProxyFromEnvironment,
+		MaxIdleConns:          100,
+		MaxIdleConnsPerHost:   20,
+		IdleConnTimeout:       30 * time.Second,
+		ForceAttemptHTTP2:     true,
+		TLSHandshakeTimeout:   10 * time.Second,
+		ExpectContinueTimeout: 1 * time.Second,
+		DisableCompression:    false,
 	},
 }
 
-// Returns the entire html for a link
-func get_html(link string) string {
-	response, err := http.Get(link)
+func rand_delay() {
+	time.Sleep(time.Duration(500+rand.Intn(1500)) * time.Millisecond)
+}
+
+func get_html(link string) (string, error) {
+	rand_delay()
+	context, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	request, err := http.NewRequestWithContext(context, "GET", link, nil)
 	if err != nil {
-		return ""
+		return "", err
+	}
+	request.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/121 Safari/537.36")
+	request.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
+	request.Header.Set("Accept-Language", "en-US,en;q=0.5")
+	request.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	request.Header.Set("Connection", "keep-alive")
+	request.Header.Set("Upgrade-Insecure-Requests", "1")
+	response, err := client.Do(request)
+	if err != nil {
+		return "", err
+	}
+	if response.StatusCode < 200 || response.StatusCode >= 300 {
+		return "", err
 	}
 	defer response.Body.Close()
 	res, err := io.ReadAll(response.Body)
 	if err != nil {
-		return ""
+		return "", err
 	}
-	return string(res)
+	return string(res), nil
 }
 
 func parse_html(link string) {
-	html := get_html(link)
+	html, err := get_html(link)
+	if err != nil {
+		fmt.Println("Error : ", err)
+		return
+	}
 	if len(html) == 0 {
 		return
 	}
@@ -62,9 +93,17 @@ func parse_html(link string) {
 }
 
 func parse_html_helper(link string, html string) {
-	if len(html) == 0 || !strings.Contains(html, KEYWORD) {
-		return
+	if FLAG == 2 || FLAG == 5 {
+		if len(html) == 0 || !strings.Contains(html, KEYWORD) {
+			return
+		}
 	}
+	if FLAG == 4 || FLAG == 6 {
+		if len(html) == 0 || !in_thresh(KEYWORD, html) {
+			return
+		}
+	}
+
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(html))
 	if err != nil {
 		panic(err)
@@ -87,7 +126,6 @@ func parse_html_helper(link string, html string) {
 			}
 		}
 		add_job(urlpath)
-
 	})
 
 	doc.Find("img[src]").Each(func(i int, s *goquery.Selection) {
@@ -98,7 +136,9 @@ func parse_html_helper(link string, html string) {
 		}
 		resolved := base.ResolveReference(ref).String()
 		append_to_lmap(link, src)
-		install(resolved, Image_T)
+		if FLAG == 3 || FLAG == 5 || FLAG == 6 {
+			install(resolved, Image_T)
+		}
 	})
 
 	doc.Find("video source").Each(func(i int, s *goquery.Selection) {
@@ -109,7 +149,9 @@ func parse_html_helper(link string, html string) {
 		}
 		resolved := base.ResolveReference(ref).String()
 		append_to_lmap(link, src)
-		install(resolved, Video_T)
+		if FLAG == 3 || FLAG == 5 || FLAG == 6 {
+			install(resolved, Video_T)
+		}
 	})
 	doc.Find("audio source").Each(func(i int, s *goquery.Selection) {
 		src, _ := s.Attr("src")
@@ -119,10 +161,13 @@ func parse_html_helper(link string, html string) {
 		}
 		resolved := base.ResolveReference(ref).String()
 		append_to_lmap(link, src)
-		install(resolved, Audio_T)
+		if FLAG == 3 || FLAG == 5 || FLAG == 6 {
+			install(resolved, Audio_T)
+		}
 	})
-
-	install_html(link, html)
+	if FLAG == 3 || FLAG == 5 || FLAG == 6 {
+		install_html(link, html)
+	}
 }
 
 func append_to_lmap(key string, val string) {
@@ -156,7 +201,7 @@ func htmlfname(name string) (string, error) {
 }
 
 func install_html(link, html string) error {
-
+	fmt.Println("Installing", link)
 	name, err := htmlfname(link)
 	if err != nil {
 		return err
@@ -166,10 +211,12 @@ func install_html(link, html string) error {
 		return err
 	}
 	path := filepath.Join(home, "Goscrapper", "output", "Websites_html", name)
+	fmt.Println("Installed", link)
 	return os.WriteFile(path, []byte(html), 0755)
 }
 
 func install(src string, M_type Media_Type) {
+	fmt.Println("Installing", src)
 	home, _ := os.UserHomeDir()
 	dwnld_dir := filepath.Join(home, "Goscrapper", "output")
 	switch M_type {
@@ -202,7 +249,7 @@ func install(src string, M_type Media_Type) {
 
 	}
 	if err := os.MkdirAll(dwnld_dir, 0755); err != nil {
-		fmt.Printf("Failed to create directory %s: %v", dwnld_dir, err)
+		fmt.Printf("Failed to create directory %s: %v\n", dwnld_dir, err)
 		return
 	}
 	bin := filepath.Join(home, "Godownloader", "main")
@@ -213,5 +260,5 @@ func install(src string, M_type Media_Type) {
 	if err != nil {
 		fmt.Println("Download Failed")
 	}
-
+	fmt.Println("Installed [", src, "] -> [", dwnld_dir, "]")
 }

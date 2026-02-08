@@ -4,28 +4,30 @@ import (
 	"os"
 )
 
+var KEYWORD string
+var FLAG i8
 var data Data
 var JobQueue chan Job
-
-func fn(s string) {
-}
+var Levanshtein_MIN_THreshold int
 
 func main() {
-	KEYWORD, flag := parse_args(os.Args)
-	if flag == 0 {
+	KEYWORD, FLAG = parse_args(os.Args)
+	if FLAG == 0 {
 		return
 	}
-	init_pool(flag)
-	init_wlist()
+	Levanshtein_MIN_THreshold = int(30 * len(KEYWORD) / 100)
+
+	init_pool()
+	// Some day get a smaller csv or use mutliple threads to process the csv
+	//init_wlist()
 	boost_wlist()
-	for i, url := range website_list {
-		if i == 50 {
-			break
-		}
+	start_workers()
+	for _, url := range website_list {
 		add_job(url)
 	}
-	start_workers()
+	go func() {
+		wg.Wait()
+		close(JobQueue)
+	}()
 	wg.Wait()
-	close(JobQueue)
-	fn(KEYWORD)
 }

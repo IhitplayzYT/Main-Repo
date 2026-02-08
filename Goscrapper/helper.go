@@ -30,29 +30,41 @@ func print_map(s map[string][]string) {
 		fmt.Println()
 	}
 }
-
+func fn(_ string, _ i8) {
+}
 func parse_args(args []string) (string, i8) {
 	var keyword string = ""
-	var deep_flag i8 = 0
+	var flag i8 = 0
 	l := len(args)
 	if l < 2 || l > 3 {
 		usage(args[0])
 		return "", 0
 	} else if l == 2 {
 		keyword = args[1]
-		deep_flag = 1
+		if keyword == "-h" {
+			usage(args[0])
+			return "", 0
+		}
+		flag = 1
 	} else {
-		if args[1] == "-d" {
-			deep_flag = 2
-		} else if args[1] == "-D" {
-			deep_flag = 3
-		} else {
+		switch args[1] {
+		case "-e":
+			flag = 2
+		case "-D":
+			flag = 3
+		case "-w":
+			flag = 4
+		case "-eD":
+			flag = 5
+		case "-wD":
+			flag = 6
+		default:
 			usage(args[0])
 			return "", 0
 		}
 		keyword = args[2]
 	}
-	return strings.Trim(keyword, " "), deep_flag
+	return strings.Trim(keyword, " "), flag
 }
 
 func match_longest_any(to_be_found, to_be_searched string) (int, int) {
@@ -125,9 +137,9 @@ func match_full(to_be_found, to_be_searched string) int {
 func usage(argv string) {
 	sidx := strings.LastIndex(argv, "/")
 	s := argv[sidx:]
-	fmt.Print("Usage: .", s, " [-d | -D] <KEYWORD>\n")
-	fmt.Println("FLAGS:\n  -d -> Deep Unfiltered Search\n  -D -> Download Flag")
-	fmt.Println("NOTE: Passing no flag resorts to Safe Search WITHOUT Downloads")
+	fmt.Print("Usage: .", s, " [-e | -w | -D | -eD | -wD] <KEYWORD>\n")
+	fmt.Println("FLAGS:\n  -e - Exact Match\n  -w - Closest Match(Leveshtein)\n  -D - Download Flag installs local copies\n  -eD - Downloads for sites with exact Match\n  -wD - Downloads for sites with rough match")
+	fmt.Println("NOTE: Passing no flag resorts to exact match WITHOUT Downloads")
 	os.Exit(1)
 }
 
@@ -151,4 +163,20 @@ func get_category(s string) (ret Media_Type) {
 		ret = Misc_T
 	}
 	return
+}
+
+func lev_dist(needle, haystack string) int {
+	if len(needle) == 0 {
+		return len(haystack)
+	} else if len(haystack) == 0 {
+		return len(needle)
+	} else if needle[0] == haystack[0] {
+		return lev_dist(needle[1:], haystack[1:])
+	} else {
+		return min(lev_dist(needle[1:], haystack), lev_dist(needle, haystack[1:]), lev_dist(needle[1:], haystack[1:]))
+	}
+}
+
+func in_thresh(needle, haystack string) bool {
+	return lev_dist(needle, haystack) < Levanshtein_MIN_THreshold
 }
