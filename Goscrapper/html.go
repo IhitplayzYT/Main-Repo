@@ -1,6 +1,8 @@
 package main
 
 import (
+	"compress/gzip"
+	"compress/zlib"
 	"context"
 	"crypto/sha1"
 	"encoding/hex"
@@ -17,6 +19,7 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/andybalholm/brotli"
 )
 
 var visited, link_map sync.Map
@@ -73,7 +76,37 @@ func get_html(link string) (string, error) {
 		return "", err
 	}
 	defer response.Body.Close()
-	res, err := io.ReadAll(response.Body)
+
+	var reader io.Reader = response.Body
+	enc := strings.ToLower(response.Header.Get("Content-Encoding"))
+	switch {
+	case strings.Contains(enc, "gzip"):
+		{
+			gz, err := gzip.NewReader(response.Body)
+			if err != nil {
+				return "", err
+			}
+			defer gz.Close()
+			reader = gz
+
+		}
+
+	case strings.Contains(enc, "bz"):
+		{
+			reader = brotli.NewReader(reader)
+		}
+	case strings.Contains(enc, "deflate"):
+		{
+			zr, err := zlib.NewReader(reader)
+			if err != nil {
+				return "", err
+			}
+			defer zr.Close()
+			reader = zr
+		}
+
+	}
+	res, err := io.ReadAll(reader)
 	if err != nil {
 		return "", err
 	}

@@ -13,7 +13,7 @@ func boost_wlist() {
 		website_list = append(website_list, (website_list[i] + "/?s=" + KEYWORD))
 		website_list = append(website_list, (website_list[i] + "/search?keyword=" + KEYWORD))
 	}
-
+	website_list = website_list[l+1:]
 }
 
 func init_wlist() {
@@ -51,6 +51,23 @@ func init_wlist() {
 }
 
 var website_list []string = []string{
+	"https://www.duolingo.com", "https://www.italki.com", "https://www.hellotalk.com",
+	"https://www.okcupid.com", "https://www.bumble.com", "https://www.hinge.co", "https://www.match.com", "https://www.tinder.com",
+	"https://www.mixi.jp", "https://www.renren.com", "https://www.douban.com", "https://www.skyrock.com", "https://www.xing.com", "https://www.viadeo.com",
+	"https://www.superuser.com", "https://www.serverfault.com", "https://www.askubuntu.com", "https://www.mathoverflow.net",
+	"https://www.letterboxd.com", "https://www.goodreads.com", "https://www.imdb.com", "https://www.rottentomatoes.com",
+	"https://www.pornhub.com", "https://www.xvideos.com", "https://www.xnxx.com", "https://www.xhamster.com", "https://www.redtube.com",
+	"https://www.youporn.com", "https://www.spankbang.com", "https://www.tube8.com", "https://www.tnaflix.com", "https://www.beeg.com",
+	"https://www.manyvids.com", "https://www.chaturbate.com", "https://www.stripchat.com", "https://www.camsoda.com", "https://www.bongacams.com",
+	"https://www.myfreecams.com", "https://www.cam4.com", "https://www.flirt4free.com", "https://www.livejasmin.com", "https://www.imlive.com",
+	"https://www.onlyfans.com", "https://www.fansly.com", "https://www.justforfans.com", "https://www.fanhouse.app",
+	"https://www.modelhub.com", "https://www.iwantclips.com", "https://www.clips4sale.com", "https://www.manyclips.com",
+	"https://www.adultwork.com", "https://www.escortdirectory.com", "https://www.eros.com", "https://www.tryst.link",
+	"https://www.fetlife.com", "https://www.alt.com", "https://www.adultfriendfinder.com", "https://www.ashleymadison.com",
+	"https://www.literotica.com", "https://www.sexstories.com", "https://www.lushstories.com",
+	"https://www.hentai-foundry.com", "https://www.rule34.xxx", "https://www.gelbooru.com", "https://www.danbooru.donmai.us",
+	"https://www.e621.net", "https://www.furaffinity.net", "https://www.newgrounds.com", "https://www.hentaifox.com",
+	"https://www.nhentai.net", "https://www.exhentai.org", "https://www.hentaigasm.com",
 	"https://www.google.com",
 	"https://www.instagram.com",
 	"https://www.twitter.com",
@@ -142,21 +159,4 @@ var website_list []string = []string{
 	"https://www.unsplash.com", "https://www.pexels.com", "https://www.pixabay.com", "https://www.500px.com", "https://www.deviantart.com", "https://www.artstation.com",
 	"https://www.npmjs.com", "https://www.pypi.org", "https://www.rubygems.org", "https://www.crates.io", "https://www.cpan.org", "https://www.packagist.org",
 	"https://www.strava.com", "https://www.fitbit.com", "https://www.garmin.com", "https://www.myfitnesspal.com",
-	"https://www.duolingo.com", "https://www.italki.com", "https://www.hellotalk.com",
-	"https://www.okcupid.com", "https://www.bumble.com", "https://www.hinge.co", "https://www.match.com", "https://www.tinder.com",
-	"https://www.mixi.jp", "https://www.renren.com", "https://www.douban.com", "https://www.skyrock.com", "https://www.xing.com", "https://www.viadeo.com",
-	"https://www.superuser.com", "https://www.serverfault.com", "https://www.askubuntu.com", "https://www.mathoverflow.net",
-	"https://www.letterboxd.com", "https://www.goodreads.com", "https://www.imdb.com", "https://www.rottentomatoes.com",
-	"https://www.pornhub.com", "https://www.xvideos.com", "https://www.xnxx.com", "https://www.xhamster.com", "https://www.redtube.com",
-	"https://www.youporn.com", "https://www.spankbang.com", "https://www.tube8.com", "https://www.tnaflix.com", "https://www.beeg.com",
-	"https://www.manyvids.com", "https://www.chaturbate.com", "https://www.stripchat.com", "https://www.camsoda.com", "https://www.bongacams.com",
-	"https://www.myfreecams.com", "https://www.cam4.com", "https://www.flirt4free.com", "https://www.livejasmin.com", "https://www.imlive.com",
-	"https://www.onlyfans.com", "https://www.fansly.com", "https://www.justforfans.com", "https://www.fanhouse.app",
-	"https://www.modelhub.com", "https://www.iwantclips.com", "https://www.clips4sale.com", "https://www.manyclips.com",
-	"https://www.adultwork.com", "https://www.escortdirectory.com", "https://www.eros.com", "https://www.tryst.link",
-	"https://www.fetlife.com", "https://www.alt.com", "https://www.adultfriendfinder.com", "https://www.ashleymadison.com",
-	"https://www.literotica.com", "https://www.sexstories.com", "https://www.lushstories.com",
-	"https://www.hentai-foundry.com", "https://www.rule34.xxx", "https://www.gelbooru.com", "https://www.danbooru.donmai.us",
-	"https://www.e621.net", "https://www.furaffinity.net", "https://www.newgrounds.com", "https://www.hentaifox.com",
-	"https://www.nhentai.net", "https://www.exhentai.org", "https://www.hentaigasm.com",
 }
