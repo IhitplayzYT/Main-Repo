@@ -21,6 +21,7 @@ func is_hash(s string) bool {
 	return hexregex.Match([]byte(before))
 }
 
+// Entropy measuring to acertain if valid english word or a hash
 func impurity(s string) float64 {
 	freq := make(map[rune]float64)
 	for _, c := range s {
@@ -32,6 +33,5 @@ func impurity(s string) float64 {
 		p := f / l
 		e -= p * math.Log2(p)
 	}
-
 	return e
 }

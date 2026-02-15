@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"strings"
 	"sync"
@@ -36,6 +37,9 @@ const (
 	Misc_T
 )
 
+/*
+Sets client struct for inconspicuous traversal
+*/
 var client = &http.Client{
 	Timeout: 10 * time.Second,
 	Transport: &http.Transport{
@@ -62,12 +66,22 @@ func get_html(link string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	request.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/121 Safari/537.36")
-	request.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
-	request.Header.Set("Accept-Language", "en-US,en;q=0.5")
-	request.Header.Set("Accept-Encoding", "gzip, deflate, br")
-	request.Header.Set("Connection", "keep-alive")
-	request.Header.Set("Upgrade-Insecure-Requests", "1")
+	request.Header = http.Header{
+		"sec-ch-ua":                 {`"Not A(Brand";v="99", "Chromium";v="121", "Google Chrome";v="121"`},
+		"sec-ch-ua-mobile":          {"?0"},
+		"sec-ch-ua-platform":        {`"Windows"`},
+		"Upgrade-Insecure-Requests": {"1"},
+		"User-Agent":                {`Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36`},
+		"Accept":                    {`text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7`},
+		"Sec-Fetch-Site":            {"none"},
+		"Sec-Fetch-Mode":            {"navigate"},
+		"Sec-Fetch-User":            {"?1"},
+		"Sec-Fetch-Dest":            {"document"},
+		"Accept-Encoding":           {"gzip, deflate, br"},
+		"Accept-Language":           {"en-US,en;q=0.9"},
+		"Connection":                {"keep-alive"},
+		"Cache-Control":             {"max-age=0"},
+	}
 	response, err := client.Do(request)
 	if err != nil {
 		return "", err
@@ -152,13 +166,28 @@ func parse_html_helper(link string, html string) {
 		if err != nil {
 			return
 		}
-		urlpath := base.ResolveReference(ref).String()
+		abs := base.ResolveReference(ref)
+		urlpath := abs.String()
+		fname := path.Base(abs.Path)
+		if !is_hash(fname) {
+			if FLAG == 2 || FLAG == 5 {
+				if !strings.Contains(html, KEYWORD) {
+					return
+				}
+			}
+			if FLAG == 4 || FLAG == 6 {
+				if !in_thresh(KEYWORD, html) {
+					return
+				}
+			}
+			add_job(urlpath)
+
+		}
 		for k, _ := range SupportedExts {
 			if strings.Contains(href, k) {
 				append_to_lmap(link, urlpath)
 			}
 		}
-		add_job(urlpath)
 	})
 
 	doc.Find("img[src]").Each(func(i int, s *goquery.Selection) {
@@ -167,10 +196,29 @@ func parse_html_helper(link string, html string) {
 		if err != nil {
 			return
 		}
-		resolved := base.ResolveReference(ref).String()
+		abs := base.ResolveReference(ref)
+		fname := path.Base(abs.Path)
 		append_to_lmap(link, src)
+		if !is_hash(fname) {
+			if FLAG == 2 || FLAG == 5 {
+				if !strings.Contains(html, KEYWORD) {
+					return
+				}
+			}
+			if FLAG == 4 || FLAG == 6 {
+				if !in_thresh(KEYWORD, html) {
+					return
+				}
+			}
+		}
 		if FLAG == 3 || FLAG == 5 || FLAG == 6 {
-			install(resolved, Image_T)
+			if !is_hash(abs.String()) {
+				if !strings.Contains(abs.String(), KEYWORD) {
+					return
+				}
+
+			}
+			install(abs.String(), Image_T)
 		}
 	})
 
@@ -180,10 +228,30 @@ func parse_html_helper(link string, html string) {
 		if err != nil {
 			return
 		}
-		resolved := base.ResolveReference(ref).String()
+		abs := base.ResolveReference(ref)
+		fname := path.Base(abs.Path)
+		append_to_lmap(link, src)
+		if !is_hash(fname) {
+			if FLAG == 2 || FLAG == 5 {
+				if !strings.Contains(html, KEYWORD) {
+					return
+				}
+			}
+			if FLAG == 4 || FLAG == 6 {
+				if !in_thresh(KEYWORD, html) {
+					return
+				}
+			}
+		}
 		append_to_lmap(link, src)
 		if FLAG == 3 || FLAG == 5 || FLAG == 6 {
-			install(resolved, Video_T)
+			if !is_hash(abs.String()) {
+				if !strings.Contains(abs.String(), KEYWORD) {
+					return
+				}
+
+			}
+			install(abs.String(), Video_T)
 		}
 	})
 	doc.Find("audio source").Each(func(i int, s *goquery.Selection) {
@@ -192,12 +260,33 @@ func parse_html_helper(link string, html string) {
 		if err != nil {
 			return
 		}
-		resolved := base.ResolveReference(ref).String()
+		abs := base.ResolveReference(ref)
+		fname := path.Base(abs.Path)
+		append_to_lmap(link, src)
+		if !is_hash(fname) {
+			if FLAG == 2 || FLAG == 5 {
+				if !strings.Contains(html, KEYWORD) {
+					return
+				}
+			}
+			if FLAG == 4 || FLAG == 6 {
+				if !in_thresh(KEYWORD, html) {
+					return
+				}
+			}
+		}
 		append_to_lmap(link, src)
 		if FLAG == 3 || FLAG == 5 || FLAG == 6 {
-			install(resolved, Audio_T)
+			if !is_hash(abs.String()) {
+				if !strings.Contains(abs.String(), KEYWORD) {
+					return
+				}
+
+			}
+			install(abs.String(), Audio_T)
 		}
 	})
+
 	if FLAG == 3 || FLAG == 5 || FLAG == 6 {
 		install_html(link, html)
 	}

@@ -6,6 +6,9 @@ type Job struct {
 	url string
 }
 
+/*
+Runs workers based on the jobs in the Jobque
+*/
 func worker(jobs <-chan Job) {
 	for job := range jobs {
 		parse_html(job.url)
@@ -14,10 +17,16 @@ func worker(jobs <-chan Job) {
 
 }
 
+/*
+Creates the JobQueue
+*/
 func init_pool() {
 	JobQueue = make(chan Job, 1000)
 }
 
+/*
+Adds links to the Jobqueue
+*/
 func add_job(link string) {
 	if _, loaded := visited.LoadOrStore(link, true); loaded {
 		return
@@ -26,6 +35,9 @@ func add_job(link string) {
 	JobQueue <- Job{url: link}
 }
 
+/*
+Spawns workers
+*/
 func start_workers() {
 	for i := 0; i < int(WORKER_COUNT); i++ {
 		go worker(JobQueue)
