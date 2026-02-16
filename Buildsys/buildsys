@@ -1,32 +1,46 @@
 #!/bin/bash
+
+# Location of the templates directory
 s_dir="$HOME/buildsystemplates"
+# Get first argument for project name
 proj_name=$1
+# Gets Current working dir
 c_dir=$PWD
+# Changing to the Working dir
 cd $s_dir
+
+# Selction prompt for template
 echo "Select the template to be used : "
 select x in *;do
     template=$x
     break
 done
+
 cd $c_dir
 s_dir="$s_dir/$template"
 
-    if [ -z proj_name ];then
-        echo -e "\e[1;31m ERROR :\e[0m Input valid name for the buildsystem to create" >&2
-        echo "FORMAT : $0 <proj_name>"
-        exit 1
-    elif [ -d $proj_name ];then
-        echo -e "\e[1;31m ERROR :\e[0m Directory already exists in current directory!" >&2
-        exit 2
-    elif [ -z s_dir ];then
-        echo -e "\e[1;31m ERROR :\e[0m The Template build system is unable to be found in $s_dir"
-        exit 3
-    fi
 
+# If proj_name provided is empty 
+if [ -z proj_name ];then
+    echo -e "\e[1;31m ERROR :\e[0m Input valid name for the buildsystem to create" >&2
+    echo "FORMAT : $0 <proj_name>"
+    exit 1
+# If dir already exist
+elif [ -d $proj_name ];then
+    echo -e "\e[1;31m ERROR :\e[0m Directory already exists in current directory!" >&2
+    exit 2
+# If src_dir doesn't have the template[Ideally impossible since we do select which only chooses available dirs]
+elif [ -z s_dir ];then
+    echo -e "\e[1;31m ERROR :\e[0m The Template build system is unable to be found in $s_dir"
+    exit 3
+fi
 
+# Creating and cloning into the directory
 mkdir $proj_name
 cd $proj_name
 cp -R $s_dir/* .
+
+# In the currnt dir does renaming of the PROJ_NAME placeholder in the files
 for x in *;do
     if [[ $x == *PROJ_NAME* ]];then
         new=$(sed "s/PROJ_NAME/$proj_name/g" <<< "$x")
@@ -37,4 +51,5 @@ for x in *;do
     fi
     
 done
+# COmpletion message
 echo -e "\e[1;32m Creation is successful!\e[0m"
