@@ -28,11 +28,11 @@ typedef unsigned long i64;
 /* Definations */
 #define IP "127.0.0.1"
 #define PORT 80
-#define ERR_STR "Error %d : %s\n"
+#define ERR_STR "[%s:%d] Error %d : %s\n"
 #define MAX_FD 256
 /* Definations */
 
 /* Function Signatures */
-private i8 isopen(i8);
-private void init_fds();
+private i8 isopen(i8); // Checks if fd is open
+private void init_fds(); // Inits Fd list 
 /* Function Signatures */
