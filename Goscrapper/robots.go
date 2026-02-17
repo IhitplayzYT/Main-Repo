@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 	"sync"
+	"time"
 
 	"github.com/temoto/robotstxt"
 )
@@ -48,4 +50,18 @@ func (agent *RobotsManager) get_robots(url string) (*robotstxt.RobotsData, error
 	agent.cache[url] = data
 	agent.mu.Unlock()
 	return data, nil
+}
+
+func (agent *RobotsManager) is_allowed(link string) (bool, time.Duration) {
+	u, err := url.Parse(link)
+	if err != nil {
+		return false, 0
+	}
+	data, err := agent.get_robots(u.Host)
+	if err != nil || data == nil {
+		return true, 0
+	}
+
+	group := data.FindGroup(agent.agent)
+	return group.Test(u.Path), time.Duration(group.CrawlDelay) * time.Second
 }

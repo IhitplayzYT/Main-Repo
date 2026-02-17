@@ -133,6 +133,16 @@ func parse_html(link string, depth int) {
 	if depth == MAX_DEPTH {
 		return
 	}
+
+	allowed, delay := RobotsAgent.is_allowed(link)
+	if !allowed {
+		return
+	}
+
+	if delay > 0 {
+		time.Sleep(delay)
+	}
+
 	html, err := get_html(link)
 	if err != nil {
 		fmt.Println("Error : ", err)
@@ -356,6 +366,13 @@ func install_html(link, html string) error {
 }
 
 func install(src string, M_type Media_Type) {
+	allowed, delay := RobotsAgent.is_allowed(src)
+	if !allowed {
+		return
+	}
+	if delay > 0 {
+		time.Sleep(delay)
+	}
 	fmt.Println("Installing", src)
 	home, _ := os.UserHomeDir()
 	dwnld_dir := filepath.Join(home, "Goscrapper", "output")
