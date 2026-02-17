@@ -7,11 +7,11 @@ type Job struct {
 }
 
 /*
-Runs workers based on the jobs in the Jobque
+Runs workers based on the jobs in the Jobqueue
 */
 func worker(jobs <-chan Job) {
 	for job := range jobs {
-		parse_html(job.url)
+		parse_html(job.url, 0)
 		wg.Done()
 	}
 

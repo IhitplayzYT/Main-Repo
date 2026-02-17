@@ -5,6 +5,9 @@ import (
 	"os"
 )
 
+/*
+Query seraches the website for the keyword we searaching for
+*/
 func boost_wlist() {
 	l := len(website_list)
 	for i := 0; i < l; i++ {
@@ -16,6 +19,9 @@ func boost_wlist() {
 	website_list = website_list[l+1:]
 }
 
+/*
+Loads the website csv into list
+*/
 func init_wlist() {
 	f, err := os.Open("majestic_million.csv")
 	if err != nil {

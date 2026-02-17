@@ -26,6 +26,8 @@ import (
 var visited, link_map sync.Map
 var wg sync.WaitGroup
 
+const MAX_DEPTH = 3
+
 type Media_Type int
 
 const (
@@ -127,7 +129,10 @@ func get_html(link string) (string, error) {
 	return string(res), nil
 }
 
-func parse_html(link string) {
+func parse_html(link string, depth int) {
+	if depth == MAX_DEPTH {
+		return
+	}
 	html, err := get_html(link)
 	if err != nil {
 		fmt.Println("Error : ", err)
@@ -136,18 +141,31 @@ func parse_html(link string) {
 	if len(html) == 0 {
 		return
 	}
-	parse_html_helper(link, html)
+	depth += 1
+	parse_html_helper(link, html, depth)
 }
 
-func parse_html_helper(link string, html string) {
+func parse_html_helper(link string, html string, depth int) {
+	if depth == MAX_DEPTH {
+		return
+	}
 	if FLAG == 2 || FLAG == 5 {
 		if len(html) == 0 || !strings.Contains(html, KEYWORD) {
 			return
 		}
 	}
 	if FLAG == 4 || FLAG == 6 {
-		if len(html) == 0 || !in_thresh(KEYWORD, html) {
-			return
+		if len(html) == 0 {
+			arr := strings.Split(html, " ")
+			flag := true
+			for _, v := range arr {
+				if in_thresh(KEYWORD, v) {
+					flag = false
+				}
+			}
+			if flag {
+				return
+			}
 		}
 	}
 
@@ -171,12 +189,12 @@ func parse_html_helper(link string, html string) {
 		fname := path.Base(abs.Path)
 		if !is_hash(fname) {
 			if FLAG == 2 || FLAG == 5 {
-				if !strings.Contains(html, KEYWORD) {
+				if !strings.Contains(fname, KEYWORD) {
 					return
 				}
 			}
 			if FLAG == 4 || FLAG == 6 {
-				if !in_thresh(KEYWORD, html) {
+				if !in_thresh(KEYWORD, fname) {
 					return
 				}
 			}
