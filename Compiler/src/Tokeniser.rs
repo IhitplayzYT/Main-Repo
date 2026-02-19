@@ -6,11 +6,11 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, version 3.
 
-#![allow(non_camel_case_types,non_snake_case,non_upper_case_globals)]
+#![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
 pub mod Tokeniser {
     use crate::Lexer_Tok::Lex_Tok::LTOK;
     use once_cell::sync::Lazy;
-    use std::{collections::HashMap, fs, ops::Index, process::exit};
+    use std::{collections::HashMap, fs, process::exit};
 
     pub static ALLOWED_KEYWORDS: Lazy<HashMap<&'static str, LTOK>> = Lazy::new(|| {
         HashMap::from([
@@ -26,6 +26,7 @@ pub mod Tokeniser {
             ("break", LTOK::BREAK),
             ("continue", LTOK::CONTINUE),
             ("return", LTOK::RETURN),
+            ("bool",LTOK::BOOL_TYPE),
             ("s8", LTOK::INT_TYPE),
             ("s16", LTOK::INT_TYPE),
             ("s32", LTOK::INT_TYPE),
@@ -48,7 +49,7 @@ pub mod Tokeniser {
             ("in",LTOK::IN)
         ])
     });
-
+    #[derive(Debug,Clone)]
     pub struct Lexer {
         pub text: String,
         pub Lexer_Output: Vec<LTOK>,
@@ -65,7 +66,7 @@ pub mod Tokeniser {
         }
 
         pub fn print_tok(&self){
-            if (!self.is_lexed()){
+            if !self.is_lexed() {
              println!("Use Tokeniser before printing!");      
             }
             println!("{:?}",self.Lexer_Output);
@@ -82,6 +83,9 @@ pub mod Tokeniser {
             if let Some(y) = ALLOWED_KEYWORDS.get(v) {
                 return Some(y.clone());
             } else {
+                if v.contains("..") {
+                    return Some(LTOK::RANGE);
+                }
                 if v.chars().all(|c| c.is_ascii_digit() || c == '.') {
                     let count = v.chars().filter(|&c| c == '.').count();
                     if count < 1 {
@@ -143,6 +147,75 @@ pub mod Tokeniser {
             let mut temp = String::new();
             let mut c = 0;
             while let Some(i) = iter.next() {
+                if i == 'T' && c == 0{
+                    let mut bool_buff = "T".to_string();
+                    match iter.next() {
+                        Some('r') => {
+                            bool_buff += "r";
+                            match iter.next() {
+                                Some('u') => {
+                                    bool_buff += "u";
+                                    match iter.next() {
+                                        Some('e') => {
+                                            ret.push(LTOK::TRUE);
+                                        }
+                                        _ => {
+                                            temp.push_str(&bool_buff[..]);
+                                        }
+                                    }
+                                },
+                                _ => {
+                                    temp.push_str(&bool_buff[..]);
+                                }
+
+                            }
+
+                        },
+                        _ => {
+                            temp.push_str(&bool_buff[..]);
+                        }
+                    }
+                }
+
+                if i == 'F' && c == 0{
+                    let mut bool_buff = "T".to_string();
+                    match iter.next() {
+                        Some('a') => {
+                            bool_buff += "r";
+                            match iter.next() {
+                                Some('l') => {
+                                    bool_buff += "u";
+                                    match iter.next() {
+                                        Some('s') => {
+                                            bool_buff += "s";
+                                            match iter.next() {
+                                                Some('e') => {
+                                                    ret.push(LTOK::FALSE);
+                                                },
+                                                _ => {
+                                                    temp.push_str(&bool_buff[..]);
+                                                }
+
+                                            }
+                                        }
+                                        _ => {
+                                            temp.push_str(&bool_buff[..]);
+                                        }
+                                    }
+                                },
+                                _ => {
+                                    temp.push_str(&bool_buff[..]);
+                                }
+
+                            }
+
+                        },
+                        _ => {
+                            temp.push_str(&bool_buff[..]);
+                        }
+                    }
+                } 
+
                 if c >= 1 {
                     if i == '\'' && c == 1 {
                         c = 0;

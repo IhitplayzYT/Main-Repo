@@ -20,7 +20,6 @@ mod Compiler;
 mod printer;
 use std::env;
 
-use crate::{Helper::utilities::read_file, printer::printer::Components};
 
 fn main() {
     let arguments: Vec<String> = env::args().collect();
@@ -36,5 +35,4 @@ fn main() {
     let mut PARSER = Parser::PARSER::Parser::new(LEXER.Lexer_Output);
     let t = PARSER.Parse();
     println!("{:?}",t);
-    println!("{:?}: {:?}",PARSER.idx,PARSER.input[PARSER.idx]);
 }

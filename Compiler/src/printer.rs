@@ -1,6 +1,15 @@
+// SPDX-License-Identifier: GPL-3.0-only
+//
+// Copyright (C) 2025 Ihit Acharya
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, version 3.
+
 pub mod printer{
 use crate::{Ast::AST::*,Tokeniser::Tokeniser::Lexer,Lexer_Tok::Lex_Tok::LTOK,Parser::PARSER::Parser};
 
+#[allow(dead_code)]
 pub trait Components{
 fn print(&self);
 }
@@ -27,6 +36,7 @@ LTOK::IDENT(x) => {x.clone()},
 LTOK::STRING(x)  => {"\"".to_string() + x + "\""},
 LTOK::INT(y) => format!("{:?}",y),
 LTOK::FLOAT(z) => format!("{:?}",z),
+LTOK::BOOL(k) => format!("{:?}",if *k {"True"} else {"False"}),
 LTOK::PLUS => {" + ".to_string()},          
 LTOK::MINUS => {" - ".to_string()},         
 LTOK::DIV => {" / ".to_string()},           
@@ -260,6 +270,9 @@ fn print_expression(expr: &Expr, indent: usize, extra_prefix: &str) {
         
         Expr::String(s) => {
             println!("{}└──  String: \"{}\"", prefix, s);
+        }
+        Expr::Bool(b) => {
+            println!("{}└──  String: \"{}\"",prefix,b);
         }
         
         Expr::Ident(name) => {
