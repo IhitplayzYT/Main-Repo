@@ -5,7 +5,6 @@
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, version 3.
-// FIXME:TODO:     Docs left from here onwards
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
 pub mod Err{
     use crate::Ast::AST::Type;
@@ -18,8 +17,29 @@ pub mod Err{
     ///     
     pub type Parser_ret<T> = Result<T,ParserError>;
 
+    /// Type defination of the Sematic Analyser Return Type
+    /// 
+    /// # Example
+    /// ```
+    /// fn test() -> Semantic_Ret<()> 
+    /// ```
+    ///     
+    pub type Semantic_Ret<T> = Result<T,Semantic_err>;
 
 
+    /// Enum that stores the Semantic Errors Possible
+    /// 
+    /// # Traits
+    /// - Derived<br/>
+    ///     - Debug
+    ///     - Clone
+    /// # Example
+    /// ```
+    /// Semantic_err::UndefinedVariable("Undefined varib".to_string());
+    /// Semantic_err::Break_Continue_location;
+    /// ```
+    ///    
+    #[derive(Debug,Clone)] 
     pub enum Semantic_err{
         UndefinedVariable(String),
         TypeMismatch{expected: Type,got: Type},
@@ -28,12 +48,19 @@ pub mod Err{
         Argument_err{expected:String,got:String},
         Reassignment(String)
     }
-    
-    pub type Semantic_Ret<T> = Result<T,Semantic_err>;
 
-
-
-
+    /// Enum that stores the Parser Errors Possible
+    /// 
+    /// # Traits
+    /// - Derived<br/>
+    ///     - Debug
+    ///     - Clone
+    /// # Example
+    /// ```
+    /// ParserError::UnexpectedToken("expected".to_string(),"got".to_string());
+    /// ParserError::Invalid_Code;
+    /// ```
+    ///    
     #[derive(Debug,Clone)]
         pub enum ParserError{
             UnexpectedToken{expected:String,got:String},
@@ -42,6 +69,13 @@ pub mod Err{
         }
 
     impl ParserError{
+    /// Function to show formatted Parser Errir 
+    ///  
+    /// # Example
+    /// ```
+    /// parser_err.show();
+    /// ```
+    ///        
         fn show(&mut self) {
             println!("{:?}",match self {
                 ParserError::UnexpectedToken{expected,got} => format!("Expected: {} but Got: {}",expected,got),
