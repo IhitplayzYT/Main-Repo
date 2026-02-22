@@ -11,7 +11,7 @@ pub mod Analyser {
     use std::collections::HashMap;
     use crate::{Ast::{self, AST::*},Errors::Err::{Parser_ret, Semantic_Ret, Semantic_err}};
 
-
+    #[derive(Debug,Clone)]
     pub struct Semantilizer {
         pub symbol_table: HashMap<String,Type>,
         pub function_map: HashMap<String,(Vec<Type>,Option<Type>)>,
@@ -166,17 +166,63 @@ pub mod Analyser {
 
             Ok(())
        }
-        pub fn eval_type(&self, expr: &Expr) -> Semantic_Ret<Type>{
-            match expr {
-                Expr::Bool(_)  => Ok(Type::BOOL),
-                Expr::Float(_)  => Ok(Type::FLOAT),
-                Expr::Int(_)  => Ok(Type::INT),
-                Expr::String(_)  => Ok(Type::STRING),
-                Expr::Ident(name) => self.symbol_table.get(name).cloned().ok_or_else(|| Semantic_err::UndefinedVariable(name.clone())),
-                // FIXME:TODO:     
-                _ => Ok(Type::INT),
+      pub fn eval_type(&self, expr: &Expr) -> Semantic_Ret<Type>{
+        match expr {
+            Expr::Bool(_)  => Ok(Type::BOOL),
+            Expr::Float(_)  => Ok(Type::FLOAT),
+            Expr::Int(_)  => Ok(Type::INT),
+            Expr::String(_)  => Ok(Type::STRING),
+            Expr::Ident(name) => self.symbol_table.get(name).cloned().ok_or_else(|| Semantic_err::UndefinedVariable(name.clone())),
+            Expr::Binary_op { op, left, right } => {
+                let (l_type,r_type) = (self.eval_type(left)?,self.eval_type(right)?);
+                match op {
+                    BIN_OP::Add | BIN_OP::Sub | BIN_OP::Mul | BIN_OP::Div | BIN_OP::Mod | BIN_OP::Amp | BIN_OP::Lshift | BIN_OP::Pipe | BIN_OP::Rshift | BIN_OP::Xor => {
+                        if self.is_compatible(&l_type, &r_type) {
+                            Ok(l_type)
+                        } else{
+                            Err(Semantic_err::TypeMismatch { expected: l_type, got:r_type })
+                        } 
+                    },
+                    BIN_OP::Eq | BIN_OP::N_eq | BIN_OP::Lt | BIN_OP::Lt_eq | BIN_OP::Gt | BIN_OP::Gt_eq => Ok(Type::BOOL),
+                    BIN_OP::And | BIN_OP::Or => {
+                        if !self.is_compatible(&Type::BOOL, &l_type) {
+                            return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: l_type });
+                        }
+                        if !self.is_compatible(&Type::BOOL, &r_type){
+                            return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: r_type });
+                        }
+
+                        Ok(Type::BOOL)
+                    }
+                }
             }
-       }
+            Expr::Unary_op { op, operand } => {
+                let operant_type = self.eval_type(operand)?;
+                match op {
+                    UN_OP::Bang => Ok(Type::BOOL),
+                    UN_OP::Neg => Ok(operant_type),
+                    UN_OP::Tilda => Ok(Type::INT),
+                }
+            },
+            Expr::Fxn_call { name, args } => {
+                let (param,ret_type) = self.function_map.get(name).ok_or_else(|| Semantic_err::UndefinedFunction(name.clone()))?;
+                if args.len() != param.len() {
+                    return Err(Semantic_err::Custom(format!("Invalid number of arguments provided for Function {:?} expected:{:?} got {:?}",name,param.len(),args.len())));
+                }
+                for (arg,param_t) in args.iter().zip(param.iter()){
+                    let arg_t = self.eval_type(arg)?;
+                    if !self.is_compatible(param_t,&arg_t){
+                        return Err(Semantic_err::TypeMismatch { expected: param_t.clone(), got: arg_t });
+                    }
+                }
+
+                Ok(ret_type.clone().unwrap_or(Type::INT))
+            },
+
+            _ => Ok(Type::INT),
+        }
+
+        }
 
 
        pub fn is_compatible(&self,t1: &Type,t2: &Type) -> bool{

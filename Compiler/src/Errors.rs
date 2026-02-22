@@ -46,7 +46,8 @@ pub mod Err{
         Break_Continue_location,
         UndefinedFunction(String),
         Argument_err{expected:String,got:String},
-        Reassignment(String)
+        Reassignment(String),
+        Custom(String),
     }
 
     /// Enum that stores the Parser Errors Possible
@@ -67,6 +68,12 @@ pub mod Err{
             Invalid_Code,
             Custom(String),
         }
+    
+    #[derive(Debug,Clone)]
+    pub enum ERROR{
+        Semerr(Semantic_err),
+        Parseerr(ParserError)
+    }
 
     impl ParserError{
     /// Function to show formatted Parser Errir 

@@ -12,6 +12,7 @@ pub mod Frontend {
     use crate::Parser::PARSER::{Parser};
     use crate::Semantic_Analysis::Analyser::Semantilizer;
     use crate::Tokeniser::Tokeniser::Lexer;
+    use crate::Errors::Err::*;
 
     /// Frontend struct
     /// 
@@ -31,6 +32,7 @@ pub mod Frontend {
     pub struct Frontend {
         pub lexer: Lexer,
         pub parser: Option<Parser>,
+        pub semantic_analyser: Semantilizer,
     }
 
 impl Frontend{
@@ -46,7 +48,7 @@ impl Frontend{
 /// ```
 ///    
 pub fn new(v : String) -> Self{
-    Self{lexer:Lexer::new(v),parser:None}
+    Self{lexer:Lexer::new(v),parser:None,semantic_analyser:Semantilizer::new()}
 }
 
 /// Frontend executor function
@@ -56,14 +58,15 @@ pub fn new(v : String) -> Self{
 /// frontend.exec();
 /// ```
 ///    
-pub fn exec(&mut self){
+pub fn exec(&mut self) -> Result<(),ERROR>{
 if !self.lexer.Tokenise(){
 panic!("FATAL INTERNAL ERROR IN COMPILER");
 }
 self.parser = Some(Parser::new(self.lexer.Lexer_Output.clone()));
-// TODO:
-let _ast = self.parser.as_mut().unwrap().Parse();
-//  ADD SEMANTIC ANALYSER TO THE CHAIN
+let ast = self.parser.as_mut().unwrap().Parse().map_err(ERROR::Parseerr)?;
+self.semantic_analyser.analyse(&ast).map_err(ERROR::Semerr)?;
+
+Ok(())
 }
 
 
