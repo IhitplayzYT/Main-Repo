@@ -6,6 +6,10 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, version 3.
 
+//    Tokeniser.rs    //
+// Contains the code for the Tokeniser/Lexer
+
+
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
 pub mod Tokeniser {
     use crate::Lexer_Tok::Lex_Tok::LTOK;

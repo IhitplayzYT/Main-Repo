@@ -5,6 +5,10 @@
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, version 3.
+
+//   Errors.rs   //
+// Contains the error structures for the compiler
+
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
 pub mod Err{
     use crate::Ast::AST::Type;
@@ -76,6 +80,7 @@ pub mod Err{
     }
 
     impl ParserError{
+
     /// Function to show formatted Parser Errir 
     ///  
     /// # Example

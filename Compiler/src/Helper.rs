@@ -6,7 +6,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, version 3.
 
-// Helper.rs //
+//    Helper.rs    //
 // Provides some required basic helper functions.
 
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
@@ -16,7 +16,8 @@ pub mod collections {
         collections::{HashMap, HashSet},
         hash::Hash,
     };
-
+    
+    
     pub fn Counter<T: Hash + Eq + Clone>(vect: &Vec<T>) -> HashMap<T, usize> {
         let mut ret: HashMap<T, usize> = HashMap::new();
         for i in vect {

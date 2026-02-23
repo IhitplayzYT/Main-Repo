@@ -6,6 +6,9 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, version 3.
 
+//   Lexer_Tok.rs   // 
+// Contains the enum used by Lexer/Tokeniser for the Tokens.
+
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
 pub mod Lex_Tok {
     #[derive(Debug, Clone, PartialEq)]
