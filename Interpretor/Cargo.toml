@@ -1,0 +1,7 @@
+[package]
+name = "Interpretor"
+version = "0.1.0"
+edition = "2024"
+license = "GPL-3.0-only"
+[dependencies]
+once_cell = "1.21.3"
