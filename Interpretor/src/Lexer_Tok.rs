@@ -11,6 +11,18 @@
 
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
 pub mod Lex_Tok {
+        /// Enum definition of LTOK used by both Lexer and Parser
+        ///
+        /// # Derived
+        /// - Debug </br> 
+        /// - Clone </br> 
+        /// - PartialEq </br> 
+        /// 
+        /// # Example
+        /// ```
+        /// LTOK::LET;
+        /// LTOK::IDENT("my_variable");
+        /// ```    
     #[derive(Debug, Clone, PartialEq)]
     pub enum LTOK {
         LET,            // -> let (Varib Declaring)
