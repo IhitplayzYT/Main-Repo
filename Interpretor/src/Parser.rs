@@ -14,6 +14,19 @@ pub mod PARSER {
 
     use crate::{Ast::{AST::{Code,Type,Declare,Statmnt,Expr,BIN_OP,UN_OP}},Lexer_Tok::Lex_Tok::LTOK};
     use crate::Errors::Err::{ParserError,Parser_ret};
+
+    ///  Parser Struct 
+    /// 
+    /// # Derived
+    /// - Debug </br> 
+    /// - Clone </br> 
+    /// # Example 
+    /// ```
+    /// Parser{input: Vec<LTOK>,
+    /// idx: usize,
+    /// ast: Option<Code>
+    /// }
+    /// ```   
     #[derive(Debug,Clone)]
     pub struct Parser {
         pub input: Vec<LTOK>,
@@ -23,13 +36,38 @@ pub mod PARSER {
 
     impl Parser{
         /* ******************************** CONSTRUCTOR ********************************  */
+
+        ///  Parser constructor
+        ///
+        /// # Arguments
+        /// v : Vec<LTOK> ->  A token stream of Lexer tokens
+        /// 
+        /// # Returns
+        /// Parser object
+        /// 
+        /// # Example 
+        /// ```
+        /// Parser::new(vec![LTOK::ADD,LTOK::SUB]);
+        /// ```   
+
         pub fn new(v:Vec<LTOK>) -> Self{
             Self{input:v,idx:0,ast:None}
         }
         /* ******************************** CONSTRUCTOR ********************************  */
 
 
-        /* ******************************** MAIN ********************************  */
+        /* ******************************** MAIN API ********************************  */
+
+        ///  Main Parser API
+        ///
+        /// # Returns
+        /// Code -> Parser output
+        /// 
+        /// # Example 
+        /// ```
+        /// parser.Parse();
+        /// ```   
+        
         pub fn Parse(&mut self) -> Parser_ret<Code> {         
             let mut ret =  Vec::new();
             while !self.check(&LTOK::EOF){
@@ -42,6 +80,18 @@ pub mod PARSER {
 
 
         /* ******************************** HELPER ********************************  */
+
+        ///  Parser Helper function
+        /// Returns the next token in the token stream and progresses forward while consuming the next token
+        ///
+        /// # Returns
+        /// LTOK -> Moves forward in token stream and returns the next token   
+        /// 
+        /// # Example 
+        /// ```
+        /// parser.next();
+        /// ```   
+        
         fn next(&mut self) -> LTOK{
             if self.input.is_empty() || self.idx == self.input.len() {
                 return LTOK::EOF;
@@ -51,14 +101,54 @@ pub mod PARSER {
             tok
         }
 
-
+        ///  Parser Helper function
+        /// Returns the next token in the token stream without progressing forward
+        ///
+        /// # Returns
+        /// LTOK -> Returns the next token without progressing onwards 
+        /// 
+        /// # Example 
+        /// ```
+        /// parser.peek();
+        /// ```   
+        
         fn peek(&self) -> &LTOK{
             if self.input.is_empty() || self.idx == self.input.len() {
                 return &LTOK::EOF;
             }
             self.input.get(self.idx).unwrap_or(&LTOK::EOF)}
 
+        ///  Parser Helper function
+        /// Checks if the provided token matches with the next token int he token stream
+        /// 
+        /// # Arguments
+        /// e : &LTOK -> The refernce to the token whom we have to compare next token in token stream with
+        /// 
+        /// # Returns
+        /// bool ->  The restult of checking next token is similar to the argument token sent to the function
+        /// # Example 
+        /// ```
+        /// parser.check(&LTOK::LSHIFT);
+        /// ```   
+
         fn check(&mut self,e: &LTOK) -> bool{std::mem::discriminant(self.peek()) == std::mem::discriminant(e)}
+
+        ///  Parser Helper function
+        /// Checks if  the next argument in the token stream matches any of the tokens in the provided token set
+        ///
+        /// # Arguments
+        /// token : &[LTOK] -> An array of tokens to check the next elem in token stream with used for checking if a next token belongs in the provided set of tokens
+        /// 
+        /// # Warning
+        ///  Moves to the next token in token stream o mtch with any of the arguments
+        /// 
+        /// # Returns
+        /// bool -> True/False based on the match
+        /// 
+        /// # Example 
+        /// ```
+        /// parser.match_token(&[LTOK::ADD,LTOK::SUB,LTOK::MUL,LTOK::DIV]);
+        /// ```   
 
         fn match_token(&mut self,token:&[LTOK]) -> bool{
             for i in token{
@@ -69,6 +159,23 @@ pub mod PARSER {
             }
             false
         }
+
+        ///  Parser Helper function
+        /// Consumes the nnext token if it matches the token provided
+        /// 
+        /// # Arguments
+        /// token : &LTOK -> the token to be matched
+        /// 
+        /// # Warning
+        ///  Moves to the next token in token stream if match argument essentially consuming the prev token in token stream
+        /// 
+        /// # Returns
+        /// Parser_ret<LTOK> -> Returns a Parser result object containing the next token
+        /// 
+        /// # Example 
+        /// ```
+        /// let result = parser.consume(&LTOK::AMP)?;
+        /// ```   
 
         fn consume(&mut self,e: &LTOK) -> Parser_ret<LTOK>{
             if self.check(e) {
@@ -81,6 +188,7 @@ pub mod PARSER {
 
         
         /* ******************************** FUNCTIONS ********************************  */
+        
         fn eval_declare(&mut self) -> Parser_ret<Declare>{
             match self.peek(){
             LTOK::FN => self.eval_fxn(),
