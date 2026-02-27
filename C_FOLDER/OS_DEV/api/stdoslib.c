@@ -198,8 +198,8 @@ v->l = 0;
 v->cap = 2;
 v->type = sz * 8;
 v->append = v_append;
-v->pop = v_pop;
-v->iterator = iterator;
+v->pop = V_pop;
+v->iterator = Iterator_init;
 v->data = (void **)alloc(sizeof(void *) * v->cap);
 if (!v->data) {dealloc(v);return (Vector*)0;}
 v->data[v->l++] = data;
@@ -217,12 +217,12 @@ v->data[v->l++] = data;
 }
 }
 
-public void v_pop(struct s_vector * v){
+public void V_pop(struct s_vector * v){
 v->l = (v->l)?--v->l:v->l;
 v->data[v->l]= NULL;
 }
 
-Iterator * iterator(struct s_vector* v){
+Iterator * Iterator_init(struct s_vector* v){
 Iterator * iter = (Iterator *)alloc(sizeof(Iterator));
 if (!iter) return (Iterator*)0;
 iter->i = 0;
@@ -382,7 +382,7 @@ public i8* fmttime(Time * ts){
 if (!ts) ts = curr_time();
 i8* buff = (i8*)alloc(50);
 if (!buff) return (i8*)0;
-snprintf(buff,49,"%s, %.02hu:%.02hu:%.02hu , %.02hu %s,%.04hu",(ts->weekday == 0)?"Monday":(ts->weekday ==1)?"Tuesday":(ts->weekday == 2)?"Wednesday":(ts->weekday == 3)?"Thursday":(ts->weekday == 4)?"Friday":(ts->weekday == 5)?"Saturday":(ts->weekday == 6)?"Sunday":"INVALID",ts->hours,ts->minutes,ts->seconds,ts->date_of_month,(ts->month == 1)?"January":(ts->month == 2)?"February":(ts->month == 3)?"March":(ts->month == 4)?"April":(ts->month == 5)?"May":(ts->month == 6)?"June":(ts->month == 7)?"July":(ts->month == 8)?"August":(ts->month == 9)?"September":(ts->month == 10)?"October":(ts->month == 11)?"November":(ts->month == 12)?"December":"INVALID",ts->years);
+snprintf((char *)buff,49,"%s, %.02hu:%.02hu:%.02hu , %.02hu %s,%.04hu",(ts->weekday == 0)?"Monday":(ts->weekday ==1)?"Tuesday":(ts->weekday == 2)?"Wednesday":(ts->weekday == 3)?"Thursday":(ts->weekday == 4)?"Friday":(ts->weekday == 5)?"Saturday":(ts->weekday == 6)?"Sunday":"INVALID",ts->hours,ts->minutes,ts->seconds,ts->date_of_month,(ts->month == 1)?"January":(ts->month == 2)?"February":(ts->month == 3)?"March":(ts->month == 4)?"April":(ts->month == 5)?"May":(ts->month == 6)?"June":(ts->month == 7)?"July":(ts->month == 8)?"August":(ts->month == 9)?"September":(ts->month == 10)?"October":(ts->month == 11)?"November":(ts->month == 12)?"December":"INVALID",ts->years);
 return buff;
 }
 
@@ -559,6 +559,7 @@ if (rem > 9) ret[1] = 'A' + (rem-10);
 else ret[1] = '0' + rem;
 x /= 16;
 }
+return ret;
 }
 
 
@@ -662,3 +663,74 @@ if (!ret) return (i8*)0;
 for (i32 i = 0;i < n;i++) ret[i] = flip_byte(s[i]);
 return ret;
 }
+
+
+public i8* find_chr(char *s,char c){
+for (i8* p = (i8 *)s; p ;p++){
+    if (*p == c){return p;}
+}
+return 0;
+}
+public i8* find_chrr(char *s,char c){
+for (int i = len(s) - 1;i >= 0 ; i--){
+    if (s[i] == c) return (i8 *)s + i;
+}
+return 0;
+}
+
+
+public void freeall(void * a,...){
+va_list args;
+va_start(args,a);
+void * ptr = a;
+while (ptr) {
+free(ptr);
+ptr = va_arg(args, void *);
+}
+va_end(args);
+}
+
+
+public boolean is_alphanumeric(char * str) {
+for (int i =0 ; str[i] ; i ++) {
+if ((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'a' && str[i] <= 'z') || (str[i] >= '0' && str[i] <= '9') || str[i] == '.' || str[i] == '_' || str[i] == '-' || str[i] == ';' || str[i] == ':' || str[i] == '/' || str[i] == '\\' || str[i] == '\'' || str[i] == '\"' || str[i] == '(' || str[i] == ')' || str[i] == '[' || str[i] == ']' || str[i] == '<' || str[i] == '>') continue;
+else return false;
+}
+return true;
+}
+
+public boolean is_numeric(char * str) {
+int cdot = 2;
+for (int i =0 ; str[i] ; i ++) {
+if (str[i] == '.') cdot--;
+if (((str[i] >= '0' && str[i] <= '9') || str[i] == '.') && cdot) continue;
+else return false;
+}
+return true;
+}
+
+public boolean is_alphabetic(char * str) {
+for (int i =0 ; str[i] ; i ++) {
+if ((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'a' && str[i] <= 'z')) continue;
+else return false;
+}
+return true;
+}
+
+
+public Type assert_type(char * str) {
+if (len(str) == 1 || str[0] == '\'') return t_char;
+if (is_numeric(str)){
+    if (!freq(str, '.')) return t_int;
+    else return t_float;
+}   
+if (strcomp(str, "true") == 0 || strcomp(str, "True") == 0 || strcomp(str, "false") == 0 || strcomp(str, "False") == 0) return t_bool;
+return t_charptr;
+}
+
+public void* clone(void * struct_,int sz){
+void * p = malloc(sz);
+memcopy(p, struct_, sz);
+return p;
+}
+
