@@ -133,7 +133,7 @@ pub mod PARSER {
 
         fn check(&mut self,e: &LTOK) -> bool{std::mem::discriminant(self.peek()) == std::mem::discriminant(e)}
 
-        ///  Parser Helper function
+        /// Parser Helper function
         /// Checks if  the next argument in the token stream matches any of the tokens in the provided token set
         ///
         /// # Arguments
@@ -160,8 +160,8 @@ pub mod PARSER {
             false
         }
 
-        ///  Parser Helper function
-        /// Consumes the nnext token if it matches the token provided
+        /// Parser Helper function
+        /// Consumes the next token if it matches the token provided
         /// 
         /// # Arguments
         /// token : &LTOK -> the token to be matched
@@ -188,7 +188,14 @@ pub mod PARSER {
 
         
         /* ******************************** FUNCTIONS ********************************  */
-        
+
+        /// Parser Helper function
+        /// Parses any function declarations ato build a syn=mbol table to be used latter for by semantic analyser
+        ///  
+        /// # Returns
+        /// Parser_ret<Declare> -> Returns a Parser result object containing Declaration enum;
+        /// 
+     
         fn eval_declare(&mut self) -> Parser_ret<Declare>{
             match self.peek(){
             LTOK::FN => self.eval_fxn(),
@@ -196,6 +203,13 @@ pub mod PARSER {
             }
 
         }         
+
+        /// Parser Helper function
+        /// Evaluates a function definition and retuns the declaration
+        ///  
+        /// # Returns
+        /// Parser_ret<Declare> -> Returns a Parser result object containing Declaration enum;
+        /// 
 
         fn eval_fxn(&mut self) -> Parser_ret<Declare>{
         self.consume(&LTOK::FN)?;
@@ -224,6 +238,13 @@ pub mod PARSER {
         return Ok(Declare::Function { name:name, rtype: rtype, args: param, body: body });
         }
 
+        /// Parser Helper function
+        /// Evaluates the paramaters and their argument types for a function 
+        ///  
+        /// # Returns
+        /// Parser_ret<Vec<(String,Type)>> -> Returns a Parser result object containing a vector of String,Type tuples to be used in the semantic anlayser to analyse the declaration type
+        /// 
+
         fn eval_params(&mut self) -> Parser_ret<Vec<(String,Type)>>{
         let mut ret:Vec<(String,Type)> = Vec::new();
         if !self.check(&LTOK::RPAREN) {
@@ -240,10 +261,18 @@ pub mod PARSER {
         }
         Ok(ret)
         }
+        
         /* ******************************** FUNCTIONS ********************************  */
 
 
         /* ******************************** LET & CONST ********************************  */
+
+        /// Parser Helper function
+        /// Evaluates a let token 
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::Let on success
+        /// 
 
         fn eval_let(&mut self) -> Parser_ret<Statmnt> {
         self.consume(&LTOK::LET)?;
@@ -264,6 +293,13 @@ pub mod PARSER {
         self.consume(&LTOK::SEMICOLON)?;
         Ok(Statmnt::Let { name, mutable, type_annot:annot, value: val })
         }
+
+        /// Parser Helper function
+        /// Evaluates a consr token 
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::Let with the mutabke flag set to false as default on success
+        /// 
 
         fn eval_const(&mut self) -> Parser_ret<Statmnt> {
             self.consume(&LTOK::CONST)?;
@@ -286,6 +322,13 @@ pub mod PARSER {
         /* ******************************** LET & CONST ********************************  */
 
         /* ******************************** IF-ELSE ********************************  */
+
+        /// Parser Helper function
+        /// Evaluates a if-else tree/branch
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::If on success containing the populated condidtion if blocka nd thde rest of the code as the else block on success
+        /// 
 
         fn eval_if_else(&mut self) -> Parser_ret<Statmnt>{
             self.consume(&LTOK::IF)?;
@@ -318,6 +361,13 @@ pub mod PARSER {
 
         /* ******************************** FOR-WHILE-LOOP ********************************  */
 
+        /// Parser Helper function
+        /// Evaluates the for loop
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::For on success containing the populated variable, loop body,Upper bound and lower bund for the range on which the variable is supposed ot iterate over on success
+        /// 
+
         fn eval_for(&mut self) -> Parser_ret<Statmnt>{
             self.consume(&LTOK::FOR)?;
             let var_name = match self.next() {
@@ -334,6 +384,13 @@ pub mod PARSER {
             Ok(Statmnt::For { var_name, lb, rb, body })
         }
 
+        /// Parser Helper function
+        /// Evaluates the while loop
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::While success containing the populated body and condition on success 
+        /// 
+
         fn eval_while(&mut self) -> Parser_ret<Statmnt> {
             self.consume(&LTOK::WHILE)?;
             let cond = self.eval_expr()?;
@@ -342,6 +399,13 @@ pub mod PARSER {
             self.consume(&LTOK::RBRACE)?;
             Ok(Statmnt::While { cond, body })
         }
+
+        /// Parser Helper function
+        /// Evaluates loop
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::Loop success containing the populated body on success 
+        /// 
 
         fn eval_loop(&mut self) -> Parser_ret<Statmnt>{
         self.consume(&LTOK::LOOP)?;
@@ -357,7 +421,14 @@ pub mod PARSER {
 
 
         /* ******************************** HELPER ********************************  */
-        
+
+        /// Parser Helper function
+        /// Evaluates the Type token in the token stream
+        ///  
+        /// # Returns
+        /// Parser_ret<Type> -> Returns the parser result which hold the Type for LTOK::XXX_TYPE on success
+        /// 
+
         fn eval_type(&mut self) -> Parser_ret<Type>{
             match self.next(){
                 LTOK::INT_TYPE => Ok(Type::INT),
@@ -368,6 +439,13 @@ pub mod PARSER {
             }
         }
 
+        /// Parser Helper function
+        /// Evaluates the return token in the token stream
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> -> Returns the parser result hold the Statmnt::return on success
+        /// 
+    
         fn eval_return(&mut self) -> Parser_ret<Statmnt> {
             self.consume(&LTOK::RETURN)?;
             let val = match self.next() {
@@ -378,6 +456,14 @@ pub mod PARSER {
             Ok(Statmnt::Return(val))
         }
 
+        /// Parser Helper function
+        /// Evaluates the return token in the token stream
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> -> Returns the parser result hold the Statmnt::return on success
+        /// 
+        
+        #[deprecated]
         fn eval_tuple_types(&mut self) -> Parser_ret<Vec<Type>>{
             let mut ret = Vec::new();
             while !self.check(&LTOK::RPAREN){
@@ -395,46 +481,60 @@ pub mod PARSER {
     
     /* ******************************** BLOCKS & STATEMENTS ********************************  */
 
-        fn eval_statmnt(&mut self) -> Parser_ret<Statmnt>{
-            match self.peek() {
-                LTOK::LET => {self.eval_let()},
-                LTOK::CONST => {self.eval_const()},
-                LTOK::IF  => {self.eval_if_else()},
-                LTOK::WHILE => {self.eval_while()},
-                LTOK::FOR => {self.eval_for()},
-                LTOK::LOOP => {self.eval_loop()},
-                
-                LTOK::BREAK => {
+    /// Parser Helper function
+    /// Evaluates any token matching statmnt type  
+    ///  
+    /// # Returns
+    /// Parser_ret<Statmnt> -> Returns the parser result hold the Statmnt::xxx on success
+    /// 
+
+    fn eval_statmnt(&mut self) -> Parser_ret<Statmnt>{
+        match self.peek() {
+            LTOK::LET => {self.eval_let()},
+            LTOK::CONST => {self.eval_const()},
+            LTOK::IF  => {self.eval_if_else()},
+            LTOK::WHILE => {self.eval_while()},
+            LTOK::FOR => {self.eval_for()},
+            LTOK::LOOP => {self.eval_loop()},
+            
+            LTOK::BREAK => {
+            self.next();
+            self.consume(&LTOK::SEMICOLON)?;
+            Ok(Statmnt::Break)
+            },
+
+            LTOK::CONTINUE =>{
+            self.next();
+            self.consume(&LTOK::SEMICOLON)?;
+            Ok(Statmnt::Continue)
+            },
+
+            LTOK::RETURN => self.eval_return(),
+            LTOK::LBRACE => {
                 self.next();
-                self.consume(&LTOK::SEMICOLON)?;
-                Ok(Statmnt::Break)
-                },
+                let blk = self.eval_block()?;
+                self.consume(&LTOK::RBRACE)?;
+                Ok(Statmnt::Block(blk))
+            },
+            _ => self.eval_assign(),
 
-                LTOK::CONTINUE =>{
-                self.next();
-                self.consume(&LTOK::SEMICOLON)?;
-                Ok(Statmnt::Continue)
-                },
+        }  
+    }
 
-                LTOK::RETURN => self.eval_return(),
-                LTOK::LBRACE => {
-                    self.next();
-                    let blk = self.eval_block()?;
-                    self.consume(&LTOK::RBRACE)?;
-                    Ok(Statmnt::Block(blk))
-                },
-                _ => self.eval_assign(),
+    /// Parser Helper function
+    /// Evaluates a block of code
+    ///  
+    /// # Returns
+    /// Parser_ret<Vec<Statmnt>> -> Returns the parser result hold a vector of sttamnts
+    /// 
 
-            }  
+    fn eval_block(&mut self) -> Parser_ret<Vec<Statmnt>>{
+        let mut statmnts:Vec<Statmnt> = Vec::new();
+        while !self.check(&LTOK::RBRACE) && !self.check(&LTOK::EOF){
+            statmnts.push(self.eval_statmnt()?);
         }
-
-        fn eval_block(&mut self) -> Parser_ret<Vec<Statmnt>>{
-            let mut statmnts:Vec<Statmnt> = Vec::new();
-            while !self.check(&LTOK::RBRACE) && !self.check(&LTOK::EOF){
-                statmnts.push(self.eval_statmnt()?);
-            }
-            Ok(statmnts)
-        }
+        Ok(statmnts)
+    }
 
     /* ******************************** BLOCKS & STATEMENTS ********************************  */
 

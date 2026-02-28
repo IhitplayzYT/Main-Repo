@@ -15,6 +15,21 @@ pub mod Analyser {
     use std::collections::HashMap;
     use crate::{Ast::{self, AST::*},Errors::Err::{Parser_ret, Semantic_Ret, Semantic_err}};
 
+    /// Semanilizer structure[MAIN API]
+    /// 
+    /// # Traits
+    /// - Derived<br/>
+    ///     - Debug
+    ///     - Clone
+    /// # Example
+    /// ```
+    /// Semantilizer{
+    ///     symbol_table: HashMap<String,Type>,
+    ///     function_map: HashMap<String,(Vec<Type>,Option<Type>)>,
+    ///     in_loop : usize,                                       
+    /// }
+    /// ```    
+    
     #[derive(Debug,Clone)]
     pub struct Semantilizer {
         pub symbol_table: HashMap<String,Type>,
@@ -24,11 +39,28 @@ pub mod Analyser {
 
 
     impl Semantilizer{
+
+        /// Semanilizer Constructor
+        /// 
+        /// # Example
+        /// ```
+        /// Semantilizer::new();
+        /// ```    
+
         pub fn new() -> Self{
             Self{symbol_table:HashMap::new(),
                 function_map: HashMap::new(),
                 in_loop: 0,
             }}
+
+        /// Semanilizer main call 
+        /// 
+        /// # Return
+        ///  Returns a Semnatic ret with useless return 
+        /// # Example
+        /// ```
+        /// semantic_analyse.analyse()?;
+        /// ```    
 
         pub fn analyse(&mut self,code:&Code) -> Semantic_Ret<()>{
             for decl in &code.Program{
@@ -41,135 +73,173 @@ pub mod Analyser {
             Ok(())
         }
 
+        /// Semanilizer function to save any function declarations
+        /// 
+        /// # Return
+        ///  Returns a Semnatic ret with useless return 
+        /// # Example
+        /// ```
+        /// semantic_analyse.save_declares()?;
+        /// ```    
 
-       pub fn save_declares(&mut self,decl: &Declare) -> Semantic_Ret<()>{
-            match decl {
-                Declare::Function { name, rtype, args, ..} => {
-                    let param_types: Vec<Type> = args.iter().map(|(_,t)| {t.clone()}).collect();
-                    self.function_map.insert(name.clone(),(param_types,rtype.clone()));
-                }
-            }
-        Ok(())
-       }
-
-
-       pub fn analyze_decl(&mut self,decl: &Declare) -> Semantic_Ret<()>{
-            match decl {
-                Declare::Function {args, body, ..} => {
-                    self.symbol_table.clear();
-                    for  (name,var_type) in args {
-                        self.symbol_table.insert(name.clone(),var_type.clone());
+        pub fn save_declares(&mut self,decl: &Declare) -> Semantic_Ret<()>{
+                match decl {
+                    Declare::Function { name, rtype, args, ..} => {
+                        let param_types: Vec<Type> = args.iter().map(|(_,t)| {t.clone()}).collect();
+                        self.function_map.insert(name.clone(),(param_types,rtype.clone()));
                     }
-                    for stmt in body {
-                        self.analyze_stmt(stmt)?;
-
-                    }
-
                 }
-            }
+            Ok(())
+        }
 
-        Ok(())
-       }
+        /// Semanilizer function to check validity of scope declarations
+        /// 
+        /// # Return
+        ///  Returns a Semnatic ret with useless return 
+        /// # Example
+        /// ```
+        /// semantic_analyse.analyze_decl()?;
+        /// ```    
 
+        pub fn analyze_decl(&mut self,decl: &Declare) -> Semantic_Ret<()>{
+                match decl {
+                    Declare::Function {args, body, ..} => {
+                        self.symbol_table.clear();
+                        for  (name,var_type) in args {
+                            self.symbol_table.insert(name.clone(),var_type.clone());
+                        }
+                        for stmt in body {
+                            self.analyze_stmt(stmt)?;
 
-       pub fn analyze_stmt(&mut self,stmt: &Statmnt) -> Semantic_Ret<()> {
-            match stmt {
-                Statmnt::Let { name, type_annot, value,.. } => {
-                    let rhs_type = self.eval_type(value)?;
-                    if let Some(t) = type_annot {
-                        if !self.is_compatible(t,&rhs_type) {
-                            return Err(Semantic_err::TypeMismatch { expected: t.clone(), got: rhs_type });
                         }
 
                     }
-                    if self.symbol_table.contains_key(name) {
-                        return Err(Semantic_err::Reassignment(name.clone()))
-                    }
-                    self.symbol_table.insert(name.clone(), rhs_type);
-                },
-                Statmnt::Assignment { name, val,.. } => {
-                    if !self.symbol_table.contains_key(name){
-                        return Err(Semantic_err::UndefinedVariable(name.clone()));
-                    }
-                    let var_type = self.symbol_table.get(name).unwrap();
-                    let val_type = self.eval_type(val)?;
-
-                    if !self.is_compatible(var_type,&val_type){
-                        return Err(Semantic_err::TypeMismatch { expected: var_type.clone(), got: val_type });                        
-                    }
                 }
-                Statmnt::If { cond, then_branch, else_branch } => {
-                    let cond_type = self.eval_type(cond)?;
-                    if !self.is_compatible(&Type::BOOL, &cond_type){
-                        return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: cond_type });
-                    }
-
-                    for i in then_branch{
-                        self.analyze_stmt(i)?;
-                    }
-                    if let Some(other) = else_branch {
-                        for i in other{
-                            self.analyze_stmt(i)?;
-                        }
-
-                    }
-
-                },
-                Statmnt::While { cond, body } => {
-                    let cond_type = self.eval_type(cond)?;
-                    if !self.is_compatible(&Type::BOOL, &cond_type){
-                        return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: cond_type });
-                    }
-                    self.in_loop += 1;
-                    for i in body{
-                        self.analyze_stmt(i)?;
-                    }
-                    self.in_loop -= 1;
-                },
-
-                Statmnt::For { var_name, lb, rb, body } => {
-                    self.eval_type(lb)?;
-                    self.eval_type(rb)?;
-                    self.symbol_table.insert(var_name.clone(), Type::INT);
-                    self.in_loop += 1;
-                    for i in body{
-                        self.analyze_stmt(i)?;
-                    }
-                    self.in_loop -= 1;
-                },
-                Statmnt::Loop { body } => {
-                    for i in body{
-                        self.analyze_stmt(i)?;
-                    }
-                },
-                Statmnt::Break => {
-                    if self.in_loop == 0 {
-                        return Err(Semantic_err::Break_Continue_location);
-                    }
-                },
-                Statmnt::Continue => {
-                    if self.in_loop == 0 {
-                        return Err(Semantic_err::Break_Continue_location);
-                    }
-                }
-                Statmnt::Return(x) => {
-                    if let Some(val)  = x {
-                        self.eval_type(val)?;
-                    }
-                },
-                Statmnt::Expr(x) => {
-                    self.eval_type(x)?;
-                },
-                Statmnt::Block(blk) => {
-                    for i in blk {
-                        self.analyze_stmt(i)?;
-                    }
-                }
-
-            }
 
             Ok(())
-       }
+        }
+
+        /// Semanilizer function to validate proper statments
+        /// 
+        /// # Return
+        ///  Returns a Semnatic ret with useless return 
+        /// # Example
+        /// ```
+        /// semantic_analyse.analyze_stmt()?;
+        /// ```    
+
+        pub fn analyze_stmt(&mut self,stmt: &Statmnt) -> Semantic_Ret<()> {
+                match stmt {
+                    Statmnt::Let { name, type_annot, value,.. } => {
+                        let rhs_type = self.eval_type(value)?;
+                        if let Some(t) = type_annot {
+                            if !self.is_compatible(t,&rhs_type) {
+                                return Err(Semantic_err::TypeMismatch { expected: t.clone(), got: rhs_type });
+                            }
+
+                        }
+                        if self.symbol_table.contains_key(name) {
+                            return Err(Semantic_err::Reassignment(name.clone()))
+                        }
+                        self.symbol_table.insert(name.clone(), rhs_type);
+                    },
+                    Statmnt::Assignment { name, val,.. } => {
+                        if !self.symbol_table.contains_key(name){
+                            return Err(Semantic_err::UndefinedVariable(name.clone()));
+                        }
+                        let var_type = self.symbol_table.get(name).unwrap();
+                        let val_type = self.eval_type(val)?;
+
+                        if !self.is_compatible(var_type,&val_type){
+                            return Err(Semantic_err::TypeMismatch { expected: var_type.clone(), got: val_type });                        
+                        }
+                    }
+                    Statmnt::If { cond, then_branch, else_branch } => {
+                        let cond_type = self.eval_type(cond)?;
+                        if !self.is_compatible(&Type::BOOL, &cond_type){
+                            return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: cond_type });
+                        }
+
+                        for i in then_branch{
+                            self.analyze_stmt(i)?;
+                        }
+                        if let Some(other) = else_branch {
+                            for i in other{
+                                self.analyze_stmt(i)?;
+                            }
+
+                        }
+
+                    },
+                    Statmnt::While { cond, body } => {
+                        let cond_type = self.eval_type(cond)?;
+                        if !self.is_compatible(&Type::BOOL, &cond_type){
+                            return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: cond_type });
+                        }
+                        self.in_loop += 1;
+                        for i in body{
+                            self.analyze_stmt(i)?;
+                        }
+                        self.in_loop -= 1;
+                    },
+
+                    Statmnt::For { var_name, lb, rb, body } => {
+                        self.eval_type(lb)?;
+                        self.eval_type(rb)?;
+                        self.symbol_table.insert(var_name.clone(), Type::INT);
+                        self.in_loop += 1;
+                        for i in body{
+                            self.analyze_stmt(i)?;
+                        }
+                        self.in_loop -= 1;
+                    },
+                    Statmnt::Loop { body } => {
+                        for i in body{
+                            self.analyze_stmt(i)?;
+                        }
+                    },
+                    Statmnt::Break => {
+                        if self.in_loop == 0 {
+                            return Err(Semantic_err::Break_Continue_location);
+                        }
+                    },
+                    Statmnt::Continue => {
+                        if self.in_loop == 0 {
+                            return Err(Semantic_err::Break_Continue_location);
+                        }
+                    }
+                    Statmnt::Return(x) => {
+                        if let Some(val)  = x {
+                            self.eval_type(val)?;
+                        }
+                    },
+                    Statmnt::Expr(x) => {
+                        self.eval_type(x)?;
+                    },
+                    Statmnt::Block(blk) => {
+                        for i in blk {
+                            self.analyze_stmt(i)?;
+                        }
+                    }
+
+                }
+
+                Ok(())
+        }
+
+       /// Semanilizer function to get the expression type 
+       /// 
+       /// # Arguments
+       /// expr : &Expr -> Takes the refernce to the expression whose type to be evaluated 
+       /// 
+       /// # Return
+       ///  Returns a Semnatic ret containing the Type on success
+       /// 
+       /// # Example
+       /// ```
+       /// semantic_analyse.eval_type(&Expr::Bool(true))?;
+       /// ```    
+    
       pub fn eval_type(&self, expr: &Expr) -> Semantic_Ret<Type>{
         match expr {
             Expr::Bool(_)  => Ok(Type::BOOL),
@@ -228,6 +298,19 @@ pub mod Analyser {
 
         }
 
+        /// Semanilizer function to check equality of the two Types
+        /// 
+        /// # Arguments
+        /// t1 : &Expr -> Takes the refernce to the expression 1
+        /// t2 : &Expr -> Takes the refernce to the expression 2
+        /// 
+        /// # Return
+        ///  Returns a True/False based on equality of the two types
+        /// 
+        /// # Example
+        /// ```
+        /// semantic_analyse.is_compatible(&Expr::Bool(true),&Expr::Bool(false))?;S
+        /// ```    
 
        pub fn is_compatible(&self,t1: &Type,t2: &Type) -> bool{
             t1 == t2
