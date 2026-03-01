@@ -15,30 +15,53 @@ pub mod Tokeniser {
     use crate::Lexer_Tok::Lex_Tok::LTOK;
     use once_cell::sync::Lazy;
     use std::{collections::HashMap, fs, process::exit};
+        
+    /// The list of available keywords
+    /// 
+    /// 
 
     pub static ALLOWED_KEYWORDS: Lazy<HashMap<&'static str, LTOK>> = Lazy::new(|| {
         HashMap::from([
             ("let", LTOK::LET),
             ("mut", LTOK::MUT),
             ("const", LTOK::CONST),
+            ("var", LTOK::LET),
             ("if", LTOK::IF),
             ("else", LTOK::ELSE),
             ("while", LTOK::WHILE),
             ("Loop", LTOK::LOOP),
+            ("loop", LTOK::LOOP),
             ("for", LTOK::FOR),
             ("fn", LTOK::FN),
+            ("function", LTOK::FN),
+            ("func", LTOK::FN),
             ("break", LTOK::BREAK),
             ("continue", LTOK::CONTINUE),
             ("return", LTOK::RETURN),
             ("bool",LTOK::BOOL_TYPE),
+            ("boolean",LTOK::BOOL_TYPE),
+            ("Bool",LTOK::BOOL_TYPE),
+            ("Boolean",LTOK::BOOL_TYPE),
             ("s8", LTOK::INT_TYPE),
             ("s16", LTOK::INT_TYPE),
             ("s32", LTOK::INT_TYPE),
             ("s64", LTOK::INT_TYPE),
+            ("u8", LTOK::INT_TYPE),
+            ("u16", LTOK::INT_TYPE),
+            ("u32", LTOK::INT_TYPE),
+            ("u64", LTOK::INT_TYPE),
             ("i8", LTOK::INT_TYPE),
             ("i16", LTOK::INT_TYPE),
             ("i32", LTOK::INT_TYPE),
             ("i64", LTOK::INT_TYPE),
+            ("uint8", LTOK::INT_TYPE),
+            ("uint16", LTOK::INT_TYPE),
+            ("uint32", LTOK::INT_TYPE),
+            ("uint64", LTOK::INT_TYPE),
+            ("int8", LTOK::INT_TYPE),
+            ("int16", LTOK::INT_TYPE),
+            ("int32", LTOK::INT_TYPE),
+            ("int64", LTOK::INT_TYPE),
             ("int", LTOK::INT_TYPE),
             ("short", LTOK::INT_TYPE),
             ("char", LTOK::INT_TYPE),
@@ -47,12 +70,37 @@ pub mod Tokeniser {
             ("f64", LTOK::FLOAT_TYPE),
             ("float", LTOK::FLOAT_TYPE),
             ("double", LTOK::FLOAT_TYPE),
+            ("float32", LTOK::FLOAT_TYPE),
+            ("float64", LTOK::FLOAT_TYPE),
+            ("Int", LTOK::INT_TYPE),
+            ("Short", LTOK::INT_TYPE),
+            ("Char", LTOK::INT_TYPE),
+            ("Long", LTOK::INT_TYPE),
+            ("F32", LTOK::FLOAT_TYPE),
+            ("F64", LTOK::FLOAT_TYPE),
+            ("Float", LTOK::FLOAT_TYPE),
+            ("Double", LTOK::FLOAT_TYPE),
             ("string",LTOK::STRING_TYPE),
             ("str",LTOK::STRING_TYPE),
             ("String",LTOK::STRING_TYPE),
             ("in",LTOK::IN)
         ])
     });
+
+    /// Lexer Struct
+    /// 
+    /// # Traits
+    /// - Derived<br/>
+    ///     - Debug
+    ///     - Clone
+    /// # Example
+    /// ```
+    /// Lexer{
+    /// text: String,
+    /// Lexer_Output: Vec<LTOK>,
+    /// }
+    /// ```
+    /// 
     #[derive(Debug,Clone)]
     pub struct Lexer {
         pub text: String,
@@ -60,6 +108,16 @@ pub mod Tokeniser {
     }
 
     impl Lexer {
+    /// Lexer constructor 
+    /// 
+    /// Reads the code from the provided input file and initialises the struct
+    /// 
+    /// # Example
+    /// ```
+    /// Lexer::new("file.rs".to_string());
+    /// ```
+    /// 
+    
         pub fn new(v: String) -> Self {
             let file = fs::read_to_string(v).unwrap();
             let t = file.replace("..", ";");
@@ -69,6 +127,16 @@ pub mod Tokeniser {
             }
         }
 
+        /// Lexer debuf print 
+        /// 
+        /// Prints the lexer output as a simple vector 
+        /// 
+        /// # Example
+        /// ```
+        /// lexer.print_tok();
+        /// ```
+        /// 
+
         pub fn print_tok(&self){
             if !self.is_lexed() {
              println!("Use Tokeniser before printing!");      
@@ -76,9 +144,31 @@ pub mod Tokeniser {
             println!("{:?}",self.Lexer_Output);
         }
 
+        
+        /// Is Lexed boolean
+        /// 
+        /// Returns the True/False based on whether the lexer has lexed input or not
+        /// 
+        /// # Example
+        /// ```
+        /// lexer.is_lexed();
+        /// ```
+        /// 
+
         pub fn is_lexed(&self) -> bool {
             self.Lexer_Output.len() > 0
         }
+
+        
+        /// Lexer token resolver
+        /// 
+        /// Returns the Option<LTOK> for a  string token passed to it used as a helper function by the main API Tokenise
+        /// 
+        /// # Example
+        /// ```
+        /// let my_token:LTOK = lexer.resolve_ltok("let")?;
+        /// ```
+        /// 
 
         pub fn resolve_ltok(v: &str) -> Option<LTOK> {
             if v.is_empty() {
@@ -143,6 +233,19 @@ pub mod Tokeniser {
                 })
             }
         }
+
+        /// Lexer MAIN API
+        /// 
+        /// Responsible for tokenising the input in Lexer struct
+        /// 
+        /// # Return
+        /// bool -> True/False based on the result of tokenising the string
+        /// 
+        /// # Example
+        /// ```
+        /// lexer.Tokenise();
+        /// ```
+        /// 
 
         pub fn Tokenise(&mut self) -> bool {
             let x = self.text.clone();

@@ -92,7 +92,7 @@ pub mod PARSER {
         /// parser.next();
         /// ```   
         
-        fn next(&mut self) -> LTOK{
+        pub fn next(&mut self) -> LTOK{
             if self.input.is_empty() || self.idx == self.input.len() {
                 return LTOK::EOF;
             }
@@ -112,7 +112,7 @@ pub mod PARSER {
         /// parser.peek();
         /// ```   
         
-        fn peek(&self) -> &LTOK{
+        pub fn peek(&self) -> &LTOK{
             if self.input.is_empty() || self.idx == self.input.len() {
                 return &LTOK::EOF;
             }
@@ -131,7 +131,7 @@ pub mod PARSER {
         /// parser.check(&LTOK::LSHIFT);
         /// ```   
 
-        fn check(&mut self,e: &LTOK) -> bool{std::mem::discriminant(self.peek()) == std::mem::discriminant(e)}
+        pub fn check(&mut self,e: &LTOK) -> bool{std::mem::discriminant(self.peek()) == std::mem::discriminant(e)}
 
         /// Parser Helper function
         /// Checks if  the next argument in the token stream matches any of the tokens in the provided token set
@@ -150,7 +150,7 @@ pub mod PARSER {
         /// parser.match_token(&[LTOK::ADD,LTOK::SUB,LTOK::MUL,LTOK::DIV]);
         /// ```   
 
-        fn match_token(&mut self,token:&[LTOK]) -> bool{
+        pub fn match_token(&mut self,token:&[LTOK]) -> bool{
             for i in token{
                 if self.check(i){
                     self.next();
@@ -177,7 +177,7 @@ pub mod PARSER {
         /// let result = parser.consume(&LTOK::AMP)?;
         /// ```   
 
-        fn consume(&mut self,e: &LTOK) -> Parser_ret<LTOK>{
+        pub fn consume(&mut self,e: &LTOK) -> Parser_ret<LTOK>{
             if self.check(e) {
                 return Ok(self.next());
             }
@@ -540,6 +540,17 @@ pub mod PARSER {
 
     /* ******************************** EXPRESSIONS ********************************  */
 
+    // TODO:FIXME: I have a bit of doubt as to correctness of the nested Option ??
+
+    /// Parser Helper function
+    /// # Priority 0: =, +=, -=, /=, *=, &=, %=, |=, ^=
+    /// Evaluates assignment/reassignment operations
+    /// 
+    ///  
+    /// # Returns
+    /// Parser_ret<Statmnt> -> If no error occurs returns the Statmnt::Expr or Statmnt::Assignment
+    ///  
+
     fn eval_assign(&mut self) -> Parser_ret<Statmnt> {
         let expr = self.eval_expr()?;
         if let Some(op) = self.match_assignment(){
@@ -555,10 +566,77 @@ pub mod PARSER {
         Ok(Statmnt::Expr(expr))
    }
 
+   /// Parser Helper function
+   /// Match function to determine which assignment
+   /// 
+   /// # Important 
+   /// This function is allows for equal precedeance of both operators 
+   /// 
+   /// # Returns
+   /// Option<BIN_OP> -> Returns the Some(assignment/shorthand operator) if match else None
+   /// 
+
+   fn match_assignment(&mut self) -> Option<Option<BIN_OP>>{
+   match self.peek(){
+       LTOK::ASSGN => {
+           self.next();
+           Some(None)
+       },
+       LTOK::S_PLUS => {
+           self.next();
+           Some(Some(BIN_OP::Add))
+       },
+       LTOK::S_MINUS => {
+           self.next();
+           Some(Some(BIN_OP::Sub))
+       },    
+       LTOK::S_MULT => {
+           self.next();
+           Some(Some(BIN_OP::Mul))
+       },    
+       LTOK::S_DIV => {
+           self.next();
+           Some(Some(BIN_OP::Div))
+       },
+       LTOK::S_MOD => {
+           self.next();
+           Some(Some(BIN_OP::Mod))
+       },
+       LTOK::S_AMP => {
+           self.next();
+           Some(Some(BIN_OP::Amp))
+       },    
+       LTOK::S_PIPE => {
+           self.next();
+           Some(Some(BIN_OP::Pipe))
+       },    
+       LTOK::S_CARET => {
+           self.next();
+           Some(Some(BIN_OP::Xor))
+       },
+       _ => None,
+   }
+   }
+
+
+   /// Parser Helper function
+   /// Used for pratt parsing the expressions
+   ///  
+   /// # Returns
+   /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+   ///  
 
     fn eval_expr(&mut self) -> Parser_ret<Expr>{
         return self.eval_logical_or();
     }
+
+    /// Parser Helper function
+    /// # Priority 1: ||
+    /// Evaluates the priority of logical OR
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
 
     fn eval_logical_or(&mut self) -> Parser_ret<Expr>{
         let mut left = self.eval_logical_and()?;
@@ -570,17 +648,86 @@ pub mod PARSER {
 
         Ok(left)
     }
-        
+
+    /// Parser Helper function
+    /// # Priority 2: &&
+    /// Evaluates the priority of logical AND
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+
     fn eval_logical_and(&mut self) -> Parser_ret<Expr>{
-        let mut left = self.eval_equality()?;
+        let mut left = self.eval_bit_or()?;
 
         while self.match_token(&[LTOK::ANDAND]){
-            let right = self.eval_equality()?;
+            let right = self.eval_bit_or()?;
             left = Expr::Binary_op{op:BIN_OP::And, left:Box::new(left), right:Box::new(right) };
         }
         Ok(left)
     }
 
+    /// Parser Helper function
+    /// # Priority 3: |
+    /// Evaluates the priority of bitwise OR
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+
+    fn eval_bit_or(&mut self) -> Parser_ret<Expr>{
+        let mut left = self.eval_bit_caret()?;
+
+        while self.match_token(&[LTOK::PIPE]){
+            let right = self.eval_bit_caret()?;
+            left = Expr::Binary_op{op:BIN_OP::Pipe, left:Box::new(left), right:Box::new(right) };
+        }
+        Ok(left)
+    }
+
+    /// Parser Helper function
+    /// # Priority 4: ^ 
+    /// Evaluates the priority of bitwise XOR
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+    
+    fn eval_bit_caret(&mut self) -> Parser_ret<Expr>{
+        let mut left = self.eval_bit_and()?;
+
+        while self.match_token(&[LTOK::CARET]){
+            let right = self.eval_bit_and()?;
+            left = Expr::Binary_op{op:BIN_OP::Xor, left:Box::new(left), right:Box::new(right) };
+        }
+        Ok(left)
+    }
+
+    /// Parser Helper function
+    /// # Priority 5: & 
+    /// Evaluates the priority of bitwise AND
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+    
+    fn eval_bit_and(&mut self) -> Parser_ret<Expr>{
+        let mut left = self.eval_equality()?;
+
+        while self.match_token(&[LTOK::AMP]){
+            let right = self.eval_equality()?;
+            left = Expr::Binary_op{op:BIN_OP::Amp, left:Box::new(left), right:Box::new(right) };
+        }
+        Ok(left)
+    } 
+
+    /// Parser Helper function
+    /// # Priority 6: ==, !==
+    /// Evaluates the priority of equality operators
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
 
     fn eval_equality(&mut self) -> Parser_ret<Expr>{
         let mut left = self.eval_comparator()?;
@@ -590,6 +737,16 @@ pub mod PARSER {
         }
         Ok(left)
     }
+
+    /// Parser Helper function
+    /// Match function to determine which operator == or !== 
+    /// 
+    /// # Important 
+    /// This function is allows for equal precedeance of both operators 
+    /// 
+    /// # Returns
+    /// Option<BIN_OP> -> Returns the Some(equality operator) if match else None
+    ///  
 
     fn match_eq_neq(&mut self) -> Option<BIN_OP>{
         match self.peek() {
@@ -603,14 +760,32 @@ pub mod PARSER {
         }
     }
 
+    /// Parser Helper function
+    /// # Priority 7: >, <, >=, <= 
+    /// Evaluates the priority of comparison operators
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+
     fn eval_comparator(&mut self) -> Parser_ret<Expr>{
-        let mut left = self.parse_term()?;
+        let mut left = self.eval_shift()?;
         while let Some(x) =self.match_comparison(){
-            let right = self.parse_term()?;
+            let right = self.eval_shift()?;
             left = Expr::Binary_op { op:x, left: Box::new(left), right:Box::new(right)}
         };
         Ok(left)
     }
+
+    /// Parser Helper function
+    /// Match function to determine which comparison <=, >=, <, > 
+    /// 
+    /// # Important 
+    /// This function is allows for equal precedeance of both operators 
+    /// 
+    /// # Returns
+    /// Option<BIN_OP> -> Returns the Some(comparison operator) if match else None
+    /// 
 
     fn match_comparison(&mut self) -> Option<BIN_OP>{
         match self.peek() {
@@ -622,47 +797,51 @@ pub mod PARSER {
         }
     }
 
-    fn match_assignment(&mut self) -> Option<Option<BIN_OP>>{
-    match self.peek(){
-        LTOK::ASSGN => {
-            self.next();
-            Some(None)
-        },
-        LTOK::S_PLUS => {
-            self.next();
-            Some(Some(BIN_OP::Add))
-        },
-        LTOK::S_MINUS => {
-            self.next();
-            Some(Some(BIN_OP::Sub))
-        },    
-        LTOK::S_MULT => {
-            self.next();
-            Some(Some(BIN_OP::Mul))
-        },    
-        LTOK::S_DIV => {
-            self.next();
-            Some(Some(BIN_OP::Div))
-        },
-        LTOK::S_MOD => {
-            self.next();
-            Some(Some(BIN_OP::Mod))
-        },
-        LTOK::S_AMP => {
-            self.next();
-            Some(Some(BIN_OP::Amp))
-        },    
-        LTOK::S_PIPE => {
-            self.next();
-            Some(Some(BIN_OP::Pipe))
-        },    
-        LTOK::S_CARET => {
-            self.next();
-            Some(Some(BIN_OP::Xor))
-        },
-        _ => None,
+    /// Parser Helper function
+    /// # Priority 8: <<, >>
+    /// Evaluates the priority of shift operators
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+    
+    fn eval_shift(&mut self) -> Parser_ret<Expr>{
+        let mut left = self.parse_term()?;
+        while let Some(x) = self.match_shift(){
+            let right = self.parse_term()?;
+            left = Expr::Binary_op { op: x, left: Box::new(left), right: Box::new(right)};
+        }
+        Ok(left)
     }
+
+    /// Parser Helper function
+    /// Match function to determine which shift << or >>
+    /// 
+    /// # Important 
+    /// This function is allows for equal precedeance of both operators 
+    /// 
+    /// # Returns
+    /// Option<BIN_OP> -> Returns the Some(Shift operator) if match else None
+    /// 
+
+    fn match_shift(&mut self) -> Option<BIN_OP>{
+        match self.peek(){
+            LTOK::LSHIFT => {self.next();Some(BIN_OP::Lshift)},
+            LTOK::RSHIFT => {self.next();Some(BIN_OP::Rshift)},
+            _ => {None}
+        }
+
     }
+
+    
+    /// Parser Helper function
+    /// # Priority 9: +, -
+    /// Evaluates the priority of signed/addition/subtraction operators
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+ 
 
     fn parse_term(&mut self) ->Parser_ret<Expr>{
         let mut left = self.parse_factor()?;
@@ -672,6 +851,16 @@ pub mod PARSER {
         }
         Ok(left)
     }
+
+    /// Parser Helper function
+    /// Match function to determine which sign + or -
+    /// 
+    /// # Important 
+    /// This function is allows for equal precedeance of both operators 
+    /// 
+    /// # Returns
+    /// Option<BIN_OP> -> Returns the Some(term operator) if match else None
+    /// 
 
     fn match_signedness(&mut self) -> Option<BIN_OP>{
         match self.peek()  {
