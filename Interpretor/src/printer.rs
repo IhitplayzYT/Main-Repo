@@ -13,12 +13,14 @@
 pub mod printer{
 use crate::{Ast::AST::*,Tokeniser::Tokeniser::Lexer,Lexer_Tok::Lex_Tok::LTOK,Parser::PARSER::Parser};
 
+// Trait with the print abstract method
 #[allow(dead_code)]
 pub trait Components{
 fn print(&self);
 }
 
 
+// Component Trait being satisfied for the Lexer
 impl Components for Lexer{
 fn print(&self){
 for i in &self.Lexer_Output{
@@ -94,6 +96,8 @@ _ => std::process::exit(-1),
 }
 }
 
+
+// Component Trait being satisfied for the Lexer
 impl Components for Parser{
 fn print(&self) {
 if let Some(ast) = &self.ast {
@@ -312,7 +316,8 @@ fn print_expression(expr: &Expr, indent: usize, extra_prefix: &str) {
         },
         Expr::Null => {
             println!("Null ");
-        }
+        },
+        _ => {}
 
     }
 

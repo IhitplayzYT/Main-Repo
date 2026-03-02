@@ -49,6 +49,7 @@ pub mod Lex_Tok {
         DIV,            // -> (/)
         MODULO,         // -> (%)
         STAR,           // -> (*)
+        POW,            // -> (**)
         ASSGN,          // -> (=)
         EQ,             // -> (==)
         LT_EQ,          // -> (<=)
@@ -64,6 +65,10 @@ pub mod Lex_Tok {
         S_AMP,          // -> (+=)
         S_PIPE,         // -> (+=)
         S_CARET,        // -> (+=)
+        S_LSHIFT,       // -> (<<=)
+        S_RSHIFT,       // -> (>>=)
+        INCR,           // -> (++)   /*  NOTE: 
+        DECR,           // -> (--)      Both of the operators simply evaluate to postfix */
         RSHIFT,         // -> (>>)
         LSHIFT,         // -> (<<)
         AMP,            // -> (&)

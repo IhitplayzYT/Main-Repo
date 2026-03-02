@@ -9,12 +9,24 @@
 //    Parser.rs    //
 // Contains the Parser and it's definition
 
-
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
 pub mod PARSER {
 
     use crate::{Ast::{AST::{Code,Type,Declare,Statmnt,Expr,BIN_OP,UN_OP}},Lexer_Tok::Lex_Tok::LTOK};
     use crate::Errors::Err::{ParserError,Parser_ret};
+
+    ///  Parser Struct 
+    /// 
+    /// # Derived
+    /// - Debug </br> 
+    /// - Clone </br> 
+    /// # Example 
+    /// ```
+    /// Parser{input: Vec<LTOK>,
+    /// idx: usize,
+    /// ast: Option<Code>
+    /// }
+    /// ```   
     #[derive(Debug,Clone)]
     pub struct Parser {
         pub input: Vec<LTOK>,
@@ -24,13 +36,38 @@ pub mod PARSER {
 
     impl Parser{
         /* ******************************** CONSTRUCTOR ********************************  */
+
+        ///  Parser constructor
+        ///
+        /// # Arguments
+        /// v : Vec<LTOK> ->  A token stream of Lexer tokens
+        /// 
+        /// # Returns
+        /// Parser object
+        /// 
+        /// # Example 
+        /// ```
+        /// Parser::new(vec![LTOK::ADD,LTOK::SUB]);
+        /// ```   
+
         pub fn new(v:Vec<LTOK>) -> Self{
             Self{input:v,idx:0,ast:None}
         }
         /* ******************************** CONSTRUCTOR ********************************  */
 
 
-        /* ******************************** MAIN ********************************  */
+        /* ******************************** MAIN API ********************************  */
+
+        ///  Main Parser API
+        ///
+        /// # Returns
+        /// Code -> Parser output
+        /// 
+        /// # Example 
+        /// ```
+        /// parser.Parse();
+        /// ```   
+        
         pub fn Parse(&mut self) -> Parser_ret<Code> {         
             let mut ret =  Vec::new();
             while !self.check(&LTOK::EOF){
@@ -43,7 +80,19 @@ pub mod PARSER {
 
 
         /* ******************************** HELPER ********************************  */
-        fn next(&mut self) -> LTOK{
+
+        ///  Parser Helper function
+        /// Returns the next token in the token stream and progresses forward while consuming the next token
+        ///
+        /// # Returns
+        /// LTOK -> Moves forward in token stream and returns the next token   
+        /// 
+        /// # Example 
+        /// ```
+        /// parser.next();
+        /// ```   
+        
+        pub fn next(&mut self) -> LTOK{
             if self.input.is_empty() || self.idx == self.input.len() {
                 return LTOK::EOF;
             }
@@ -52,16 +101,56 @@ pub mod PARSER {
             tok
         }
 
-
-        fn peek(&self) -> &LTOK{
+        ///  Parser Helper function
+        /// Returns the next token in the token stream without progressing forward
+        ///
+        /// # Returns
+        /// LTOK -> Returns the next token without progressing onwards 
+        /// 
+        /// # Example 
+        /// ```
+        /// parser.peek();
+        /// ```   
+        
+        pub fn peek(&self) -> &LTOK{
             if self.input.is_empty() || self.idx == self.input.len() {
                 return &LTOK::EOF;
             }
             self.input.get(self.idx).unwrap_or(&LTOK::EOF)}
 
-        fn check(&mut self,e: &LTOK) -> bool{std::mem::discriminant(self.peek()) == std::mem::discriminant(e)}
+        ///  Parser Helper function
+        /// Checks if the provided token matches with the next token int he token stream
+        /// 
+        /// # Arguments
+        /// e : &LTOK -> The refernce to the token whom we have to compare next token in token stream with
+        /// 
+        /// # Returns
+        /// bool ->  The restult of checking next token is similar to the argument token sent to the function
+        /// # Example 
+        /// ```
+        /// parser.check(&LTOK::LSHIFT);
+        /// ```   
 
-        fn match_token(&mut self,token:&[LTOK]) -> bool{
+        pub fn check(&mut self,e: &LTOK) -> bool{std::mem::discriminant(self.peek()) == std::mem::discriminant(e)}
+
+        /// Parser Helper function
+        /// Checks if  the next argument in the token stream matches any of the tokens in the provided token set
+        ///
+        /// # Arguments
+        /// token : &[LTOK] -> An array of tokens to check the next elem in token stream with used for checking if a next token belongs in the provided set of tokens
+        /// 
+        /// # Warning
+        ///  Moves to the next token in token stream o mtch with any of the arguments
+        /// 
+        /// # Returns
+        /// bool -> True/False based on the match
+        /// 
+        /// # Example 
+        /// ```
+        /// parser.match_token(&[LTOK::ADD,LTOK::SUB,LTOK::MUL,LTOK::DIV]);
+        /// ```   
+
+        pub fn match_token(&mut self,token:&[LTOK]) -> bool{
             for i in token{
                 if self.check(i){
                     self.next();
@@ -71,7 +160,24 @@ pub mod PARSER {
             false
         }
 
-        fn consume(&mut self,e: &LTOK) -> Parser_ret<LTOK>{
+        /// Parser Helper function
+        /// Consumes the next token if it matches the token provided
+        /// 
+        /// # Arguments
+        /// token : &LTOK -> the token to be matched
+        /// 
+        /// # Warning
+        ///  Moves to the next token in token stream if match argument essentially consuming the prev token in token stream
+        /// 
+        /// # Returns
+        /// Parser_ret<LTOK> -> Returns a Parser result object containing the next token
+        /// 
+        /// # Example 
+        /// ```
+        /// let result = parser.consume(&LTOK::AMP)?;
+        /// ```   
+
+        pub fn consume(&mut self,e: &LTOK) -> Parser_ret<LTOK>{
             if self.check(e) {
                 return Ok(self.next());
             }
@@ -82,6 +188,14 @@ pub mod PARSER {
 
         
         /* ******************************** FUNCTIONS ********************************  */
+
+        /// Parser Helper function
+        /// Parses any function declarations ato build a syn=mbol table to be used latter for by semantic analyser
+        ///  
+        /// # Returns
+        /// Parser_ret<Declare> -> Returns a Parser result object containing Declaration enum;
+        /// 
+     
         fn eval_declare(&mut self) -> Parser_ret<Declare>{
             match self.peek(){
             LTOK::FN => self.eval_fxn(),
@@ -89,6 +203,13 @@ pub mod PARSER {
             }
 
         }         
+
+        /// Parser Helper function
+        /// Evaluates a function definition and retuns the declaration
+        ///  
+        /// # Returns
+        /// Parser_ret<Declare> -> Returns a Parser result object containing Declaration enum;
+        /// 
 
         fn eval_fxn(&mut self) -> Parser_ret<Declare>{
         self.consume(&LTOK::FN)?;
@@ -117,6 +238,13 @@ pub mod PARSER {
         return Ok(Declare::Function { name:name, rtype: rtype, args: param, body: body });
         }
 
+        /// Parser Helper function
+        /// Evaluates the paramaters and their argument types for a function 
+        ///  
+        /// # Returns
+        /// Parser_ret<Vec<(String,Type)>> -> Returns a Parser result object containing a vector of String,Type tuples to be used in the semantic anlayser to analyse the declaration type
+        /// 
+
         fn eval_params(&mut self) -> Parser_ret<Vec<(String,Type)>>{
         let mut ret:Vec<(String,Type)> = Vec::new();
         if !self.check(&LTOK::RPAREN) {
@@ -133,10 +261,18 @@ pub mod PARSER {
         }
         Ok(ret)
         }
+        
         /* ******************************** FUNCTIONS ********************************  */
 
 
         /* ******************************** LET & CONST ********************************  */
+
+        /// Parser Helper function
+        /// Evaluates a let token 
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::Let on success
+        /// 
 
         fn eval_let(&mut self) -> Parser_ret<Statmnt> {
         self.consume(&LTOK::LET)?;
@@ -157,6 +293,13 @@ pub mod PARSER {
         self.consume(&LTOK::SEMICOLON)?;
         Ok(Statmnt::Let { name, mutable, type_annot:annot, value: val })
         }
+
+        /// Parser Helper function
+        /// Evaluates a consr token 
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::Let with the mutabke flag set to false as default on success
+        /// 
 
         fn eval_const(&mut self) -> Parser_ret<Statmnt> {
             self.consume(&LTOK::CONST)?;
@@ -179,6 +322,13 @@ pub mod PARSER {
         /* ******************************** LET & CONST ********************************  */
 
         /* ******************************** IF-ELSE ********************************  */
+
+        /// Parser Helper function
+        /// Evaluates a if-else tree/branch
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::If on success containing the populated condidtion if blocka nd thde rest of the code as the else block on success
+        /// 
 
         fn eval_if_else(&mut self) -> Parser_ret<Statmnt>{
             self.consume(&LTOK::IF)?;
@@ -211,6 +361,13 @@ pub mod PARSER {
 
         /* ******************************** FOR-WHILE-LOOP ********************************  */
 
+        /// Parser Helper function
+        /// Evaluates the for loop
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::For on success containing the populated variable, loop body,Upper bound and lower bund for the range on which the variable is supposed ot iterate over on success
+        /// 
+
         fn eval_for(&mut self) -> Parser_ret<Statmnt>{
             self.consume(&LTOK::FOR)?;
             let var_name = match self.next() {
@@ -219,12 +376,20 @@ pub mod PARSER {
             };
             self.consume(&LTOK::IN)?;
             let lb = self.eval_expr()?;
+            self.consume(&LTOK::RANGE)?;
             let rb = self.eval_expr()?;
             self.consume(&LTOK::LBRACE)?;
             let body = self.eval_block()?;
             self.consume(&LTOK::RBRACE)?;   
             Ok(Statmnt::For { var_name, lb, rb, body })
         }
+
+        /// Parser Helper function
+        /// Evaluates the while loop
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::While success containing the populated body and condition on success 
+        /// 
 
         fn eval_while(&mut self) -> Parser_ret<Statmnt> {
             self.consume(&LTOK::WHILE)?;
@@ -234,6 +399,13 @@ pub mod PARSER {
             self.consume(&LTOK::RBRACE)?;
             Ok(Statmnt::While { cond, body })
         }
+
+        /// Parser Helper function
+        /// Evaluates loop
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> ->  Returns a Parser result object that contains the Statmnt::Loop success containing the populated body on success 
+        /// 
 
         fn eval_loop(&mut self) -> Parser_ret<Statmnt>{
         self.consume(&LTOK::LOOP)?;
@@ -249,7 +421,14 @@ pub mod PARSER {
 
 
         /* ******************************** HELPER ********************************  */
-        
+
+        /// Parser Helper function
+        /// Evaluates the Type token in the token stream
+        ///  
+        /// # Returns
+        /// Parser_ret<Type> -> Returns the parser result which hold the Type for LTOK::XXX_TYPE on success
+        /// 
+
         fn eval_type(&mut self) -> Parser_ret<Type>{
             match self.next(){
                 LTOK::INT_TYPE => Ok(Type::INT),
@@ -260,6 +439,13 @@ pub mod PARSER {
             }
         }
 
+        /// Parser Helper function
+        /// Evaluates the return token in the token stream
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> -> Returns the parser result hold the Statmnt::return on success
+        /// 
+    
         fn eval_return(&mut self) -> Parser_ret<Statmnt> {
             self.consume(&LTOK::RETURN)?;
             let val = match self.next() {
@@ -270,6 +456,14 @@ pub mod PARSER {
             Ok(Statmnt::Return(val))
         }
 
+        /// Parser Helper function
+        /// Evaluates the return token in the token stream
+        ///  
+        /// # Returns
+        /// Parser_ret<Statmnt> -> Returns the parser result hold the Statmnt::return on success
+        /// 
+        
+        #[deprecated]
         fn eval_tuple_types(&mut self) -> Parser_ret<Vec<Type>>{
             let mut ret = Vec::new();
             while !self.check(&LTOK::RPAREN){
@@ -287,50 +481,76 @@ pub mod PARSER {
     
     /* ******************************** BLOCKS & STATEMENTS ********************************  */
 
-        fn eval_statmnt(&mut self) -> Parser_ret<Statmnt>{
-            match self.peek() {
-                LTOK::LET => {self.eval_let()},
-                LTOK::CONST => {self.eval_const()},
-                LTOK::IF  => {self.eval_if_else()},
-                LTOK::WHILE => {self.eval_while()},
-                LTOK::FOR => {self.eval_for()},
-                LTOK::LOOP => {self.eval_loop()},
-                
-                LTOK::BREAK => {
+    /// Parser Helper function
+    /// Evaluates any token matching statmnt type  
+    ///  
+    /// # Returns
+    /// Parser_ret<Statmnt> -> Returns the parser result hold the Statmnt::xxx on success
+    /// 
+
+    fn eval_statmnt(&mut self) -> Parser_ret<Statmnt>{
+        match self.peek() {
+            LTOK::LET => {self.eval_let()},
+            LTOK::CONST => {self.eval_const()},
+            LTOK::IF  => {self.eval_if_else()},
+            LTOK::WHILE => {self.eval_while()},
+            LTOK::FOR => {self.eval_for()},
+            LTOK::LOOP => {self.eval_loop()},
+            
+            LTOK::BREAK => {
+            self.next();
+            self.consume(&LTOK::SEMICOLON)?;
+            Ok(Statmnt::Break)
+            },
+
+            LTOK::CONTINUE =>{
+            self.next();
+            self.consume(&LTOK::SEMICOLON)?;
+            Ok(Statmnt::Continue)
+            },
+
+            LTOK::RETURN => self.eval_return(),
+            LTOK::LBRACE => {
                 self.next();
-                self.consume(&LTOK::SEMICOLON)?;
-                Ok(Statmnt::Break)
-                },
+                let blk = self.eval_block()?;
+                self.consume(&LTOK::RBRACE)?;
+                Ok(Statmnt::Block(blk))
+            },
+            _ => self.eval_assign(),
 
-                LTOK::CONTINUE =>{
-                self.next();
-                self.consume(&LTOK::SEMICOLON)?;
-                Ok(Statmnt::Continue)
-                },
+        }  
+    }
 
-                LTOK::RETURN => self.eval_return(),
-                LTOK::LBRACE => {
-                    self.next();
-                    let blk = self.eval_block()?;
-                    self.consume(&LTOK::RBRACE)?;
-                    Ok(Statmnt::Block(blk))
-                },
-                _ => self.eval_assign(),
+    /// Parser Helper function
+    /// Evaluates a block of code
+    ///  
+    /// # Returns
+    /// Parser_ret<Vec<Statmnt>> -> Returns the parser result hold a vector of sttamnts
+    /// 
 
-            }  
+    fn eval_block(&mut self) -> Parser_ret<Vec<Statmnt>>{
+        let mut statmnts:Vec<Statmnt> = Vec::new();
+        while !self.check(&LTOK::RBRACE) && !self.check(&LTOK::EOF){
+            statmnts.push(self.eval_statmnt()?);
         }
-
-        fn eval_block(&mut self) -> Parser_ret<Vec<Statmnt>>{
-            let mut statmnts:Vec<Statmnt> = Vec::new();
-            while !self.check(&LTOK::RBRACE) && !self.check(&LTOK::EOF){
-                statmnts.push(self.eval_statmnt()?);
-            }
-            Ok(statmnts)
-        }
+        Ok(statmnts)
+    }
 
     /* ******************************** BLOCKS & STATEMENTS ********************************  */
 
     /* ******************************** EXPRESSIONS ********************************  */
+
+    // TODO:FIXME: I have a bit of doubt as to correctness of the nested Option ??
+    // Also see for incr and decr
+
+    /// Parser Helper function
+    /// # Priority 0: =, +=, -=, /=, *=, &=, %=, |=, ^=, **
+    /// Evaluates assignment/reassignment operations
+    /// 
+    ///  
+    /// # Returns
+    /// Parser_ret<Statmnt> -> If no error occurs returns the Statmnt::Expr or Statmnt::Assignment
+    ///  
 
     fn eval_assign(&mut self) -> Parser_ret<Statmnt> {
         let expr = self.eval_expr()?;
@@ -347,10 +567,81 @@ pub mod PARSER {
         Ok(Statmnt::Expr(expr))
    }
 
+   /// Parser Helper function
+   /// Match function to determine which assignment
+   /// 
+   /// # Important 
+   /// This function is allows for equal precedeance of both operators 
+   /// 
+   /// # Returns
+   /// Option<BIN_OP> -> Returns the Some(assignment/shorthand operator) if match else None
+   /// 
+
+   fn match_assignment(&mut self) -> Option<Option<BIN_OP>>{
+   match self.peek(){
+       LTOK::ASSGN => {
+           self.next();
+           Some(None)
+       },
+       LTOK::S_PLUS => {
+           self.next();
+           Some(Some(BIN_OP::Add))
+       },
+       LTOK::S_MINUS => {
+           self.next();
+           Some(Some(BIN_OP::Sub))
+       },    
+       LTOK::S_MULT => {
+           self.next();
+           Some(Some(BIN_OP::Mul))
+       },    
+       LTOK::S_DIV => {
+           self.next();
+           Some(Some(BIN_OP::Div))
+       },
+       LTOK::S_MOD => {
+           self.next();
+           Some(Some(BIN_OP::Mod))
+       },
+       LTOK::S_AMP => {
+           self.next();
+           Some(Some(BIN_OP::Amp))
+       },    
+       LTOK::S_PIPE => {
+           self.next();
+           Some(Some(BIN_OP::Pipe))
+       },    
+       LTOK::S_CARET => {
+           self.next();
+           Some(Some(BIN_OP::Xor))
+       },
+        LTOK::POW => {
+           self.next();
+           Some(Some(BIN_OP::Pow))
+       },
+       _ => None,
+   }
+   }
+
+
+   /// Parser Helper function
+   /// Used for pratt parsing the expressions
+   ///  
+   /// # Returns
+   /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+   ///  
 
     fn eval_expr(&mut self) -> Parser_ret<Expr>{
         return self.eval_logical_or();
     }
+
+    /// Parser Helper function
+    /// # Priority 1: ||
+    /// Evaluates the priority of logical OR
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
 
     fn eval_logical_or(&mut self) -> Parser_ret<Expr>{
         let mut left = self.eval_logical_and()?;
@@ -362,17 +653,86 @@ pub mod PARSER {
 
         Ok(left)
     }
-        
+
+    /// Parser Helper function
+    /// # Priority 2: &&
+    /// Evaluates the priority of logical AND
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+
     fn eval_logical_and(&mut self) -> Parser_ret<Expr>{
-        let mut left = self.eval_equality()?;
+        let mut left = self.eval_bit_or()?;
 
         while self.match_token(&[LTOK::ANDAND]){
-            let right = self.eval_equality()?;
+            let right = self.eval_bit_or()?;
             left = Expr::Binary_op{op:BIN_OP::And, left:Box::new(left), right:Box::new(right) };
         }
         Ok(left)
     }
 
+    /// Parser Helper function
+    /// # Priority 3: |
+    /// Evaluates the priority of bitwise OR
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+
+    fn eval_bit_or(&mut self) -> Parser_ret<Expr>{
+        let mut left = self.eval_bit_caret()?;
+
+        while self.match_token(&[LTOK::PIPE]){
+            let right = self.eval_bit_caret()?;
+            left = Expr::Binary_op{op:BIN_OP::Pipe, left:Box::new(left), right:Box::new(right) };
+        }
+        Ok(left)
+    }
+
+    /// Parser Helper function
+    /// # Priority 4: ^ 
+    /// Evaluates the priority of bitwise XOR
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+    
+    fn eval_bit_caret(&mut self) -> Parser_ret<Expr>{
+        let mut left = self.eval_bit_and()?;
+
+        while self.match_token(&[LTOK::CARET]){
+            let right = self.eval_bit_and()?;
+            left = Expr::Binary_op{op:BIN_OP::Xor, left:Box::new(left), right:Box::new(right) };
+        }
+        Ok(left)
+    }
+
+    /// Parser Helper function
+    /// # Priority 5: & 
+    /// Evaluates the priority of bitwise AND
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+    
+    fn eval_bit_and(&mut self) -> Parser_ret<Expr>{
+        let mut left = self.eval_equality()?;
+
+        while self.match_token(&[LTOK::AMP]){
+            let right = self.eval_equality()?;
+            left = Expr::Binary_op{op:BIN_OP::Amp, left:Box::new(left), right:Box::new(right) };
+        }
+        Ok(left)
+    } 
+
+    /// Parser Helper function
+    /// # Priority 6: ==, !==
+    /// Evaluates the priority of equality operators
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
 
     fn eval_equality(&mut self) -> Parser_ret<Expr>{
         let mut left = self.eval_comparator()?;
@@ -382,6 +742,16 @@ pub mod PARSER {
         }
         Ok(left)
     }
+
+    /// Parser Helper function
+    /// Match function to determine which operator == or !== 
+    /// 
+    /// # Important 
+    /// This function is allows for equal precedeance of both operators 
+    /// 
+    /// # Returns
+    /// Option<BIN_OP> -> Returns the Some(equality operator) if match else None
+    ///  
 
     fn match_eq_neq(&mut self) -> Option<BIN_OP>{
         match self.peek() {
@@ -395,14 +765,32 @@ pub mod PARSER {
         }
     }
 
+    /// Parser Helper function
+    /// # Priority 7: >, <, >=, <= 
+    /// Evaluates the priority of comparison operators
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+
     fn eval_comparator(&mut self) -> Parser_ret<Expr>{
-        let mut left = self.parse_term()?;
+        let mut left = self.eval_shift()?;
         while let Some(x) =self.match_comparison(){
-            let right = self.parse_term()?;
+            let right = self.eval_shift()?;
             left = Expr::Binary_op { op:x, left: Box::new(left), right:Box::new(right)}
         };
         Ok(left)
     }
+
+    /// Parser Helper function
+    /// Match function to determine which comparison <=, >=, <, > 
+    /// 
+    /// # Important 
+    /// This function is allows for equal precedeance of both operators 
+    /// 
+    /// # Returns
+    /// Option<BIN_OP> -> Returns the Some(comparison operator) if match else None
+    /// 
 
     fn match_comparison(&mut self) -> Option<BIN_OP>{
         match self.peek() {
@@ -414,47 +802,50 @@ pub mod PARSER {
         }
     }
 
-    fn match_assignment(&mut self) -> Option<Option<BIN_OP>>{
-    match self.peek(){
-        LTOK::ASSGN => {
-            self.next();
-            Some(None)
-        },
-        LTOK::S_PLUS => {
-            self.next();
-            Some(Some(BIN_OP::Add))
-        },
-        LTOK::S_MINUS => {
-            self.next();
-            Some(Some(BIN_OP::Sub))
-        },    
-        LTOK::S_MULT => {
-            self.next();
-            Some(Some(BIN_OP::Mul))
-        },    
-        LTOK::S_DIV => {
-            self.next();
-            Some(Some(BIN_OP::Div))
-        },
-        LTOK::S_MOD => {
-            self.next();
-            Some(Some(BIN_OP::Mod))
-        },
-        LTOK::S_AMP => {
-            self.next();
-            Some(Some(BIN_OP::Amp))
-        },    
-        LTOK::S_PIPE => {
-            self.next();
-            Some(Some(BIN_OP::Pipe))
-        },    
-        LTOK::S_CARET => {
-            self.next();
-            Some(Some(BIN_OP::Xor))
-        },
-        _ => None,
+    /// Parser Helper function
+    /// # Priority 8: <<, >>
+    /// Evaluates the priority of shift operators
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+    
+    fn eval_shift(&mut self) -> Parser_ret<Expr>{
+        let mut left = self.parse_term()?;
+        while let Some(x) = self.match_shift(){
+            let right = self.parse_term()?;
+            left = Expr::Binary_op { op: x, left: Box::new(left), right: Box::new(right)};
+        }
+        Ok(left)
     }
+
+    /// Parser Helper function
+    /// Match function to determine which shift << or >>
+    /// 
+    /// # Important 
+    /// This function is allows for equal precedeance of both operators 
+    /// 
+    /// # Returns
+    /// Option<BIN_OP> -> Returns the Some(Shift operator) if match else None
+    /// 
+
+    fn match_shift(&mut self) -> Option<BIN_OP>{
+        match self.peek(){
+            LTOK::LSHIFT => {self.next();Some(BIN_OP::Lshift)},
+            LTOK::RSHIFT => {self.next();Some(BIN_OP::Rshift)},
+            _ => {None}
+        }
+
     }
+
+    
+    /// Parser Helper function
+    /// # Priority 9: +, -
+    /// Evaluates the priority of signed/addition/subtraction operators
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///   
 
     fn parse_term(&mut self) ->Parser_ret<Expr>{
         let mut left = self.parse_factor()?;
@@ -465,6 +856,16 @@ pub mod PARSER {
         Ok(left)
     }
 
+    /// Parser Helper function
+    /// Match function to determine which sign + or -
+    /// 
+    /// # Important 
+    /// This function is allows for equal precedeance of both operators 
+    /// 
+    /// # Returns
+    /// Option<BIN_OP> -> Returns the Some(term operator) if match else None
+    /// 
+
     fn match_signedness(&mut self) -> Option<BIN_OP>{
         match self.peek()  {
             LTOK::PLUS => {self.next();Some(BIN_OP::Add)},
@@ -472,6 +873,14 @@ pub mod PARSER {
             _ => None,
         }
     }
+
+    /// Parser Helper function
+    /// # Priority 9: *, /, %
+    /// Evaluates the priority of factor type operators and incr/decr
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
 
     fn parse_factor(&mut self) -> Parser_ret<Expr>{
         let mut left = self.eval_unary()?;
@@ -482,6 +891,16 @@ pub mod PARSER {
         Ok(left)
     }
 
+    /// Parser Helper function
+    /// Match function to determine which factor op * or / or %
+    /// 
+    /// # Important 
+    /// This function is allows for equal precedeance of all operators 
+    /// 
+    /// # Returns
+    /// Option<BIN_OP> -> Returns the Some(factor operator) if match else None
+    /// 
+
     fn match_factor_op(&mut self) -> Option<BIN_OP>{
         match self.peek(){
         LTOK::STAR => {self.next();Some(BIN_OP::Mul)},
@@ -490,6 +909,14 @@ pub mod PARSER {
         _ => None,
         }
     }
+    
+    /// Parser Helper function
+    /// # Priority 10: !, ~, negate, --, ++
+    /// Evaluates the priority of unary operators
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///      
 
     fn eval_unary(&mut self) -> Parser_ret<Expr>{
         match self.peek(){
@@ -502,14 +929,33 @@ pub mod PARSER {
             self.next();
             let operand= self.eval_unary()?;
             Ok(Expr::Unary_op { op:UN_OP::Bang, operand: Box::new(operand) })
-        },LTOK::TILDA => {
+        },
+        LTOK::TILDA => {
             self.next();
             let operand= self.eval_unary()?;
             Ok(Expr::Unary_op { op:UN_OP::Tilda, operand: Box::new(operand) })
         },
+        LTOK::INCR => {
+            self.next();
+            let operand= self.eval_unary()?;
+            Ok(Expr::Unary_op { op:UN_OP::Incr, operand: Box::new(operand) })           
+        },
+        LTOK::DECR => {
+            self.next();
+            let operand= self.eval_unary()?;
+            Ok(Expr::Unary_op { op:UN_OP::Decr, operand: Box::new(operand) })           
+        }
         _ => {self.eval_fxn_call()},
         }    
     }
+
+    /// Parser Helper function
+    /// # Priority 10: fxn_calls()
+    /// Evaluates the priority of function calls[NOTE: Same priority as the unary operators]
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
 
     fn eval_fxn_call(&mut self) -> Parser_ret<Expr>{
         let mut expr = self.eval_primary()?;
@@ -531,6 +977,13 @@ pub mod PARSER {
         Ok(expr)
     }
 
+    /// Parser Helper function
+    /// Function to evaluate the params passed to a function call
+    ///  
+    /// # Returns
+    /// Parser_ret<Vec<Expr>> -> If no error occurs returns a vector of expressions symbolising the AST of each of the arghuments provided to the function
+    ///  
+
     fn eval_args(&mut self) -> Parser_ret<Vec<Expr>> {
         let mut ret = Vec::new();
         if !self.check(&LTOK::RPAREN){
@@ -543,6 +996,14 @@ pub mod PARSER {
         };
         Ok(ret)
     }
+
+    /// Parser Helper function
+    /// Priority 11: variables, ()
+    /// Evaluates the priority of variables and () 
+    ///  
+    /// # Returns
+    /// Parser_ret<Vec<Expr>> -> If no error occurs returns a vector of expressions symbolising the AST of each of the arghuments provided to the function
+    ///  
 
     fn eval_primary(&mut self) -> Parser_ret<Expr> {
         match self.next() {

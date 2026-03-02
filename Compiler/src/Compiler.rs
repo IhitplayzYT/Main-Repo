@@ -45,6 +45,20 @@ use crate::Frontend::Frontend::Frontend;
             Self{frontend:Frontend::new(file_path.to_string())}
         }
 
+        /// Compiler MAIN API !![ COMPILES THE CODE ]!!
+        ///
+        /// # Return
+        /// bool -> true/false: If compilation was successful 
+        /// 
+        /// # Example
+        /// ```
+        /// Compiler::new("myfile.c");
+        /// ``` 
+
+        pub fn compile(&mut self) -> bool {
+            true
+        }
+
     }
 
 }

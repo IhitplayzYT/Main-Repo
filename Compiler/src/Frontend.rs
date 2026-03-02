@@ -6,7 +6,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, version 3.
 
-//    Frontend.rs    //
+//   Frontend.rs   //
 // Contains the Frontend Sub-API for Compiler
 
 

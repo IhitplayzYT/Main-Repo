@@ -367,10 +367,23 @@ pub mod Tokeniser {
                     }
                     temp.clear();
                 } else if i == '+' {
-                    if let Some('=') = iter.next() {
+                    if let Some(v) = iter.next() {
+                        match v {
+                        '=' => {
                         ret.push(LTOK::S_PLUS);
                         temp.clear();
                         iter.next();
+                        },
+                        '+' => {
+                        ret.push(LTOK::INCR);
+                        temp.clear();
+                        iter.next();
+                        },
+                        _ => {
+                        ret.push(LTOK::PLUS);
+                        temp.clear();
+                        }
+                        }
                     } else {
                         ret.push(LTOK::PLUS);
                         temp.clear();
@@ -380,6 +393,7 @@ pub mod Tokeniser {
                         let r = match v{
                             '=' => LTOK::S_MINUS,
                             '>' => LTOK::ARROW,
+                            '-' => LTOK::DECR,
                             _ => {exit(-1);}
                         };
                         ret.push(r);
@@ -390,10 +404,23 @@ pub mod Tokeniser {
                         temp.clear();
                     }
                 } else if i == '*' {
-                    if let Some('=') = iter.next() {
-                        ret.push(LTOK::S_MULT);
-                        temp.clear();
-                        iter.next();
+                    if let Some(v) = iter.next() {
+                        match v {
+                        '=' => {
+                            ret.push(LTOK::S_MULT);
+                            temp.clear();
+                            iter.next();
+                        },
+                        '*' => {
+                            ret.push(LTOK::POW);
+                            temp.clear();
+                            iter.next();
+                        },
+                        _ => {
+                            ret.push(LTOK::STAR);
+                            temp.clear();
+                        }
+                        }
                     } else {
                         ret.push(LTOK::STAR);
                         temp.clear();
@@ -438,7 +465,14 @@ pub mod Tokeniser {
                     if let Some(v) = iter.next() {
                         match v {
                             '=' => ret.push(LTOK::GT_EQ),
-                            '>' => ret.push(LTOK::RSHIFT),
+                            '>' => {
+                                if let Some(chr) = iter.next(){
+                                match chr{
+                                '=' => ret.push(LTOK::S_RSHIFT),
+                                _ => ret.push(LTOK::RSHIFT),
+                                }
+                            }
+                            },
                             _ => continue,
                         };
                         temp.clear();
@@ -451,7 +485,14 @@ pub mod Tokeniser {
                     if let Some(v) = iter.next() {
                         match v {
                             '=' => ret.push(LTOK::LT_EQ),
-                            '<' => ret.push(LTOK::LSHIFT),
+                            '<' => {
+                                if let Some(chr) = iter.next(){
+                                match chr{
+                                '=' => ret.push(LTOK::S_LSHIFT),
+                                _ => ret.push(LTOK::LSHIFT),
+                                }
+                            }
+                            },
                             _ => continue,
                         };
                         temp.clear();

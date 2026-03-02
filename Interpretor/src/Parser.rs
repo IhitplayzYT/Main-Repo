@@ -541,9 +541,10 @@ pub mod PARSER {
     /* ******************************** EXPRESSIONS ********************************  */
 
     // TODO:FIXME: I have a bit of doubt as to correctness of the nested Option ??
+    // Also see for incr and decr
 
     /// Parser Helper function
-    /// # Priority 0: =, +=, -=, /=, *=, &=, %=, |=, ^=
+    /// # Priority 0: =, +=, -=, /=, *=, &=, %=, |=, ^=, **
     /// Evaluates assignment/reassignment operations
     /// 
     ///  
@@ -613,6 +614,10 @@ pub mod PARSER {
        LTOK::S_CARET => {
            self.next();
            Some(Some(BIN_OP::Xor))
+       },
+        LTOK::POW => {
+           self.next();
+           Some(Some(BIN_OP::Pow))
        },
        _ => None,
    }
@@ -840,8 +845,7 @@ pub mod PARSER {
     ///  
     /// # Returns
     /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
-    ///  
- 
+    ///   
 
     fn parse_term(&mut self) ->Parser_ret<Expr>{
         let mut left = self.parse_factor()?;
@@ -870,6 +874,14 @@ pub mod PARSER {
         }
     }
 
+    /// Parser Helper function
+    /// # Priority 9: *, /, %
+    /// Evaluates the priority of factor type operators and incr/decr
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
+
     fn parse_factor(&mut self) -> Parser_ret<Expr>{
         let mut left = self.eval_unary()?;
         while let Some(op) = self.match_factor_op(){
@@ -879,6 +891,16 @@ pub mod PARSER {
         Ok(left)
     }
 
+    /// Parser Helper function
+    /// Match function to determine which factor op * or / or %
+    /// 
+    /// # Important 
+    /// This function is allows for equal precedeance of all operators 
+    /// 
+    /// # Returns
+    /// Option<BIN_OP> -> Returns the Some(factor operator) if match else None
+    /// 
+
     fn match_factor_op(&mut self) -> Option<BIN_OP>{
         match self.peek(){
         LTOK::STAR => {self.next();Some(BIN_OP::Mul)},
@@ -887,6 +909,14 @@ pub mod PARSER {
         _ => None,
         }
     }
+    
+    /// Parser Helper function
+    /// # Priority 10: !, ~, negate, --, ++
+    /// Evaluates the priority of unary operators
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///      
 
     fn eval_unary(&mut self) -> Parser_ret<Expr>{
         match self.peek(){
@@ -899,14 +929,33 @@ pub mod PARSER {
             self.next();
             let operand= self.eval_unary()?;
             Ok(Expr::Unary_op { op:UN_OP::Bang, operand: Box::new(operand) })
-        },LTOK::TILDA => {
+        },
+        LTOK::TILDA => {
             self.next();
             let operand= self.eval_unary()?;
             Ok(Expr::Unary_op { op:UN_OP::Tilda, operand: Box::new(operand) })
         },
+        LTOK::INCR => {
+            self.next();
+            let operand= self.eval_unary()?;
+            Ok(Expr::Unary_op { op:UN_OP::Incr, operand: Box::new(operand) })           
+        },
+        LTOK::DECR => {
+            self.next();
+            let operand= self.eval_unary()?;
+            Ok(Expr::Unary_op { op:UN_OP::Decr, operand: Box::new(operand) })           
+        }
         _ => {self.eval_fxn_call()},
         }    
     }
+
+    /// Parser Helper function
+    /// # Priority 10: fxn_calls()
+    /// Evaluates the priority of function calls[NOTE: Same priority as the unary operators]
+    ///  
+    /// # Returns
+    /// Parser_ret<Expr> -> If no error occurs returns the enum Expr
+    ///  
 
     fn eval_fxn_call(&mut self) -> Parser_ret<Expr>{
         let mut expr = self.eval_primary()?;
@@ -928,6 +977,13 @@ pub mod PARSER {
         Ok(expr)
     }
 
+    /// Parser Helper function
+    /// Function to evaluate the params passed to a function call
+    ///  
+    /// # Returns
+    /// Parser_ret<Vec<Expr>> -> If no error occurs returns a vector of expressions symbolising the AST of each of the arghuments provided to the function
+    ///  
+
     fn eval_args(&mut self) -> Parser_ret<Vec<Expr>> {
         let mut ret = Vec::new();
         if !self.check(&LTOK::RPAREN){
@@ -940,6 +996,14 @@ pub mod PARSER {
         };
         Ok(ret)
     }
+
+    /// Parser Helper function
+    /// Priority 11: variables, ()
+    /// Evaluates the priority of variables and () 
+    ///  
+    /// # Returns
+    /// Parser_ret<Vec<Expr>> -> If no error occurs returns a vector of expressions symbolising the AST of each of the arghuments provided to the function
+    ///  
 
     fn eval_primary(&mut self) -> Parser_ret<Expr> {
         match self.next() {

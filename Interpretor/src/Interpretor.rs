@@ -7,7 +7,7 @@
 // the Free Software Foundation, version 3.
 #![allow(non_snake_case,non_camel_case_types,unused_imports,dead_code)]
 
-//  Interpretor.rs   //
+//   Interpretor.rs   //
 // Contains the main Interpretor API
 
 pub mod Interpretor{

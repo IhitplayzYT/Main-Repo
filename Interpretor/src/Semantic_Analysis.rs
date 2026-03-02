@@ -250,7 +250,7 @@ pub mod Analyser {
             Expr::Binary_op { op, left, right } => {
                 let (l_type,r_type) = (self.eval_type(left)?,self.eval_type(right)?);
                 match op {
-                    BIN_OP::Add | BIN_OP::Sub | BIN_OP::Mul | BIN_OP::Div | BIN_OP::Mod | BIN_OP::Amp | BIN_OP::Lshift | BIN_OP::Pipe | BIN_OP::Rshift | BIN_OP::Xor => {
+                    BIN_OP::Add | BIN_OP::Sub | BIN_OP::Mul | BIN_OP::Div | BIN_OP::Mod | BIN_OP::Amp | BIN_OP::Lshift | BIN_OP::Pipe | BIN_OP::Rshift | BIN_OP::Xor | BIN_OP::Pow => {
                         if self.is_compatible(&l_type, &r_type) {
                             Ok(l_type)
                         } else{
@@ -276,6 +276,8 @@ pub mod Analyser {
                     UN_OP::Bang => Ok(Type::BOOL),
                     UN_OP::Neg => Ok(operant_type),
                     UN_OP::Tilda => Ok(Type::INT),
+                    UN_OP::Decr => Ok(Type::INT),
+                    UN_OP::Incr => Ok(Type::INT),
                 }
             },
             Expr::Fxn_call { name, args } => {

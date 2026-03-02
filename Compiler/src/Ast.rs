@@ -6,7 +6,7 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, version 3.
 
-//  Ast.rs   //
+//   Ast.rs    //
 // Contains the enums,structs used by the Parser to build the AST
 
 
@@ -73,7 +73,7 @@ pub mod AST {
 /// ```   
     #[derive(Clone,PartialEq,Debug)]
     pub enum BIN_OP{
-        Add,Sub,Mul,Div,Mod,Eq,Lt_eq,Gt_eq,Lt,Gt,N_eq,Amp,Pipe,Xor,Lshift,Rshift,And,Or
+        Add,Sub,Mul,Div,Mod,Eq,Lt_eq,Gt_eq,Lt,Gt,N_eq,Amp,Pipe,Xor,Lshift,Rshift,And,Or,Pow
     }
 
 /// Enum to hold Unary Operators
@@ -90,7 +90,7 @@ pub mod AST {
 /// ``` 
     #[derive(Clone,PartialEq,Debug)]
     pub enum UN_OP{
-        Tilda,Bang,Neg
+        Tilda,Bang,Neg,Incr,Decr
     }
 
 /// Enum to hold evaluatable expressions used by Parser
@@ -136,6 +136,7 @@ pub mod AST {
             name: String,
             args: Vec<Expr>,
         },
+        INCR_DECR_1(i64),
     }
 
 

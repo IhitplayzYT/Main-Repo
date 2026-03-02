@@ -13,6 +13,7 @@
 pub mod Err{
     use crate::Ast::AST::Type;
     /// Type defination of the Parser Return Type
+    /// This is will be the majority return type used in the parser
     /// 
     /// # Example
     /// ```
@@ -98,5 +99,7 @@ pub mod Err{
 
 
     }
+
+
 
 }
