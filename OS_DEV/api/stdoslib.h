@@ -70,6 +70,8 @@ typedef __builtin_va_list va_list;
 #define va_end(ap) __builtin_va_end(ap)
 #define trash(arg, ...) ((void)0)
 #define use(a) ((void)(a))
+#define STD_COMPARATOR(a, b) ((a) > (b))
+#define STR_COMPARATOR(a, b) (strcomp((a), (b)))
 
 typedef enum Type { t_char, t_int, t_float, t_charptr, t_bool } Type;
 
@@ -491,90 +493,159 @@ typedef struct sv_Metadata {
 } v_Metadata;
 
 typedef struct s_Vector {
-  v_Metadata* meta;
+  v_Metadata *meta;
   void *arr;
 } Vec;
 
 //   [header][array]
 #define mkvec(arr, cap)                                                        \
   do {                                                                         \
-    v_Metadata *meta = malloc(sizeof(Metadata) + sizeof(*(arr)) * (cap));        \
+    v_Metadata *meta = malloc(sizeof(Metadata) + sizeof(*(arr)) * (cap));      \
     if (!meta)                                                                 \
       exit(10);                                                                \
     meta->cap = (cap);                                                         \
-    meta->len = 0;                                                \
+    meta->len = 0;                                                             \
     arr = (void *)(meta + 1);                                                  \
   } while (0)
 
-#define v_push(arr, data)                                                           \
-  do {                                                                              \
-    if (!arr) exit(10);                                                             \
-    if (((v_Metadata *)(arr) - 1)->len == ((Metadata *)(arr) - 1)->cap) {             \
-      v_Metadata* meta = (Metadata*)(arr) - 1;                                        \
-      u64 cap = meta->cap;                                                          \
-      v_Metadata * n_meta = realloc(meta,sizeof(Metadata) + sizeof(*(arr)) * cap * 2);\
-      meta = n_meta;                                                                \
-      if (!meta) exit(10);                                                          \
-      (arr) = (v_Metadata*)meta+1;                                                    \
-      meta->cap = cap * 2 ;                                                         \
-    }                                                                               \
-    (arr)[(((v_Metadata *)(arr) - 1)->len)++] = (data);                               \
+#define v_push(arr, data)                                                      \
+  do {                                                                         \
+    if (!arr)                                                                  \
+      exit(10);                                                                \
+    if (((v_Metadata *)(arr) - 1)->len == ((Metadata *)(arr) - 1)->cap) {      \
+      v_Metadata *meta = (Metadata *)(arr) - 1;                                \
+      u64 cap = meta->cap;                                                     \
+      v_Metadata *n_meta =                                                     \
+          realloc(meta, sizeof(Metadata) + sizeof(*(arr)) * cap * 2);          \
+      meta = n_meta;                                                           \
+      if (!meta)                                                               \
+        exit(10);                                                              \
+      (arr) = (v_Metadata *)meta + 1;                                          \
+      meta->cap = cap * 2;                                                     \
+    }                                                                          \
+    (arr)[(((v_Metadata *)(arr) - 1)->len)++] = (data);                        \
   } while (0)
 
 #define v_pop(arr)                                                             \
   do {                                                                         \
-    if (((v_Metadata *)arr - 1)->len == 0)                                       \
-      exit(10);                                                                   \
-    ((v_Metadata *)arr - 1)->len--;                                              \
+    if (((v_Metadata *)arr - 1)->len == 0)                                     \
+      exit(10);                                                                \
+    ((v_Metadata *)arr - 1)->len--;                                            \
   } while (0)
 
+#define v_free(arr)                                                            \
+  do {                                                                         \
+    v_Metadata *meta = (v_Metadata *)arr - 1;                                  \
+    free(arr);                                                                 \
+    free(meta);                                                                \
+  } while (0)
 
-#define v_len(arr) ((v_Metadata*)(arr) - 1)->len
-#define v_cap(arr) ((v_Metadata*)(arr) - 1)->cap
-#define v_free(arr) do {\
-if (arr) {free((v_Metadata*)(arr)-1);\
-(arr) = NULL;}     \
-} while (0)
+#define v_len(arr) ((v_Metadata *)(arr) - 1)->len
+#define v_cap(arr) ((v_Metadata *)(arr) - 1)->cap
+#define v_free(arr)                                                            \
+  do {                                                                         \
+    if (arr) {                                                                 \
+      free((v_Metadata *)(arr) - 1);                                           \
+      (arr) = NULL;                                                            \
+    }                                                                          \
+  } while (0)
 
+#define SORT_ARGS(_1, _2, name, ...) name
 
-typedef struct ss_Metadata{
-u64 len,cap;
+#define v_sort(...) SORT_ARGS(__VA_ARGS__, sort_def, sort_by)(__VA_ARGS__)
+
+#define v_slice(arr, l, r)                                                     \
+  do {                                                                         \
+    v_Metadata *meta = (Metadata *)arr - 1;                                    \
+    if ((l > 0 && l < meta->len)) {                                            \
+      if ((r > l) && (r > 0 && r < meta->len)) {                               \
+        u64 n_len = r - 1;                                                     \
+        memcopy(arr, arr + l, n_len);                                          \
+        meta->len = n_len;                                                     \
+      }                                                                        \
+    }                                                                          \
+  } while (0)
+
+// TODO: ADD DENERIC FOR STRINGS
+#define sort_def(arr)                                                          \
+  do {                                                                         \
+                                                                               \
+  } while (0)
+
+// Avoid namespace collision
+#define __MERGE__SORT(arr, l, r, cmp)                                          \
+  do {                                                                         \
+if ((l) < (r){\
+u64 __mid = (l) + ((r)-(l))/2;\
+__MERGE__SORT((arr),(l),__mid,cmp);\
+__MERGE__SORT((arr),__mid,(r),cmp);\
+__MERGE(arr,(l),__mid,(r),cmp);\
+}                                                                              \
+  } while (0)
+
+#define merge(arr, l, m, r, cmp)                                               \
+  do {                                                                         \
+    u64 __l1 = (m) - (l) + 1, __l2 = (r) - (m);                                \
+    __auto_type __temp = malloc(sizeof(*(arr)) * (__l1 + __l2));               \
+    if (!__temp)                                                               \
+      exit(10);                                                                \
+    u64 __i = (l), __j = (m), __k = 0;                                         \
+    while (__i <= (m) && __j <= (r)) {                                         \
+      __temp[__k++] = (cmp)((arr)[__i], (arr)[__j]) ? arr[__j] : arr[__i];     \
+    }                                                                          \
+    while (__i <= (m))                                                         \
+      __temp[__k++] = (arr)[__i++];                                            \
+    while (__j <= (r))                                                         \
+      __temp[__k++] = (arr)[__j++];                                            \
+    memcopy(&(arr[l]), __temp, sizeof(*(arr)) * __k);                          \
+    free(__temp);                                                              \
+  } while (0)
+
+typedef struct ss_Metadata {
+  u64 len, cap;
 } s_Metadata;
 
-typedef struct s_String{
-s_Metadata * meta;
-void * string;
+typedef struct s_String {
+  s_Metadata *meta;
+  void *string;
 } String;
 
-#define mkstr(arr,cap) do {\
-s_Metadata * meta = malloc(sizeof(s_Metadata) + sizeof(*(arr)) * (cap));\
-if (!meta) exit(10);\
-meta->len = 0;\
-meta->cap = (cap);\
-(arr) = (void *)(meta + 1);\
-} while (0)
-
-#define s_push(arr,str) do { \
-if (!arr) exit(10);\
-s_Metadata * meta = (s_Metadata*)(arr) - 1;\
-if (meta->len + len(str) > meat->len){\
-u64 new_len,old_len = len(str) + meta->len,meta->len;\
-meta = realloc(meta,sizeof(s_Metadata) + sizeof(*(arr))* (new_len+10));\
-if (!meta) exit(10);\
-meta->len = new_len;\
-meta->cap = new_len+10;\
-}\
-arr = (void *)((s_Metadata*)meta + 1);\
-strncopy(arr+old_len,str,len(str));\
-} while (0)
-
-#define s_pop(arr) do{\
-if (!arr) exit(10);\
-if (((s_Metadata *)arr - 1)->len == 0)                                       \
+#define mkstr(arr, cap)                                                        \
+  do {                                                                         \
+    s_Metadata *meta = malloc(sizeof(s_Metadata) + sizeof(*(arr)) * (cap));    \
+    if (!meta)                                                                 \
       exit(10);                                                                \
-((s_Metadata*)arr - 1)->len --;\
-}while (0)
+    meta->len = 0;                                                             \
+    meta->cap = (cap);                                                         \
+    (arr) = (void *)(meta + 1);                                                \
+  } while (0)
 
+#define s_push(arr, str)                                                       \
+  do {                                                                         \
+    if (!arr)                                                                  \
+      exit(10);                                                                \
+    s_Metadata *meta = (s_Metadata *)(arr) - 1;                                \
+    if (meta->len + len(str) > meat->len) {                                    \
+      u64 new_len, old_len = len(str) + meta->len, meta->len;                  \
+      meta =                                                                   \
+          realloc(meta, sizeof(s_Metadata) + sizeof(*(arr)) * (new_len + 10)); \
+      if (!meta)                                                               \
+        exit(10);                                                              \
+      meta->len = new_len;                                                     \
+      meta->cap = new_len + 10;                                                \
+    }                                                                          \
+    arr = (void *)((s_Metadata *)meta + 1);                                    \
+    strncopy(arr + old_len, str, len(str));                                    \
+  } while (0)
+
+#define s_pop(arr)                                                             \
+  do {                                                                         \
+    if (!arr)                                                                  \
+      exit(10);                                                                \
+    if (((s_Metadata *)arr - 1)->len == 0)                                     \
+      exit(10);                                                                \
+    ((s_Metadata *)arr - 1)->len--;                                            \
+  } while (0)
 
 static signed short _strcomp(i8 *a, i8 *b) {
   if (!a || !*a)
@@ -977,5 +1048,8 @@ public
 void freeall(void *args, ...); // Free all to be used as helper for macro FREE()
 public
 void *clone(void *struct_, int sz); // Clones the object
+
+public
+bool DEALLOC();
 
 /* Function Signatures */

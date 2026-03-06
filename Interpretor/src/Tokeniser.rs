@@ -72,6 +72,8 @@ pub mod Tokeniser {
             ("double", LTOK::FLOAT_TYPE),
             ("float32", LTOK::FLOAT_TYPE),
             ("float64", LTOK::FLOAT_TYPE),
+            ("struct", LTOK::STRUCT),
+            ("enum", LTOK::ENUM),
             ("Int", LTOK::INT_TYPE),
             ("Short", LTOK::INT_TYPE),
             ("Char", LTOK::INT_TYPE),

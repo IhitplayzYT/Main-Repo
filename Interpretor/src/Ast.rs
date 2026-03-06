@@ -5,7 +5,6 @@
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, version 3.
-
 //   Ast.rs    //
 // Contains the enums,structs used by the Parser to build the AST
 
@@ -57,6 +56,7 @@ pub mod AST {
         STRING,
         BOOL,
         NULL,
+        CUSTOM(String),
     } 
 
 /// Enum to hold Binary Operators
@@ -137,6 +137,37 @@ pub mod AST {
             args: Vec<Expr>,
         },
         INCR_DECR_1(i64),
+
+        Struct_enum_init {
+        name: String,
+        fields: Vec<(String,Type)>,
+        },
+
+        field_access {
+            obj : Box<Expr>,
+            field:String,
+        },
+    }
+    /// Enum special type field -to be used in enum decl
+    /// 
+    /// # Traits
+    /// - Derived<br/>
+    ///     - Clone
+    ///     - PartialEq
+    ///     - Debug
+    /// # Example
+    /// ```
+    /// Single(String),             // res::error;
+    /// Tuple(String,Vec<Type>),    // Res::ok(i32,f64);
+    /// ``` 
+    /// 
+
+    #[derive(Debug,Clone,PartialEq)]
+    pub enum EnumVars{
+        Single(String),                     // res::error;
+        Tuple(String,Vec<Type>),            // Res::ok(i32,f64);
+        Struct(String,Vec<(String,Type)>),  // Res::Ok { val : i32 };
+
     }
 
 
@@ -166,6 +197,14 @@ pub mod AST {
             args : Vec<(String,Type)>,
             body : Vec<Statmnt>,
         },
+        Struct {
+            name:String,
+            fields: Vec<(String,Type)>,
+        },
+        Enum {
+            name: String,
+            variations: Vec<EnumVars>
+        }
     }
 
 /// Enum to hold statements used by Parser

@@ -134,7 +134,35 @@ fn print_decl(decl: &Declare, indent: usize) {
                 let last = i == body.len() - 1;
                 print_statement(stmt, indent + 2, last);
             }
-        }
+        },
+        Declare::Struct { name, fields } => {
+            println!("{}{} Struct: '{}'", prefix, branch, name);
+            if !fields.is_empty() {
+                println!("{}│   ├── Fields:", prefix);
+                for (i, (pname, ptype)) in fields.iter().enumerate() {
+                    let last = i == fields.len() - 1;
+                    let connector = if last { "└──" } else { "├──" };
+                    println!("{}│   │   {} {} : {:?}", prefix, connector, pname, ptype);
+                }
+            } else {
+                println!("{}│   ├── Fields: (none)", prefix);
+            }
+            
+        }, 
+        Declare::Enum { name, variations } => {
+            println!("{}{} Enum: '{}'", prefix, branch, name);
+            if !variations.is_empty() {
+                println!("{}│   ├── Parameters:", prefix);
+                for (i,v) in variations.iter().enumerate() {
+                    let last = i == variations.len() - 1;
+                    let connector = if last { "└──" } else { "├──" };
+                    println!("{}│   │   {} {:?}", prefix, connector,v);
+                }
+            } else {
+                println!("{}│   ├── Fields: (none)", prefix);
+            }
+            
+        },
         
     }
 }
