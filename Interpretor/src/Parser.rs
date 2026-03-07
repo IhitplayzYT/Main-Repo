@@ -12,6 +12,7 @@
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
 pub mod PARSER {
 
+
     use crate::{Ast::AST::{BIN_OP, Code, Declare, EnumVars, Expr, Statmnt, Type, UN_OP},Lexer_Tok::Lex_Tok::LTOK};
     use crate::Errors::Err::{ParserError,Parser_ret};
 
@@ -1000,7 +1001,7 @@ pub mod PARSER {
     }
     
     /// Parser Helper function
-    /// # Priority 10: !, ~, negate, --, ++
+    /// # Priority 10: !, ~, negate, --, ++, function_calls
     /// Evaluates the priority of unary operators
     ///  
     /// # Returns
@@ -1026,14 +1027,18 @@ pub mod PARSER {
         },
         LTOK::INCR => {
             self.next();
-            let operand= self.eval_unary()?;
-            Ok(Expr::Unary_op { op:UN_OP::Incr, operand: Box::new(operand) })           
+            match self.next(){
+                LTOK::IDENT(x) => Ok(Expr::Preincr(x)),
+                t => Err(ParserError::UnexpectedToken { expected: "identifier".to_string(), got: format!("{:?}",t)}),
+            }
         },
         LTOK::DECR => {
             self.next();
-            let operand= self.eval_unary()?;
-            Ok(Expr::Unary_op { op:UN_OP::Decr, operand: Box::new(operand) })           
-        }
+            match self.next(){
+                LTOK::IDENT(x) => Ok(Expr::Predecr(x)),
+                t => Err(ParserError::UnexpectedToken { expected: "identifier".to_string(), got: format!("{:?}",t)}),
+            }
+        },
         _ => {self.eval_fxn_call()},
         }    
     }
@@ -1054,12 +1059,29 @@ pub mod PARSER {
                     self.next();
                     let args = self.eval_args()?;
                     self.consume(&LTOK::RPAREN)?;
+
                     if let Expr::Ident(x) = expr{
                         expr = Expr::Fxn_call { name:x, args:args };
                     }else{
                         return Err(ParserError::Invalid_Code);
                     }
-                }
+                },
+                LTOK::INCR => {
+                    if let Expr::Ident(x) = expr{
+                        self.next();
+                        expr = Expr::Postincr(x);
+                    } else{
+                        return Err(ParserError::Custom("Incr only identifiers".to_string()));
+                    }
+                },
+                LTOK::DECR => {
+                    if let Expr::Ident(x) = expr{
+                        self.next();
+                        expr = Expr::Postdecr(x);
+                    } else{
+                        return Err(ParserError::Custom("Decr only identifiers".to_string()));
+                    }
+                },
                 _ => break,
             }
         }
@@ -1082,7 +1104,7 @@ pub mod PARSER {
                     break;
                 }
             }
-        };
+        }
         Ok(ret)
     }
 
@@ -1111,8 +1133,7 @@ pub mod PARSER {
                 self.consume(&LTOK::RPAREN)?;
                 Ok(expr)
             }
-            _ => Err(ParserError::Custom("TYPE was required".to_string())),
-
+            t => Err(ParserError::UnexpectedToken{expected: "Expression".to_string(),got:format!("{:?}",t)}),
         }
     }
    

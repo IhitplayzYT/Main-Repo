@@ -172,6 +172,14 @@ fn print_statement(stmt: &Statmnt, indent: usize, is_last: bool) {
     let connector = if is_last { "└──" } else { "├──" };
     
     match stmt {
+        Statmnt::Incr(x)=> {
+            println!("{:?}++",x);
+
+        },
+        Statmnt::Decr(x)=> {
+            println!("{:?}--",x);
+
+        },
         Statmnt::Let { name, mutable, type_annot, value } => {
             let mut_str = if *mutable { "mut " } else { "" };
             print!("{}{} Let {}'{}'", prefix, connector, mut_str, name);

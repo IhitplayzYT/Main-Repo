@@ -136,17 +136,19 @@ pub mod AST {
             name: String,
             args: Vec<Expr>,
         },
-        INCR_DECR_1(i64),
-
         Struct_enum_init {
         name: String,
         fields: Vec<(String,Type)>,
         },
 
-        field_access {
+        Field_access {
             obj : Box<Expr>,
             field:String,
         },
+        Postincr(String), // x++
+        Postdecr(String), // x--
+        Preincr(String),  // ++x
+        Predecr(String),  // --x
     }
     /// Enum special type field -to be used in enum decl
     /// 
@@ -264,7 +266,9 @@ pub mod AST {
         Break,
         Continue,
         Return(Option<Expr>),
-        Block(Vec<Statmnt>)
+        Block(Vec<Statmnt>),
+        Incr(String),
+        Decr(String),
 
     }
 
