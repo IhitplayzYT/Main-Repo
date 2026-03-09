@@ -47,9 +47,12 @@ pub mod Err{
     #[derive(Debug,Clone)] 
     pub enum Semantic_err{
         UndefinedVariable(String),
+        RedefinedVariable(String),
         TypeMismatch{expected: Type,got: Type},
         Break_Continue_location,
         UndefinedFunction(String),
+        RedefinedFunction(String),
+        Immutable_Variable(String),
         Argument_err{expected:String,got:String},
         Reassignment(String),
         Custom(String),

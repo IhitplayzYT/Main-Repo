@@ -334,7 +334,23 @@ fn print_expression(expr: &Expr, indent: usize, extra_prefix: &str) {
         Expr::Unary_op { op, operand } => {
             println!("{}└── UnaryOp: {:?}", prefix, op);
             print_expression(operand, indent + 1, "    ");
-        }
+        },
+        Expr::Postdecr(x) => {
+            println!("{}└── Postdecr: {:?}", prefix, "--");
+            print_expression(&Expr::Postdecr(x.clone()), indent + 1, "    ");
+        },
+        Expr::Predecr(x) => {
+            println!("{}└── Predecr: {:?}", prefix, "--");
+            print_expression(&Expr::Predecr(x.clone()), indent + 1, "    ");
+        },
+        Expr::Postincr(x) => {
+            println!("{}└── Postincr: {:?}", prefix, "++");
+            print_expression(&Expr::Postincr(x.clone()), indent + 1, "    ");
+        },
+        Expr::Preincr(x) => {
+            println!("{}└── Preincr: {:?}", prefix, "--");
+            print_expression(&Expr::Preincr(x.clone()), indent + 1, "    ");
+        },
         
         Expr::Fxn_call { name, args } => {
             println!("{}└── FunctionCall: '{}'", prefix, name);

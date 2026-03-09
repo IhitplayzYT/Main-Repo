@@ -138,7 +138,7 @@ pub mod AST {
         },
         Struct_enum_init {
         name: String,
-        fields: Vec<(String,Type)>,
+        fields: Vec<(String,Expr)>,
         },
 
         Field_access {

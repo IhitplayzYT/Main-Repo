@@ -85,6 +85,7 @@ pub mod Lex_Tok {
         LPAREN,         // -> (
         RPAREN,         // -> )
         SEMICOLON,      // -> (;)
+        DOT,            // -> (.)
         COLON,          // -> (:)
         COMMA,          // -> (,)
         NULL,           // -> (None/Null)   

@@ -454,7 +454,12 @@ pub mod Tokeniser {
                         ret.push(LTOK::ASSGN);
                         temp.clear();
                     }
-                } else if i == '!' {
+                } else if i == '.'{
+                  ret.push(LTOK::DOT)  ;
+                  temp.clear();
+                  iter.next();
+                }
+                 else if i == '!' {
                     if let Some('=') = iter.next() {
                         ret.push(LTOK::N_EQ);
                         temp.clear();

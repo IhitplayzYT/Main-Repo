@@ -13,7 +13,7 @@
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,unused_imports,dead_code)]
 pub mod Analyser {
     use std::collections::HashMap;
-    use crate::{Ast::{self, AST::*},Errors::Err::{Parser_ret, Semantic_Ret, Semantic_err}};
+    use crate::{Ast::{self, AST::*},Errors::Err::{self, Parser_ret, Semantic_Ret, Semantic_err}};
 
     /// Semanilizer structure[MAIN API]
     /// 
@@ -32,9 +32,13 @@ pub mod Analyser {
     
     #[derive(Debug,Clone)]
     pub struct Semantilizer {
-        pub symbol_table: HashMap<String,Type>,
-        pub function_map: HashMap<String,(Vec<Type>,Option<Type>)>,
-        pub in_loop : usize,
+        variables: HashMap<String, (Type, bool)>,              // Variable name -> (type, is_mutable)
+        functions: HashMap<String, (Vec<Type>, Option<Type>)>, 
+        structs: HashMap<String, Vec<(String, Type)>>,
+        enums: HashMap<String, Vec<EnumVars>>,
+        current_function_return: Option<Type>,
+        loop_depth: usize,
+        scope_stack: Vec<HashMap<String, (Type, bool)>>,
     }
 
 
@@ -48,10 +52,16 @@ pub mod Analyser {
         /// ```    
 
         pub fn new() -> Self{
-            Self{symbol_table:HashMap::new(),
-                function_map: HashMap::new(),
-                in_loop: 0,
-            }}
+        Self {
+            variables: HashMap::new(),
+            functions: HashMap::new(),
+            structs: HashMap::new(),
+            enums: HashMap::new(),
+            current_function_return: None,
+            loop_depth: 0,
+            scope_stack: vec![HashMap::new()],
+        }
+        }
 
         /// Semanilizer main call 
         /// 
@@ -70,8 +80,47 @@ pub mod Analyser {
             for decl in &code.Program{
                 self.analyze_decl(decl)?;
             }
+
+            if !self.functions.contains_key("main"){
+                return Err(Semantic_err::UndefinedFunction("main".to_string()));
+            }
+
             Ok(())
         }
+
+        fn enter_scope(&mut self) {self.scope_stack.push(HashMap::new());}
+
+        fn exit_scope(&mut self) {self.scope_stack.pop();}
+
+        fn declare_varib(&mut self,name: String,type_: Type,mutable: bool ) -> Semantic_Ret<()>{
+        let cur_scope = self.scope_stack.last_mut().unwrap();
+        if cur_scope.contains_key(&name) {
+            return Err(Semantic_err::RedefinedVariable(name));
+        }
+        cur_scope.insert(name, (type_,mutable));
+        Ok(())
+        }
+
+        fn get_varib(&mut self,name: &str) -> Semantic_Ret<(Type,bool)>{
+            for sc in self.scope_stack.iter().rev(){
+                if let Some(var) = sc.get(name) {
+                    return Ok(var.clone());
+                }                    
+            }
+            Err(Semantic_err::UndefinedVariable(name.to_string()))
+        }
+
+        fn update_varib(&mut self,name: &str) -> Semantic_Ret<()>{
+            let (_,is_mutable) = self.get_varib(name)?;
+            if !is_mutable{
+                return Err(Semantic_err::Immutable_Variable(name.to_string()));
+            }
+
+            Ok(())
+        }
+
+
+
 
         /// Semanilizer function to save any function declarations
         /// 
@@ -84,10 +133,26 @@ pub mod Analyser {
 
         pub fn save_declares(&mut self,decl: &Declare) -> Semantic_Ret<()>{
                 match decl {
-                    Declare::Function { name, rtype, args, ..} => {
+                    Declare::Function { name, rtype, args, .. } => {
                         let param_types: Vec<Type> = args.iter().map(|(_,t)| {t.clone()}).collect();
-                        self.function_map.insert(name.clone(),(param_types,rtype.clone()));
-                    }
+                        if self.functions.contains_key(name) {
+                            return Err(Semantic_err::RedefinedFunction(name.to_string()));
+                        }
+                        self.functions.insert(name.clone(),(param_types,rtype.clone()));
+                    },
+                    Declare::Enum { name, variations } =>{
+                        if self.enums.contains_key(name) {
+                            return Err(Semantic_err::Custom(format!("Enum {} already defined",name)))
+                        }
+                        self.enums.insert(name.clone(), variations.clone());
+
+                    },
+                    Declare::Struct { name, fields } => {
+                        if self.structs.contains_key(name) {
+                            return Err(Semantic_err::Custom(format!("Struct {} already defined",name)))
+                        }
+                        self.structs.insert(name.clone(), fields.clone());
+                    },
                 }
             Ok(())
         }
@@ -103,17 +168,21 @@ pub mod Analyser {
 
         pub fn analyze_decl(&mut self,decl: &Declare) -> Semantic_Ret<()>{
                 match decl {
-                    Declare::Function {args, body, ..} => {
-                        self.symbol_table.clear();
-                        for  (name,var_type) in args {
-                            self.symbol_table.insert(name.clone(),var_type.clone());
+                    Declare::Function { name, rtype, args, body } => {
+                        self.scope_stack = vec![HashMap::new()];
+                        self.current_function_return = rtype.clone();
+
+                        for  (p_name,var_type) in args {
+                            self.declare_varib(p_name.clone(), var_type.clone(), false)?;
                         }
+
                         for stmt in body {
                             self.analyze_stmt(stmt)?;
-
                         }
+                        self.current_function_return = None;
 
                     }
+                    _=> {},
                 }
 
             Ok(())
@@ -130,7 +199,7 @@ pub mod Analyser {
 
         pub fn analyze_stmt(&mut self,stmt: &Statmnt) -> Semantic_Ret<()> {
                 match stmt {
-                    Statmnt::Let { name, type_annot, value,.. } => {
+                    Statmnt::Let { name, mutable, type_annot, value } => {
                         let rhs_type = self.eval_type(value)?;
                         if let Some(t) = type_annot {
                             if !self.is_compatible(t,&rhs_type) {
@@ -138,11 +207,11 @@ pub mod Analyser {
                             }
 
                         }
-                        if self.symbol_table.contains_key(name) {
-                            return Err(Semantic_err::Reassignment(name.clone()))
-                        }
-                        self.symbol_table.insert(name.clone(), rhs_type);
+                    let final_type = type_annot.clone().unwrap_or(rhs_type);
+                    self.declare_varib(name.clone(), rhs_type, *mutable)?;
                     },
+                    // TODO:
+                    // FIXME:
                     Statmnt::Assignment { name, val,.. } => {
                         if !self.symbol_table.contains_key(name){
                             return Err(Semantic_err::UndefinedVariable(name.clone()));

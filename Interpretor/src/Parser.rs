@@ -13,7 +13,7 @@
 pub mod PARSER {
 
 
-    use crate::{Ast::AST::{BIN_OP, Code, Declare, EnumVars, Expr, Statmnt, Type, UN_OP},Lexer_Tok::Lex_Tok::LTOK};
+    use crate::{Ast::AST::{BIN_OP, Code, Declare, EnumVars, Expr, Statmnt, Type, UN_OP}, Lexer_Tok::Lex_Tok::LTOK};
     use crate::Errors::Err::{ParserError,Parser_ret};
 
     ///  Parser Struct 
@@ -202,7 +202,7 @@ pub mod PARSER {
             LTOK::FN => self.eval_fxn(),
             LTOK::STRUCT => self.eval_struct(), 
             LTOK::ENUM => self.eval_enum(), 
-                _ => {return Err(ParserError::Custom("Expected Declaration".to_string()));}
+            _ => {return Err(ParserError::Custom("Expected Declaration".to_string()));}
             }
         }         
 
@@ -243,7 +243,7 @@ pub mod PARSER {
             self.consume(&LTOK::LBRACE)?;
             let fields = self.eval_struct_fields()?;
             self.consume(&LTOK::RBRACE)?;
-            Ok(Declare::Struct { name, fields})
+            Ok(Declare::Struct { name, fields })
 
         }
 
@@ -262,13 +262,10 @@ pub mod PARSER {
             tok => {return Err(ParserError::UnexpectedToken{expected:"Function name".to_string(),got:format!("{:?}",tok)});}};
 
         self.consume(&LTOK::LPAREN)?;
-
         let param = self.eval_params()?;
-
         self.consume(&LTOK::RPAREN)?;
 
-        let rtype = 
-            if self.match_token(&[LTOK::ARROW]) {
+        let rtype = if self.match_token(&[LTOK::ARROW]) {
                 Some(self.eval_types().unwrap())
             }
             else{
@@ -308,6 +305,13 @@ pub mod PARSER {
             Ok(ret)
         }
 
+        /// Parser Helper function
+        /// Evaluates a enum and struct field declaration
+        ///  
+        /// # Returns
+        /// Parser_ret<Vec<(String,Type)>> -> Returns a Parser result object containing a vector of (name,dtype) tuples
+        /// 
+
         fn eval_struct_fields(&mut self) -> Parser_ret<Vec<(String,Type)>>{
             let mut fields = Vec::new();
             while !self.check(&LTOK::RBRACE) {
@@ -326,6 +330,13 @@ pub mod PARSER {
             Ok(fields)
         }
 
+        /// Parser Helper function
+        /// Evaluates the type of next token
+        ///  
+        /// # Returns
+        /// Parser_ret<> -> Returns a Parser result object containing the type of the next token in token stream
+        /// 
+
         fn eval_types(&mut self)->Parser_ret<Type>{
             match self.next(){
             LTOK::STRING_TYPE => Ok(Type::STRING),
@@ -335,6 +346,7 @@ pub mod PARSER {
             LTOK::IDENT(name) => Ok(Type::CUSTOM(name)),
             tok => {return Err(ParserError::UnexpectedToken{expected:"type".to_string(),got:format!("{:?}",tok)});},
             }
+
         }
 
 
@@ -586,19 +598,16 @@ pub mod PARSER {
             LTOK::WHILE => {self.eval_while()},
             LTOK::FOR => {self.eval_for()},
             LTOK::LOOP => {self.eval_loop()},
-            
             LTOK::BREAK => {
             self.next();
             self.consume(&LTOK::SEMICOLON)?;
             Ok(Statmnt::Break)
             },
-
             LTOK::CONTINUE =>{
             self.next();
             self.consume(&LTOK::SEMICOLON)?;
             Ok(Statmnt::Continue)
             },
-
             LTOK::RETURN => self.eval_return(),
             LTOK::LBRACE => {
                 self.next();
@@ -1001,7 +1010,7 @@ pub mod PARSER {
     }
     
     /// Parser Helper function
-    /// # Priority 10: !, ~, negate, --, ++, function_calls
+    /// # Priority 10: !, ~, negate, --(pre), ++(pre), function_calls
     /// Evaluates the priority of unary operators
     ///  
     /// # Returns
@@ -1044,7 +1053,7 @@ pub mod PARSER {
     }
 
     /// Parser Helper function
-    /// # Priority 10: fxn_calls()
+    /// # Priority 10: fxn_calls(), ++(post), --(post)
     /// Evaluates the priority of function calls[NOTE: Same priority as the unary operators]
     ///  
     /// # Returns
@@ -1065,6 +1074,14 @@ pub mod PARSER {
                     }else{
                         return Err(ParserError::Invalid_Code);
                     }
+                },
+                LTOK::DOT => {
+                    self.next();
+                    let field = match self.next() {
+                        LTOK::IDENT(x) => x,
+                        t => return Err(ParserError::UnexpectedToken { expected: "Field name".to_string(), got: format!("{:?}",t)})
+                    };
+                    expr = Expr::Field_access { obj: Box::new(expr), field };
                 },
                 LTOK::INCR => {
                     if let Expr::Ident(x) = expr{
@@ -1127,7 +1144,16 @@ pub mod PARSER {
             LTOK::BOOL(x) => Ok(Expr::Bool(x)),
             LTOK::TRUE => Ok(Expr::Bool(true)),
             LTOK::FALSE => Ok(Expr::Bool(false)),
-            LTOK::IDENT(x) => Ok(Expr::Ident(x)),
+            LTOK::IDENT(x) => {
+                if self.match_token(&[LTOK::LBRACE]) {
+                    let fields = self.parse_struct_fields()?;
+                    self.consume(&LTOK::RBRACE)?;
+                    Ok(Expr::Struct_enum_init { name:x , fields})
+                }
+                else{
+                    Ok(Expr::Ident(x))
+                }
+            },
             LTOK::LPAREN => {
                 let expr = self.eval_expr()?;
                 self.consume(&LTOK::RPAREN)?;
@@ -1136,6 +1162,28 @@ pub mod PARSER {
             t => Err(ParserError::UnexpectedToken{expected: "Expression".to_string(),got:format!("{:?}",t)}),
         }
     }
+
+
+    fn parse_struct_fields(&mut self) -> Parser_ret<Vec<(String,Expr)>> {
+        let mut fields = Vec::new();
+        if !self.check(&LTOK::RBRACE) {
+            loop {
+            let name = match self.next() {
+            LTOK::IDENT(n) => n,
+            tok => {return Err(ParserError::UnexpectedToken{expected:"Enum name".to_string(),got:format!("{:?}",tok)});},
+            };
+        self.consume(&LTOK::COLON)?;
+        let value = self.eval_expr()?;
+        fields.push((name,value));
+        if !self.match_token(&[LTOK::COMMA]) {
+            break ;
+        }
+        }
+        }
+        
+        Ok(fields)
+    }
+
    
     /* ******************************** EXPRESSIONS ********************************  */
 
