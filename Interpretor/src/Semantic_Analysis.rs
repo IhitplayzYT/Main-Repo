@@ -101,7 +101,7 @@ pub mod Analyser {
         Ok(())
         }
 
-        fn get_varib(&mut self,name: &str) -> Semantic_Ret<(Type,bool)>{
+        fn get_varib(&self,name: &str) -> Semantic_Ret<(Type,bool)>{
             for sc in self.scope_stack.iter().rev(){
                 if let Some(var) = sc.get(name) {
                     return Ok(var.clone());
@@ -168,7 +168,7 @@ pub mod Analyser {
 
         pub fn analyze_decl(&mut self,decl: &Declare) -> Semantic_Ret<()>{
                 match decl {
-                    Declare::Function { name, rtype, args, body } => {
+                    Declare::Function {rtype, args, body ,..} => {
                         self.scope_stack = vec![HashMap::new()];
                         self.current_function_return = rtype.clone();
 
@@ -208,87 +208,125 @@ pub mod Analyser {
 
                         }
                     let final_type = type_annot.clone().unwrap_or(rhs_type);
-                    self.declare_varib(name.clone(), rhs_type, *mutable)?;
+                    self.declare_varib(name.clone(), final_type, *mutable)?;
                     },
-                    // TODO:
-                    // FIXME:
-                    Statmnt::Assignment { name, val,.. } => {
-                        if !self.symbol_table.contains_key(name){
-                            return Err(Semantic_err::UndefinedVariable(name.clone()));
-                        }
-                        let var_type = self.symbol_table.get(name).unwrap();
+                    Statmnt::Assignment { name,op, val} => {
+                        self.update_varib(name)?;
+                        let (var_type,_) = self.get_varib(name)?;
                         let val_type = self.eval_type(val)?;
-
-                        if !self.is_compatible(var_type,&val_type){
-                            return Err(Semantic_err::TypeMismatch { expected: var_type.clone(), got: val_type });                        
+                        if let Some(operat) = op {
+                            self.check_bin_op_types(operat,&var_type,&val_type)?;
+                        }else{
+                            if !self.is_compatible(&var_type, &val_type) {
+                                return Err(Semantic_err::TypeMismatch { expected: var_type, got: val_type });
+                            }       
                         }
-                    }
+                   }
                     Statmnt::If { cond, then_branch, else_branch } => {
                         let cond_type = self.eval_type(cond)?;
                         if !self.is_compatible(&Type::BOOL, &cond_type){
                             return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: cond_type });
                         }
+                        self.enter_scope();
+
 
                         for i in then_branch{
                             self.analyze_stmt(i)?;
                         }
                         if let Some(other) = else_branch {
+                            self.enter_scope();
                             for i in other{
                                 self.analyze_stmt(i)?;
                             }
+                            self.exit_scope();
 
                         }
-
+                        self.exit_scope();
                     },
+
                     Statmnt::While { cond, body } => {
                         let cond_type = self.eval_type(cond)?;
                         if !self.is_compatible(&Type::BOOL, &cond_type){
                             return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: cond_type });
                         }
-                        self.in_loop += 1;
+                        self.loop_depth += 1;
+                        self.enter_scope();
                         for i in body{
                             self.analyze_stmt(i)?;
                         }
-                        self.in_loop -= 1;
+                        self.exit_scope();
+                        self.loop_depth -= 1;
                     },
 
                     Statmnt::For { var_name, lb, rb, body } => {
-                        self.eval_type(lb)?;
-                        self.eval_type(rb)?;
-                        self.symbol_table.insert(var_name.clone(), Type::INT);
-                        self.in_loop += 1;
+                        let lb_t = self.eval_type(lb)?;
+                        let rb_t = self.eval_type(rb)?;
+                        if !self.is_compatible(&Type::INT, &lb_t){
+                            return Err(Semantic_err::TypeMismatch { expected: Type::INT, got: lb_t });
+                        }
+                        if !self.is_compatible(&Type::INT, &rb_t){
+                            return Err(Semantic_err::TypeMismatch { expected: Type::INT, got: rb_t });
+                        }
+                        self.loop_depth += 1;
+                        self.enter_scope();
+                        self.declare_varib(var_name.clone(), Type::INT, false)?;
                         for i in body{
                             self.analyze_stmt(i)?;
                         }
-                        self.in_loop -= 1;
+                        self.exit_scope();
+                        self.loop_depth -= 1;
+
                     },
                     Statmnt::Loop { body } => {
+                        self.loop_depth += 1;
+                        self.enter_scope();
                         for i in body{
                             self.analyze_stmt(i)?;
                         }
+                        self.exit_scope();
+                        self.loop_depth -= 1;                   
                     },
                     Statmnt::Break => {
-                        if self.in_loop == 0 {
+                        if self.loop_depth == 0 {
                             return Err(Semantic_err::Break_Continue_location);
                         }
                     },
                     Statmnt::Continue => {
-                        if self.in_loop == 0 {
+                        if self.loop_depth == 0 {
                             return Err(Semantic_err::Break_Continue_location);
                         }
                     }
-                    Statmnt::Return(x) => {
-                        if let Some(val)  = x {
-                            self.eval_type(val)?;
+                    Statmnt::Return(val) => {
+                        let rtype = if let Some(x)  = val {
+                            Some(self.eval_type(x)?)
+                        }else{
+                            None
+                        };
+                            
+                        match (&self.current_function_return,&rtype) {
+                            (Some(expected),Some(got)) => {
+                                if !self.is_compatible(expected, got) {
+                                    return Err(Semantic_err::TypeMismatch { expected:expected.clone(), got:got.clone() });
+                                }
+                            },
+                            (Some(expected),None) => {
+                                return Err(Semantic_err::TypeMismatch { expected:expected.clone(), got:Type::NULL });
+                            },
+                            (None,Some(got)) => {
+                                return Err(Semantic_err::TypeMismatch { expected:Type::NULL, got:got.clone() });
+                            },
+                            (None,None) => {}
                         }
                     },
                     Statmnt::Expr(x) => {
                         self.eval_type(x)?;
                     },
                     Statmnt::Block(blk) => {
+                        self.enter_scope();
                         for i in blk {
                             self.analyze_stmt(i)?;
                         }
+                        self.exit_scope();
                     }
 
                 }
@@ -315,42 +353,44 @@ pub mod Analyser {
             Expr::Float(_)  => Ok(Type::FLOAT),
             Expr::Int(_)  => Ok(Type::INT),
             Expr::String(_)  => Ok(Type::STRING),
-            Expr::Ident(name) => self.symbol_table.get(name).cloned().ok_or_else(|| Semantic_err::UndefinedVariable(name.clone())),
+            Expr::Ident(name) => {
+                let (typ,_) = self.get_varib(name)?;
+                Ok(typ)
+            }, 
             Expr::Binary_op { op, left, right } => {
                 let (l_type,r_type) = (self.eval_type(left)?,self.eval_type(right)?);
-                match op {
-                    BIN_OP::Add | BIN_OP::Sub | BIN_OP::Mul | BIN_OP::Div | BIN_OP::Mod | BIN_OP::Amp | BIN_OP::Lshift | BIN_OP::Pipe | BIN_OP::Rshift | BIN_OP::Xor | BIN_OP::Pow => {
-                        if self.is_compatible(&l_type, &r_type) {
-                            Ok(l_type)
-                        } else{
-                            Err(Semantic_err::TypeMismatch { expected: l_type, got:r_type })
-                        } 
-                    },
-                    BIN_OP::Eq | BIN_OP::N_eq | BIN_OP::Lt | BIN_OP::Lt_eq | BIN_OP::Gt | BIN_OP::Gt_eq => Ok(Type::BOOL),
-                    BIN_OP::And | BIN_OP::Or => {
-                        if !self.is_compatible(&Type::BOOL, &l_type) {
-                            return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: l_type });
-                        }
-                        if !self.is_compatible(&Type::BOOL, &r_type){
-                            return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: r_type });
-                        }
-
-                        Ok(Type::BOOL)
-                    }
-                }
-            }
+                self.check_bin_op_types(op,&l_type,&r_type)
+           }
             Expr::Unary_op { op, operand } => {
                 let operant_type = self.eval_type(operand)?;
                 match op {
-                    UN_OP::Bang => Ok(Type::BOOL),
-                    UN_OP::Neg => Ok(operant_type),
-                    UN_OP::Tilda => Ok(Type::INT),
-                    UN_OP::Decr => Ok(Type::INT),
-                    UN_OP::Incr => Ok(Type::INT),
+                    UN_OP::Bang => {
+                        if matches!(operant_type,Type::BOOL){
+                            Ok(Type::BOOL)
+                        }else{
+                            Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: operant_type })
+                        }
+                    },
+                    UN_OP::Neg =>  {
+                        if matches!(operant_type,Type::INT | Type::FLOAT){
+                            Ok(operant_type)
+                        }else{
+                            Err(Semantic_err::TypeMismatch { expected: Type::INT, got: operant_type })
+                        }
+                    },
+                    UN_OP::Tilda =>{
+                        if matches!(operant_type,Type::INT){
+                            Ok(Type::INT)
+                        }else{
+                            Err(Semantic_err::TypeMismatch { expected: Type::INT, got: operant_type })
+                        }
+                    },
                 }
             },
+
             Expr::Fxn_call { name, args } => {
-                let (param,ret_type) = self.function_map.get(name).ok_or_else(|| Semantic_err::UndefinedFunction(name.clone()))?;
+                let (param,ret_type) = self.functions.get(name).ok_or_else(|| Semantic_err::UndefinedFunction(name.clone()))?;
+
                 if args.len() != param.len() {
                     return Err(Semantic_err::Custom(format!("Invalid number of arguments provided for Function {:?} expected:{:?} got {:?}",name,param.len(),args.len())));
                 }
@@ -363,8 +403,62 @@ pub mod Analyser {
 
                 Ok(ret_type.clone().unwrap_or(Type::INT))
             },
+            Expr::Struct_enum_init { name, fields } => {
+                if let Some(s_fields) = self.structs.get(name) {
+                    if s_fields.len() != fields.len() {
+                        return Err(Semantic_err::Custom(format!("Invalid number of arguments provided for Struct {:?} expected:{:?} got {:?}",name,s_fields.len(),fields.len())));
+                    }
+                    for (fname,fexpr) in fields {
+                        let ftype = self.eval_type(fexpr)?;
+                        let exp_t = s_fields.iter().find(|(n,_)| n == fname).map(| (_,t) | t).ok_or_else(|| Semantic_err::Custom(format!("Struct '{}' has no field '{}'", name, fname)))?;
+                        if !self.is_compatible(exp_t, &ftype) {
+                            return Err(Semantic_err::TypeMismatch { expected: exp_t.clone(), got: ftype });
+                        }
+                    }
+                    return Ok(Type::CUSTOM(name.clone()));
+                }
 
-            _ => Ok(Type::INT),
+                if self.enums.contains_key(name) {
+                    return Ok(Type::CUSTOM(name.clone()));
+                }
+
+                Err(Semantic_err::Custom(format!("Undefined type: {}",name)))
+
+            },
+            Expr::Field_access { obj, field } => {
+                let typ = self.eval_type(obj)?;
+                match typ {
+                    Type::CUSTOM(sname) => {
+                        if let Some(fields) = self.structs.get(&sname){
+                            for (fname,ftype) in fields{
+                                if fname == field {
+                                    return Ok(ftype.clone());
+                                }
+                            }
+                            Err(Semantic_err::Custom(format!("Struct {} has no field named {}",sname,field)))
+                        }
+                        else{
+                            Err(Semantic_err::Custom(format!("Type {} has no fields",sname)))
+                        }
+                    }
+                    _ => Err(Semantic_err::Custom(format!("Cannot access field '{}' on type {:?}", field, typ))),
+                }
+
+            },
+            Expr::Postdecr(name) | Expr::Predecr(name) | Expr::Preincr(name) | Expr::Postincr(name) => {
+                let (typ,is_mut) = self.get_varib(name)?;
+                if !is_mut{
+                    return Err(Semantic_err::Immutable_Variable(name.clone()));
+                }
+                
+                if !matches!(typ,Type::INT | Type::FLOAT) {
+                    return Err(Semantic_err::TypeMismatch { expected: Type::INT, got: typ });
+                }
+                Ok(typ)
+            },
+            Expr::Null => {Ok(Type::NULL)},
+
+
         }
 
         }
@@ -388,6 +482,52 @@ pub mod Analyser {
        }
 
        
+       pub fn check_bin_op_types(&self,op:&BIN_OP,l_type: &Type,r_type: &Type) -> Semantic_Ret<Type>{
+                match op {
+                    BIN_OP::Add | BIN_OP::Sub | BIN_OP::Mul | BIN_OP::Div | BIN_OP::Mod | BIN_OP::Pow => {
+                        if self.is_compatible(&l_type, &r_type) {
+                            if matches!(l_type,Type::INT | Type::FLOAT){
+                                Ok(l_type.clone())
+                            }else{
+                                Err(Semantic_err::Custom(format!("[ARITHMETIC] Required numeric types, found {:?}", l_type)))
+                            }
+                        } else{
+                            Err(Semantic_err::TypeMismatch { expected: l_type.clone(), got:r_type.clone() })
+                        } 
+                    },
+                    BIN_OP::Eq | BIN_OP::N_eq | BIN_OP::Lt | BIN_OP::Lt_eq | BIN_OP::Gt | BIN_OP::Gt_eq => {
+                        if self.is_compatible(l_type, r_type) {
+                            Ok(Type::BOOL)
+                        }else{
+                            Err(Semantic_err::TypeMismatch { expected: l_type.clone(), got:r_type.clone() })
+                        }
+
+                    },
+                    BIN_OP::And | BIN_OP::Or => {
+                        if !self.is_compatible(&Type::BOOL, &l_type) {
+                            return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: l_type.clone() });
+                        }
+                        if !self.is_compatible(&Type::BOOL, &r_type){
+                            return Err(Semantic_err::TypeMismatch { expected: Type::BOOL, got: r_type.clone() });
+                        }
+
+                        Ok(Type::BOOL)
+                    },
+                    BIN_OP::Amp | BIN_OP::Pipe | BIN_OP::Xor | BIN_OP::Lshift | BIN_OP::Rshift => {
+                        if !matches!(l_type,Type::INT) {
+                            return Err(Semantic_err::TypeMismatch { expected: Type::INT, got: l_type.clone()});
+                        }
+                        if !matches!(r_type,Type::INT) {
+                            return Err(Semantic_err::TypeMismatch { expected: Type::INT, got: r_type.clone()});
+                        }
+                        Ok(Type::INT)
+                    },
+                }
+ 
+       }
+
+
+
 
 
 

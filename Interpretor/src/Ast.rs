@@ -90,7 +90,7 @@ pub mod AST {
 /// ``` 
     #[derive(Clone,PartialEq,Debug)]
     pub enum UN_OP{
-        Tilda,Bang,Neg,Incr,Decr
+        Tilda,Bang,Neg,
     }
 
 /// Enum to hold evaluatable expressions used by Parser
@@ -267,8 +267,6 @@ pub mod AST {
         Continue,
         Return(Option<Expr>),
         Block(Vec<Statmnt>),
-        Incr(String),
-        Decr(String),
 
     }
 
