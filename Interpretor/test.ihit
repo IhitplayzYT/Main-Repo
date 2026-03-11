@@ -1,0 +1,18 @@
+
+fn main (x: int, z: float) {
+let mut a = 34;
+let mut b = 54;
+let mut y: String = "temp";
+if  a >= b {
+    y = " hello dcwinidw si_() \' .. }  \n " ;
+}
+else{
+    a ^= (b + 23);
+}
+
+
+for i in b..a{
+    y = "pls";    
+}
+
+}

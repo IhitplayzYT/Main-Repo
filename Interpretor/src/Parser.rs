@@ -401,7 +401,23 @@ pub mod PARSER {
         };
 
         self.consume(&LTOK::ASSGN)?;
-        let val = self.eval_expr()?;
+        // Check for struct initialization: TypeName { ... }
+        let val = if let LTOK::IDENT(type_name) = self.peek().clone() {
+        let saved_idx = self.idx;
+        self.next(); // Consume IDENT
+        if self.check(&LTOK::LBRACE) {
+            self.next(); // Consume LBRACE
+            let fields = self.parse_struct_fields()?;
+            self.consume(&LTOK::RBRACE)?;
+            Expr::Struct_enum_init { name: type_name, fields }
+        } else {
+            // Not struct init, restore and parse normally
+            self.idx = saved_idx;
+            self.eval_expr()?
+        }
+    } else {
+        self.eval_expr()?
+    };
         self.consume(&LTOK::SEMICOLON)?;
         Ok(Statmnt::Let { name, mutable, type_annot:annot, value: val })
         }
@@ -428,7 +444,7 @@ pub mod PARSER {
             self.consume(&LTOK::ASSGN)?;
             let val = self.eval_expr()?;
             self.consume(&LTOK::SEMICOLON)?;
-            Ok(Statmnt::Let { name, mutable:true, type_annot:annot, value: val })
+            Ok(Statmnt::Let { name, mutable:false, type_annot:annot, value: val })
         }
    
         /* ******************************** LET & CONST ********************************  */
@@ -444,8 +460,12 @@ pub mod PARSER {
 
         fn eval_if_else(&mut self) -> Parser_ret<Statmnt>{
             self.consume(&LTOK::IF)?;
-           
+            let has_paren = self.match_token(&[LTOK::LPAREN]);
             let cond = self.eval_expr()?;
+            if has_paren{
+                self.consume(&LTOK::RPAREN)?;
+            }
+
             self.consume(&LTOK::LBRACE)?;
             let then_branch = self.eval_block()?;
             self.consume(&LTOK::RBRACE)?;
@@ -455,7 +475,7 @@ pub mod PARSER {
                 if self.check(&LTOK::IF){
                     Some(vec![self.eval_if_else()?])
                 }else{
-                    self.consume(&LTOK::LBRACE)?;
+                   self.consume(&LTOK::LBRACE)?;
                    let bl = self.eval_block()?;
                    self.consume(&LTOK::RBRACE)?;
                    Some(bl)
@@ -505,7 +525,11 @@ pub mod PARSER {
 
         fn eval_while(&mut self) -> Parser_ret<Statmnt> {
             self.consume(&LTOK::WHILE)?;
+            let has_paren = self.match_token(&[LTOK::LPAREN]);
             let cond = self.eval_expr()?;
+            if has_paren {
+                self.consume(&LTOK::RPAREN)?;
+            }
             self.consume(&LTOK::LBRACE)?;
             let body = self.eval_block()?;
             self.consume(&LTOK::RBRACE)?;
@@ -551,11 +575,12 @@ pub mod PARSER {
     
         fn eval_return(&mut self) -> Parser_ret<Statmnt> {
             self.consume(&LTOK::RETURN)?;
-            let val = match self.next() {
-                LTOK::SEMICOLON => None,
-                _ => Some(self.eval_expr()?),
+            let val = if self.check(&LTOK::SEMICOLON) {
+                None
+            }else {
+                Some(self.eval_expr()?)
             };
-
+            self.consume(&LTOK::SEMICOLON)?;
             Ok(Statmnt::Return(val))
         }
 
@@ -714,11 +739,7 @@ pub mod PARSER {
            self.next();
            Some(Some(BIN_OP::Xor))
        },
-        LTOK::POW => {
-           self.next();
-           Some(Some(BIN_OP::Pow))
-       },
-       _ => None,
+      _ => None,
    }
    }
 
@@ -974,7 +995,8 @@ pub mod PARSER {
     }
 
     /// Parser Helper function
-    /// # Priority 9: *, /, %
+    /// # Priority 9: *, /, %, **
+    ///
     /// Evaluates the priority of factor type operators and incr/decr
     ///  
     /// # Returns
@@ -991,7 +1013,8 @@ pub mod PARSER {
     }
 
     /// Parser Helper function
-    /// Match function to determine which factor op * or / or %
+    /// Match function to determine which factor op * or / or % or **
+    /// 
     /// 
     /// # Important 
     /// This function is allows for equal precedeance of all operators 
@@ -1005,6 +1028,7 @@ pub mod PARSER {
         LTOK::STAR => {self.next();Some(BIN_OP::Mul)},
         LTOK::DIV => {self.next();Some(BIN_OP::Div)},
         LTOK::MODULO => {self.next();Some(BIN_OP::Mod)},
+        LTOK::POW => {self.next();Some(BIN_OP::Pow)},
         _ => None,
         }
     }
@@ -1137,7 +1161,8 @@ pub mod PARSER {
     // TODO:
     // FIXME: Finish this function
     fn eval_primary(&mut self) -> Parser_ret<Expr> {
-        match self.next() {
+    let token = self.next();
+        match token {
             LTOK::INT(x) => Ok(Expr::Int(x)),
             LTOK::FLOAT(x) => Ok(Expr::Float(x)),
             LTOK::STRING(x) => Ok(Expr::String(x)),
@@ -1145,14 +1170,7 @@ pub mod PARSER {
             LTOK::TRUE => Ok(Expr::Bool(true)),
             LTOK::FALSE => Ok(Expr::Bool(false)),
             LTOK::IDENT(x) => {
-                if self.match_token(&[LTOK::LBRACE]) {
-                    let fields = self.parse_struct_fields()?;
-                    self.consume(&LTOK::RBRACE)?;
-                    Ok(Expr::Struct_enum_init { name:x , fields})
-                }
-                else{
-                    Ok(Expr::Ident(x))
-                }
+                Ok(Expr::Ident(x))
             },
             LTOK::LPAREN => {
                 let expr = self.eval_expr()?;

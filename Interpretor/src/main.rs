@@ -24,6 +24,8 @@ mod Interpretor;
 mod printer;
 use std::env;
 
+use crate::Semantic_Analysis::Analyser::Semantilizer;
+
 
 fn main() {
     let arguments: Vec<String> = env::args().collect();
@@ -37,7 +39,10 @@ fn main() {
     println!();
     println!();
     let mut PARSER = Parser::PARSER::Parser::new(LEXER.Lexer_Output);
-    let t = PARSER.Parse();
+    let t = PARSER.Parse().unwrap();
     println!("{:?}",t);
+    let mut sem = Semantilizer::new();
+    let z =  sem.analyse(&t);
+    println!("{:?} !!",z);
     /* ADD THE FRONTEND CODE TO REPLACE THIS  */
 }

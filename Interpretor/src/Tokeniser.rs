@@ -122,7 +122,7 @@ pub mod Tokeniser {
     
         pub fn new(v: String) -> Self {
             let file = fs::read_to_string(v).unwrap();
-            let t = file.replace("..", ";");
+            let t = file.replace("..", " ` ");
             Self {
                 text:t,
                 Lexer_Output: Vec::new(),
@@ -454,11 +454,21 @@ pub mod Tokeniser {
                         ret.push(LTOK::ASSGN);
                         temp.clear();
                     }
-                } else if i == '.'{
-                  ret.push(LTOK::DOT)  ;
-                  temp.clear();
-                  iter.next();
+                } else if i == '`'{
+                    ret.push(LTOK::RANGE);
+                    temp.clear();
+                    iter.next();
                 }
+                else if i == '.'{
+                    if let Some('.') = iter.next(){
+                        ret.push(LTOK::RANGE);
+                        temp.clear();
+                        iter.next();
+                    }else{
+                        ret.push(LTOK::DOT);
+                        temp.clear();
+                    }
+                                  }
                  else if i == '!' {
                     if let Some('=') = iter.next() {
                         ret.push(LTOK::N_EQ);
