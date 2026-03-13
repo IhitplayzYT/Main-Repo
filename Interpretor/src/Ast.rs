@@ -196,7 +196,7 @@ pub mod AST {
         Function { 
             name : String,
             rtype: Option<Type>,
-            args : Vec<(String,Type)>,
+            args : Vec<(String,Type,bool)>,
             body : Vec<Statmnt>,
         },
         Struct {

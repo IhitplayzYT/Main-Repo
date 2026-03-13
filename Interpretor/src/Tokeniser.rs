@@ -24,6 +24,7 @@ pub mod Tokeniser {
         HashMap::from([
             ("let", LTOK::LET),
             ("mut", LTOK::MUT),
+            ("&mut", LTOK::MUT_ref),
             ("const", LTOK::CONST),
             ("var", LTOK::LET),
             ("if", LTOK::IF),

@@ -27,6 +27,7 @@ pub mod Lex_Tok {
     pub enum LTOK {
         LET,            // -> let (Varib Declaring)
         MUT,            // -> mut (mutability declaring)
+        MUT_ref,        // -> &mut (mutability reference)
         CONST,          // -> const (For constants)
         IF,             // -> (If conditional for Statement && Expr)
         ELSE,           // -> (Else conditional for Statement && Expr)

@@ -77,6 +77,7 @@ pub mod PARSER {
             self.ast = Some(Code{Program:ret.clone()});
             Ok(Code { Program: ret})
         }
+
         /* ******************************** MAIN ********************************  */
 
 
@@ -101,6 +102,49 @@ pub mod PARSER {
             self.idx += 1;
             tok
         }
+
+        ///  Parser Helper function
+        /// 
+        /// Returns the previous token
+        ///
+        /// # Returns
+        /// LTOK -> Returns the previous token without progressing onwards 
+        /// 
+        /// # Example 
+        /// ```
+        /// parser.prev();
+        /// ```       
+
+        pub fn prev(&mut self) -> LTOK {
+            if self.idx > 0 {
+            self.input[self.idx - 1].clone()
+            } else{
+                LTOK::EOF
+            }
+
+        }
+
+        ///  Parser Helper function
+        /// 
+        /// Returns the ith before token
+        ///
+        /// # Returns
+        /// LTOK -> Returns the prev ith token without progressing onwards 
+        /// 
+        /// # Example 
+        /// ```
+        /// parser.prev_n(3);
+        /// ```   
+        
+
+        pub fn prev_n(&mut self,i: usize) -> LTOK {
+             if self.idx - i > 0 {
+            self.input[self.idx - i].clone()
+            } else{
+                LTOK::EOF
+            }
+        }
+
 
         ///  Parser Helper function
         /// Returns the next token in the token stream without progressing forward
@@ -357,17 +401,26 @@ pub mod PARSER {
         /// Parser_ret<Vec<(String,Type)>> -> Returns a Parser result object containing a vector of String,Type tuples to be used in the semantic anlayser to analyse the declaration type
         /// 
 
-        fn eval_params(&mut self) -> Parser_ret<Vec<(String,Type)>>{
-        let mut ret:Vec<(String,Type)> = Vec::new();
+        fn eval_params(&mut self) -> Parser_ret<Vec<(String,Type,bool)>>{
+        let mut ret:Vec<(String,Type,bool)> = Vec::new();
         if !self.check(&LTOK::RPAREN) {
             loop{
+                let mut mutable = false;
+                if let LTOK::MUT = self.peek() {
+                    mutable = true;
+                    self.next();
+                }
+                if let LTOK::MUT_ref = self.peek() {
+                    mutable = true;
+                    self.next();
+                }
                 let name = match self.next() {
                     LTOK::IDENT(x) => x,
                     t => {return Err(ParserError::UnexpectedToken { expected: "Identifier".to_string(), got: format!("{:?}", t) })}
                 };
                 self.consume(&LTOK::COLON)?;
                 let type_varib = self.eval_types()?;
-                ret.push((name,type_varib));
+                ret.push((name,type_varib,mutable));
                 if !self.match_token(&[LTOK::COMMA]){break;}
             }
         }
@@ -664,8 +717,6 @@ pub mod PARSER {
 
     /* ******************************** EXPRESSIONS ********************************  */
 
-    // TODO:FIXME: I have a bit of doubt as to correctness of the nested Option ??
-    // Also see for incr and decr
 
     /// Parser Helper function
     /// # Priority 0: =, +=, -=, /=, *=, &=, %=, |=, ^=, **

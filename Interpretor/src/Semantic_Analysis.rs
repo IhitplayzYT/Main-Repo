@@ -198,7 +198,7 @@ pub mod Analyser {
                 Declare::Function {
                     name, rtype, args, ..
                 } => {
-                    let param_types: Vec<Type> = args.iter().map(|(_, t)| t.clone()).collect();
+                    let param_types: Vec<Type> = args.iter().map(|(_, t,_)| t.clone()).collect();
                     if self.functions.contains_key(name) {
                         return Err(Semantic_err::RedefinedFunction(name.to_string()));
                     }
@@ -244,8 +244,8 @@ pub mod Analyser {
                     self.scope_stack = vec![HashMap::new()];
                     self.current_function_return = rtype.clone();
 
-                    for (p_name, var_type) in args {
-                        self.declare_varib(p_name.clone(), var_type.clone(), false)?;
+                    for (p_name, var_type,mutable) in args {
+                        self.declare_varib(p_name.clone(), var_type.clone(), *mutable)?;
                     }
 
                     for stmt in body {

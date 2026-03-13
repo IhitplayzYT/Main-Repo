@@ -114,10 +114,10 @@ fn print_decl(decl: &Declare, indent: usize) {
             println!("{}{} Function: '{}'", prefix, branch, name);
             if !args.is_empty() {
                 println!("{}│   ├── Parameters:", prefix);
-                for (i, (pname, ptype)) in args.iter().enumerate() {
+                for (i, (pname, ptype,mutable)) in args.iter().enumerate() {
                     let last = i == args.len() - 1;
                     let connector = if last { "└──" } else { "├──" };
-                    println!("{}│   │   {} {} : {:?}", prefix, connector, pname, ptype);
+                    println!("{}│   │   {} {} : {:?} {}", prefix, connector, pname, ptype,if *mutable {"MUTABLE"} else {"IMMUTABLE"});
                 }
             } else {
                 println!("{}│   ├── Parameters: (none)", prefix);
