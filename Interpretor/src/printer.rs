@@ -185,11 +185,11 @@ fn print_statement(stmt: &Statmnt, indent: usize, is_last: bool) {
             print_expression(value, indent, expr_prefix);
         }
         
-        Statmnt::Assignment { name, op, val } => {
+        Statmnt::Assignment { target, op, val } => {
             if let Some(shorthand) = op {
-                println!("{}{}️  Assignment: '{}' {:?}=", prefix, connector, name, shorthand);
+                println!("{}{}️  Assignment: '{:?}' {:?}=", prefix, connector, target, shorthand);
             } else {
-                println!("{}{}️  Assignment: '{}' =", prefix, connector, name);
+                println!("{}{}️  Assignment: '{:?}' =", prefix, connector, target);
             }
             
             let expr_prefix = if is_last { "    " } else { "│   " };

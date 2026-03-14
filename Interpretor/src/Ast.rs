@@ -245,7 +245,7 @@ pub mod AST {
             else_branch: Option<Vec<Statmnt>>,
         },
         Assignment{
-            name:String,            // Deals with assignment/reassignment
+            target : Expr,            // Deals with assignment/reassignment
             op : Option<BIN_OP>,
             val: Expr,
         },

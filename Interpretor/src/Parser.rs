@@ -310,7 +310,7 @@ pub mod PARSER {
         self.consume(&LTOK::RPAREN)?;
 
         let rtype = if self.match_token(&[LTOK::ARROW]) {
-                Some(self.eval_types().unwrap())
+                Some(self.eval_types()?)
             }
             else{
                 None
@@ -454,26 +454,25 @@ pub mod PARSER {
         };
 
         self.consume(&LTOK::ASSGN)?;
-        // Check for struct initialization: TypeName { ... }
         let val = if let LTOK::IDENT(type_name) = self.peek().clone() {
         let saved_idx = self.idx;
-        self.next(); // Consume IDENT
+        self.next();
         if self.check(&LTOK::LBRACE) {
-            self.next(); // Consume LBRACE
+            self.next();
             let fields = self.parse_struct_fields()?;
             self.consume(&LTOK::RBRACE)?;
             Expr::Struct_enum_init { name: type_name, fields }
         } else {
-            // Not struct init, restore and parse normally
             self.idx = saved_idx;
             self.eval_expr()?
         }
+
     } else {
         self.eval_expr()?
     };
         self.consume(&LTOK::SEMICOLON)?;
         Ok(Statmnt::Let { name, mutable, type_annot:annot, value: val })
-        }
+    }
 
         /// Parser Helper function
         /// Evaluates a consr token 
@@ -494,8 +493,23 @@ pub mod PARSER {
             else{
                 None
             };
+//
             self.consume(&LTOK::ASSGN)?;
-            let val = self.eval_expr()?;
+            let val = if let LTOK::IDENT(type_name) = self.peek().clone() {
+            let saved_idx = self.idx;
+            self.next();
+            if self.check(&LTOK::LBRACE) {
+                self.next();
+                let fields = self.parse_struct_fields()?;
+                self.consume(&LTOK::RBRACE)?;
+                Expr::Struct_enum_init { name: type_name, fields }
+            } else {
+                self.idx = saved_idx;
+                self.eval_expr()?
+            }
+        } else {
+            self.eval_expr()?
+        };
             self.consume(&LTOK::SEMICOLON)?;
             Ok(Statmnt::Let { name, mutable:false, type_annot:annot, value: val })
         }
@@ -560,9 +574,15 @@ pub mod PARSER {
                 _ => return Err(ParserError::Custom("Provide an identifier to store iterator results".to_string())),
             };
             self.consume(&LTOK::IN)?;
+            if let &LTOK::LPAREN = self.peek(){
+                self.consume(&LTOK::LPAREN)?;
+            }
             let lb = self.eval_expr()?;
             self.consume(&LTOK::RANGE)?;
             let rb = self.eval_expr()?;
+            if let &LTOK::RPAREN = self.peek(){
+                self.consume(&LTOK::RPAREN)?;
+            }
             self.consume(&LTOK::LBRACE)?;
             let body = self.eval_block()?;
             self.consume(&LTOK::RBRACE)?;   
@@ -730,13 +750,13 @@ pub mod PARSER {
     fn eval_assign(&mut self) -> Parser_ret<Statmnt> {
         let expr = self.eval_expr()?;
         if let Some(op) = self.match_assignment(){
-            if let Expr::Ident(name) = expr{
-                let val = self.eval_expr()?;
-                self.consume(&LTOK::SEMICOLON)?;
-                return Ok(Statmnt::Assignment { name, op, val });
-            } else{
-            return Err(ParserError::Custom("Invalid assignment\n".to_string()))
-            }
+           match &expr {
+            Expr::Ident(_) | Expr::Field_access { .. } => {},
+            _ => return Err(ParserError::Custom("Can't assign to the assignment target".to_string())),
+           } 
+           let val = self.eval_expr()?;
+           self.consume(&LTOK::SEMICOLON)?;
+           return Ok(Statmnt::Assignment { target: expr, op, val })
         }
         self.consume(&LTOK::SEMICOLON)?;
         Ok(Statmnt::Expr(expr))
@@ -790,6 +810,14 @@ pub mod PARSER {
            self.next();
            Some(Some(BIN_OP::Xor))
        },
+       LTOK::S_LSHIFT => {
+        self.next();
+        Some(Some(BIN_OP::Lshift))
+       },
+       LTOK::S_RSHIFT => {
+        self.next();
+        Some(Some(BIN_OP::Rshift))
+       } 
       _ => None,
    }
    }
@@ -1218,6 +1246,7 @@ pub mod PARSER {
             LTOK::FLOAT(x) => Ok(Expr::Float(x)),
             LTOK::STRING(x) => Ok(Expr::String(x)),
             LTOK::BOOL(x) => Ok(Expr::Bool(x)),
+            LTOK::NULL => Ok(Expr::Null),
             LTOK::TRUE => Ok(Expr::Bool(true)),
             LTOK::FALSE => Ok(Expr::Bool(false)),
             LTOK::IDENT(x) => {

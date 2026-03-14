@@ -1,0 +1,77 @@
+LET               ...           
+MUT               ...   
+MUT_ref           ...     
+CONST             ...     
+IF                ...     
+ELSE              ...     
+WHILE             ...     
+LOOP              ...     
+FOR               ...    
+IN                ...     
+RANGE             ...     
+FN                ...     
+BREAK             ...     
+CONTINUE          ...     
+RETURN            ...     
+IDENT(String)     ...  
+STRING(String) 
+INT(i64)       
+FLOAT(f64)     
+BOOL(bool)     
+PLUS           
+MINUS          
+DIV            
+MODULO         
+STAR           
+POW            
+ASSGN          
+EQ             
+LT_EQ          
+GT_EQ          
+N_EQ           
+LT             
+GT             
+S_PLUS         
+S_MINUS        
+S_MULT         
+S_DIV          
+S_MOD          
+S_AMP          
+S_PIPE         
+S_CARET        
+S_LSHIFT       
+S_RSHIFT       
+INCR           
+DECR           
+RSHIFT         
+LSHIFT         
+AMP            
+CARET          
+PIPE           
+TILDA          
+ANDAND         
+OROR           
+BANG           
+LBRACE         
+RBRACE         
+LBRACK         
+RBRACK         
+LPAREN         
+RPAREN         
+SEMICOLON      
+DOT            
+COLON          
+COMMA          
+NULL           
+TRUE           
+FALSE          
+EOF            
+QUOTE          
+DQUOTE         
+ARROW          
+INT_TYPE       
+FLOAT_TYPE     
+STRING_TYPE    
+BOOL_TYPE      
+STRUCT         
+ENUM           
