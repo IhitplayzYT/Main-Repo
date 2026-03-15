@@ -6,26 +6,25 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, version 3.
 
-//   main.rs   // 
+//   main.rs   //
 // The main entry point
 
-
-#![allow(non_camel_case_types,non_snake_case,non_upper_case_globals)]
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals)]
 mod Ast;
+mod Errors;
 mod Frontend;
 mod Helper;
+mod Ident_table;
+mod Interpretor;
 mod Lexer_Tok;
 mod Parser;
 mod Semantic_Analysis;
-mod Ident_table;
 mod Tokeniser;
-mod Errors;
-mod Interpretor;
+mod codegen;
 mod printer;
 use std::env;
 
 use crate::Semantic_Analysis::Analyser::Semantilizer;
-
 
 fn main() {
     let arguments: Vec<String> = env::args().collect();
@@ -40,9 +39,9 @@ fn main() {
     println!();
     let mut PARSER = Parser::PARSER::Parser::new(LEXER.Lexer_Output);
     let t = PARSER.Parse().unwrap();
-    println!("{:?}",t);
+    println!("{:?}", t);
     let mut sem = Semantilizer::new();
-    let z =  sem.analyse(&t);
-    println!("{:?} !!",z);
+    let z = sem.analyse(&t);
+    println!("{:?} !!", z);
     /* ADD THE FRONTEND CODE TO REPLACE THIS  */
 }
