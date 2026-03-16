@@ -54,6 +54,85 @@ pub mod collections {
     }
 }
 
+pub mod Main{
+use std::env;
+
+pub struct CLI{
+    files: Vec<String>,
+    optimise: i32,
+    debug: bool,
+    env_var: Vec<String>
+}
+
+impl CLI{
+    pub fn new() -> Self{
+        Self{
+            files: Vec::new(),
+            optimise: 0,
+            debug: false,
+            env_var: Vec::new(),
+        }        
+    }
+    pub fn parse_clargs(&mut self) -> CLI_ret<bool>{
+    let arguments: Vec<String> = env::args().collect();
+    let l = arguments.len();
+    for i in 0..l {
+        match &arguments[i][..]{
+            "-O1" => {
+                self.optimise = 1;
+            },
+            "-O2" => {
+                self.optimise = 2;
+            },
+            "-O3" => {
+                self.optimise = 3;
+            },
+            "-d" => {
+                self.debug = true;
+            }
+            t => {
+            if !t.ends_with(".rs"){
+                if t.contains("."){
+                let x:Vec<&str> = t.split("/").collect();
+                if x.last().iter().any(|c| {**c == "."}){
+                return Err(CLI_ERR::UnsupportedFileformat(x.last().unwrap().to_string().split_off(x.last().unwrap().to_string().rfind(".").unwrap())))
+                }
+            }else{
+                return Err(CLI_ERR::Unsupported(t.to_string()));
+            }
+            }else{
+                self.files.push(t.to_string());
+            }
+
+            }
+        }
+
+    }
+
+
+
+    Ok(true)
+    }
+}
+
+pub enum CLI_ERR {
+    UnknownParam(String),
+    UnsupportedFileformat(String),
+    Unsupported(String),
+    Custom(String),
+}
+
+static SUPPORTED_ARGS:&'static [&str;5] = &["-O1","-O2","-O3","<FILES>","-d"];
+
+pub type CLI_ret<T> = Result<T,CLI_ERR>;
+
+
+
+
+
+
+}
+
 pub mod Checkers {
     ///  Checks if a char is numeric 
     ///  # Arguments

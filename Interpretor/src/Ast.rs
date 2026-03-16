@@ -281,7 +281,7 @@ pub mod AST {
 ///     Program : Vec::new(Declare),
 /// }
 /// ```    
-    #[derive(Debug,Clone)]
+    #[derive(Debug,Clone,PartialEq)]
     pub struct Code{
         pub Program: Vec<Declare>,
     }

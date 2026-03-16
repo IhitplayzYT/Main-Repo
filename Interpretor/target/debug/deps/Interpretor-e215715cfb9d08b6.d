@@ -1,6 +1,6 @@
-/home/IhitplayzYT/Interpretor/target/debug/deps/Interpretor-e215715cfb9d08b6.d: src/main.rs src/Ast.rs src/Errors.rs src/Frontend.rs src/Helper.rs src/Ident_table.rs src/Interpretor.rs src/Lexer_Tok.rs src/Parser.rs src/Semantic_Analysis.rs src/Tokeniser.rs src/codegen.rs src/printer.rs
+/home/IhitplayzYT/Interpretor/target/debug/deps/Interpretor-e215715cfb9d08b6.d: src/main.rs src/Ast.rs src/Errors.rs src/Frontend.rs src/Helper.rs src/Ident_table.rs src/Interpretor.rs src/Lexer_Tok.rs src/Parser.rs src/Semantic_Analysis.rs src/Tokeniser.rs src/Codegen.rs src/printer.rs
 
-/home/IhitplayzYT/Interpretor/target/debug/deps/libInterpretor-e215715cfb9d08b6.rmeta: src/main.rs src/Ast.rs src/Errors.rs src/Frontend.rs src/Helper.rs src/Ident_table.rs src/Interpretor.rs src/Lexer_Tok.rs src/Parser.rs src/Semantic_Analysis.rs src/Tokeniser.rs src/codegen.rs src/printer.rs
+/home/IhitplayzYT/Interpretor/target/debug/deps/libInterpretor-e215715cfb9d08b6.rmeta: src/main.rs src/Ast.rs src/Errors.rs src/Frontend.rs src/Helper.rs src/Ident_table.rs src/Interpretor.rs src/Lexer_Tok.rs src/Parser.rs src/Semantic_Analysis.rs src/Tokeniser.rs src/Codegen.rs src/printer.rs
 
 src/main.rs:
 src/Ast.rs:
@@ -13,5 +13,5 @@ src/Lexer_Tok.rs:
 src/Parser.rs:
 src/Semantic_Analysis.rs:
 src/Tokeniser.rs:
-src/codegen.rs:
+src/Codegen.rs:
 src/printer.rs:

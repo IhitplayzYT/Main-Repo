@@ -20,7 +20,7 @@ mod Lexer_Tok;
 mod Parser;
 mod Semantic_Analysis;
 mod Tokeniser;
-mod codegen;
+mod Codegen;
 mod printer;
 use std::env;
 
