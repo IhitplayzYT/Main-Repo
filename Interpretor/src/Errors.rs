@@ -11,7 +11,7 @@
 
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
 pub mod Err{
-    use crate::Ast::AST::Type;
+    use crate::{Ast::AST::Type, Codegen::Codegen::ControlFlow};
     /// Type defination of the Parser Return Type
     /// This is will be the majority return type used in the parser
     /// 
@@ -31,7 +31,41 @@ pub mod Err{
     ///     
     pub type Semantic_Ret<T> = Result<T,Semantic_err>;
 
+    /// Type defination of the Interpretor Return Type
+    /// 
+    /// # Example
+    /// ```
+    /// fn test() -> InterpretorError<()> 
+    /// ```
+    ///     
+    pub type InterpretorReturn<T> = Result<T,InterpretorError>;
 
+    /// Enum that stores the Interpretor Errors Possible
+    /// 
+    /// # Traits
+    /// - Derived<br/>
+    ///     - Debug
+    ///     - Clone
+    /// # Example
+    /// ```
+    /// InterpretorError::UndefinedVariable("Undefined varib".to_string());
+    /// InterpretorError::DivideByZero;
+    /// ```
+    ///    
+    #[derive(Debug,Clone)] 
+    pub enum InterpretorError{
+        UndefinedVariable(String),
+        RedefinedVariable(String),
+        ImmutableVariable(String),
+        TypeError(String),
+        DivideByZero,
+        InvalidAssignment,
+        NoFieldOnType(String, String),
+        ControlFault(ControlFlow), 
+        Custom(String),
+    }
+
+    
     /// Enum that stores the Semantic Errors Possible
     /// 
     /// # Traits
@@ -80,7 +114,8 @@ pub mod Err{
     #[derive(Debug,Clone)]
     pub enum ERROR{
         Semerr(Semantic_err),
-        Parseerr(ParserError)
+        Parseerr(ParserError),
+        Intererr(InterpretorError)
     }
 
     impl ParserError{
