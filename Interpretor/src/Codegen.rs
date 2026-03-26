@@ -16,7 +16,7 @@
     dead_code
 )]
 pub mod Codegen {
-    use crate::{Ast::AST::{Code, Declare, Type}, Errors::Err::InterpretorReturn};
+    use crate::{Ast::AST::{Code, Declare, Statmnt, Type}, Errors::Err::{self, InterpretorReturn}};
     use std::{collections::HashMap, fmt::Display};
     use crate::Errors::Err::*;
 
@@ -25,7 +25,6 @@ pub mod Codegen {
 
     #[derive(Debug,Clone)]
     struct Codegen {
-        code: Code,
         errs: bool,
         env: Env
     }
@@ -147,29 +146,162 @@ pub mod Codegen {
 
     pub fn new(ast:Code) -> Self{
         Self{
-            code:ast,
             errs: false,
             env: Env::new()
         }
     }
 
-    pub fn register(&self,decl: &Declare) -> InterpretorReturn<()> {
+    pub fn register(&mut self,decl: &Declare) -> InterpretorReturn<()> {
+        match decl{
+            Declare::Function {name,..} => {
+                self.env.func.insert(name.clone(),decl.clone());
+            },
+            Declare::Struct { name,fields} => {
+                self.env.dtypes.insert(name.clone(), fields.clone());
+            },
+            Declare::Enum { name, variations } => {
+                // TODO:
+                // FIXME:
+            },
+
+        }
         Ok(())
     }
 
-    pub fn Exec(&mut self) -> InterpretorReturn<bool>{
-        for decl in &self.code.Program{
+    pub fn Exec(&mut self,code:Code) -> InterpretorReturn<bool>{
+        for decl in &code.Program{
             self.register(decl)?;
         }        
 
+        let _start = self.env.func.get("main").ok_or_else(|| InterpretorError::FunctionNotFound("main".to_string()))?;
+        if let Declare::Function {body ,..} = _start{
+        let fn_body = body.clone();
+        self.env.scopes.push();
+        match self.exec_block(&body) {
+            Ok(_) |  Err(InterpretorError::ControlFault(ControlFlow::Return(_))) => {},
+            Err(e) => return Err(e),
+        }
+        self.env.scopes.pop();
+        }
         Ok(true)    
     }
     
 
 
+    pub fn exec_block(&self,block: &Vec<Statmnt>) -> InterpretorReturn<()>{
+        block.iter().for_each(|statmnt| self.exec_statmnt(statmnt).unwrap());
+        Ok(())
+    }
+
+    pub fn exec_statmnt(&self,statmnt: &Statmnt) -> InterpretorReturn<()>{
+        match statmnt{
+            Statmnt::Let { name, mutable, value,..} => {
+                let val = self.eval_expr(value)?;
+                self.env.scopes.declare(name.clone(), val, *mutable);
+            },
+            Statmnt::Assignment { target, op, val } => {
+                let value = self.eval_expr(val)?;
+                self.try_assign(target,op,value)?;
+            },
+            Statmnt::If { cond, then_branch, else_branch } => {
+                let cbool = self.eval_expr(cond)?;
+                self.env.scopes.push();
+                if Self::is_truthy(&cbool){
+                    then_branch.iter().for_each(|f| self.exec_statmnt(f).unwrap());
+                }else{
+                    if let Some(branch) = else_branch{
+                        branch.iter().for_each(|f| self.exec_statmnt(f).unwrap());
+                    }
+                }
+                self.env.scopes.pop();
 
 
 
+            },
+            Statmnt::For { var_name, lb, rb, body } => {
+                let (l,r) = (self.eval_expr(lb)?,self.eval_expr(rb)?);
+                let (l,r) = match (l,r) {
+                    (Val::Int(a),Val::Int(b)) => (a,b),
+                    _ => return Err(InterpretorError::TypeError("For loops only allow <INT> TYPE".to_string()))
+                };
+                for idx in l..r {
+                    self.env.scopes.push();
+                    self.env.scopes.declare(var_name.clone(), Val::Int(idx), false);
+                    match self.exec_block(body){
+                        Ok(_) => {},
+                        Err(InterpretorError::ControlFault(ControlFlow::Continue)) => {self.env.scopes.pop();continue;},
+                        Err(InterpretorError::ControlFault(ControlFlow::Break)) => {self.env.scopes.pop();break;},
+                        Err(e) => {self.env.scopes.pop();return Err(e);}
+                    }
+                    self.env.scopes.pop();
+                }
+
+
+            },
+            Statmnt::Loop { body } => {
+            loop {
+                self.env.scopes.push();
+                match self.exec_block(body){
+                    Ok(_) => {},
+                    Err(InterpretorError::ControlFault(ControlFlow::Continue)) => {self.env.scopes.pop();continue;},
+                    Err(InterpretorError::ControlFault(ControlFlow::Break)) => {self.env.scopes.pop();break;},
+                    Err(e) => {self.env.scopes.pop();return Err(e);}
+
+                }
+                self.env.scopes.pop();
+            }
+            },
+            Statmnt::While { cond, body } => {
+                loop {
+                let cbool = self.eval_expr(cond)?;
+                if !Self::is_truthy(&cbool) {
+                    break;
+                }
+                self.env.scopes.push();
+                match self.exec_block(body){
+                    Ok(_) => {},
+                    Err(InterpretorError::ControlFault(ControlFlow::Continue)) => {self.env.scopes.pop();continue;},
+                    Err(InterpretorError::ControlFault(ControlFlow::Break)) => {self.env.scopes.pop();break;},
+                    Err(e) => {self.env.scopes.pop();return Err(e);}
+
+                }
+                self.env.scopes.pop();
+
+                }
+
+            },
+            Statmnt::Return(v) => {
+                let val = match v {
+                    Some(e) => self.eval_expr(e)?,
+                    None => Val::Null
+                };
+                return Err(InterpretorError::ControlFault(ControlFlow::Return(val)));
+            },
+            Statmnt::Break => return Err(InterpretorError::ControlFault(ControlFlow::Break)),
+            Statmnt::Continue => return Err(InterpretorError::ControlFault(ControlFlow::Continue)),
+            Statmnt::Block(blk ) => {
+            self.env.scopes.push();
+            let r = self.exec_block(blk)?;
+            self.env.scopes.pop();
+            r
+            },
+            Statmnt::Expr(e) => self.eval_expr(e)?,
+        }
+
+
+        Ok(())
+    }
+
+    pub fn is_truthy(v: Val) -> bool {
+        match v {
+           Val::Bool(true) => true,
+           Val::Custom(_,f) => !f.is_empty(),
+           Val::Int(x) => x != 0,
+           Val::Float(y) => y != 0.0,
+           Val::String(z) => z.len() > 0,
+           _ => false
+        }
+    }
 
 
     }

@@ -62,6 +62,7 @@ pub mod Err{
         InvalidAssignment,
         NoFieldOnType(String, String),
         ControlFault(ControlFlow), 
+        FunctionNotFound(String),
         Custom(String),
     }
 
