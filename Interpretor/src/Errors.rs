@@ -63,6 +63,7 @@ pub mod Err{
         NoFieldOnType(String, String),
         ControlFault(ControlFlow), 
         FunctionNotFound(String),
+        IncompatibleTypes(String,String),
         Custom(String),
     }
 

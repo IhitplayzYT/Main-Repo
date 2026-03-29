@@ -143,7 +143,7 @@ pub mod AST {
 
         Field_access {
             obj : Box<Expr>,
-            field:String,
+            field: String,
         },
         Postincr(String), // x++
         Postdecr(String), // x--

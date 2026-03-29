@@ -16,7 +16,7 @@
     dead_code
 )]
 pub mod Codegen {
-    use crate::{Ast::AST::{Code, Declare, Statmnt, Type}, Errors::Err::{self, InterpretorReturn}};
+    use crate::{Ast::AST::{BIN_OP, Code, Declare, Expr, Statmnt, Type}, Errors::Err::{self, InterpretorReturn}};
     use std::{collections::HashMap, fmt::Display};
     use crate::Errors::Err::*;
 
@@ -25,8 +25,9 @@ pub mod Codegen {
 
     #[derive(Debug,Clone)]
     struct Codegen {
-        errs: bool,
         env: Env
+        // TODO: Add maybe return value that the Exec fn may return to signal a fn main() -> int{}
+        // FIXME:
     }
 
     #[derive(Debug,Clone)]
@@ -41,7 +42,7 @@ pub mod Codegen {
         Custom_err(String)
     }
 
-    #[derive(Debug,Clone)]
+    #[derive(Debug,Clone,PartialEq)]
     pub enum Val {
     Int(i64),
     Float(f64),
@@ -144,9 +145,8 @@ pub mod Codegen {
 
     impl Codegen {
 
-    pub fn new(ast:Code) -> Self{
+    pub fn new() -> Self{
         Self{
-            errs: false,
             env: Env::new()
         }
     }
@@ -168,16 +168,16 @@ pub mod Codegen {
         Ok(())
     }
 
-    pub fn Exec(&mut self,code:Code) -> InterpretorReturn<bool>{
+    pub fn Exec(&mut self,code: &Code) -> InterpretorReturn<bool>{
         for decl in &code.Program{
             self.register(decl)?;
         }        
 
-        let _start = self.env.func.get("main").ok_or_else(|| InterpretorError::FunctionNotFound("main".to_string()))?;
+        let _start = self.env.func.get("main").ok_or_else(|| InterpretorError::FunctionNotFound("main".to_string()))?.clone();
         if let Declare::Function {body ,..} = _start{
         let fn_body = body.clone();
         self.env.scopes.push();
-        match self.exec_block(&body) {
+        match self.exec_block(&fn_body) {
             Ok(_) |  Err(InterpretorError::ControlFault(ControlFlow::Return(_))) => {},
             Err(e) => return Err(e),
         }
@@ -188,12 +188,12 @@ pub mod Codegen {
     
 
 
-    pub fn exec_block(&self,block: &Vec<Statmnt>) -> InterpretorReturn<()>{
+    pub fn exec_block(&mut self,block: &Vec<Statmnt>) -> InterpretorReturn<Val>{
         block.iter().for_each(|statmnt| self.exec_statmnt(statmnt).unwrap());
-        Ok(())
+        Ok(Val::Null)
     }
 
-    pub fn exec_statmnt(&self,statmnt: &Statmnt) -> InterpretorReturn<()>{
+    pub fn exec_statmnt(&mut self,statmnt: &Statmnt) -> InterpretorReturn<()>{
         match statmnt{
             Statmnt::Let { name, mutable, value,..} => {
                 let val = self.eval_expr(value)?;
@@ -281,27 +281,201 @@ pub mod Codegen {
             Statmnt::Continue => return Err(InterpretorError::ControlFault(ControlFlow::Continue)),
             Statmnt::Block(blk ) => {
             self.env.scopes.push();
-            let r = self.exec_block(blk)?;
+            let r = self.exec_block(blk);
             self.env.scopes.pop();
-            r
+            r?;
             },
-            Statmnt::Expr(e) => self.eval_expr(e)?,
+            Statmnt::Expr(e) => {self.eval_expr(e)?;},
         }
 
 
         Ok(())
     }
 
-    pub fn is_truthy(v: Val) -> bool {
+
+
+
+    pub fn try_assign(&mut self,lhs:&Expr,bin_op:&Option<BIN_OP>,rhs:Val) -> InterpretorReturn<()>{
+        match lhs {
+            Expr::Ident(x) => {
+                let fin = if let Some(bop) = bin_op {
+                    let cur = self.env.scopes.get(x.clone())?;
+                    Self::try_bin_op(bop,cur,rhs)?
+                }else{ 
+                    rhs
+                };
+                self.env.scopes.set(x.clone(), fin)?;
+            },
+            Expr::Field_access { obj, field } => {
+                let member = Self::traverse_root(obj).ok_or(InterpretorError::InvalidAssignment)?;
+                let mut cstm_val = self.env.scopes.get(member.clone())?;
+                let fin_rhs = if let Some(bop) = bin_op{
+                    let cur = Self::get_field_val(&cstm_val,field)?;
+                    Self::try_bin_op(bop,cur,rhs)?
+                } else{
+                    rhs
+                };
+
+                Self::set_field_val(&mut cstm_val,obj,field,fin_rhs)?; // Updates the struct
+                self.env.scopes.set(member.clone(), cstm_val)?;   // Updates our scopes[This scopes has members of structs also[..Flattened memory for faster serach in a scope]]
+
+            }
+            _ => {}
+        };
+
+
+        Ok(())
+    }
+
+    pub fn get_field_val(val:&Val,name: &String) -> InterpretorReturn<Val>{
+        match val{
+            Val::Custom(_,f) => f.get(name).cloned().ok_or_else(|| InterpretorError::NoFieldOnType(name.to_string(),"<Object>".to_string())),
+            _ => Err(InterpretorError::Custom("Can't access non-object's fields".to_string()))
+        }
+    }
+
+    pub fn set_field_val(val:&mut Val,expr:&Expr,name: &String,new: Val) -> InterpretorReturn<()>{
+        match expr{
+            Expr::Ident(_) => {
+                if let Val::Custom(_, s_fields) = val{
+                    s_fields.insert(name.to_string(), new);
+                    Ok(())      
+                }else{
+                    Err(InterpretorError::Custom(name.to_string()))
+                }
+            },
+            Expr::Field_access { obj, field } => {
+                if let Val::Custom(_,s_fields ) = val {
+                    let inner = s_fields.get_mut(field).ok_or_else(|| {InterpretorError::NoFieldOnType(field.to_string(), name.to_string())})?;
+                    Self::set_field_val(inner, obj, name, new)
+                }else{
+                    Err(InterpretorError::TypeError("Can't access non-object fields".to_string()))
+                } 
+            },
+            _ => Err(InterpretorError::TypeError("Can't assign to non-object fields".to_string()))
+
+
+        }
+
+    }
+
+    pub fn traverse_root(root: &Expr) -> Option<String>{
+        match root {
+            Expr::Ident(x) => Some(x.clone()), 
+            Expr::Field_access { obj, .. } => {Self::traverse_root(obj)},
+            _ => None
+        }
+    }
+
+    pub fn is_truthy(v: &Val) -> bool {
         match v {
            Val::Bool(true) => true,
            Val::Custom(_,f) => !f.is_empty(),
-           Val::Int(x) => x != 0,
-           Val::Float(y) => y != 0.0,
+           Val::Int(x) => *x != 0,
+           Val::Float(y) => *y != 0.0,
            Val::String(z) => z.len() > 0,
            _ => false
         }
     }
+
+// TODO:
+// FIXME: 
+
+    pub fn try_bin_op(op: &BIN_OP,old: Val, new:Val) -> InterpretorReturn<Val> {
+       match op {
+        BIN_OP::Add => match (old,new) {
+            (Val::Int(a),Val::Int(b)) => Ok(Val::Int(a+b)),
+            (Val::Float(a),Val::Float(b)) => Ok(Val::Float(a+b)),
+            (Val::String(a),Val::String(b)) => Ok(Val::String(a+&b)),
+            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+        },
+        BIN_OP::Sub => match (old,new) {
+            (Val::Int(a),Val::Int(b)) => Ok(Val::Int(a-b)),
+            (Val::Float(a),Val::Float(b)) => Ok(Val::Float(a-b)),
+            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+
+        },BIN_OP::Mul => match (old,new) {
+            (Val::Int(a),Val::Int(b)) => Ok(Val::Int(a*b)),
+            (Val::Float(a),Val::Float(b)) => Ok(Val::Float(a*b)),
+            (Val::String(z),Val::Int(cnt)) => Ok(Val::String(z.repeat(cnt as usize))),
+            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+        },BIN_OP::Div => match (old,new) {
+            (Val::Int(a),Val::Int(b)) => {
+                if b != 0 { 
+                    return Ok(Val::Int(a/b));
+                }else{
+                    return Err(InterpretorError::DivideByZero);
+                } 
+            },
+            (Val::Float(a),Val::Float(b)) => {
+                if b != 0.0 { 
+                    return Ok(Val::Float(a/b));
+                }else{
+                    return Err(InterpretorError::DivideByZero);
+                } 
+            },
+            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}")))
+        },BIN_OP::Mod => match (old,new) {
+            (Val::Int(a),Val::Int(b)) => {
+                if b == 0 {
+                    return Err(InterpretorError::DivideByZero);
+                }
+                return Ok(Val::Int(a%b));
+            },
+            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+        },
+        BIN_OP::Pow =>  match (old,new) {
+            (Val::Int(a),Val::Int(b)) => Ok(Val::Int(a.pow(b as u32))),
+            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+        },
+        BIN_OP::Eq => Ok(Val::Bool(old == new)),
+        BIN_OP::N_eq => Ok(Val::Bool(old != new)),
+        BIN_OP::Gt => Self::cmp_op(old,new,|a,b| a > b),
+        //TODO:
+        //FIXME: 
+
+        
+
+
+
+
+
+
+        _ => {}
+
+       } 
+        
+
+
+        Ok(Val::Null)
+    }
+
+    pub fn cmp_op(l:Val,r: Val,f: impl Fn(f64,f64) -> bool) -> InterpretorReturn<Val>{
+        let (a,b) = match (l,r) {
+            (Val::Int(c),Val::Int(d)) => ( c as f64, d as f64),
+            (Val::Float(c),Val::Float(d)) => (c, d),
+            _ => {return Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}")))},
+        };
+        Ok(Val::Bool(f(a,b)))
+
+    }
+
+    pub fn eval_expr(&mut self,expr:&Expr) -> InterpretorReturn<Val>{
+
+        Ok(Val::Null)
+    }
+
+
+    pub fn add(a: Val,b: f64) -> InterpretorReturn<Val>{
+        match a {
+            Val::Float(x) => {Ok(Val::Float(x+b))},
+            Val::Int(x) => {Ok(Val::Int(x + (b as i64)))},
+            Val::Bool(_) => {Ok(Val::Bool(if b < 0.0 {false} else {true}))}, 
+            t => Err(InterpretorError::IncompatibleTypes(format!("{t:?}"), format!("{b}")))
+        }
+
+    }
+
 
 
     }
