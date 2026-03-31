@@ -24,7 +24,7 @@ mod Codegen;
 mod printer;
 use std::env;
 
-use crate::Semantic_Analysis::Analyser::Semantilizer;
+use crate::{Semantic_Analysis::Analyser::Semantilizer};
 
 fn main() {
     let arguments: Vec<String> = env::args().collect();
@@ -44,6 +44,9 @@ fn main() {
     let z = sem.analyse(&t);
     println!("{:?} !!", z);
     /* ADD THE FRONTEND CODE TO REPLACE THIS  */
+    let mut codgen = Codegen::Codegen::Codegen::new();
+    let ret = codgen.Exec(&t);
+    println!("{ret:?}");
 
 
 }

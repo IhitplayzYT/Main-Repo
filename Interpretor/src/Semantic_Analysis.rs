@@ -79,6 +79,7 @@ pub mod Analyser {
         /// ```    
 
         pub fn analyse(&mut self, code: &Code) -> Semantic_Ret<()> {
+            self.save_declares(&Declare::Function { name: "println".to_string(), rtype: None, args: vec![("fmt".to_string(),Type::STRING,false),("a".to_string(),Type::STRING,false)], body: vec![] })?;  
             for decl in &code.Program {
                 self.save_declares(decl)?;
             }

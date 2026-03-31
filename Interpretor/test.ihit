@@ -15,4 +15,6 @@ for i in (b..a){
     y = "pls";    
 }
 
+println("{}",y);
+
 }
