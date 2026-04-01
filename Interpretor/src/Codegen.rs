@@ -16,13 +16,15 @@
     dead_code
 )]
 pub mod Codegen {
-    use crate::{Ast::AST::{BIN_OP, Code, Declare, Expr, Statmnt, Type, UN_OP}, Errors::Err::{InterpretorReturn}};
+    use crate::{Ast::AST::{BIN_OP, Code, Declare, Expr, Statmnt, Type, UN_OP}, Errors::Err::CodegenReturn, Helper::Main::CLI};
     use core::panic;
     use std::{collections::HashMap, fmt::Display, io};
     use crate::Errors::Err::*;
-
-    type Codegen_result<T> = Result<T,CodegenErr>;
-
+    use std::collections::HashSet;
+    use std::sync::LazyLock;
+    static STDIO_FXNS: LazyLock<HashSet<&str>> = LazyLock::new(|| {
+    HashSet::from(["print","println","log","Print","Log","Println","Scan","Scanf","Scanln","scan","scanf"])
+});
 
     #[derive(Debug,Clone)]
     pub struct Codegen {
@@ -38,10 +40,6 @@ pub mod Codegen {
        dtypes: HashMap<String,Vec<(String,Type)>>
     }
 
-    pub enum CodegenErr{
-        Fatal_err,
-        Custom_err(String)
-    }
 
     #[derive(Debug,Clone,PartialEq)]
     pub enum Val {
@@ -96,27 +94,27 @@ pub mod Codegen {
            self.scope.iter().rev().any(|x| { x.contains_key(&name)}) 
         }
 
-        fn get(&self,name: String) -> InterpretorReturn<Val>{
+        fn get(&self,name: String) -> CodegenReturn<Val>{
           for i in self.scope.iter().rev(){
             if let Some((ret,_)) = i.get(&name){
                 return Ok(ret.clone());
             }
           } 
-          Err(InterpretorError::UndefinedVariable(name))
+          Err(CodegenError::UndefinedVariable(name))
         }
 
-        fn set(&mut self,name: String, new:Val) -> InterpretorReturn<()>{
+        fn set(&mut self,name: String, new:Val) -> CodegenReturn<()>{
             for i in self.scope.iter_mut().rev(){
                 if let Some((old,mutable)) = i.get_mut(&name) {
                     if !*mutable {
-                        return Err(InterpretorError::ImmutableVariable(name));
+                        return Err(CodegenError::ImmutableVariable(name));
                     }
                     *old = new;
                     return Ok(());
                 }
 
             }
-            Err(InterpretorError::UndefinedVariable(name))
+            Err(CodegenError::UndefinedVariable(name))
         }
 
 
@@ -152,7 +150,7 @@ pub mod Codegen {
         }
     }
 
-    pub fn register(&mut self,decl: &Declare) -> InterpretorReturn<()> {
+    pub fn register(&mut self,decl: &Declare) -> CodegenReturn<()> {
         match decl{
             Declare::Function {name,..} => {
                 self.env.func.insert(name.clone(),decl.clone());
@@ -169,18 +167,37 @@ pub mod Codegen {
         Ok(())
     }
 
-    pub fn Exec(&mut self,code: &Code) -> InterpretorReturn<bool>{
-            self.register(&Declare::Function { name: "println".to_string(), rtype: None, args: vec![("fmt".to_string(),Type::STRING,false),("a".to_string(),Type::STRING,false)], body: vec![] })?;  
+    fn gen_vec() -> Vec<(String,Type,bool)>{
+        let mut ret = Vec::new();
+        for i in 0..256{
+            ret.push((i.to_string(),Type::STRING,false));
+        }
+        ret
+    }
+
+    pub fn Exec(&mut self,code: &Code,clargs: CLI) -> CodegenReturn<bool>{
+            let vec = Self::gen_vec();
+            self.register(&Declare::Function { name: "println".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
+            self.register(&Declare::Function { name: "Println".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
+            self.register(&Declare::Function { name: "Print".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
+            self.register(&Declare::Function { name: "print".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
+            self.register(&Declare::Function { name: "log".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
+            self.register(&Declare::Function { name: "Log".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
+            self.register(&Declare::Function { name: "Scan".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
+            self.register(&Declare::Function { name: "scan".to_string(), rtype: None,args :vec.clone() , body: vec![] })?;  
+            self.register(&Declare::Function { name: "Scanf".to_string(), rtype: None,args :vec.clone() , body: vec![] })?;  
+            self.register(&Declare::Function { name: "scanf".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
+            self.register(&Declare::Function { name: "Scanln".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
         for decl in &code.Program{
             self.register(decl)?;
         }        
 
-        let _start = self.env.func.get("main").ok_or_else(|| InterpretorError::FunctionNotFound("main".to_string()))?.clone();
+        let _start = self.env.func.get("main").ok_or_else(|| CodegenError::FunctionNotFound("main".to_string()))?.clone();
         if let Declare::Function {body ,..} = _start{
         let fn_body = body.clone();
         self.env.scopes.push();
         match self.exec_block(&fn_body) {
-            Ok(_) |  Err(InterpretorError::ControlFault(ControlFlow::Return(_))) => {},
+            Ok(_) |  Err(CodegenError::ControlFault(ControlFlow::Return(_))) => {},
             Err(e) => return Err(e),
         }
         self.env.scopes.pop();
@@ -190,12 +207,12 @@ pub mod Codegen {
     
 
 
-    pub fn exec_block(&mut self,block: &Vec<Statmnt>) -> InterpretorReturn<Val>{
+    pub fn exec_block(&mut self,block: &Vec<Statmnt>) -> CodegenReturn<Val>{
         block.iter().for_each(|statmnt| self.exec_statmnt(statmnt).unwrap());
         Ok(Val::Null)
     }
 
-    pub fn exec_statmnt(&mut self,statmnt: &Statmnt) -> InterpretorReturn<()>{
+    pub fn exec_statmnt(&mut self,statmnt: &Statmnt) -> CodegenReturn<()>{
         match statmnt{
             Statmnt::Let { name, mutable, value,..} => {
                 let val = self.eval_expr(value)?;
@@ -224,15 +241,15 @@ pub mod Codegen {
                 let (l,r) = (self.eval_expr(lb)?,self.eval_expr(rb)?);
                 let (l,r) = match (l,r) {
                     (Val::Int(a),Val::Int(b)) => (a,b),
-                    _ => return Err(InterpretorError::TypeError("For loops only allow <INT> TYPE".to_string()))
+                    _ => return Err(CodegenError::TypeError("For loops only allow <INT> TYPE".to_string()))
                 };
                 for idx in l..r {
                     self.env.scopes.push();
                     self.env.scopes.declare(var_name.clone(), Val::Int(idx), false);
                     match self.exec_block(body){
                         Ok(_) => {},
-                        Err(InterpretorError::ControlFault(ControlFlow::Continue)) => {self.env.scopes.pop();continue;},
-                        Err(InterpretorError::ControlFault(ControlFlow::Break)) => {self.env.scopes.pop();break;},
+                        Err(CodegenError::ControlFault(ControlFlow::Continue)) => {self.env.scopes.pop();continue;},
+                        Err(CodegenError::ControlFault(ControlFlow::Break)) => {self.env.scopes.pop();break;},
                         Err(e) => {self.env.scopes.pop();return Err(e);}
                     }
                     self.env.scopes.pop();
@@ -245,8 +262,8 @@ pub mod Codegen {
                 self.env.scopes.push();
                 match self.exec_block(body){
                     Ok(_) => {},
-                    Err(InterpretorError::ControlFault(ControlFlow::Continue)) => {self.env.scopes.pop();continue;},
-                    Err(InterpretorError::ControlFault(ControlFlow::Break)) => {self.env.scopes.pop();break;},
+                    Err(CodegenError::ControlFault(ControlFlow::Continue)) => {self.env.scopes.pop();continue;},
+                    Err(CodegenError::ControlFault(ControlFlow::Break)) => {self.env.scopes.pop();break;},
                     Err(e) => {self.env.scopes.pop();return Err(e);}
 
                 }
@@ -262,8 +279,8 @@ pub mod Codegen {
                 self.env.scopes.push();
                 match self.exec_block(body){
                     Ok(_) => {},
-                    Err(InterpretorError::ControlFault(ControlFlow::Continue)) => {self.env.scopes.pop();continue;},
-                    Err(InterpretorError::ControlFault(ControlFlow::Break)) => {self.env.scopes.pop();break;},
+                    Err(CodegenError::ControlFault(ControlFlow::Continue)) => {self.env.scopes.pop();continue;},
+                    Err(CodegenError::ControlFault(ControlFlow::Break)) => {self.env.scopes.pop();break;},
                     Err(e) => {self.env.scopes.pop();return Err(e);}
 
                 }
@@ -277,10 +294,10 @@ pub mod Codegen {
                     Some(e) => self.eval_expr(e)?,
                     None => Val::Null
                 };
-                return Err(InterpretorError::ControlFault(ControlFlow::Return(val)));
+                return Err(CodegenError::ControlFault(ControlFlow::Return(val)));
             },
-            Statmnt::Break => return Err(InterpretorError::ControlFault(ControlFlow::Break)),
-            Statmnt::Continue => return Err(InterpretorError::ControlFault(ControlFlow::Continue)),
+            Statmnt::Break => return Err(CodegenError::ControlFault(ControlFlow::Break)),
+            Statmnt::Continue => return Err(CodegenError::ControlFault(ControlFlow::Continue)),
             Statmnt::Block(blk ) => {
             self.env.scopes.push();
             let r = self.exec_block(blk);
@@ -297,7 +314,7 @@ pub mod Codegen {
 
 
 
-    pub fn try_assign(&mut self,lhs:&Expr,bin_op:&Option<BIN_OP>,rhs:Val) -> InterpretorReturn<()>{
+    pub fn try_assign(&mut self,lhs:&Expr,bin_op:&Option<BIN_OP>,rhs:Val) -> CodegenReturn<()>{
         match lhs {
             Expr::Ident(x) => {
                 let fin = if let Some(bop) = bin_op {
@@ -309,7 +326,7 @@ pub mod Codegen {
                 self.env.scopes.set(x.clone(), fin)?;
             },
             Expr::Field_access { obj, field } => {
-                let member = Self::traverse_root(obj).ok_or(InterpretorError::InvalidAssignment)?;
+                let member = Self::traverse_root(obj).ok_or(CodegenError::InvalidAssignment)?;
                 let mut cstm_val = self.env.scopes.get(member.clone())?;
                 let fin_rhs = if let Some(bop) = bin_op{
                     let cur = Self::get_field_val(&cstm_val,field)?;
@@ -329,32 +346,32 @@ pub mod Codegen {
         Ok(())
     }
 
-    pub fn get_field_val(val:&Val,name: &String) -> InterpretorReturn<Val>{
+    pub fn get_field_val(val:&Val,name: &String) -> CodegenReturn<Val>{
         match val{
-            Val::Custom(_,f) => f.get(name).cloned().ok_or_else(|| InterpretorError::NoFieldOnType(name.to_string(),"<Object>".to_string())),
-            _ => Err(InterpretorError::Custom("Can't access non-object's fields".to_string()))
+            Val::Custom(_,f) => f.get(name).cloned().ok_or_else(|| CodegenError::NoFieldOnType(name.to_string(),"<Object>".to_string())),
+            _ => Err(CodegenError::Custom("Can't access non-object's fields".to_string()))
         }
     }
 
-    pub fn set_field_val(val:&mut Val,expr:&Expr,name: &String,new: Val) -> InterpretorReturn<()>{
+    pub fn set_field_val(val:&mut Val,expr:&Expr,name: &String,new: Val) -> CodegenReturn<()>{
         match expr{
             Expr::Ident(_) => {
                 if let Val::Custom(_, s_fields) = val{
                     s_fields.insert(name.to_string(), new);
                     Ok(())      
                 }else{
-                    Err(InterpretorError::Custom(name.to_string()))
+                    Err(CodegenError::Custom(name.to_string()))
                 }
             },
             Expr::Field_access { obj, field } => {
                 if let Val::Custom(_,s_fields ) = val {
-                    let inner = s_fields.get_mut(field).ok_or_else(|| {InterpretorError::NoFieldOnType(field.to_string(), name.to_string())})?;
+                    let inner = s_fields.get_mut(field).ok_or_else(|| {CodegenError::NoFieldOnType(field.to_string(), name.to_string())})?;
                     Self::set_field_val(inner, obj, name, new)
                 }else{
-                    Err(InterpretorError::TypeError("Can't access non-object fields".to_string()))
+                    Err(CodegenError::TypeError("Can't access non-object fields".to_string()))
                 } 
             },
-            _ => Err(InterpretorError::TypeError("Can't assign to non-object fields".to_string()))
+            _ => Err(CodegenError::TypeError("Can't assign to non-object fields".to_string()))
 
 
         }
@@ -381,51 +398,51 @@ pub mod Codegen {
     }
 
 
-    pub fn try_bin_op(op: &BIN_OP,old: Val, new:Val) -> InterpretorReturn<Val> {
+    pub fn try_bin_op(op: &BIN_OP,old: Val, new:Val) -> CodegenReturn<Val> {
        match op {
         BIN_OP::Add => match (old,new) {
             (Val::Int(a),Val::Int(b)) => Ok(Val::Int(a+b)),
             (Val::Float(a),Val::Float(b)) => Ok(Val::Float(a+b)),
             (Val::String(a),Val::String(b)) => Ok(Val::String(a+&b)),
-            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+            (l,r) => Err(CodegenError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
         },
         BIN_OP::Sub => match (old,new) {
             (Val::Int(a),Val::Int(b)) => Ok(Val::Int(a-b)),
             (Val::Float(a),Val::Float(b)) => Ok(Val::Float(a-b)),
-            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+            (l,r) => Err(CodegenError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
 
         },BIN_OP::Mul => match (old,new) {
             (Val::Int(a),Val::Int(b)) => Ok(Val::Int(a*b)),
             (Val::Float(a),Val::Float(b)) => Ok(Val::Float(a*b)),
             (Val::String(z),Val::Int(cnt)) => Ok(Val::String(z.repeat(cnt as usize))),
-            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+            (l,r) => Err(CodegenError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
         },BIN_OP::Div => match (old,new) {
             (Val::Int(a),Val::Int(b)) => {
                 if b != 0 { 
                    return Ok(Val::Int(a/b));
                 }
-                Err(InterpretorError::DivideByZero)
+                Err(CodegenError::DivideByZero)
             },
             (Val::Float(a),Val::Float(b)) => {
                 if b != 0.0 { 
                     return Ok(Val::Float(a/b));
                 }
-                Err(InterpretorError::DivideByZero)
+                Err(CodegenError::DivideByZero)
                  
             },
-            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+            (l,r) => Err(CodegenError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
         },BIN_OP::Mod => match (old,new) {
             (Val::Int(a),Val::Int(b)) => {
                 if b == 0 {
-                    return Err(InterpretorError::DivideByZero);
+                    return Err(CodegenError::DivideByZero);
                 }
                 return Ok(Val::Int(a%b));
             },
-            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+            (l,r) => Err(CodegenError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
         },
         BIN_OP::Pow =>  match (old,new) {
             (Val::Int(a),Val::Int(b)) => Ok(Val::Int(a.pow(b as u32))),
-            (l,r) => Err(InterpretorError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
+            (l,r) => Err(CodegenError::IncompatibleTypes(format!("{l:?}"), format!("{r:?}"))),
         },
         BIN_OP::Eq => Ok(Val::Bool(old == new)),
         BIN_OP::N_eq => Ok(Val::Bool(old != new)),
@@ -440,11 +457,11 @@ pub mod Codegen {
         BIN_OP::Rshift => Self::bitwise_op(old,new,|a,b| {a >> b}),
         BIN_OP::Or => match (old,new) {
             (Val::Bool(x),Val::Bool(y)) => Ok(Val::Bool(x || y)),
-            (x,y) => Err(InterpretorError::IncompatibleTypes(x.to_string(), y.to_string()))
+            (x,y) => Err(CodegenError::IncompatibleTypes(x.to_string(), y.to_string()))
         },
         BIN_OP::And => match (old,new) {
             (Val::Bool(x),Val::Bool(y)) => Ok(Val::Bool(x && y)),
-            (x,y) => Err(InterpretorError::IncompatibleTypes(x.to_string(), y.to_string()))
+            (x,y) => Err(CodegenError::IncompatibleTypes(x.to_string(), y.to_string()))
         },
 
        } 
@@ -453,26 +470,26 @@ pub mod Codegen {
 
     }
 
-    pub fn bitwise_op(l:Val,r:Val,f: impl Fn(i64,i64) -> i64) -> InterpretorReturn<Val>{
+    pub fn bitwise_op(l:Val,r:Val,f: impl Fn(i64,i64) -> i64) -> CodegenReturn<Val>{
         match (l,r) {
             (Val::Int(x),Val::Int(y)) => {Ok(Val::Int(f(x,y)))},
             (Val::Bool(x),Val::Bool(y)) => {Ok(Val::Bool((f(x as i64,y as i64) & 1) == 1))}
-            (x,y) => Err(InterpretorError::IncompatibleTypes(x.to_string(), y.to_string()))
+            (x,y) => Err(CodegenError::IncompatibleTypes(x.to_string(), y.to_string()))
         }
 
     }
 
-    pub fn cmp_op(l:Val,r: Val,f: impl Fn(f64,f64) -> bool) -> InterpretorReturn<Val>{
+    pub fn cmp_op(l:Val,r: Val,f: impl Fn(f64,f64) -> bool) -> CodegenReturn<Val>{
         let (a,b) = match (l,r) {
             (Val::Int(c),Val::Int(d)) => ( c as f64, d as f64),
             (Val::Float(c),Val::Float(d)) => (c, d),
-            (x,y) => {return Err(InterpretorError::IncompatibleTypes(format!("{x:?}"), format!("{y:?}")))},
+            (x,y) => {return Err(CodegenError::IncompatibleTypes(format!("{x:?}"), format!("{y:?}")))},
         };
         Ok(Val::Bool(f(a,b)))
 
     }
 
-    pub fn eval_expr(&mut self,expr:&Expr) -> InterpretorReturn<Val>{
+    pub fn eval_expr(&mut self,expr:&Expr) -> CodegenReturn<Val>{
         match expr {
             Expr::Bool(x) => Ok(Val::Bool(*x)),
             Expr::Int(x) => Ok(Val::Int(*x)),
@@ -510,13 +527,13 @@ pub mod Codegen {
                     UN_OP::Bang => {
                         match x {
                             Val::Bool(y) => Ok(Val::Bool(!y)),
-                            t => Err(InterpretorError::IncompatibleTypes(t.to_string(), "Bool".to_string()))
+                            t => Err(CodegenError::IncompatibleTypes(t.to_string(), "Bool".to_string()))
                         }
                     },
                     UN_OP::Tilda => {
                         match x {
                             Val::Int(y) => Ok(Val::Int(!y)),
-                            t => Err(InterpretorError::IncompatibleTypes(t.to_string(), "Bool".to_string()))
+                            t => Err(CodegenError::IncompatibleTypes(t.to_string(), "Bool".to_string()))
                         }
                     
                     },
@@ -525,7 +542,7 @@ pub mod Codegen {
                             Val::Float(y) => Ok(Val::Float(-y)),
                             Val::Int(y) => Ok(Val::Int(-y)),
                             Val::Bool(y) => Ok(Val::Bool(!y)),
-                            t => Err(InterpretorError::IncompatibleTypes(t.to_string(), "Bool".to_string()))
+                            t => Err(CodegenError::IncompatibleTypes(t.to_string(), "Bool".to_string()))
                         }
                     },
                     
@@ -545,10 +562,12 @@ pub mod Codegen {
             Expr::Fxn_call { name, args } => {
                 let mut args = args.clone();
                 match name.as_str(){
-                    "Println" | "Println!" | "println" | "println!" => {
+                    "Println" | "println" | "log" | "Log" => {
                         if let Ok(Val::String(fmt)) = self.eval_expr(&args[0]){
                            let _ = args.iter_mut().map(|f| self.eval_expr(f).unwrap_or(Val::Null));
                            let mut segments = fmt.split("{}");
+                            let xos:Vec<&str> = segments.by_ref().collect();
+                           println!("{:?}\n",xos);
                            let mut ret = "".to_string();
                            for (i,part) in segments.by_ref().enumerate(){
                                 ret.push_str(part);
@@ -583,10 +602,12 @@ pub mod Codegen {
                             println!("{ret}\n");
                         }
                     },
-                    "Print" | "Print!" | "print" | "print!" => {
+                    "Print" | "print"  => {
                         if let Ok(Val::String(fmt)) = self.eval_expr(&args[0]){
                             let _ = args.iter_mut().map(|f| self.eval_expr(f).unwrap_or(Val::Null));
                            let mut segments = fmt.split("{}");
+                            let xos:Vec<&str> = segments.by_ref().collect();
+                           println!("{:?}\n",xos);
                            let mut ret = "".to_string();
                            for (i,part) in segments.by_ref().enumerate(){
                                 ret.push_str(part);
@@ -621,7 +642,7 @@ pub mod Codegen {
                             println!("{ret}");
                         }
                     },
-                    "Scan" | "Scan!" | "scan" | "scan!"  => {
+                    "Scan" | "scan" | "Scanln" | "scanf" | "Scanf" => {
                         let la = args.len();
                         let mut cur = 0;
                         while cur < la {
@@ -638,11 +659,14 @@ pub mod Codegen {
 
                 };
 
-                let decl = self.env.func.get(name).ok_or_else(|| InterpretorError::UndefinedVariable(name.clone()))?.clone();
+                let decl = self.env.func.get(name).ok_or_else(|| CodegenError::UndefinedVariable(name.clone()))?.clone();
                 if let Declare::Function { args:params, body,.. } = &decl{
+                    if !STDIO_FXNS.contains(name.as_str()){
                     if args.len() != params.len(){
-                        return Err(InterpretorError::Custom("Fxn Arg count mismatched".to_string()));
+                        return Err(CodegenError::Custom("Fxn Arg count mismatched".to_string()));
                     }
+                }
+
                     let mut eval: Vec<(String,Val,bool)> = Vec::new();
                     for (arg_expr,(param_name,_,mutable)) in args.iter().zip(params.iter()){
                         let val = self.eval_expr(arg_expr)?;
@@ -656,22 +680,22 @@ pub mod Codegen {
                     
                     let ret = match self.exec_block(&body){
                         Ok(_) => Val::Null,
-                        Err(InterpretorError::ControlFault(ControlFlow::Return(v))) => v,
+                        Err(CodegenError::ControlFault(ControlFlow::Return(v))) => v,
                         Err(e) => {self.env.scopes.pop();return Err(e);}
                     };
                     self.env.scopes.pop();
                     Ok(ret)
                 }else{
-                    Err(InterpretorError::UndefinedVariable(name.clone()))
+                    Err(CodegenError::UndefinedVariable(name.clone()))
                 }
             },
             Expr::Field_access { obj, field } => {
                 let val = self.eval_expr(obj)?;
                 match val{
                     Val::Custom(_,fields) => {
-                        fields.get(field).cloned().ok_or_else(|| InterpretorError::Custom(format!("Can't find field: {:?} on the Object",field.to_string())))
+                        fields.get(field).cloned().ok_or_else(|| CodegenError::Custom(format!("Can't find field: {:?} on the Object",field.to_string())))
                     },
-                    _ => Err(InterpretorError::Custom(format!("Can't find field: {:?} of type {:?} on Object",field.to_string(), val.to_string())))
+                    _ => Err(CodegenError::Custom(format!("Can't find field: {:?} of type {:?} on Object",field.to_string(), val.to_string())))
                 }
             },
 
@@ -680,7 +704,7 @@ pub mod Codegen {
 
 
                                 
-    pub fn try_read(&mut self,arg: Expr,i:String) -> InterpretorReturn<bool> {
+    pub fn try_read(&mut self,arg: Expr,i:String) -> CodegenReturn<bool> {
         if let Expr::Ident(name) = arg{
             if self.env.scopes.is_declared(name.clone()){
                 let data = Self::get_Val(&i);
@@ -693,9 +717,9 @@ pub mod Codegen {
     }
 
 
-    pub fn parse_json_struct(bs: &Vec<u8>) -> InterpretorReturn<(String,HashMap<String,Val>)>{
+    pub fn parse_json_struct(bs: &Vec<u8>) -> CodegenReturn<(String,HashMap<String,Val>)>{
         let mut map = HashMap::new();
-        let name = String::from_utf8(bs.iter().take_while(|b| **b != b'{').map(|x| {x.clone()}).collect::<Vec<u8>>()).or_else(|_f| {return Err(InterpretorError::Custom("Failed to parse invalid object".to_string()));})?;
+        let name = String::from_utf8(bs.iter().take_while(|b| **b != b'{').map(|x| {x.clone()}).collect::<Vec<u8>>()).or_else(|_f| {return Err(CodegenError::Custom("Failed to parse invalid object".to_string()));})?;
         let mut i = 0;
 
         for z in bs{
@@ -779,12 +803,12 @@ pub mod Codegen {
     }
 
 
-    pub fn add(a: Val,b: f64) -> InterpretorReturn<Val>{
+    pub fn add(a: Val,b: f64) -> CodegenReturn<Val>{
         match a {
             Val::Float(x) => {Ok(Val::Float(x+b))},
             Val::Int(x) => {Ok(Val::Int(x + (b as i64)))},
             Val::Bool(_) => {Ok(Val::Bool(if b < 0.0 {false} else {true}))}, 
-            t => Err(InterpretorError::IncompatibleTypes(format!("{t:?}"), format!("{b}")))
+            t => Err(CodegenError::IncompatibleTypes(format!("{t:?}"), format!("{b}")))
         }
 
     }

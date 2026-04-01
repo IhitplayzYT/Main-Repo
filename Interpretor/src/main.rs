@@ -15,7 +15,7 @@ mod Errors;
 mod Frontend;
 mod Helper;
 mod Ident_table;
-mod Interpretor;
+mod Interpret;
 mod Lexer_Tok;
 mod Parser;
 mod Semantic_Analysis;
@@ -24,9 +24,14 @@ mod Codegen;
 mod printer;
 use std::env;
 
-use crate::{Semantic_Analysis::Analyser::Semantilizer};
+use crate::{Interpret::interpretor::{self, Interpretor}, Semantic_Analysis::Analyser::Semantilizer};
 
 fn main() {
+
+    let interpretor:Interpretor = Interpretor::new("");
+    // TODO:
+    // FIXME: Use the api instead of direct member instatntiaition also check for pub API and make sure to add documentation to the code
+
     let arguments: Vec<String> = env::args().collect();
     if arguments.len() != 2 {
         std::process::exit(0);

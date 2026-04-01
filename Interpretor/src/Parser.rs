@@ -246,7 +246,7 @@ pub mod PARSER {
             LTOK::FN => self.eval_fxn(),
             LTOK::STRUCT => self.eval_struct(), 
             LTOK::ENUM => self.eval_enum(), 
-            _ => {return Err(ParserError::Custom("Expected Declaration".to_string()));}
+            t => {println!("{:?}",t);return Err(ParserError::Custom("Expected Declaration".to_string()));}
             }
         }         
 
@@ -287,6 +287,7 @@ pub mod PARSER {
             self.consume(&LTOK::LBRACE)?;
             let fields = self.eval_struct_fields()?;
             self.consume(&LTOK::RBRACE)?;
+            println!("{name}{fields:?}");
             Ok(Declare::Struct { name, fields })
 
         }

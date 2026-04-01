@@ -57,41 +57,52 @@ pub mod collections {
 pub mod Main{
 use std::env;
 
+#[derive(Debug,Clone)]
 pub struct CLI{
-    files: Vec<String>,
-    optimise: i32,
-    debug: bool,
-    env_var: Vec<String>
+    pub files: Vec<String>,
+    pub debug: bool,
+    env_var: Vec<(String,String)>
 }
 
 impl CLI{
     pub fn new() -> Self{
         Self{
             files: Vec::new(),
-            optimise: 0,
             debug: false,
             env_var: Vec::new(),
-        }        
+        }       
     }
+
+    pub fn parse_envs(&mut self,args: &str){
+    let mut args = args.to_string();
+        if !args.ends_with(")") {
+            return;
+        }else{
+        args.pop();
+        }
+        //   a=b,c=d ,d=k , ...
+        let args =String::from_utf8( args.bytes().filter(|c| *c != b' ' || *c != b'\n' ).collect()).unwrap();
+        args.split(",").for_each(|x| {
+           let x = x.split("=").collect::<Vec<&str>>(); 
+           self.env_var.push((x[0].to_string(),x[1].to_string()));
+        });
+    }
+
     pub fn parse_clargs(&mut self) -> CLI_ret<bool>{
     let arguments: Vec<String> = env::args().collect();
     let l = arguments.len();
     for i in 0..l {
+        if arguments[i].starts_with("-E=("){
+           self.parse_envs(&arguments[i][4..]); 
+        }
+        else{
+
         match &arguments[i][..]{
-            "-O1" => {
-                self.optimise = 1;
-            },
-            "-O2" => {
-                self.optimise = 2;
-            },
-            "-O3" => {
-                self.optimise = 3;
-            },
             "-d" => {
                 self.debug = true;
-            }
+            },
             t => {
-            if !t.ends_with(".rs"){
+            if !t.ends_with(".rs") || !t.ends_with(".ihit"){
                 if t.contains("."){
                 let x:Vec<&str> = t.split("/").collect();
                 if x.last().iter().any(|c| {**c == "."}){
@@ -106,7 +117,7 @@ impl CLI{
 
             }
         }
-
+    }
     }
 
 
@@ -115,6 +126,7 @@ impl CLI{
     }
 }
 
+#[derive(Debug,Clone)]
 pub enum CLI_ERR {
     UnknownParam(String),
     UnsupportedFileformat(String),
@@ -122,7 +134,7 @@ pub enum CLI_ERR {
     Custom(String),
 }
 
-static SUPPORTED_ARGS:&'static [&str;5] = &["-O1","-O2","-O3","<FILES>","-d"];
+static SUPPORTED_ARGS:&'static [&str;3] = &["<FILES>","-d","-E=(<ENV_VAR_NAME>=<VAL>,...)"];
 
 pub type CLI_ret<T> = Result<T,CLI_ERR>;
 

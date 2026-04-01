@@ -1,3 +1,7 @@
+struct x{
+    name:String,
+    age:int
+}
 
 fn main (x: int, z: float) {
 let mut a = 34;
@@ -14,7 +18,9 @@ else{
 for i in (b..a){
     y = "pls";    
 }
-
-println("{}",y);
+let k = x{name:"hello",age:45};
+println("hello {} reply",y);
+println("{}",k);
+print("{}",y);
 
 }

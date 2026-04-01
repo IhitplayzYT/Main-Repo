@@ -22,6 +22,8 @@ pub mod Analyser {
         Errors::Err::{self, Parser_ret, Semantic_Ret, Semantic_err},
     };
     use std::collections::HashMap;
+    use std::collections::HashSet;
+    use std::sync::LazyLock;
 
     /// Semanilizer structure[MAIN API]
     ///
@@ -49,6 +51,10 @@ pub mod Analyser {
         scope_stack: Vec<HashMap<String, (Type, bool)>>,
     }
 
+static STDIO_FXNS: LazyLock<HashSet<&str>> = LazyLock::new(|| {
+    HashSet::from(["print","println","log","Print","Log","Println","Scan","Scanf","Scanln","scan","scanf"])
+});
+
     impl Semantilizer {
         /// Semanilizer Constructor
         ///
@@ -69,6 +75,15 @@ pub mod Analyser {
             }
         }
 
+
+        fn gen_vec() -> Vec<(String,Type,bool)>{
+            let mut ret = Vec::new();
+            for i in 0..256{
+                ret.push((i.to_string(),Type::STRING,false));
+            }
+            ret
+        }
+
         /// Semanilizer main call
         ///
         /// # Return
@@ -79,7 +94,18 @@ pub mod Analyser {
         /// ```    
 
         pub fn analyse(&mut self, code: &Code) -> Semantic_Ret<()> {
-            self.save_declares(&Declare::Function { name: "println".to_string(), rtype: None, args: vec![("fmt".to_string(),Type::STRING,false),("a".to_string(),Type::STRING,false)], body: vec![] })?;  
+            let vec = Self::gen_vec();
+            self.save_declares(&Declare::Function { name: "println".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
+            self.save_declares(&Declare::Function { name: "log".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
+            self.save_declares(&Declare::Function { name: "Log".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
+            self.save_declares(&Declare::Function { name: "print".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
+            self.save_declares(&Declare::Function { name: "Println".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
+            self.save_declares(&Declare::Function { name: "Print".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
+            self.save_declares(&Declare::Function { name: "Scan".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
+            self.save_declares(&Declare::Function { name: "scan".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
+            self.save_declares(&Declare::Function { name: "Scanln".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
+            self.save_declares(&Declare::Function { name: "scanf".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
+            self.save_declares(&Declare::Function { name: "Scanf".to_string(), rtype: None, args: vec.clone(), body: vec![] })?;  
             for decl in &code.Program {
                 self.save_declares(decl)?;
             }
@@ -547,6 +573,7 @@ pub mod Analyser {
                         .functions
                         .get(name)
                         .ok_or_else(|| Semantic_err::UndefinedFunction(name.clone()))?;
+                    if !STDIO_FXNS.contains(name.as_str()) {
 
                     if args.len() != param.len() {
                         return Err(Semantic_err::Custom(format!(
@@ -556,6 +583,7 @@ pub mod Analyser {
                             args.len()
                         )));
                     }
+                 }
                     for (arg, param_t) in args.iter().zip(param.iter()) {
                         let arg_t = self.eval_type(arg)?;
                         if !self.is_compatible(param_t, &arg_t) {

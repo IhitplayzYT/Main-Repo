@@ -11,7 +11,7 @@
 
 #![allow(non_camel_case_types,non_snake_case,non_upper_case_globals,dead_code)]
 pub mod Err{
-    use crate::{Ast::AST::Type, Codegen::Codegen::ControlFlow};
+    use crate::{Ast::AST::Type, Codegen::Codegen::{ControlFlow}};
     /// Type defination of the Parser Return Type
     /// This is will be the majority return type used in the parser
     /// 
@@ -31,16 +31,16 @@ pub mod Err{
     ///     
     pub type Semantic_Ret<T> = Result<T,Semantic_err>;
 
-    /// Type defination of the Interpretor Return Type
+    /// Type defination of the Codegen Return Type
     /// 
     /// # Example
     /// ```
-    /// fn test() -> InterpretorError<()> 
+    /// fn test() -> CodegenReturn<()> 
     /// ```
     ///     
-    pub type InterpretorReturn<T> = Result<T,InterpretorError>;
+    pub type CodegenReturn<T> = Result<T,CodegenError>;
 
-    /// Enum that stores the Interpretor Errors Possible
+    /// Enum that stores the Codegen Errors Possible
     /// 
     /// # Traits
     /// - Derived<br/>
@@ -53,7 +53,7 @@ pub mod Err{
     /// ```
     ///    
     #[derive(Debug,Clone)] 
-    pub enum InterpretorError{
+    pub enum CodegenError{
         UndefinedVariable(String),
         RedefinedVariable(String),
         ImmutableVariable(String),
@@ -94,6 +94,16 @@ pub mod Err{
         Custom(String),
     }
 
+    #[derive(Debug,Clone)] 
+    pub enum InterpretorError{
+        RULES_ERROR(String),
+        FRONTEND_ERROR(String),
+        CODEGEN_ERROR(String),
+    }
+
+    pub type InterpretorReturn<T> = Result<T,InterpretorError>;
+
+
     /// Enum that stores the Parser Errors Possible
     /// 
     /// # Traits
@@ -117,7 +127,8 @@ pub mod Err{
     pub enum ERROR{
         Semerr(Semantic_err),
         Parseerr(ParserError),
-        Intererr(InterpretorError)
+        Codegenerr(CodegenError),
+        Intererr(InterpretorError),
     }
 
     impl ParserError{
