@@ -315,6 +315,7 @@ static STDIO_FXNS: LazyLock<HashSet<&str>> = LazyLock::new(|| {
                     let rhs_type = self.eval_type(value)?;
                     if let Some(t) = type_annot {
                         if !self.is_compatible(t, &rhs_type) {
+                        println!("1");
                             return Err(Semantic_err::TypeMismatch {
                                 expected: t.clone(),
                                 got: rhs_type,
@@ -334,6 +335,8 @@ static STDIO_FXNS: LazyLock<HashSet<&str>> = LazyLock::new(|| {
                                 self.check_bin_op_types(operator, &var_type,&val_type)?;
                             } else {
                                 if !self.is_compatible(&var_type, &val_type){
+
+                                    println!("2");
                                     return Err(Semantic_err::TypeMismatch { expected: var_type, got:val_type });
                                 }
                             }
@@ -359,6 +362,7 @@ static STDIO_FXNS: LazyLock<HashSet<&str>> = LazyLock::new(|| {
                             if let Some(operator) = op {
                                 self.check_bin_op_types(operator,&field_type,&val_type)?;
                             }else if !self.is_compatible(&field_type, &val_type) {
+                                println!("3");
                                 return Err(Semantic_err::TypeMismatch { expected: field_type, got: val_type });
                             }
 
@@ -573,7 +577,7 @@ static STDIO_FXNS: LazyLock<HashSet<&str>> = LazyLock::new(|| {
                         .functions
                         .get(name)
                         .ok_or_else(|| Semantic_err::UndefinedFunction(name.clone()))?;
-                    if !STDIO_FXNS.contains(name.as_str()) {
+                if !STDIO_FXNS.contains(name.as_str()) {
 
                     if args.len() != param.len() {
                         return Err(Semantic_err::Custom(format!(
@@ -585,12 +589,14 @@ static STDIO_FXNS: LazyLock<HashSet<&str>> = LazyLock::new(|| {
                     }
                  }
                     for (arg, param_t) in args.iter().zip(param.iter()) {
+                    if !STDIO_FXNS.contains(name.as_str()) {
                         let arg_t = self.eval_type(arg)?;
                         if !self.is_compatible(param_t, &arg_t) {
                             return Err(Semantic_err::TypeMismatch {
                                 expected: param_t.clone(),
                                 got: arg_t,
                             });
+                        }
                         }
                     }
 

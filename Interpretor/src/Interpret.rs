@@ -50,25 +50,34 @@ use crate::Errors::Err::{self, InterpretorError, InterpretorReturn};
         }
 
         pub fn Run(&mut self) -> InterpretorReturn<bool>{
+            /*  ***************************************** Rules Engine *****************************************  */
            let clargs = self.rules_engine.parse_clargs().map_err(|e| {
             InterpretorError::RULES_ERROR(format!("{e:?}"))
            })?; 
+            /*  ***************************************** Rules Engine *****************************************  */
+
+            if !clargs{
+           return Err(InterpretorError::RULES_ERROR(format!("Rules engine failed! : {clargs:?}")));
+            }
+
            if self.rules_engine.files.is_empty(){
             return Err(InterpretorError::RULES_ERROR("No target file provided!!".to_string()));
            }
-           self.frontend.lexer = Some(Lexer::new(self.rules_engine.files[0].clone()));
-           
 
-           if !clargs{
-           return Err(InterpretorError::RULES_ERROR(format!("Rules engine failed! : {clargs:?}")));
-           }
-            let code = self.frontend.exec(self.rules_engine.clone()).map_err(|e| {
+            /*  ***************************************** Frontend *****************************************  */
+           self.frontend.lexer = Some(Lexer::new(self.rules_engine.files[0].clone()));
+            let code = self.frontend.Exec(self.rules_engine.clone()).map_err(|e| {
             InterpretorError::FRONTEND_ERROR(format!("{e:?}"))
            })?;
+            /*  ***************************************** Frontend *****************************************  */
+
+
+           
+            /*  ***************************************** Codegen *****************************************  */
            let status = self.codegen.Exec(&code,self.rules_engine.clone()).map_err(|e| {
             InterpretorError::CODEGEN_ERROR(format!("{e:?}"))
            })?;
-           
+            /*  ***************************************** Codegen *****************************************  */
 
             Ok(status)
         }         

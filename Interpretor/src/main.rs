@@ -22,36 +22,14 @@ mod Semantic_Analysis;
 mod Tokeniser;
 mod Codegen;
 mod printer;
-use std::env;
 
-use crate::{Interpret::interpretor::{self, Interpretor}, Semantic_Analysis::Analyser::Semantilizer};
+use crate::{Interpret::interpretor::Interpretor}; 
 
 fn main() {
 
-    let interpretor:Interpretor = Interpretor::new("");
-    // TODO:
-    // FIXME: Use the api instead of direct member instatntiaition also check for pub API and make sure to add documentation to the code
-
-    let arguments: Vec<String> = env::args().collect();
-    if arguments.len() != 2 {
-        std::process::exit(0);
+    let mut interpretor:Interpretor = Interpretor::new();
+    if let Ok(result) = interpretor.Run(){
+        println!("Result={result}");
     }
-
-    let mut LEXER = Tokeniser::Tokeniser::Lexer::new(arguments[1].clone());
-    LEXER.Tokenise();
-    LEXER.print_tok();
-    println!();
-    println!();
-    let mut PARSER = Parser::PARSER::Parser::new(LEXER.Lexer_Output);
-    let t = PARSER.Parse().unwrap();
-    println!("{:?}", t);
-    let mut sem = Semantilizer::new();
-    let z = sem.analyse(&t);
-    println!("{:?} !!", z);
-    /* ADD THE FRONTEND CODE TO REPLACE THIS  */
-    let mut codgen = Codegen::Codegen::Codegen::new();
-    let ret = codgen.Exec(&t);
-    println!("{ret:?}");
-
 
 }

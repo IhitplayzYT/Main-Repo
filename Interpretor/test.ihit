@@ -1,26 +1,25 @@
 struct x{
     name:String,
     age:int
+};
+
+fn factorial(n:i64) -> i64{
+    let mut ret = n;
+    for i in 1..n{
+        ret *= i;
+    }
+    return ret;
 }
 
 fn main (x: int, z: float) {
-let mut a = 34;
-let mut b = 54;
-let mut y: String = "temp";
-if  a >= b {
-    y = " hello dcwinidw si_() \' .. }  \n " ;
-}
-else{
-    a ^= (b + 23);
+
+let mut a = 10;
+let mut b = 0;
+let y = "pls"; 
+scan(a,b);
+for i in a..b{
+    println("{}:{}",i,factorial(i));
 }
 
-
-for i in (b..a){
-    y = "pls";    
-}
-let k = x{name:"hello",age:45};
-println("hello {} reply",y);
-println("{}",k);
-print("{}",y);
 
 }

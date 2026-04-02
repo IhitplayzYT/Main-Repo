@@ -287,7 +287,9 @@ pub mod PARSER {
             self.consume(&LTOK::LBRACE)?;
             let fields = self.eval_struct_fields()?;
             self.consume(&LTOK::RBRACE)?;
-            println!("{name}{fields:?}");
+            if let LTOK::SEMICOLON = self.peek(){
+                self.consume(&LTOK::SEMICOLON)?;
+            }
             Ok(Declare::Struct { name, fields })
 
         }

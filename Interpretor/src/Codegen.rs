@@ -177,6 +177,9 @@ pub mod Codegen {
 
     pub fn Exec(&mut self,code: &Code,clargs: CLI) -> CodegenReturn<bool>{
             let vec = Self::gen_vec();
+            clargs.env_var.iter().for_each(|(a,b)| {
+                self.env.scopes.declare(a.to_string(), Self::get_Val(b), false);
+            });
             self.register(&Declare::Function { name: "println".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
             self.register(&Declare::Function { name: "Println".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
             self.register(&Declare::Function { name: "Print".to_string(), rtype: None,args: vec.clone() , body: vec![] })?;  
@@ -208,7 +211,9 @@ pub mod Codegen {
 
 
     pub fn exec_block(&mut self,block: &Vec<Statmnt>) -> CodegenReturn<Val>{
-        block.iter().for_each(|statmnt| self.exec_statmnt(statmnt).unwrap());
+        for x in block{
+            self.exec_statmnt(x)?;
+        }
         Ok(Val::Null)
     }
 
@@ -567,11 +572,10 @@ pub mod Codegen {
                            let _ = args.iter_mut().map(|f| self.eval_expr(f).unwrap_or(Val::Null));
                            let mut segments = fmt.split("{}");
                             let xos:Vec<&str> = segments.by_ref().collect();
-                           println!("{:?}\n",xos);
                            let mut ret = "".to_string();
-                           for (i,part) in segments.by_ref().enumerate(){
+                           for (i,part) in xos.iter().enumerate(){
                                 ret.push_str(part);
-                                if let Some(arg) = args.get(i){
+                                if let Some(arg) = args.get(i+1){
                                     let val = self.eval_expr(arg)?;
                                     match val {
                                         Val::Bool(x) => ret.push_str(&x.to_string()),
@@ -580,10 +584,11 @@ pub mod Codegen {
                                         Val::Float(x) => ret.push_str(&x.to_string()),
                                         Val::Null => ret.push_str("None"),
                                         Val::Custom(x,y) => {
+                                            ret.push_str("<Object ");
                                             ret.push_str(&x);
                                             ret.push_str("{");
                                                for (member,Val) in y {
-                                                ret.push_str(&format!("{}:{}",member,match Val{
+                                                ret.push_str(&format!("{}: {}, ",member,match Val{
                                                     Val::Bool(x) => x.to_string(),
                                                     Val::Int(x) => x.to_string(),
                                                     Val::String(x) => x,
@@ -592,26 +597,27 @@ pub mod Codegen {
                                                     Val::Custom(m,_) => m,
                                                 }));
                                                } 
+                                            ret.pop();
+                                            ret.pop();
+                                            ret.push_str("}>");
 
-                                            ret.push_str("}");
                                         }
 
                                     }
                                 }
                            }
-                            println!("{ret}\n");
+                           println!("{ret}");
                         }
                     },
                     "Print" | "print"  => {
                         if let Ok(Val::String(fmt)) = self.eval_expr(&args[0]){
-                            let _ = args.iter_mut().map(|f| self.eval_expr(f).unwrap_or(Val::Null));
+                           let _ = args.iter_mut().map(|f| self.eval_expr(f).unwrap_or(Val::Null));
                            let mut segments = fmt.split("{}");
                             let xos:Vec<&str> = segments.by_ref().collect();
-                           println!("{:?}\n",xos);
                            let mut ret = "".to_string();
-                           for (i,part) in segments.by_ref().enumerate(){
+                           for (i,part) in xos.iter().enumerate(){
                                 ret.push_str(part);
-                                if let Some(arg) = args.get(i){
+                                if let Some(arg) = args.get(i+1){
                                     let val = self.eval_expr(arg)?;
                                     match val {
                                         Val::Bool(x) => ret.push_str(&x.to_string()),
@@ -620,10 +626,11 @@ pub mod Codegen {
                                         Val::Float(x) => ret.push_str(&x.to_string()),
                                         Val::Null => ret.push_str("None"),
                                         Val::Custom(x,y) => {
+                                            ret.push_str("<Object ");
                                             ret.push_str(&x);
                                             ret.push_str("{");
                                                for (member,Val) in y {
-                                                ret.push_str(&format!("{}:{}",member,match Val{
+                                                ret.push_str(&format!("{}: {}, ",member,match Val{
                                                     Val::Bool(x) => x.to_string(),
                                                     Val::Int(x) => x.to_string(),
                                                     Val::String(x) => x,
@@ -632,14 +639,16 @@ pub mod Codegen {
                                                     Val::Custom(m,_) => m,
                                                 }));
                                                } 
+                                            ret.pop();
+                                            ret.pop();
+                                            ret.push_str("}>");
 
-                                            ret.push_str("}");
                                         }
 
                                     }
                                 }
                            }
-                            println!("{ret}");
+                           print!("{ret}");
                         }
                     },
                     "Scan" | "scan" | "Scanln" | "scanf" | "Scanf" => {

@@ -61,7 +61,8 @@ use std::env;
 pub struct CLI{
     pub files: Vec<String>,
     pub debug: bool,
-    env_var: Vec<(String,String)>
+    pub env_var: Vec<(String,String)>,
+    pub pretty: bool
 }
 
 impl CLI{
@@ -70,6 +71,7 @@ impl CLI{
             files: Vec::new(),
             debug: false,
             env_var: Vec::new(),
+            pretty: false,
         }       
     }
 
@@ -87,30 +89,53 @@ impl CLI{
            self.env_var.push((x[0].to_string(),x[1].to_string()));
         });
     }
+    
+    pub fn DEBUG_STR(){
+        println!("./Interpretor [-d|-E|-f] <FILES> ...\n
+   -d: To enable the Debug mode
+   -f: To enable pretty Debug mode[Debug mode has to be enabled to work]
+   -E=(ENV_VAR=VAL,...): A tuple of comma seperated env vars
+   <FILES>: A file taken as argument with extentions .rs and .ihit");
+    }
 
     pub fn parse_clargs(&mut self) -> CLI_ret<bool>{
     let arguments: Vec<String> = env::args().collect();
+    if arguments.len() < 2  {
+        Self::DEBUG_STR();    
+    }
     let l = arguments.len();
-    for i in 0..l {
+    for i in 1..l {
         if arguments[i].starts_with("-E=("){
            self.parse_envs(&arguments[i][4..]); 
         }
         else{
-
         match &arguments[i][..]{
             "-d" => {
                 self.debug = true;
             },
+            "-f" => {
+                self.pretty = true;
+            },
+            "-df" | "-fd" => {
+                self.pretty = true;
+                self.debug = true;
+            }
             t => {
-            if !t.ends_with(".rs") || !t.ends_with(".ihit"){
-                if t.contains("."){
+            if !t.ends_with(".rs") && !t.ends_with(".ihit"){
                 let x:Vec<&str> = t.split("/").collect();
                 if x.last().iter().any(|c| {**c == "."}){
-                return Err(CLI_ERR::UnsupportedFileformat(x.last().unwrap().to_string().split_off(x.last().unwrap().to_string().rfind(".").unwrap())))
+                    if let Some(y) = x.last(){
+                        Self::DEBUG_STR();    
+                        return Err(CLI_ERR::UnsupportedFileformat(y.to_string()));
+                    } else{
+                    Self::DEBUG_STR();    
+                    return Err(CLI_ERR::UnsupportedFileformat(x.last().unwrap().to_string().split_off(x.last().unwrap().to_string().rfind(".").unwrap())))
+                    }
                 }
-            }else{
-                return Err(CLI_ERR::Unsupported(t.to_string()));
-            }
+                else{
+                    Self::DEBUG_STR();    
+                    return Err(CLI_ERR::Unsupported(t.to_string()));
+                }
             }else{
                 self.files.push(t.to_string());
             }
@@ -119,7 +144,6 @@ impl CLI{
         }
     }
     }
-
 
 
     Ok(true)
@@ -134,7 +158,7 @@ pub enum CLI_ERR {
     Custom(String),
 }
 
-static SUPPORTED_ARGS:&'static [&str;3] = &["<FILES>","-d","-E=(<ENV_VAR_NAME>=<VAL>,...)"];
+static SUPPORTED_ARGS:&'static [&str;6] = &["<FILES>","-d","-E=(<ENV_VAR_NAME>=<VAL>,...)","-f","-df","-fd"];
 
 pub type CLI_ret<T> = Result<T,CLI_ERR>;
 

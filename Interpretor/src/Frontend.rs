@@ -19,6 +19,7 @@ pub mod Frontend {
     use crate::Semantic_Analysis::Analyser::Semantilizer;
     use crate::Tokeniser::Tokeniser::Lexer;
     use crate::Errors::Err::*;
+    use crate::printer::printer::Components;
 
     /// Frontend struct
     /// 
@@ -64,20 +65,33 @@ pub mod Frontend {
         /// frontend.exec();
         /// ```
         ///    
-        pub fn exec(&mut self,clargs: CLI) -> Result<Code,ERROR>{
+        pub fn Exec(&mut self,clargs: CLI) -> Result<Code,ERROR>{
             if let Some(mut lexer) = self.lexer.clone(){
                 if !lexer.Tokenise(){
                 panic!("FATAL INTERNAL ERROR IN COMPILER");
                 }
+            println!("\nLexer Sucess!!");
+            if clargs.debug{
+                println!("\nTOKENSTREAM: {{");
+                if clargs.pretty {lexer.print();} else {lexer.print_tok();}
+                println!("}}");
+            }                
             self.parser = Some(Parser::new(lexer.Lexer_Output.clone()));
-            let ast = self.parser.as_mut().unwrap().Parse().map_err(ERROR::Parseerr)?;
-            self.semantic_analyser.analyse(&ast).map_err(ERROR::Semerr)?;
+            let ast = self.parser.as_mut().unwrap().Parse().map_err(|e| {println!("Parser Error {e:?}");ERROR::Parseerr(e)})?;
+            println!("{}Parser Sucess!!",if clargs.debug {"\n"} else {""});
+            if clargs.debug{
+                if let Some(x) = self.parser.clone(){
+                    println!("\nAST: ");
+                    if clargs.pretty {x.print();} else {println!("{:?}\n",ast);}
+                }
+            }
+            self.semantic_analyser.analyse(&ast).map_err(|e| {println!("Semantic Error {e:?}");ERROR::Semerr(e)})?;
+            println!("{}Semantalizer Sucess!!",if clargs.debug {"\n"} else {""});
             Ok(ast)
 
             }else{
                 panic!("No file provided");
             } 
-
 
         }
 
