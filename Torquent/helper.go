@@ -19,6 +19,8 @@ func DEBUG_STR() {
 	fmt.Println("./Torquent [-d|-t|-o|-i|-h] <TORRENT_FILES> ... \n  -d: Enables debug mode\n  -t: Enables multi threaded mode\n  -i=/path/to/input/dir: Provide the input directory to search for torrent file\n  -o=/path/to/output/dir: Provide the output directory for downloaded file\n  -h: Displays the help menu")
 }
 
+
+
 func parse_cli(cwd string) CLI {
 	cli := CLI{
 		dbg:   false,
@@ -30,12 +32,13 @@ func parse_cli(cwd string) CLI {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		fmt.Println("No Home directory found for the user")
+		os.Exit(int(E_FS))
 	}
 
 	args := os.Args[1:]
-	if len(args) < 2 {
+	if len(args) < 1 {
 		DEBUG_STR()
-		os.Exit(0)
+		os.Exit(int(E_CLI))
 	}
 	for _, v := range args {
 		if strings.HasPrefix(v, "-o=") {
@@ -46,7 +49,7 @@ func parse_cli(cwd string) CLI {
 				err2 := os.Mkdir(v, 0755)
 				if err2 != nil {
 					fmt.Println("Can't create the directory with path: ", v)
-					os.Exit(-1)
+					os.Exit(int(E_FS))
 				}
 				idx := strings.LastIndex(v, "/")
 				fmt.Println("Created directory ", v[idx+1:], "in path: ", v[:idx])
@@ -64,7 +67,7 @@ func parse_cli(cwd string) CLI {
 				err2 := os.Mkdir(v, 0755)
 				if err2 != nil {
 					fmt.Println("Can't create the directory with path: ", v)
-					os.Exit(-1)
+					os.Exit(int(E_FS))
 				}
 				idx := strings.LastIndex(v, "/")
 				fmt.Println("Created directory ", v[idx+1:], "in path: ", v[:idx])
@@ -86,11 +89,11 @@ func parse_cli(cwd string) CLI {
 			cli.multi = true
 		case "-h":
 			DEBUG_STR()
-			os.Exit(1)
+			os.Exit(int(E_HELP))
 		default:
 			fmt.Println(v)
 			DEBUG_STR()
-			os.Exit(1)
+			os.Exit(int(E_HELP))
 		}
 
 	}
@@ -104,3 +107,5 @@ func If[T any](cond bool, tval T, fval T) T {
 	}
 	return fval
 }
+
+func WRN(a any) {}

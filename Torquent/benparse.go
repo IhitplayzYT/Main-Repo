@@ -1,13 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 )
 
-type Parser struct {
-	cur, end int
-}
 type Btype int
 
 const (
@@ -17,177 +15,186 @@ const (
 	BDICT
 )
 
+type Span struct {
+	strt, end int
+}
+
 type BNode struct {
 	Type Btype
 	Int  int
-	Str  string
+	Str  []byte
 	List []*BNode
 	Dict map[string]*BNode
+	span Span
 }
 
 type Torrent struct {
-	fname  string
-	doc    []byte
-	parser Parser
-	node   *BNode
+	fname string
+	doc   []byte
+	cur   int
+	node  *BNode
 }
 
-func (t Torrent) open_file() {
-	f, err := os.ReadFile(t.fname)
+func (t *Torrent) is_open() bool {
+	return len(t.doc) != 0
+}
 
+func (t *Torrent) open_file() {
+	f, err := os.ReadFile(t.fname)
 	if err != nil {
 		fmt.Println("Unable to open the file")
-		os.Exit(-2)
+		os.Exit(int(E_IO))
 	}
 	t.doc = f
 }
 
-func (t Torrent) is_open() bool {
-	return len(t.doc) == 0
-}
-
-func (t Torrent) idx() (int, int) {
-	return t.parser.cur, t.parser.end
-}
-
 func init_torrent(name string) Torrent {
 	self := Torrent{fname: name}
+	self.open_file()
 
-	if !self.is_open() {
-		self.open_file()
-	}
-	l := len(self.doc)
-	if l <= 1 {
+	if len(self.doc) <= 1 {
 		fmt.Println("Truncated/Corrupt torrent file provided")
-		os.Exit(-3)
+		os.Exit(int(E_FILE))
 	}
-	self.parser.cur = 0
-	self.parser.end = l - 1
+	self.cur = 0
 	self.node = nil
 	return self
 }
 
-func (self Torrent) Parse() *BNode {
-	if self.parser.cur == self.parser.end {
-		fmt.Println("Finished Parsing")
+func (self *Torrent) Parse() *BNode {
+	if self.cur >= len(self.doc) {
+		fmt.Println("EOF")
+		os.Exit(int(E_FILE))
 	}
-	l, r := self.idx()
-	if self.doc[l] == 'd' {
-		if self.doc[r] == 'e' {
-			return self.eval_dict()
-		}
-
-	} else if self.doc[l] == 'i' {
-		node := &BNode{
-			Type: BINT,
-		}
-		if self.doc[r] == 'e' {
-			node.Int = self.eval_int()
-		} else {
-			fmt.Println("Corrupt File")
-			os.Exit(-4)
-		}
-		return node
-	} else if self.doc[l] == 'l' {
-		if self.doc[r] == 'e' {
-			return self.eval_list()
-		}
-
-	} else if self.doc[l] >= 0 && self.doc[l] <= 9 {
-		return self.eval_bstr()
+	strt := self.cur
+	switch self.doc[self.cur] {
+	case 'd':
+		self.cur++
+		return &BNode{Type: BDICT, Dict: self.eval_dict(), span: Span{strt, self.cur}}
+	case 'l':
+		self.cur++
+		return &BNode{Type: BLIST, List: self.eval_list(), span: Span{strt, self.cur}}
+	case 'i':
+		self.cur++
+		return &BNode{Type: BINT, Int: self.eval_int(), span: Span{strt, self.cur}}
+	default:
+		return &BNode{Type: BSTR, Str: self.eval_bstr(), span: Span{strt, self.cur}}
 	}
-
-	fmt.Println("Invalid token encountered")
-	return nil
-
 }
 
-func (self Torrent) eval_dict() map[string]*BNode {
-	ret := make(map[string]*BNode, 0)
-	l, r := self.idx()
-	for self.doc[l] != 'e' {
-		k, v := string(self.eval_bstr()), self.Parse()
-		ret[k] = v
-	}
-	if self.doc[l] != 'e' {
-		fmt.Println("Corrupt torrent file")
-		os.Exit(-4)
+// d....e
+func (self *Torrent) eval_dict() map[string]*BNode {
+	ret := make(map[string]*BNode)
+	var prev []byte = nil
+
+	for self.cur < len(self.doc) && self.doc[self.cur] != 'e' {
+		kb := self.eval_bstr()
+		if prev != nil && bytes.Compare(kb, prev) <= 0 {
+			fmt.Println("Parsing failed @ Dict due to unsorted Key-Value")
+			os.Exit(int(E_FILE))
+		}
+		prev = kb
+		ret[string(kb)] = self.Parse()
 	}
 
-	self.parser.cur = l
-	self.parser.end = r
+	if self.cur >= len(self.doc) || self.doc[self.cur] != 'e' {
+		fmt.Println("Parsing failed @ Dict due to Corrupt/Invalid file")
+		os.Exit(int(E_FILE))
+	}
+	self.cur++
 	return ret
 }
 
-func (self Torrent) eval_list() []*BNode {
-
-	self.parser.cur += 1
-	l, r := self.idx()
-
+// l....e
+func (self *Torrent) eval_list() []*BNode {
 	k := make([]*BNode, 0)
-	for l < r && self.doc[l] != 'e' {
+
+	for self.cur < len(self.doc) && self.doc[self.cur] != 'e' {
 		k = append(k, self.Parse())
 	}
 
-	if self.doc[l] != 'e' {
-		fmt.Println("Corrupt torrent file")
-		os.Exit(-4)
+	if self.cur >= len(self.doc) || self.doc[self.cur] != 'e' {
+		fmt.Println("Parsing failed @ List due to Corrupt/Invalid file")
+		os.Exit(int(E_FILE))
 	}
-
-	self.parser.cur = l
-	self.parser.end = r
+	self.cur++
 	return k
 }
-func (self Torrent) eval_bstr() []byte {
-	l, r := self.idx()
-	if self.doc[l] == 's' {
-		l += 1
+
+// 5:hello
+func (self *Torrent) eval_bstr() []byte {
+	strt := self.cur
+	for self.cur < len(self.doc) && self.doc[self.cur] != ':' {
+		self.cur++
 	}
-	node := &BNode{
-		Type: BLIST,
+	if self.cur >= len(self.doc) {
+		fmt.Println("Parsing failed @ Str due to Corrupt/Invalid file")
+		os.Exit(int(E_FILE))
 	}
 
-	neg := If(self.doc[l] == '-', true, false)
-	val := 0
-	for l < r && (self.doc[l] >= '0' && self.doc[l] <= '9') {
-		val = val*10 + int(self.doc[l]-'0')
-		l += 1
-	}
-	k := If(neg, -val, val)
+	le := self.doc[strt:self.cur]
 
-	if self.doc[l] != ':' {
-		fmt.Println("Corrupt torrent file")
-		os.Exit(-4)
-	}
-	l += 1
-	if l+k > r {
-		fmt.Println("Corrupt torrent file")
-		os.Exit(-5)
+	if len(le) > 1 && le[0] == '0' {
+		fmt.Println("Parsing failed @ Str due to leading zero in length")
+		os.Exit(int(E_FILE))
 	}
 
-	node.Str = string(self.doc[l : l+k+1])
-	self.parser.cur = l + k
-	self.parser.end = r
-	return node
+	l := 0
+	for _, v := range le {
+		if v < '0' || v > '9' {
+			fmt.Println("Parsing failed @ Str due to invalid string length")
+			os.Exit(int(E_FILE))
+		}
+		l = l*10 + int(v-'0')
+	}
+	self.cur++
+
+	if self.cur+l > len(self.doc) {
+		fmt.Println("Parsing failed @ Str due to Corrupt/Invalid file")
+		os.Exit(int(E_FILE))
+	}
+
+	ret := self.doc[self.cur : self.cur+l]
+	self.cur += l
+	return ret
 }
 
-func (self Torrent) eval_int() int {
-	l, r := self.idx()
-	if self.doc[l] == 'i' {
-		l += 1
-	}
-	neg := If(self.doc[l] == '-', true, false)
-	val := 0
-	for l < r && (self.doc[l] >= '0' && self.doc[l] <= '9') {
-		val = val*10 + int(self.doc[l]-'0')
-		l += 1
+func (self *Torrent) eval_int() int {
+
+	neg := false
+	if self.cur < len(self.doc) && self.doc[self.cur] == '-' {
+		neg = true
+		self.cur++
+		if self.cur < len(self.doc) && self.doc[self.cur] == '0' {
+			fmt.Println("Parsing failed @ Int due to invalid: -0")
+			os.Exit(int(E_FILE))
+		}
 	}
 
-	if self.doc[l] != 'e' {
-		fmt.Println("Corrupt torrent file")
-		os.Exit(-4)
+	if self.cur >= len(self.doc) || self.doc[self.cur] < '0' || self.doc[self.cur] > '9' {
+		fmt.Println("Parsing failed @ Int due to invalid Int")
+		os.Exit(int(E_FILE))
 	}
-	self.parser.cur = l
-	self.parser.end = r
-	return If(neg, -val, val)
+
+	if self.doc[self.cur] == '0' && self.cur+1 < len(self.doc) && self.doc[self.cur+1] != 'e' {
+		fmt.Println("Parsing failed @ Int due to leading zeroes")
+		os.Exit(int(E_FILE))
+	}
+
+	val := 0
+	for self.cur < len(self.doc) && self.doc[self.cur] >= '0' && self.doc[self.cur] <= '9' {
+		val = val*10 + int(self.doc[self.cur]-'0')
+		self.cur++
+	}
+
+	if self.cur >= len(self.doc) || self.doc[self.cur] != 'e' {
+		fmt.Println("Parsing failed @ Int due to Corrupt/Invalid file")
+		os.Exit(int(E_FILE))
+	}
+	self.cur++ // consume 'e'
+
+	if neg {
+		return -val
+	}
+	return val
 }
