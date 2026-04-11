@@ -1,0 +1,7268 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "1393e9f0-ecf6-4394-8ba3-473bd835e5f9")
+	(paper "A4")
+	(lib_symbols
+		(symbol "ScottoKeebs:Placeholder_Diode"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at -0.15 1.066 0)
+				(show_name no)
+				(do_not_autoplace yes)
+				(effects
+					(font
+						(size 0.635 0.635)
+						(thickness 0.127)
+						(bold yes)
+					)
+					(justify right bottom)
+				)
+			)
+			(property "Value" ""
+				(at 2.54 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 3.81 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "diode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "D*DO?35*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Placeholder_Diode_0_1"
+				(polyline
+					(pts
+						(xy 0 -0.762) (xy 0 0.762)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Placeholder_Diode_1_1"
+				(polyline
+					(pts
+						(xy 1.016 0.762) (xy 0 -0.762) (xy -1.016 0.762) (xy 1.016 0.762)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.016 -0.762) (xy -1.016 -0.762)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 -2.54 90)
+					(length 1.778)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 2.54 270)
+					(length 1.778)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "ScottoKeebs:Placeholder_Keyswitch"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "S"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace yes)
+				(effects
+					(font
+						(size 0.635 0.635)
+						(thickness 0.127)
+						(bold yes)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at -2.54 -1.778 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "switch normally-open pushbutton push-button"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Placeholder_Keyswitch_0_1"
+				(polyline
+					(pts
+						(xy -2.54 2.54) (xy -1.524 1.524) (xy -1.524 1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -1.1684 1.1684)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.508 2.54) (xy 2.54 -0.508)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.016 1.016) (xy 2.032 2.032)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.143 -1.1938)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.524 -1.524) (xy 2.54 -2.54) (xy 2.54 -2.54) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -2.54 2.54 0)
+					(length 0)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -2.54 180)
+					(length 0)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "The keyboard marix has a usage of 8 column pins and 5 row pins with accomodation for the thumb keys as well"
+		(exclude_from_sim no)
+		(at 122.682 50.038 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "0cf4eec6-14c5-44ac-8752-74b656c138d6")
+	)
+	(junction
+		(at 106.68 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "021bc8e2-c7e2-4fbd-bff0-737050c4ec3b")
+	)
+	(junction
+		(at 129.54 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0a0972b5-db4f-44ee-9c8c-b96112a5c737")
+	)
+	(junction
+		(at 134.62 110.49)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0a4a3011-9838-4961-a504-e6a85dc4a8af")
+	)
+	(junction
+		(at 121.92 74.93)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0ec45461-4a74-4977-8982-d1506cb45913")
+	)
+	(junction
+		(at 127 123.19)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1009bf6b-dd87-4204-ba18-26aabd1eed59")
+	)
+	(junction
+		(at 129.54 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "134e5b4c-e00a-4a21-8872-73c2b90603ae")
+	)
+	(junction
+		(at 119.38 110.49)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "181b533d-693b-44e6-804a-81f4d0e7d78c")
+	)
+	(junction
+		(at 106.68 100.33)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1e6df435-0e6c-46e1-a7df-23b15a996689")
+	)
+	(junction
+		(at 142.24 110.49)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "23624ede-1f17-421f-9476-f1e670b04a5b")
+	)
+	(junction
+		(at 114.3 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "27ded214-9e69-436c-a5df-5b7fe63ad992")
+	)
+	(junction
+		(at 137.16 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "320ccf62-2b78-4366-974e-303ff3baf057")
+	)
+	(junction
+		(at 111.76 110.49)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3caf59d9-8a97-49f5-b353-d135c5aa5b9d")
+	)
+	(junction
+		(at 127 110.49)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3e956b4c-70e9-492b-ab9c-beea87d22c20")
+	)
+	(junction
+		(at 149.86 123.19)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3eb305b4-c801-40c5-807e-12b535a040fc")
+	)
+	(junction
+		(at 129.54 74.93)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3f9477a1-0cf3-45bd-85b1-89bab9e0cd0c")
+	)
+	(junction
+		(at 114.3 74.93)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4d91f9e4-21d5-4ec9-a34c-5b0d50df223a")
+	)
+	(junction
+		(at 137.16 74.93)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "51b11a62-5c30-47d0-88a9-a04b3e158411")
+	)
+	(junction
+		(at 106.68 74.93)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "594c7116-1983-475c-9da9-68f49797abc0")
+	)
+	(junction
+		(at 111.76 123.19)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5a6dda6a-8cda-4667-b472-0c8b8cdfcbb8")
+	)
+	(junction
+		(at 114.3 100.33)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5c8ddf5e-ada8-4163-b541-3e78b27c4c6d")
+	)
+	(junction
+		(at 152.4 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "62da88ec-5989-4655-853c-4846c78862df")
+	)
+	(junction
+		(at 119.38 85.09)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7205d234-5237-4098-b836-5a2d4df47fc8")
+	)
+	(junction
+		(at 99.06 74.93)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "73bdcbb1-f02f-49e5-b1e2-f5d6932ae3dc")
+	)
+	(junction
+		(at 144.78 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "76f01043-f1e0-4c6d-96ed-e2895701eb7a")
+	)
+	(junction
+		(at 121.92 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "77402b12-23f7-4caa-a508-b9b290cafd28")
+	)
+	(junction
+		(at 119.38 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8488e499-b8ef-4ba7-b00f-2925b8fa8e1a")
+	)
+	(junction
+		(at 137.16 100.33)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "89eb1e4f-1357-470e-b05b-1fd93afc8186")
+	)
+	(junction
+		(at 114.3 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8a9e73c0-7574-4bdd-bf31-f0ceb4dd7646")
+	)
+	(junction
+		(at 134.62 97.79)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8b19a482-db5f-4e2d-a669-221b407939d4")
+	)
+	(junction
+		(at 134.62 85.09)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8e328dc5-634e-4899-8fb0-ea2869bda755")
+	)
+	(junction
+		(at 129.54 100.33)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9166985b-7a3d-4e2f-a949-9ed0aaf2610c")
+	)
+	(junction
+		(at 121.92 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "919207be-9b5d-4573-8d4e-d66f4e54d5b9")
+	)
+	(junction
+		(at 99.06 100.33)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "935266bc-753d-4f87-b1e1-e8dd2cbb1a4a")
+	)
+	(junction
+		(at 119.38 97.79)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9b7e9cc2-3a3e-4630-a046-6d5ba86537eb")
+	)
+	(junction
+		(at 157.48 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9dbdb8b4-3685-4b48-a46c-5966a65ad630")
+	)
+	(junction
+		(at 149.86 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a10d7a6b-f59b-4699-a9c7-3b7377d27cd4")
+	)
+	(junction
+		(at 119.38 123.19)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a72e311e-a2a0-4715-9b35-b27c886585b1")
+	)
+	(junction
+		(at 142.24 123.19)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "adf6fa8e-09ea-4493-b0aa-7da4bb7b03f4")
+	)
+	(junction
+		(at 121.92 100.33)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b2991da4-e8db-4a65-a0f4-ef8865814989")
+	)
+	(junction
+		(at 111.76 85.09)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b8ab44d5-1e49-4669-967f-102aad6f2da6")
+	)
+	(junction
+		(at 157.48 123.19)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c03b0b7a-6a43-438d-9130-e9b25a96c190")
+	)
+	(junction
+		(at 99.06 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c47c3e8e-b1ec-4fe5-856d-a1b9419095b3")
+	)
+	(junction
+		(at 142.24 97.79)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "cb7bc088-ea4c-4cf7-ab63-0107605a8b36")
+	)
+	(junction
+		(at 142.24 85.09)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "cbbbaeb0-51d2-471f-814f-72d75352dadc")
+	)
+	(junction
+		(at 127 97.79)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ceab4473-262b-477a-9334-c3f738f2bfb7")
+	)
+	(junction
+		(at 106.68 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d12d6270-166e-4763-b46a-3910ac7c4e66")
+	)
+	(junction
+		(at 127 85.09)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d9843a09-e81e-4482-a29d-42c4e07439c6")
+	)
+	(junction
+		(at 127 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d99dcf35-5f40-4e27-ad30-69239d9687a4")
+	)
+	(junction
+		(at 142.24 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "df3b4006-40b3-4ae1-9a0b-6d90b7fbc45a")
+	)
+	(junction
+		(at 134.62 123.19)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "df4f593c-be40-448a-b212-a806a182b1b4")
+	)
+	(junction
+		(at 134.62 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e0957708-1c49-44ef-9a1a-3f24c53a3fc6")
+	)
+	(junction
+		(at 99.06 113.03)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e3765e28-b19f-467f-ad43-282545b41dd1")
+	)
+	(junction
+		(at 111.76 97.79)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e4e46497-a5d1-4d48-afd7-123512799e02")
+	)
+	(junction
+		(at 111.76 135.89)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e62f54a3-f5e3-4742-8dc3-5b8e71f50cbd")
+	)
+	(junction
+		(at 137.16 87.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f640e7c8-e92a-4085-acc2-f8c93a28419d")
+	)
+	(wire
+		(pts
+			(xy 121.92 100.33) (xy 121.92 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "05290089-2211-4f06-a725-8ccd06d29697")
+	)
+	(wire
+		(pts
+			(xy 119.38 85.09) (xy 127 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "094efbfe-8a31-4443-bfc0-2ef419315382")
+	)
+	(wire
+		(pts
+			(xy 134.62 85.09) (xy 142.24 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "09c00755-efaf-4e62-9452-b28730bdfa77")
+	)
+	(wire
+		(pts
+			(xy 142.24 85.09) (xy 166.37 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "142d0aa2-f058-4e3b-8c4c-7289b1d8e9b8")
+	)
+	(wire
+		(pts
+			(xy 111.76 110.49) (xy 119.38 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "14aec089-cf40-4159-b8fc-737683a7eb2b")
+	)
+	(wire
+		(pts
+			(xy 157.48 135.89) (xy 166.37 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "186b725a-6476-45f2-89e7-60a5a0bf6a02")
+	)
+	(wire
+		(pts
+			(xy 134.62 97.79) (xy 142.24 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1ac9ab72-5185-41bd-a43f-cb81440aecfe")
+	)
+	(wire
+		(pts
+			(xy 104.14 110.49) (xy 111.76 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1d180c8f-a6cf-42d6-866a-70bdf26e9d20")
+	)
+	(wire
+		(pts
+			(xy 111.76 97.79) (xy 119.38 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2da00471-8786-43cc-94bd-ae58a4ddd3e0")
+	)
+	(wire
+		(pts
+			(xy 119.38 135.89) (xy 127 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2fae0145-f691-40c2-95f9-2a02a20b3726")
+	)
+	(wire
+		(pts
+			(xy 137.16 74.93) (xy 137.16 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "33ed9db6-0242-4e47-b177-a47e1d49ff94")
+	)
+	(wire
+		(pts
+			(xy 129.54 60.96) (xy 129.54 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "349dbdf3-fa4d-4041-b0e6-8adca9a1ab67")
+	)
+	(wire
+		(pts
+			(xy 114.3 74.93) (xy 114.3 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "35b7d458-28f3-496a-a6ad-04668710adc4")
+	)
+	(wire
+		(pts
+			(xy 129.54 113.03) (xy 129.54 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3854045d-be12-4d82-975e-2f1ac0de6383")
+	)
+	(wire
+		(pts
+			(xy 127 135.89) (xy 134.62 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3d32681d-ec70-4670-92a1-c0ccdc54dc27")
+	)
+	(wire
+		(pts
+			(xy 111.76 85.09) (xy 119.38 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4143fb72-4e8b-49a8-86a2-bb35aa68faf5")
+	)
+	(wire
+		(pts
+			(xy 149.86 135.89) (xy 157.48 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "41a5229e-9e26-4717-888b-eb765593d062")
+	)
+	(wire
+		(pts
+			(xy 142.24 97.79) (xy 166.37 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "47d351a4-8fe8-462d-bc46-a101fe56bd03")
+	)
+	(wire
+		(pts
+			(xy 137.16 100.33) (xy 137.16 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4a064e39-0777-4834-8478-6b002a45d4d7")
+	)
+	(wire
+		(pts
+			(xy 121.92 87.63) (xy 121.92 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4aa5789d-4ba8-4176-a68d-b669a21d2fe5")
+	)
+	(wire
+		(pts
+			(xy 121.92 74.93) (xy 121.92 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "51d2d19a-b100-4373-9620-e49d8cb730e7")
+	)
+	(wire
+		(pts
+			(xy 129.54 100.33) (xy 129.54 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5618a9ef-a92c-4dfa-8283-e6a0eaaa0da4")
+	)
+	(wire
+		(pts
+			(xy 119.38 110.49) (xy 127 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "578838d6-8a29-42c8-ba34-b98a6ee747c4")
+	)
+	(wire
+		(pts
+			(xy 121.92 113.03) (xy 121.92 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5a8e9413-ccb7-4888-adf6-40cc2d4f4ea5")
+	)
+	(wire
+		(pts
+			(xy 106.68 100.33) (xy 106.68 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5b87f528-8e8a-4820-b251-530238914713")
+	)
+	(wire
+		(pts
+			(xy 134.62 135.89) (xy 142.24 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5ca8ce60-92b1-405a-9fee-e6663bc43a0f")
+	)
+	(wire
+		(pts
+			(xy 104.14 85.09) (xy 111.76 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5d3b382d-ccf8-4c99-8056-bcb6763ca18e")
+	)
+	(wire
+		(pts
+			(xy 137.16 113.03) (xy 137.16 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6411cebf-226d-4ed5-8d22-289cdeeac341")
+	)
+	(wire
+		(pts
+			(xy 142.24 110.49) (xy 166.37 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "698838c8-cadd-42ab-b4fa-dacb5439cc6d")
+	)
+	(wire
+		(pts
+			(xy 144.78 60.96) (xy 144.78 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "699c9e4a-3f00-4c0b-9035-5ffcf902afeb")
+	)
+	(wire
+		(pts
+			(xy 127 97.79) (xy 134.62 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7095ee98-dbf9-498a-8679-adbd147d5830")
+	)
+	(wire
+		(pts
+			(xy 142.24 135.89) (xy 149.86 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "73e2b200-9545-4147-9a0b-dc8169c375dd")
+	)
+	(wire
+		(pts
+			(xy 99.06 74.93) (xy 99.06 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7771608c-ca06-4b22-b818-e5a5010256af")
+	)
+	(wire
+		(pts
+			(xy 106.68 74.93) (xy 106.68 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "81c3664c-4c59-4016-8499-5010ed892ee8")
+	)
+	(wire
+		(pts
+			(xy 114.3 113.03) (xy 114.3 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8360be96-c898-4ce1-ac36-db778d8c2a73")
+	)
+	(wire
+		(pts
+			(xy 121.92 60.96) (xy 121.92 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8516f118-1c89-44ae-96fb-0eb92d14b4f3")
+	)
+	(wire
+		(pts
+			(xy 129.54 87.63) (xy 129.54 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d45b0e4-2b45-4287-8c02-e433b74b6dbd")
+	)
+	(wire
+		(pts
+			(xy 104.14 97.79) (xy 111.76 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "90e09309-8682-4518-a73e-a972055afc2a")
+	)
+	(wire
+		(pts
+			(xy 99.06 60.96) (xy 99.06 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "91dd27fb-bd7c-44ca-8590-24184ba7d269")
+	)
+	(wire
+		(pts
+			(xy 99.06 87.63) (xy 99.06 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "95a51240-5057-4cba-8045-ef856a44d07f")
+	)
+	(wire
+		(pts
+			(xy 137.16 87.63) (xy 137.16 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "96013169-1af5-4d3d-aedc-4395ca7c3eb8")
+	)
+	(wire
+		(pts
+			(xy 142.24 123.19) (xy 166.37 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "971862cb-602b-49c8-8cdc-c5282c91fa0a")
+	)
+	(wire
+		(pts
+			(xy 111.76 135.89) (xy 119.38 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9b708afc-3546-4d36-b24f-a10bec13e695")
+	)
+	(wire
+		(pts
+			(xy 114.3 100.33) (xy 114.3 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a61df2a5-9312-46fb-bb11-3a0b4b45f7d4")
+	)
+	(wire
+		(pts
+			(xy 119.38 97.79) (xy 127 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ac122b33-1123-41e7-a545-1d36349dc0b2")
+	)
+	(wire
+		(pts
+			(xy 99.06 100.33) (xy 99.06 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b5390db3-8200-462b-b539-224075b8dacb")
+	)
+	(wire
+		(pts
+			(xy 106.68 87.63) (xy 106.68 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b9a63c3e-8446-422e-9983-f2020ff94fdb")
+	)
+	(wire
+		(pts
+			(xy 114.3 60.96) (xy 114.3 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "be7f4a30-338a-4f4c-9e30-0aae97d14317")
+	)
+	(wire
+		(pts
+			(xy 104.14 135.89) (xy 111.76 135.89)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c1ddc936-d8dc-4cd0-b942-f09add1b28bd")
+	)
+	(wire
+		(pts
+			(xy 137.16 60.96) (xy 137.16 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c6bc2cb2-4e44-4d81-911a-81469ed3d905")
+	)
+	(wire
+		(pts
+			(xy 106.68 60.96) (xy 106.68 74.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c8d79e40-43d6-46be-b5c6-a6cd3bb5e8c2")
+	)
+	(wire
+		(pts
+			(xy 114.3 87.63) (xy 114.3 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cd1b0e84-507a-441e-b8c0-2c14cc0fc089")
+	)
+	(wire
+		(pts
+			(xy 144.78 113.03) (xy 144.78 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d1f5ac92-b097-40ad-966c-9114af98e233")
+	)
+	(wire
+		(pts
+			(xy 111.76 123.19) (xy 119.38 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d29f496e-183c-4f44-b180-71b9a24b83da")
+	)
+	(wire
+		(pts
+			(xy 129.54 74.93) (xy 129.54 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d3c07bfe-c05c-4406-9232-2e99579943dd")
+	)
+	(wire
+		(pts
+			(xy 127 110.49) (xy 134.62 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d7ae07d4-4a7e-4398-adb2-d25427ba035b")
+	)
+	(wire
+		(pts
+			(xy 106.68 113.03) (xy 106.68 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "db0988fd-0bd2-4c83-9561-3b113a4e6f4e")
+	)
+	(wire
+		(pts
+			(xy 104.14 123.19) (xy 111.76 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e58ce27c-cd22-402f-a267-a3f0ef269652")
+	)
+	(wire
+		(pts
+			(xy 152.4 60.96) (xy 152.4 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e69e436e-51e0-42e5-b12e-e6377927c37e")
+	)
+	(wire
+		(pts
+			(xy 152.4 113.03) (xy 152.4 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e76442ef-2262-4f3f-a5a4-190cce10d9ed")
+	)
+	(wire
+		(pts
+			(xy 99.06 113.03) (xy 99.06 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f24f3f0c-e5a3-4c78-9236-96e83106788a")
+	)
+	(wire
+		(pts
+			(xy 134.62 110.49) (xy 142.24 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f7cd888d-9839-46be-b851-f4813b4d5df5")
+	)
+	(wire
+		(pts
+			(xy 127 85.09) (xy 134.62 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "faa60cbd-a3a1-4cf2-8355-364ff320cf9f")
+	)
+	(wire
+		(pts
+			(xy 119.38 123.19) (xy 142.24 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fe23f9e3-19f6-4446-b9fb-8d790c13711c")
+	)
+	(global_label "R1"
+		(shape input)
+		(at 166.37 97.79 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "19a40e1f-a487-48f1-a062-1823cdeb4136")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 171.8347 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "C4"
+		(shape input)
+		(at 129.54 60.96 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "1e4fc8f7-93d4-44a3-9a22-309acd3e4f4c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 129.54 55.4953 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "C5"
+		(shape input)
+		(at 137.16 60.96 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "23a086b6-aa92-4324-a5eb-499779cca608")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 137.16 55.4953 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "C3"
+		(shape input)
+		(at 121.92 60.96 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "23d3015a-7678-40db-b128-984238422311")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 121.92 55.4953 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "C1"
+		(shape input)
+		(at 106.68 60.96 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2d7d5ee6-df3e-4564-85a2-0af06b4f876f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 106.68 55.4953 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "C0"
+		(shape input)
+		(at 99.06 60.96 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "32ad2dce-c2e1-45f2-be95-e4af8f1fc6f1")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 99.06 55.4953 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "C7"
+		(shape input)
+		(at 152.4 60.96 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3d839cde-8b00-451a-b52c-0f5d61d13f5d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 152.4 55.4953 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "R3"
+		(shape input)
+		(at 166.37 123.19 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4359c9db-5dfc-4b73-8ea0-0f3690d92ab9")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 171.8347 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "R2"
+		(shape input)
+		(at 166.37 110.49 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5b324da4-7c43-4b7c-a377-2a490837920f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 171.8347 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "C6"
+		(shape input)
+		(at 144.78 60.96 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "6c070671-5f16-4711-a0d9-a9d66fecb8a9")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 144.78 55.4953 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "C2"
+		(shape input)
+		(at 114.3 60.96 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "90c998eb-ee18-42a1-9484-fcb53d37efbd")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 114.3 55.4953 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "R0"
+		(shape input)
+		(at 166.37 85.09 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c7bbebca-f7d2-46db-aa98-f2b772ca51de")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 171.8347 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "R4"
+		(shape input)
+		(at 166.37 135.89 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "fe79c95b-fecf-485e-9c23-d70cd12c4106")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 171.8347 135.89 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 134.62 120.65 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "01832a1a-6964-4372-af80-69f8d2acfaa6")
+		(property "Reference" "D25"
+			(at 134.47 119.584 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 137.16 120.65 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 134.62 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 134.62 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 138.43 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "4577fc95-0b4d-4eae-a35a-07c94685f162")
+		)
+		(pin "1"
+			(uuid "8d4b62ad-e093-497b-9aba-314a156dfc1d")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D25")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 132.08 90.17 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0c4c5404-32bc-45bb-ab8b-4fb98e68b73b")
+		(property "Reference" "S12"
+			(at 132.08 90.17 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 132.08 93.98 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 132.08 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 91.948 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 132.08 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "2c9a1bfe-7119-473e-8695-9825d2686846")
+		)
+		(pin "1"
+			(uuid "194d36d5-0d93-41e0-94a0-330d3ecee887")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 101.6 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0de5ce15-5eb0-4d6e-9672-b612a110ffa9")
+		(property "Reference" "S21"
+			(at 101.6 115.57 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 101.6 119.38 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 101.6 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 99.06 117.348 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 101.6 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "02db1a6c-8f01-422d-9005-d7c2726bdc86")
+		)
+		(pin "1"
+			(uuid "62abe89b-4288-4a33-a808-86285e916dad")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S21")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 132.08 102.87 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0e1e013f-e858-415b-8bdd-20370dfb62dd")
+		(property "Reference" "S19"
+			(at 132.08 102.87 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 132.08 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 132.08 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 104.648 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 132.08 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "52429227-ea41-40fa-8d01-a24c44105ad9")
+		)
+		(pin "1"
+			(uuid "ca520596-6526-4e06-bfcf-c15d1fef1f5a")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 101.6 90.17 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "13501b2c-569f-432f-96fb-26c0578963e4")
+		(property "Reference" "S8"
+			(at 101.6 90.17 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 101.6 93.98 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 101.6 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 99.06 91.948 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 101.6 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "d8d3caa1-30af-4823-a00a-4575c8a59683")
+		)
+		(pin "1"
+			(uuid "10abc67e-a424-440e-9b70-7de4459cc5c2")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 111.76 120.65 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1623f1da-fcde-47d4-82e3-8da771a7d3d1")
+		(property "Reference" "D22"
+			(at 111.61 119.584 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 114.3 120.65 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 111.76 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 115.57 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "a78f8190-304c-492f-88c2-73f18dd90d97")
+		)
+		(pin "1"
+			(uuid "b4321632-7d56-4736-9b5d-15dd01f916d2")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 101.6 128.27 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "16e6275b-729e-43b5-a02a-ca4857021a06")
+		(property "Reference" "S27"
+			(at 101.6 128.27 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 101.6 132.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 101.6 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 99.06 130.048 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 101.6 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "ead7dc34-4034-488c-afde-d53b8901246e")
+		)
+		(pin "1"
+			(uuid "0f81a90e-a222-4153-a208-5b8eb66076d1")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S27")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 119.38 82.55 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "17d09637-b8e3-4fdb-b7d2-3ae5fbd265bd")
+		(property "Reference" "D3"
+			(at 119.23 81.484 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 121.92 82.55 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 119.38 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 119.38 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 123.19 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "fdfeca02-02c8-4663-b693-32947eccfcde")
+		)
+		(pin "1"
+			(uuid "e205d9db-778c-445a-ac0f-7f3c66a0948c")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 147.32 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "20d75158-8aa9-46ea-8fbe-1cc01cd8e9d3")
+		(property "Reference" "S33"
+			(at 147.32 115.57 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 147.32 119.38 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 147.32 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 144.78 117.348 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 147.32 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "18ecae41-3ddb-4684-ac45-55edb84b9c3a")
+		)
+		(pin "1"
+			(uuid "a46612cb-2ff0-4f94-bce0-1e9f3e7f2abb")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S33")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 134.62 82.55 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2649c56c-65ec-4c33-818e-628a99dfaf39")
+		(property "Reference" "D5"
+			(at 134.47 81.484 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 137.16 82.55 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 134.62 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 134.62 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 138.43 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "39a2734b-ca8f-486e-90bd-d6457615c92a")
+		)
+		(pin "1"
+			(uuid "f399d2d2-29e1-4333-993c-19ca45e6e981")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 127 133.35 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2776a79c-0dd8-4fe1-ab93-bb9445e50797")
+		(property "Reference" "D30"
+			(at 126.85 132.284 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 129.54 133.35 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 127 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 130.81 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "ec2aca36-3f9f-4e94-ade9-bc4736f41df6")
+		)
+		(pin "1"
+			(uuid "8c819317-f12c-41e4-b391-b3072a5a57f5")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D30")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 147.32 128.27 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "354a24f5-cc0f-4132-9c17-1b653217f413")
+		(property "Reference" "S34"
+			(at 147.32 128.27 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 147.32 132.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 147.32 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 144.78 130.048 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 147.32 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "f1e916bf-2e43-49cf-b36e-a4d7e6a4b204")
+		)
+		(pin "1"
+			(uuid "c4791e66-0a1c-4066-987d-53c9e9371362")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S34")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 142.24 133.35 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3885ac10-c337-4ce2-9f2c-651bba57e021")
+		(property "Reference" "D32"
+			(at 142.09 132.284 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 144.78 133.35 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 142.24 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 146.05 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "8dd4eb93-e222-44de-89ed-5b7baae0a5de")
+		)
+		(pin "1"
+			(uuid "fc85b1b3-9970-4519-a9a6-4f093045e886")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D32")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 104.14 120.65 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3896c351-2378-4001-8301-7095c4f15597")
+		(property "Reference" "D21"
+			(at 103.99 119.584 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 106.68 120.65 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 104.14 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 104.14 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 107.95 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "c50d1631-7b2e-431b-b441-6ea4d81081f9")
+		)
+		(pin "1"
+			(uuid "118609cc-2c5e-4eb8-a728-3e63fb478d7d")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D21")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 109.22 77.47 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "397522ac-7602-439a-8af8-cbe59ce9617c")
+		(property "Reference" "S2"
+			(at 109.22 77.47 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 109.22 81.28 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 109.22 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.68 79.248 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 109.22 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "362b73cf-8975-40e1-88a8-b9faba7699f8")
+		)
+		(pin "1"
+			(uuid "50322366-3d56-4bfa-b6bd-1bcdfda1c77c")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 124.46 90.17 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3a4fb7f4-fb50-491d-8e37-b99a4ed01b81")
+		(property "Reference" "S11"
+			(at 124.46 90.17 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 124.46 93.98 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 124.46 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 91.948 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 124.46 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "d35ec808-d2b3-4f5c-b5ac-3035bd4dcd3c")
+		)
+		(pin "1"
+			(uuid "88c7bd43-7c9d-45ce-ae96-4f216c8b564c")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 116.84 77.47 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3ded074e-2573-4ced-8ca6-7d9d951b6a31")
+		(property "Reference" "S3"
+			(at 116.84 77.47 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 116.84 81.28 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 116.84 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 79.248 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 116.84 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "12db7f07-86f6-4310-a774-11fb389e7b39")
+		)
+		(pin "1"
+			(uuid "65dd8160-ade7-4868-bb69-516d69618248")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 119.38 133.35 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "446873e2-41d3-4c3e-b080-e07621a67d63")
+		(property "Reference" "D29"
+			(at 119.23 132.284 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 121.92 133.35 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 119.38 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 119.38 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 123.19 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "506fe218-72c8-4244-b67d-b7a7f27a2315")
+		)
+		(pin "1"
+			(uuid "2e30ddbd-e40f-4835-907b-8fc2ad682527")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D29")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 109.22 90.17 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "520cbd68-75c8-4df6-82ac-c44a693a8a3c")
+		(property "Reference" "S9"
+			(at 109.22 90.17 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 109.22 93.98 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 109.22 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.68 91.948 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 109.22 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "fff02e4a-ecad-4db3-83db-e40ee13817db")
+		)
+		(pin "1"
+			(uuid "04cdfdca-cc83-4668-bce8-85c073ece3b8")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 127 120.65 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "57277643-73d9-4576-a7d3-d6bbdcd0ab8a")
+		(property "Reference" "D24"
+			(at 126.85 119.584 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 129.54 120.65 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 127 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 130.81 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "7c434c67-50f9-44f0-aa9a-f51b0dbaf094")
+		)
+		(pin "1"
+			(uuid "e928df74-06af-41c2-b858-4ce0ba30ab7d")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D24")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 154.94 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "57ba85f9-59c1-4802-be96-93a4c7f9e451")
+		(property "Reference" "S35"
+			(at 154.94 115.57 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 154.94 119.38 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 154.94 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 152.4 117.348 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 154.94 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "8504ca34-bde8-464a-ab8b-feaf84b4f1a0")
+		)
+		(pin "1"
+			(uuid "b8a1d86b-f4d5-4b78-8b99-e8634e9d3f61")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S35")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 134.62 95.25 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "5bcb6a95-b201-415e-9c8f-0db10495deab")
+		(property "Reference" "D12"
+			(at 134.47 94.184 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 137.16 95.25 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 134.62 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 134.62 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 138.43 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "2fe95c2d-306c-4118-962f-25b691c08fac")
+		)
+		(pin "1"
+			(uuid "fb60dac2-9b1f-430d-b77d-2ab9a608b61c")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 101.6 102.87 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6339372f-5104-498b-ac58-83744aab7543")
+		(property "Reference" "S15"
+			(at 101.6 102.87 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 101.6 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 101.6 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 99.06 104.648 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 101.6 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "39e199d5-07cd-409c-8c32-078bb666209a")
+		)
+		(pin "1"
+			(uuid "97917285-54f9-44a1-9d9a-d5354eb3f1d5")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 142.24 95.25 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "63a2deb2-cf30-4dd3-9a16-c4d15045d9e4")
+		(property "Reference" "D13"
+			(at 142.09 94.184 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 144.78 95.25 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 142.24 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 146.05 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "ea8b7cfc-bc72-4e16-8272-400790e2a4ee")
+		)
+		(pin "1"
+			(uuid "d8538180-12e9-4cb1-948d-112f3b0c6f51")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 149.86 120.65 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "662788d2-3b75-4703-bccc-9281ab5bde6b")
+		(property "Reference" "D33"
+			(at 149.71 119.584 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 152.4 120.65 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 149.86 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.86 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 153.67 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "49d38048-b003-4e58-8cac-64d644542e4a")
+		)
+		(pin "1"
+			(uuid "3e48c3be-fa49-472a-be10-1d07729aa5ba")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D33")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 111.76 95.25 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6e6390a0-d223-4883-802e-f432c3331192")
+		(property "Reference" "D9"
+			(at 111.61 94.184 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 114.3 95.25 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 111.76 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 115.57 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "8b59a851-fb9a-4f98-a1a7-6181b08ae041")
+		)
+		(pin "1"
+			(uuid "aa986043-f9c5-40b9-befc-8c7705d21132")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 124.46 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6ee3ee88-d933-4a06-850f-a69dbcd8f2f4")
+		(property "Reference" "S24"
+			(at 124.46 115.57 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 124.46 119.38 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 124.46 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 117.348 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 124.46 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "c3a7a5a3-b17b-4732-82d7-0cf25a340835")
+		)
+		(pin "1"
+			(uuid "35b7e13c-0bff-4b98-801a-982136a8d300")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S24")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 124.46 102.87 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7254d8e7-4de5-4e1a-9080-702cfca8d388")
+		(property "Reference" "S18"
+			(at 124.46 102.87 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 124.46 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 124.46 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 104.648 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 124.46 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "11229980-5100-4e11-95d8-779889d368b5")
+		)
+		(pin "1"
+			(uuid "81b218d7-e186-4872-9de7-8e284fa2b741")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S18")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 132.08 77.47 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "75456278-7c41-43b0-8672-cd40e5f722e8")
+		(property "Reference" "S5"
+			(at 132.08 77.47 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 132.08 81.28 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 132.08 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 79.248 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 132.08 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "194bba53-e7ef-4688-a43a-537b857430f7")
+		)
+		(pin "1"
+			(uuid "4c1c9053-5bec-4449-8e78-79dd215d2f04")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 139.7 102.87 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "763a42a4-edbb-402e-a0fc-b9e607f03067")
+		(property "Reference" "S20"
+			(at 139.7 102.87 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 139.7 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 139.7 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 137.16 104.648 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 139.7 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "0c32b76e-67c0-4278-9115-c28d159eb5cd")
+		)
+		(pin "1"
+			(uuid "387a7390-14cc-457c-a1a0-c9ca118aefb2")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S20")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 111.76 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "76648fac-e4ac-406c-b8dd-ba60e6a1526d")
+		(property "Reference" "D16"
+			(at 111.61 106.884 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 114.3 107.95 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 111.76 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 115.57 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "cc7aae12-da97-4358-9b57-220e2eb57156")
+		)
+		(pin "1"
+			(uuid "96cd4ff1-ce22-470d-a39c-c2548f4c53ea")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 142.24 82.55 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7688b391-2fa6-482e-8caa-e5739eaf95ff")
+		(property "Reference" "D6"
+			(at 142.09 81.484 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 144.78 82.55 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 142.24 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 146.05 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "80fef568-8cdb-4d79-82d7-6b33f4da9de8")
+		)
+		(pin "1"
+			(uuid "8b3a6f6e-da01-40ab-86fd-170be74957eb")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 119.38 95.25 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "77adec30-7de1-4d48-abde-8ce6fc47a781")
+		(property "Reference" "D10"
+			(at 119.23 94.184 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 121.92 95.25 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 119.38 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 119.38 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 123.19 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "d91e4ac1-ad41-4b05-b8e2-994f6d4cd12f")
+		)
+		(pin "1"
+			(uuid "b73203df-5e6d-420b-b792-37c65059b2e9")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 142.24 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7880ac01-b0cb-44df-965f-2a45e0f571e4")
+		(property "Reference" "D20"
+			(at 142.09 106.884 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 144.78 107.95 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 142.24 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 146.05 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "144f6037-82fa-464e-bdee-2a6f2fb8b942")
+		)
+		(pin "1"
+			(uuid "d1f6f98c-6135-499d-91e7-72173333da8b")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D20")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 134.62 133.35 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7c296ef5-c54b-407d-8c6c-fbf21ef2ffe5")
+		(property "Reference" "D31"
+			(at 134.47 132.284 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 137.16 133.35 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 134.62 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 134.62 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 138.43 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "40263aa3-ab42-4624-aed5-2318cfac7fa9")
+		)
+		(pin "1"
+			(uuid "5ceba07c-19a8-40a9-8b9c-231b1354e96e")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D31")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 139.7 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7f7c4ea1-2ee1-4c8d-8b2c-68048a08ba75")
+		(property "Reference" "S26"
+			(at 139.7 115.57 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 139.7 119.38 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 139.7 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 137.16 117.348 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 139.7 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "50f90eab-bc23-428a-aa30-bbb2741903dc")
+		)
+		(pin "1"
+			(uuid "0ac11f2d-554f-4f7a-aea8-d2fd699cd6d5")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S26")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 139.7 77.47 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "81b05e34-4b2c-4069-8fee-e543caa388c5")
+		(property "Reference" "S6"
+			(at 139.7 77.47 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 139.7 81.28 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 139.7 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 137.16 79.248 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 139.7 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "4986abe1-4042-40e9-a764-136313e0c83a")
+		)
+		(pin "1"
+			(uuid "342bf4d8-e43e-4690-8a22-4ff26078b968")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 119.38 120.65 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8de413df-c605-410b-9831-87cfb5e6e22b")
+		(property "Reference" "D23"
+			(at 119.23 119.584 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 121.92 120.65 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 119.38 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 119.38 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 123.19 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "7313ca58-55fd-44c4-899c-307d8108146c")
+		)
+		(pin "1"
+			(uuid "7a38e9b8-bf39-4abd-a504-2fd340236ea2")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 127 95.25 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9086af58-c7fd-4876-ae33-40c714a852a1")
+		(property "Reference" "D11"
+			(at 126.85 94.184 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 129.54 95.25 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 127 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 130.81 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "737ab6dc-28df-4ddb-b23a-4a8873513ed8")
+		)
+		(pin "1"
+			(uuid "2beb3f11-36ff-4c08-a669-6da007a3e4d7")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 132.08 128.27 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "91153ae5-4adc-4520-8cac-5aa4b934780c")
+		(property "Reference" "S31"
+			(at 132.08 128.27 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 132.08 132.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 132.08 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 130.048 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 132.08 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "b1f9a528-3d09-4f2f-8f6d-5b7c87d69013")
+		)
+		(pin "1"
+			(uuid "8e6cf70b-fe63-4e55-869f-d327a519a8d3")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S31")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 109.22 128.27 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "93b6ae5b-8e06-4967-9731-68ce87914d26")
+		(property "Reference" "S28"
+			(at 109.22 128.27 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 109.22 132.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 109.22 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.68 130.048 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 109.22 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "56277b44-875a-41f5-b1aa-cae406a6031e")
+		)
+		(pin "1"
+			(uuid "d81aa415-8476-421b-88b4-297278e80e24")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S28")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 127 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9719635a-9fc6-4523-bda5-dd7ff9b9146e")
+		(property "Reference" "D18"
+			(at 126.85 106.884 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 129.54 107.95 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 127 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 130.81 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "eb13f294-101a-4b55-97ff-613ac42a9c15")
+		)
+		(pin "1"
+			(uuid "28ff08eb-2793-4c39-909e-ad3a78c197da")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D18")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 157.48 120.65 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "98e47055-b13d-40f9-acc0-f6f610c0dbaa")
+		(property "Reference" "D35"
+			(at 157.33 119.584 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 160.02 120.65 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 157.48 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 161.29 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "5db5ebdb-1039-4871-a120-ab376b5205b8")
+		)
+		(pin "1"
+			(uuid "fd78e2f2-8990-467a-a11e-18a64082879b")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D35")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 119.38 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9aefc104-506b-40b2-9484-06cdcf5191cc")
+		(property "Reference" "D17"
+			(at 119.23 106.884 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 121.92 107.95 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 119.38 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 119.38 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 123.19 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "820ee1b7-9992-4a15-b90c-82824b2f4049")
+		)
+		(pin "1"
+			(uuid "952158df-4ead-477d-9a52-55be83cee4f6")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 139.7 128.27 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a1ef2d74-6ccc-4f1e-82e6-bd5c93e2c192")
+		(property "Reference" "S32"
+			(at 139.7 128.27 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 139.7 132.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 139.7 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 137.16 130.048 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 139.7 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "91f17c48-0f5c-4031-a11c-dabb13c33262")
+		)
+		(pin "1"
+			(uuid "446502cd-0769-4814-91fb-6e86df60a7a7")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S32")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 101.6 77.47 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a6f40bf1-c101-48ca-b13d-8f783da72dd4")
+		(property "Reference" "S1"
+			(at 101.6 77.47 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 101.6 81.28 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 101.6 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 99.06 79.248 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 101.6 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "54b933b4-aff0-4a7a-8745-723060be223e")
+		)
+		(pin "1"
+			(uuid "e33db342-a204-4733-91e9-5510c3e73ffd")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 124.46 128.27 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a9c42058-5d4e-489a-8f62-5bbc042e2366")
+		(property "Reference" "S30"
+			(at 124.46 128.27 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 124.46 132.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 124.46 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 130.048 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 124.46 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "96540c57-a471-4d9e-8a7a-14c1513ccaee")
+		)
+		(pin "1"
+			(uuid "1a88535e-51f6-4668-ae32-e02b0e882bd0")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S30")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 109.22 102.87 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b0198545-f61d-4e12-b3de-06b4f2fbf370")
+		(property "Reference" "S16"
+			(at 109.22 102.87 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 109.22 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 109.22 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.68 104.648 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 109.22 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "13342530-d574-4726-8326-2e8e23b2e2b3")
+		)
+		(pin "1"
+			(uuid "3bad563d-9855-435a-a125-05f3b00d2b82")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 157.48 133.35 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b59c6e9e-6c65-4d66-8377-2206280f5ab2")
+		(property "Reference" "D36"
+			(at 157.33 132.284 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 160.02 133.35 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 157.48 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 161.29 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "f68c6384-41d8-49bd-a00e-da9bc1c92fee")
+		)
+		(pin "1"
+			(uuid "a7f06e2c-12f2-446c-9be1-368f01f6663b")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D36")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 104.14 95.25 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c48b64b4-a066-48b0-82be-0687ebf51c44")
+		(property "Reference" "D8"
+			(at 103.99 94.184 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 106.68 95.25 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 104.14 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 104.14 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 107.95 95.25 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "2bd4d3b3-d77f-4c61-bde2-cb0670869d3c")
+		)
+		(pin "1"
+			(uuid "36d4d5df-3796-42e3-8c9b-f73f951e1b41")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 142.24 120.65 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cde76b0e-d1de-4e93-84ca-eda74fe153d2")
+		(property "Reference" "D26"
+			(at 142.09 119.584 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 144.78 120.65 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 142.24 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 146.05 120.65 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "fe8e3683-bbde-41f3-8b1d-c1411e50d8b9")
+		)
+		(pin "1"
+			(uuid "cd0d0a00-a906-4858-b473-6a9239a9d193")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D26")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 116.84 102.87 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cfba61d6-7de1-4442-8d9f-21dd01488da4")
+		(property "Reference" "S17"
+			(at 116.84 102.87 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 116.84 106.68 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 116.84 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 104.648 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 116.84 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "2a6711ba-c33f-4fb8-a460-881ded9a46c6")
+		)
+		(pin "1"
+			(uuid "c30e45b6-e259-47d8-bb6e-d6c235d605cf")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 104.14 82.55 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d44175b7-64ba-4358-9597-21e199864d19")
+		(property "Reference" "D1"
+			(at 103.99 81.484 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 106.68 82.55 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 104.14 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 104.14 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 107.95 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "685177fa-0d8c-4893-b48e-2a887ead0008")
+		)
+		(pin "1"
+			(uuid "593c8757-bcae-4dd2-aaa7-54fff0281f3f")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 116.84 128.27 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d4b4cc36-f6da-419b-b1c4-6f01fe8cf728")
+		(property "Reference" "S29"
+			(at 116.84 128.27 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 116.84 132.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 116.84 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 130.048 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 116.84 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "01899c18-ef61-4eb7-b9c5-32ec795a08d9")
+		)
+		(pin "1"
+			(uuid "a664d015-75da-4399-a69c-bf47da3bf1b2")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S29")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 104.14 133.35 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d6cad072-076d-4484-8fa2-7a63fac1c141")
+		(property "Reference" "D27"
+			(at 103.99 132.284 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 106.68 133.35 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 104.14 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 104.14 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 107.95 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "e2b71d17-cf43-435c-9297-492287e5f268")
+		)
+		(pin "1"
+			(uuid "ca1167b8-e171-4a4b-b605-2c3bda298c33")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D27")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 111.76 133.35 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d6e638d3-7591-493e-8c0b-e310d1eb21d7")
+		(property "Reference" "D28"
+			(at 111.61 132.284 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 114.3 133.35 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 111.76 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 115.57 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "81c88818-a10f-4c19-8f59-a1c356b8d979")
+		)
+		(pin "1"
+			(uuid "22ff6de3-f8bc-4874-b575-d171f67ebf23")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D28")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 109.22 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d8caaab8-cfb9-4d84-9ce4-1ab25f1920e4")
+		(property "Reference" "S22"
+			(at 109.22 115.57 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 109.22 119.38 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 109.22 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.68 117.348 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 109.22 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "625bcd16-b332-4657-87cb-a8be3c70313b")
+		)
+		(pin "1"
+			(uuid "ec47a666-aa88-486b-9e45-efeb7b3a756f")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 116.84 90.17 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ddc530fd-b083-4348-979b-c920033187bd")
+		(property "Reference" "S10"
+			(at 116.84 90.17 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 116.84 93.98 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 116.84 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 91.948 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 116.84 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "d7d2316d-e2e8-4a88-a869-0222dce731d7")
+		)
+		(pin "1"
+			(uuid "158bb42c-f135-4e3a-85de-48c3aa6907e9")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 124.46 77.47 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e9f44573-30b5-42c4-b18c-a29d78ac1043")
+		(property "Reference" "S4"
+			(at 124.46 77.47 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 124.46 81.28 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 124.46 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 79.248 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 124.46 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "0dd7da9c-36d6-44e4-80d7-598dba07e2ac")
+		)
+		(pin "1"
+			(uuid "33b97186-a545-4f62-a433-fc417c9423d3")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 154.94 128.27 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "eaa8989b-f3d6-47ab-be2b-a92c05291dc6")
+		(property "Reference" "S36"
+			(at 154.94 128.27 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 154.94 132.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 154.94 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 152.4 130.048 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 154.94 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "cb332601-93d1-4df1-9317-3dafbd3d22fd")
+		)
+		(pin "1"
+			(uuid "ecf5eff4-7ba0-49e9-aedc-8345d39dc6d0")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S36")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 149.86 133.35 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "edc01b94-4aea-4e50-83f4-a59b90cef5bb")
+		(property "Reference" "D34"
+			(at 149.71 132.284 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 152.4 133.35 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 149.86 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.86 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 153.67 133.35 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "40d1834a-a62b-44e8-a0d8-e496f5cb490f")
+		)
+		(pin "1"
+			(uuid "eff75a17-db80-496e-993b-f7caec6a8159")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D34")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 116.84 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "eff1a634-fecf-42ac-8772-22cf23dec6ed")
+		(property "Reference" "S23"
+			(at 116.84 115.57 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 116.84 119.38 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 116.84 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 117.348 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 116.84 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "b79ffe9e-25fc-4128-bf2f-0215cd1e74fe")
+		)
+		(pin "1"
+			(uuid "872ffc3b-3565-4d84-b716-399a64b8777e")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 127 82.55 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f154e09a-94d4-41c8-928a-f24d91f3b41d")
+		(property "Reference" "D4"
+			(at 126.85 81.484 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 129.54 82.55 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 127 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 130.81 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "9dec2abe-01a8-45bc-b81a-c8a4221a409d")
+		)
+		(pin "1"
+			(uuid "8396162f-8165-4fe9-a83f-676514e11c6a")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 111.76 82.55 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f1cc0bfc-f6c7-4117-82de-3f81d361ce51")
+		(property "Reference" "D2"
+			(at 111.61 81.484 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 114.3 82.55 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 111.76 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 115.57 82.55 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "1887e27e-09ef-44e2-b323-05559efdeb1b")
+		)
+		(pin "1"
+			(uuid "8a538190-4a1c-49eb-9f16-dcc373d796f0")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 104.14 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f1f4662b-fcee-479d-b5cb-b7a06f167e8d")
+		(property "Reference" "D15"
+			(at 103.99 106.884 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 106.68 107.95 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 104.14 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 104.14 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 107.95 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "d81f047e-4bf5-484d-b0d0-188510f14343")
+		)
+		(pin "1"
+			(uuid "5320b3be-22a8-4602-a3da-3bf1adc8466b")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 139.7 90.17 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f59cc72f-626c-4888-ac66-95165f2d3f9a")
+		(property "Reference" "S13"
+			(at 139.7 90.17 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 139.7 93.98 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 139.7 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 137.16 91.948 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 139.7 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "67c02b22-07ae-4707-b02c-9993fe31ce84")
+		)
+		(pin "1"
+			(uuid "beb6370b-7287-4505-9023-d0ea7648caac")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Diode")
+		(at 134.62 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f919e8cb-5108-455b-8b58-a8aec14ca927")
+		(property "Reference" "D19"
+			(at 134.47 106.884 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+				(justify right bottom)
+			)
+		)
+		(property "Value" ""
+			(at 137.16 107.95 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 134.62 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 134.62 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 138.43 107.95 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "77c65da0-0cdd-4c9d-86f9-5756bb6627e7")
+		)
+		(pin "1"
+			(uuid "03cf3102-cda3-49d3-b414-3cc81c13d0c2")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "D19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "ScottoKeebs:Placeholder_Keyswitch")
+		(at 132.08 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "fe63fa34-d1fa-4c46-8aa0-0d1adde3969a")
+		(property "Reference" "S25"
+			(at 132.08 115.57 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(size 0.635 0.635)
+					(thickness 0.127)
+					(bold yes)
+				)
+			)
+		)
+		(property "Value" ""
+			(at 132.08 119.38 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 132.08 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 117.348 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 132.08 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "0002eb59-0d72-4d11-b9cd-ed985d929636")
+		)
+		(pin "1"
+			(uuid "2b76bd96-d204-4dac-b9b1-6ced5ebc44fd")
+		)
+		(instances
+			(project "PCB"
+				(path "/ba2c06d4-323d-45bc-9485-93de7ad6175c/74ee0f88-7c22-4290-95f8-c7e7ac253bbc"
+					(reference "S25")
+					(unit 1)
+				)
+			)
+		)
+	)
+)

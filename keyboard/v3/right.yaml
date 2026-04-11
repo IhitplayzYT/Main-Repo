@@ -1,0 +1,119 @@
+meta:
+  engine: 4.1.0
+# U is a predefined unit of measure that means 19.05mm, which is MX spacing (u is 19.00mm)
+points:
+  zones:
+    matrix:
+      anchor.shift: [50,-100] # Fix KiCad placement
+      columns:
+        c0:
+        c1.key.stagger: 2.5
+        c2.key.stagger: 2.5
+        c3:
+        c4.key.stagger: -2.5
+        c5.key.stagger: -2.5
+        c6.key.stagger: -5
+      rows:
+        r0:
+        r1: 
+        r2:
+        r3:
+        r4:
+
+
+    thumb_s:
+      anchor:
+        ref: matrix_c0_r3
+        shift: [-50, -90]
+        rotate: 25
+      columns:
+        tucky:
+          key:
+        reachy:
+          key.spread: U
+          key.splay:
+          key.origin: [-0.5U, -0.5U]
+          key.name:
+
+    thumb_l:
+      anchor:
+        ref: thumb_s_reachy
+        shift: [-1U, -1.3U]
+      columns:
+        tucky_l:
+          key:
+          key.height: 1.5U
+        reachy_l:
+          key.spread: U
+          key.splay:
+          key.height: 1.5U
+          key.origin: [-0.5U, -0.5U]
+          key.name:
+
+    arrow_u:
+      anchor:
+        ref: matrix_c2_r3
+        shift: [9,-81]
+      columns:
+        r:
+          key:
+      rows:
+        c:
+          key:
+
+
+    arrow:
+      anchor:
+        ref: matrix_c2_r3
+        shift: [-10, -100]
+      columns:
+        arr_l:
+          key.stagger: -1
+        arr_d:
+          key.stagger: 1
+          key.spread: U
+          key.splay:
+          key.origin: [-0.5U, -0.5U]
+          key.name:
+        arr_r:
+          key.stagger: -1
+          key.spread: U
+          key.splay:
+          key.origin: [-0.5U, -0.5U]
+          key.name:
+
+outlines:
+  raw:
+    - where: true
+      what: rectangle
+      size: [cx+2, cy+2]
+
+  right:
+    - what: outline
+      name: raw
+    - what: polygon
+      operation: add
+      points:
+        # Bridge matrix bottom-left to thumb_s
+        - ref: matrix_c0_r4
+          shift: [-2.25cx, -6cy]
+        - ref: thumb_s_tucky
+          shift: [0,0]
+        - ref: thumb_s_tucky
+          shift: [-0.55cx,0.55cy]
+        - ref: thumb_l_tucky_l
+          shift: [-0.55cx,0]
+        - ref: matrix_c1_r0
+          shift: [0, -0.5cy]
+
+
+
+        # Bridge matrix bottom to arrow keys
+        - ref: matrix_c2_r0
+          shift: [0, -0.5cy]
+        - ref: arrow_u_r_c
+          shift: [-0.5cx, 0.8]
+        - ref: arrow_u_r_c
+          shift: [0.5cx, -cy]
+        - ref: matrix_c2_r4
+          shift: [cx, -cy]

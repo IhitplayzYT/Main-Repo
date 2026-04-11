@@ -1,0 +1,87 @@
+meta:
+  engine: 4.1.0
+# U is a predefined unit of measure that means 19.05mm, which is MX spacing (u is 19.00mm)
+points:
+  zones:
+    matrix:
+      anchor.shift: [50,-100] # Fix KiCad placement
+      columns:
+        c0:
+        c1.key.stagger: 2.5
+        c2.key.stagger: 2.5
+        c3:
+        c4.key.stagger: -2.5
+        c5.key.stagger: -2.5
+
+      rows:
+        r0:
+        r1:
+        r2:
+        r3:
+        r4:
+
+
+    thumb_s:
+      anchor:
+        ref: matrix_c5_r3
+        shift: [30, -90]
+        rotate: -25
+      columns:
+        tucky:
+          key:
+        reachy:
+          key.spread: U
+          key.splay:
+          key.origin: [-0.5U, -0.5U]
+          key.name:
+
+    thumb_l:
+      anchor:
+        ref: thumb_s_reachy
+        shift: [-1U, -1.3U]
+      columns:
+        tucky_l:
+          key:
+          key.height: 1.5U
+        reachy_l:
+          key.spread: U
+          key.splay:
+          key.height: 1.5U
+          key.origin: [-0.5U, -0.5U]
+          key.name:
+
+outlines:
+  raw:
+    - where: true
+      what: rectangle
+      size: [cx+2, cy+2]
+      fillet: 2
+  left:
+    - name: raw
+      what: outline
+      fillet: 5
+    - what: polygon
+      operation: add
+      fillet: 0
+      points:
+        - ref: matrix_c5_r3
+          shift: [0, 0]
+        - ref: thumb_s_tucky
+          shift: [-cx, -cy]
+        - ref: thumb_s_tucky
+          shift: [1.6cx, -0.95cy]
+
+        - ref: thumb_l_reachy_l
+          shift: [0.55cx, 2cy]
+
+        - ref: thumb_l_tucky_l
+          shift: [-0.5cx, 2cy]
+        - ref: thumb_s_reachy
+          shift: [-cx,0]
+        - ref: matrix_c5_r4
+          shift: [-cx, 0.4cy]
+
+
+        - ref: matrix_c5_r4
+          shift: [0, 0]
+

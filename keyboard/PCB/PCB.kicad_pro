@@ -632,13 +632,25 @@
         "uuid": "ba2c06d4-323d-45bc-9485-93de7ad6175c"
       }
     ],
-    "used_designators": "U1,S1-41,D1-41",
+    "used_designators": "J3,#PWR9-11,U2-3",
     "variants": []
   },
   "sheets": [
     [
       "ba2c06d4-323d-45bc-9485-93de7ad6175c",
       "Root"
+    ],
+    [
+      "74ee0f88-7c22-4290-95f8-c7e7ac253bbc",
+      "key_matrix"
+    ],
+    [
+      "9583a0fa-c84f-42fd-ab56-05d02b8eed08",
+      "power"
+    ],
+    [
+      "198d335c-44ab-4ea7-8ffe-16fb26754bc4",
+      "extras"
     ]
   ],
   "text_variables": {},
