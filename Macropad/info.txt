@@ -1,0 +1,6 @@
+total := 22
+1x1     := 17
+1 x 1.5 := 4
+1 x 2.0 := 1
+
+Maybe add rotary encoders to use for some more macropad like functionality
