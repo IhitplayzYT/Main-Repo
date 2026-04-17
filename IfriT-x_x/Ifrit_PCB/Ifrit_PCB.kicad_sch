@@ -1,0 +1,248 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "43e7d489-79c3-4767-8504-9766ae01c4a6")
+	(paper "A4")
+	(lib_symbols)
+	(no_connect
+		(at 163.83 43.18)
+		(uuid "e35ab8c2-4f85-4551-8603-8aba190d6a02")
+	)
+	(sheet
+		(at 86.36 15.24)
+		(size 35.56 55.88)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "33cebe23-21fd-4ae8-9888-c00c72843848")
+		(property "Sheetname" "POWER"
+			(at 86.36 14.5284 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "POWER.kicad_sch"
+			(at 86.36 71.7046 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Ifrit_PCB"
+				(path "/43e7d489-79c3-4767-8504-9766ae01c4a6"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 13.97 15.24)
+		(size 69.85 55.88)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "5bf05ab5-5f89-4de2-84ca-909084f574e1")
+		(property "Sheetname" "MCU"
+			(at 13.97 14.5284 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "MCU.kicad_sch"
+			(at 13.97 71.7046 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Ifrit_PCB"
+				(path "/43e7d489-79c3-4767-8504-9766ae01c4a6"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 124.46 15.24)
+		(size 48.26 55.88)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "73381cde-8db5-4fc2-b596-e9bb1e2c5729")
+		(property "Sheetname" "MISC"
+			(at 124.46 14.5284 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "MISC.kicad_sch"
+			(at 124.46 71.7046 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Ifrit_PCB"
+				(path "/43e7d489-79c3-4767-8504-9766ae01c4a6"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 176.53 15.24)
+		(size 53.34 55.88)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "87ff47b6-3fc3-4c91-9bb1-f81e0da3969c")
+		(property "Sheetname" "SENS_AND_ACC"
+			(at 176.53 14.5284 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "PERIPHERAL_ESS.kicad_sch"
+			(at 176.53 71.7046 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Ifrit_PCB"
+				(path "/43e7d489-79c3-4767-8504-9766ae01c4a6"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 13.97 77.47)
+		(size 72.39 58.42)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "a97d6673-97aa-44e0-a643-adeb9daccd37")
+		(property "Sheetname" "CONTROLS"
+			(at 13.97 76.7584 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "CONTROLS.kicad_sch"
+			(at 13.97 136.4746 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Ifrit_PCB"
+				(path "/43e7d489-79c3-4767-8504-9766ae01c4a6"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
