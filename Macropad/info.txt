@@ -3,4 +3,13 @@ total := 22
 1 x 1.5 := 4
 1 x 2.0 := 1
 
-Maybe add rotary encoders to use for some more macropad like functionality
+Stabilisers for the 2u keys
+flx fix thre alignment bothe vertically and horizontally
+Fix the rotary encoder footprint
+Also do coupled traces for runnning the USB lines and accordiunghly calc the impedence between the couples
+Add the layer fill
+Add holes for screw holes
+Add battery cahrging if possible
+See if we can use LED strips
+change the 4 pin prongs to 4 pin connection holes
+See if we can add bluetooth support using a breakout board
