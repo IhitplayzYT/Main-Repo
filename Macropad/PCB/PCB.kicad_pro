@@ -495,6 +495,13 @@
         "via_diameter": 0.6,
         "via_drill": 0.3,
         "wire_width": 6
+      },
+      {
+        "name": "USB_90",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 0,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "tuning_profile": ""
       }
     ],
     "meta": {
@@ -502,7 +509,16 @@
     },
     "net_colors": null,
     "netclass_assignments": null,
-    "netclass_patterns": []
+    "netclass_patterns": [
+      {
+        "netclass": "USB_90",
+        "pattern": "D+"
+      },
+      {
+        "netclass": "USB_90",
+        "pattern": "D-"
+      }
+    ]
   },
   "pcbnew": {
     "last_paths": {
@@ -632,7 +648,7 @@
         "uuid": "61897acb-2078-4c47-92ce-82a0439bac7e"
       }
     ],
-    "used_designators": "J3,S5,S22,D5,D22",
+    "used_designators": "SW2-3,R4-7,R10-17,C10-13,#PWR22-23,#PWR25-26,#PWR31-36,#PWR38-41",
     "variants": []
   },
   "sheets": [

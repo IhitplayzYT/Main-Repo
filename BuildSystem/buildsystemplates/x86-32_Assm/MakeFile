@@ -1,0 +1,20 @@
+flags= -f elf32 -I/include
+ldflags= -T PROJ_NAME.ld -m elf_i386
+
+.PHONY: all clean 
+
+all: clean PROJ_NAME
+
+PROJ_NAME: PROJ_NAME.elf
+	objcopy -O binary $^ -o PROJ_NAME
+
+PROJ_NAME.elf: PROJ_NAME.o
+	ld $(ldflags) $^ -o $@ 
+	chmod +x PROJ_NAME.elf
+
+PROJ_NAME.o: PROJ_NAME.asm include/PROJ_NAME.h
+	nasm $(flags) $^ -o $@
+
+clean:
+	rm -rf *.o *.elf *.bin PROJ_NAME
+
