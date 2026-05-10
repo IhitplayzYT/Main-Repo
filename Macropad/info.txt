@@ -5,6 +5,7 @@ total := 22
 
 keycap dim = 17x17mm
 
+Add support for controller sticks 
 Add the layer fill
 add grounf fill
 change the 4 pin prongs to 4 pin connection holes
