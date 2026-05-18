@@ -38,19 +38,20 @@ fi
 # Creating and cloning into the directory
 mkdir $proj_name
 cd $proj_name
-git init
-cp -R $s_dir/* .
+cp -R "$s_dir"/* .
 
 # In the currnt dir does renaming of the PROJ_NAME placeholder in the files
-for x in *;do
-    if [[ $x == *PROJ_NAME* ]];then
-        new=$(sed "s/PROJ_NAME/$proj_name/g" <<< "$x")
-        sed "s/PROJ_NAME/$proj_name/g" < $x > $new
-        rm -f $x
-    else
-        sed -i "s/PROJ_NAME/$proj_name/g" $x
+find . -depth | while IFS= read -r path; do
+    name="$(basename "$path")"
+    dir="$(dirname "$path")"
+    if [[ -f "$path" ]]; then
+        sed -i "s/PROJ_NAME/$proj_name/g" "$path"
     fi
-    
+    # Rename file/dir if name contains PROJ_NAME
+    if [[ "$name" == *PROJ_NAME* ]]; then
+        new_name="${name//PROJ_NAME/$proj_name}"
+        mv "$path" "$dir/$new_name"
+    fi
 done
 # Completion message
 echo -e "\e[1;32m Creation is successful!\e[0m"

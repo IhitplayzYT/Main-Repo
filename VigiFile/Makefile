@@ -1,6 +1,6 @@
 CC := gcc
 
-TARGET := PROJ_NAME
+TARGET := VigiFile
 
 SRC_DIR := src
 INC_DIR := include
@@ -36,3 +36,4 @@ clean:
 
 run: all
 	./$(TARGET)
+
