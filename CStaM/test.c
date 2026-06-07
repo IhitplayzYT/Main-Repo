@@ -4,6 +4,7 @@ struct Point {
 };
 
 
+
 async struct Point * a1(){
     printf("In 1");
     
@@ -22,4 +23,3 @@ async void hello_async(char ** z) {
     a2();
     a3();
 }
-

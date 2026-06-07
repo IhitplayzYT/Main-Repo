@@ -1,8 +1,8 @@
 #![allow(non_camel_case_types,non_snake_case,dead_code)]
 
 pub mod Cstam {
-
-    use std::{collections::HashSet, collections::HashMap};
+const HASH_SIZE: usize = 10;
+    use std::{collections::{HashMap, HashSet}, fmt::format};
 
     use regex::Regex;
 use sha2::{Digest, Sha256};
@@ -29,6 +29,8 @@ use sha2::{Digest, Sha256};
 
 
             let mut start = 0;
+            let mut Future_Map:HashMap<String,String> = HashMap::new();
+            let mut Fn_Body_Map:HashMap<String,String> = HashMap::new();
             while start < l {
                 let pos = doc[start..].find("async").unwrap_or(l);
                 if pos >= l {
@@ -69,10 +71,13 @@ use sha2::{Digest, Sha256};
                 let (fn_start, fn_end) = (start + pos + rel_off, k);
                 let fn_body: String = String::from_utf8(bytes[fn_start..fn_end].iter().map(|x| x.clone()).into_iter().collect::<Vec<u8>>()).unwrap();
                 println!("{fn_name} => {}",fn_body);
+                Fn_Body_Map.insert(fn_name.clone(),fn_body.clone());
 
-                    let state_enum = Gen_Enum(fn_name,fn_body,&is_async);
+                    let names = Get_Fn_Name_Ordered(fn_body.clone(), &is_async);
+                    let (state_enum,future_struct) = (Gen_Enum(fn_name.clone(),fn_body.clone(),names.clone()),Gen_Future(fn_name.clone(), fn_body.clone(), &is_async, names.clone(),&mut Future_Map,&Fn_Body_Map));
+                    Future_Map.insert(fn_name.clone(), future_struct.clone());
                     println!("Enum  => {}",state_enum);
-//                    let future_struct = Gen_Future();
+                    println!("Future  => {}",future_struct);
 
                 start = fn_end;
             }
@@ -84,9 +89,7 @@ use sha2::{Digest, Sha256};
         hasher.update(digest.as_bytes());
         format!("{:x}", hasher.finalize())
     } 
-
-    pub fn Gen_Enum(fn_name:String,fn_body:String,is_async: & HashSet<&String>) -> String {
-        let ret = format!("typedef enum e_State_{} {{\n{{}}\n}} e_State_{}_{}",fn_name,fn_name,hashed_digest(fn_body.clone()));
+    pub fn Get_Fn_Name_Ordered(fn_body:String,is_async: & HashSet<&String>) -> Vec<String> { 
         let mut fn_names = String::new();
         fn_body.split_ascii_whitespace().for_each(|s| {
             for start in 0..s.len() {
@@ -100,9 +103,43 @@ use sha2::{Digest, Sha256};
                 }
             }
         });
-
         let fn_names = fn_names.trim();
-        let names = fn_names.split_ascii_whitespace().map(|x| x.to_string()).collect::<Vec<String>>();
+       fn_names.split_ascii_whitespace().map(|x| x.to_string()).collect::<Vec<String>>()
+    }
+
+    /*
+        a() {
+        }
+
+        b() {
+        a()
+        c()
+        }
+
+     */
+
+
+// We assume Hoisting to not be there and it be sequentially defined to avoid maintaining of ast to parse Future creation orders
+    pub fn Gen_Future(fn_name:String,fn_body:String,is_async: & HashSet<&String>,names: Vec<String>,future_map: &mut HashMap<String,String>,fn_body_map: &HashMap<String,String>) -> String {
+        let ret = format!("typedef struct s_Future_{} {{\ne_State_{}_{} state;\n{{}}\n}} Future_{};",fn_name.clone(),fn_name.clone(),&hashed_digest(fn_body.clone())[..HASH_SIZE],fn_name.clone()); 
+        let mut s_future = "".to_string();
+        let mut is_async = is_async.clone();
+        for i in &names {
+                if future_map.contains_key(i){
+                }else{
+                    let k = s_future.clone();
+                    let t = &Gen_Future(i.to_string(), fn_body_map[i].clone(), &is_async,Get_Fn_Name_Ordered(fn_body_map[i].clone(), &is_async) , future_map, fn_body_map);
+                    future_map.insert(fn_name.clone(), t.to_string());
+                    s_future = t.to_string() + "\n" + &k;
+
+                }
+                    s_future += &format!("Future_{i} fn_{i};\n");
+        }
+        ret.replace("{}", &s_future)
+    }
+
+    pub fn Gen_Enum(fn_name:String,fn_body:String,names: Vec<String>) -> String {
+        let ret = format!("typedef enum e_State_{} {{\n{{}}\n}} e_State_{}_{};",fn_name,fn_name,&hashed_digest(fn_body.clone())[..HASH_SIZE]);
         let mut counts = HashMap::<String, usize>::new();
         let states = names.iter().map(|name| {
                 let n = counts.entry(name.clone()).or_insert(0);
