@@ -1,11 +1,11 @@
 #![allow(non_camel_case_types,non_snake_case,dead_code)]
 
 pub mod Cstam {
-const HASH_SIZE: usize = 10;
-    use std::{collections::{HashMap, HashSet}, fmt::format};
-
+const HASH_SIZE: usize = 5;
+    use std::{collections::{HashMap, HashSet}};
     use regex::Regex;
-use sha2::{Digest, Sha256};
+    use sha2::{Digest, Sha256};
+
     pub fn process_dir(_fpath: String) {}
 
     pub fn process_file(fname: String) {
@@ -74,10 +74,11 @@ use sha2::{Digest, Sha256};
                 Fn_Body_Map.insert(fn_name.clone(),fn_body.clone());
 
                     let names = Get_Fn_Name_Ordered(fn_body.clone(), &is_async);
-                    let (state_enum,future_struct) = (Gen_Enum(fn_name.clone(),fn_body.clone(),names.clone()),Gen_Future(fn_name.clone(), fn_body.clone(), &is_async, names.clone(),&mut Future_Map,&Fn_Body_Map));
+                    let (poll_enum,state_enum,future_struct) = ("typedef enum e_PollStatus{\nPOLL_PENDING,\nPOLL_READY\n} PollStatus;\n\ntypedef struct s_PollResult{\nPollStatus status;\n} PollResult;\n".to_string(),Gen_Enum(fn_name.clone(),fn_body.clone(),names.clone()),Gen_Future(fn_name.clone(), fn_body.clone(), &is_async, names.clone(),&mut Future_Map,&Fn_Body_Map));
                     Future_Map.insert(fn_name.clone(), future_struct.clone());
                     println!("Enum  => {}",state_enum);
                     println!("Future  => {}",future_struct);
+                    println!("Poll Enum  => {}",poll_enum);
 
                 start = fn_end;
             }
@@ -121,7 +122,7 @@ use sha2::{Digest, Sha256};
 
 // We assume Hoisting to not be there and it be sequentially defined to avoid maintaining of ast to parse Future creation orders
     pub fn Gen_Future(fn_name:String,fn_body:String,is_async: & HashSet<&String>,names: Vec<String>,future_map: &mut HashMap<String,String>,fn_body_map: &HashMap<String,String>) -> String {
-        let ret = format!("typedef struct s_Future_{} {{\ne_State_{}_{} state;\n{{}}\n}} Future_{};",fn_name.clone(),fn_name.clone(),&hashed_digest(fn_body.clone())[..HASH_SIZE],fn_name.clone()); 
+        let ret = format!("typedef struct s_Future_{} {{\ne_State_{}_{} state;\n{{}}\n}} Future_{};\n",fn_name.clone(),fn_name.clone(),&hashed_digest(fn_body.clone())[..HASH_SIZE],fn_name.clone()); 
         let mut s_future = "".to_string();
         let mut is_async = is_async.clone();
         for i in &names {
@@ -135,11 +136,12 @@ use sha2::{Digest, Sha256};
                 }
                     s_future += &format!("Future_{i} fn_{i};\n");
         }
-        ret.replace("{}", &s_future)
+        let vars = Extract_Persistent_Vars(fn_body, &is_async);
+        ret.replace("{}", &(s_future + &vars))
     }
 
     pub fn Gen_Enum(fn_name:String,fn_body:String,names: Vec<String>) -> String {
-        let ret = format!("typedef enum e_State_{} {{\n{{}}\n}} e_State_{}_{};",fn_name,fn_name,&hashed_digest(fn_body.clone())[..HASH_SIZE]);
+        let ret = format!("typedef enum e_State_{} {{\n{{}}\n}} e_State_{}_{};\n",fn_name,fn_name,&hashed_digest(fn_body.clone())[..HASH_SIZE]);
         let mut counts = HashMap::<String, usize>::new();
         let states = names.iter().map(|name| {
                 let n = counts.entry(name.clone()).or_insert(0);
@@ -155,6 +157,127 @@ use sha2::{Digest, Sha256};
         let enum_contents = std::iter::once("Start".to_string()).chain(states).chain(std::iter::once("Done".to_string())).collect::<Vec<_>>().join(",\n");
         ret.replace("{}", &enum_contents)
     }
+
+    pub fn Gen_Poll(fn_name:String,fn_body:String,is_async: & HashSet<&String>,names: Vec<String>,future_map: &mut HashMap<String,String>,s_enum:String,s_Future: String) -> String {
+        let ret  = "Poll".to_string();
+
+
+
+
+
+        ret
+    }
+
+pub fn split_args(args: &str) -> Vec<String> {
+    let mut out = Vec::new();
+    let mut start = 0;
+    let mut depth = 0;
+    for (i, ch) in args.char_indices() {
+        match ch {
+            '(' => depth += 1,
+            ')' => depth -= 1,
+            ',' if depth == 0 => {
+                out.push(args[start..i].trim().to_string());
+                start = i + 1;
+            }
+            _ => {}
+        }
+    }
+    out.push(args[start..].trim().to_string());
+    out
+}
+
+#[derive(Debug, Clone)]
+pub struct FunctionCall {
+    pub variable_type: Option<String>,
+    pub variable_name: Option<String>,
+    pub function_name: String,
+    pub parameter_list: Vec<String>,
+}
+
+pub fn parse_calls(text: &str) -> Vec<FunctionCall> {
+    let mut result = Vec::new();
+    for line in text.lines() {
+        let line = line.trim();
+        if line.is_empty() {
+            continue;
+        }
+        let (variable_type, variable_name, rhs) =
+            if let Some(eq_pos) = line.find('=') {
+                let lhs = line[..eq_pos].trim();
+                let rhs = line[eq_pos + 1..].trim();
+                let parts: Vec<&str> =
+                    lhs.split_whitespace().collect();
+                if parts.len() >= 2 {
+                    let variable_name =
+                        parts.last().unwrap().to_string();
+
+                    let variable_type =
+                        parts[..parts.len() - 1].join(" ");
+                    (
+                        Some(variable_type),
+                        Some(variable_name),
+                        rhs,
+                    )
+                } else {
+                    (None, None, rhs)
+                }
+            } else {
+                (None, None, line)
+            };
+        let Some(open_pos) = rhs.find('(') else {
+            continue;
+        };
+        let function_name = rhs[..open_pos].trim().to_string();
+        let bytes = rhs.as_bytes();
+        let mut depth = 1;
+        let mut i = open_pos + 1;
+        while i < bytes.len() && depth > 0 {
+            match bytes[i] {
+                b'(' => depth += 1,
+                b')' => depth -= 1,
+                _ => {}
+            }
+            i += 1;
+        }
+        if depth != 0 {
+            continue;
+        }
+        let p_list =rhs[open_pos + 1..i - 1].trim().to_string();
+        result.push(FunctionCall {
+            variable_type,
+            variable_name,
+            function_name,
+            parameter_list:split_args(&p_list)
+        });
+    }
+    result
+}
+
+
+
+    pub fn Extract_Persistent_Vars(fn_body:String,is_async: & HashSet<&String>) -> String {
+        let mut ret = "".to_string();
+        let fxn_call_table = parse_calls(&fn_body);
+        let l = fxn_call_table.len();
+        for i in 0..l {
+            if is_async.contains(&fxn_call_table[i].function_name) {
+                for k in &fxn_call_table[i].parameter_list{
+                for j in 0..i{
+                    if let Some(name) = fxn_call_table[j].variable_name.clone(){
+                        if name == k.clone() {
+                            if let Some(n_type) = fxn_call_table[j].variable_type.clone(){
+                            ret += &format!("{n_type} {name};\n");
+                            }
+                        }
+                    }
+                }
+            }
+            }
+        } 
+        ret
+    }
+
 
 }
 
