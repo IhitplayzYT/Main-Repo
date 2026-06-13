@@ -2,7 +2,7 @@
 
 pub mod Cstam {
 const HASH_SIZE: usize = 5;
-    use std::{collections::{HashMap, HashSet}};
+    use std::{collections::{HashMap, HashSet}, fmt::format, fs::TryLockError::WouldBlock};
     use regex::Regex;
     use sha2::{Digest, Sha256};
 
@@ -22,11 +22,6 @@ const HASH_SIZE: usize = 5;
             }
 
             let is_async: HashSet<_> = async_fns.iter().collect();
-            println!("Async set = {:?}",is_async);
-
-
-
-
 
             let mut start = 0;
             let mut Future_Map:HashMap<String,String> = HashMap::new();
@@ -52,11 +47,17 @@ const HASH_SIZE: usize = 5;
 
                 println!("Cur fn = {fn_name}");
 
+                let mut ret_type = "".to_string();
+                let k = temp;
+                while temp > 0 && &doc[start+pos..temp+start+pos] != "async "{
+                    temp -= 1;
+                }
+                ret_type += &doc[temp+start+pos..k+start+pos];
+
                 let rel_off = doc[start+pos..].find("{").unwrap_or(l);
                 if rel_off >= l {
                     break;
                 }
-
 
                 let mut stack = 1;
                 let mut k = start + pos + rel_off+1;
@@ -74,15 +75,20 @@ const HASH_SIZE: usize = 5;
                 Fn_Body_Map.insert(fn_name.clone(),fn_body.clone());
 
                     let names = Get_Fn_Name_Ordered(fn_body.clone(), &is_async);
-                    let (poll_enum,state_enum,future_struct) = ("typedef enum e_PollStatus{\nPOLL_PENDING,\nPOLL_READY\n} PollStatus;\n\ntypedef struct s_PollResult{\nPollStatus status;\n} PollResult;\n".to_string(),Gen_Enum(fn_name.clone(),fn_body.clone(),names.clone()),Gen_Future(fn_name.clone(), fn_body.clone(), &is_async, names.clone(),&mut Future_Map,&Fn_Body_Map));
+                    let (poll_enum,state_enum,future_struct) = (Gen_Poll_Type(fn_name.clone(),ret_type),Gen_Enum(fn_name.clone(),fn_body.clone(),names.clone()),Gen_Future(fn_name.clone(), fn_body.clone(), &is_async, names.clone(),&mut Future_Map,&Fn_Body_Map));
                     Future_Map.insert(fn_name.clone(), future_struct.clone());
                     println!("Enum  => {}",state_enum);
                     println!("Future  => {}",future_struct);
                     println!("Poll Enum  => {}",poll_enum);
-
+                    let poll_fn = Gen_Poll(fn_name, fn_body, &is_async, state_enum, future_struct);
+                    println!("{poll_fn}");
                 start = fn_end;
             }
         }
+    }
+
+    pub fn Gen_Poll_Type(fn_name: String,ret_type: String) -> String{ 
+        format!("typedef enum e_PollStatus{{\nPOLL_PENDING,\nPOLL_READY\n}} PollStatus;\n\ntypedef struct s_PollResult{{\nPollStatus status;\n{ret_type} result;\n}} {fn_name}_PollResult;\n")
     }
 
     pub fn hashed_digest(digest:String) -> String {
@@ -124,7 +130,6 @@ const HASH_SIZE: usize = 5;
     pub fn Gen_Future(fn_name:String,fn_body:String,is_async: & HashSet<&String>,names: Vec<String>,future_map: &mut HashMap<String,String>,fn_body_map: &HashMap<String,String>) -> String {
         let ret = format!("typedef struct s_Future_{} {{\ne_State_{}_{} state;\n{{}}\n}} Future_{};\n",fn_name.clone(),fn_name.clone(),&hashed_digest(fn_body.clone())[..HASH_SIZE],fn_name.clone()); 
         let mut s_future = "".to_string();
-        let mut is_async = is_async.clone();
         for i in &names {
                 if future_map.contains_key(i){
                 }else{
@@ -147,9 +152,9 @@ const HASH_SIZE: usize = 5;
                 let n = counts.entry(name.clone()).or_insert(0);
                 *n += 1;
                 if *n == 1 {
-                    format!("Waiting{}", name.to_uppercase())
+                    format!("Waiting{}", name)
                 } else {
-                    format!("Waiting{}{}", name.to_uppercase(), *n)
+                    format!("Waiting{}{}", name, *n)
                 }
             })
             .collect::<Vec<_>>();
@@ -158,14 +163,198 @@ const HASH_SIZE: usize = 5;
         ret.replace("{}", &enum_contents)
     }
 
-    pub fn Gen_Poll(fn_name:String,fn_body:String,is_async: & HashSet<&String>,names: Vec<String>,future_map: &mut HashMap<String,String>,s_enum:String,s_Future: String) -> String {
-        let ret  = "Poll".to_string();
+    pub fn Gen_Poll(fn_name:String,fn_body:String,is_async: & HashSet<&String>,s_enum:String,s_Future: String) -> String {
+        let ret  = format!("
+{fn_name}_PollResult {fn_name}_poll(Future_{fn_name} *self) {{
+    {fn_name}_PollResult ret = ({fn_name}_PollResult){{.status = POLL_PENDING}};
+    while (1) {{
+        switch (self->state) {{  
+    {{}}
+    }}
+
+}}");
+
+        let mut ladder = "".to_string();
+
+        /*
+        Gen code for Start
+        */
+
+        /*
+         *      {
+         *          printf("");
+         *          let y = 9;
+         *          let x = a1(y);
+         *          if x > 2 {
+         *              return x;
+         *          }
+         *          return a2(x)
+         *      }
+         * 
+         * 
+         */
+
+        let mut buff = "".to_string();
+        let mut iop = 0;
+        let mut ASSIGN = "".to_string();
+        let fn_map = parse_calls(&fn_body);
+        for i in  fn_body.split("\n").skip(1){
+        let mut has_async = "".to_string();
+           for j in is_async{
+            if i.contains(*j){
+                has_async = j.to_string();
+                break;
+            }
+           }
+
+                if has_async.is_empty(){
+                    if let Some(idx) = i.find("return"){
+                        let mut fn_ret = i[idx+7..].trim();
+                        fn_ret = &fn_ret[..fn_ret.len() - 1];
+                        buff += &format!("self->state = Done;\nreturn ({fn_name}_PollResult){{.result = {fn_ret},.status = POLL_READY}};\n");
+                    } else{
+                        buff += i;
+                        buff += "\n";
+                    }
+                }else{
+                let (mut lp,mut rp) = (0,0);
+                    if let Some(idx) = i.find(&has_async){
+                     lp = idx + has_async.len()+1;
+                     rp = lp + i[lp..].find(")").unwrap();
+                    }
+                    
+                    let params = split_args(&i[lp..rp]);
+                    let p_buff = params.iter().map(|x| if s_Future.contains(&(" ".to_string() + x + ";")) {format!("self->{x},")} else {x.clone()+","} ).collect::<Vec<String>>().join(" ");
+                    let p_buff = &p_buff[..p_buff.len() - 1];
+                    
+                    
+                    let mut next_state = "".to_string();
+
+                    let sp = s_enum.find(&format!("Waiting{has_async}")).unwrap() + 7 + has_async.len()+1;
+                    if let Some(z) = s_enum[sp..].find(","){
+                        println!("{} {}",sp+1,sp+z);
+                        next_state += &s_enum[sp +1..sp+z];
+                    }else{
+                    next_state = format!("Done");
+                    }
+
+                    next_state = next_state.trim().to_string();
+                    let mut next_fn = "".to_string();
+                    let mut next_p_buff = "".to_string();
+                    let mut params = vec![];
 
 
+                    if &next_state[..] != "Done" {
+                    next_fn = next_state[7..].to_string();
+                    let k = fn_body[fn_body.find(&i).unwrap()+i.len()..].to_string();
+
+                    if let Some(idx) = k.find(&next_fn){
+                     lp = idx + next_fn.len()+1;
+                     rp = lp + k[lp..].find(")").unwrap();
+                    }
+                     params = split_args(&k[lp..rp]);
+                     next_p_buff = params.iter().map(|x| if s_Future.contains(&(" ".to_string() + x + ";")) {format!("self->{x},")} else {x.clone()+","} ).collect::<Vec<String>>().join(" ");
+                     next_p_buff = next_p_buff[..next_p_buff.len() - 1].to_string();
+
+                     println!("{next_fn} {params:?} {next_p_buff:?}");
+                }
 
 
+                // TODO: FIXME: New issue is that we need to assignt he results of the async fn to the varib in the self...eg self->r1 = ret.result
+                for i in &fn_map {
+                    if i.function_name == has_async{
+                        if let Some(var) = i.variable_name.clone(){
+                            ASSIGN += &format!("\n\t\tself->{var}={has_async}_ret.result;");
+                        }
+                        break;
+                    }
 
-        ret
+                }
+
+
+                    if iop == 0{
+                    ladder += &format!("
+            case Start :{{
+                {}self->fn_{has_async} = {has_async}({p_buff});{ASSIGN}
+                self->state = Waiting{has_async}; 
+                continue;
+            }}
+
+            case Waiting{has_async} :{{
+                {has_async}_PollResult {has_async}_ret = {has_async}_poll(&self->fn_{has_async});
+                if ({has_async}_ret.status == POLL_PENDING) {{return ret;}}{}{ASSIGN}
+                self->fn_{next_fn} = {next_fn}({next_p_buff});
+                self->state = {next_state};
+                continue;
+            }}
+                    ",if buff.is_empty(){buff.clone()} else {"\n".to_string()+&buff},if buff.is_empty(){buff.clone()} else {"\n".to_string()+&buff});
+                    
+                        
+                }
+                else if &next_state[..] == "Done"{
+            ladder += &format!("
+            case Waiting{has_async} :{{
+                {has_async}_PollResult {has_async}_ret = {has_async}_poll(&self->fn_{has_async});
+                if ({has_async}_ret.status == POLL_PENDING) {{return ret;}}{}{ASSIGN}
+                self->state = {next_state};
+                continue;
+            }}
+                   ",if buff.is_empty(){buff.clone()} else {"\n".to_string()+&buff}) 
+                }
+                else{
+
+
+                    ladder += &format!("
+            case Waiting{has_async} :{{
+                {has_async}_PollResult {has_async}_ret = {has_async}_poll(&self->fn_{has_async});
+                if ({has_async}_ret.status == POLL_PENDING) return ret;{}{ASSIGN}
+                self->fn_{next_fn} = {next_fn}({next_p_buff});
+                self->state = {next_state};
+                continue;
+            }}
+                    ",if buff.is_empty(){buff.clone()} else {"\n".to_string()+&buff});}
+
+                    iop +=1;
+                    buff.clear();
+                }
+                ASSIGN.clear();
+        }
+
+        /*
+
+        for i in s_enum.split("\n").skip(1){
+            if i.ends_with(",") {
+                let e_var = &i[..i.len() - 1];
+                let e_fn_name = &e_var[7..];
+                ladder += &format!("
+                    case {e_var}:{{
+                        ret = {e_fn_name}_poll(&self->fn_{e_fn_name});
+                        if (ret.result = POLL_PENDING) return ret;
+                        self->
+
+                    }}
+                ")
+
+            }
+        }
+
+        */
+
+        /*
+        Gen code for Done 
+        */
+
+        ladder += &format!("
+            case DONE :{{
+                return ({fn_name}_PollResult){{
+                    .status = POLL_READY,
+                    .result = self->result
+                }};
+            }}
+        }}
+        ");
+
+        ret.replace("{}", &ladder)
     }
 
 pub fn split_args(args: &str) -> Vec<String> {
