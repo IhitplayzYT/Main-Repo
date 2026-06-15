@@ -1,1 +1,1 @@
-/home/ihitplayzyt/SpeRu/target/debug/SpeRu: /home/ihitplayzyt/SpeRu/src/helper.rs /home/ihitplayzyt/SpeRu/src/main.rs /home/ihitplayzyt/SpeRu/src/speru.rs
+/home/ihitplayzyt/SpeRu/target/debug/SpeRu: /home/ihitplayzyt/SpeRu/src/dist.rs /home/ihitplayzyt/SpeRu/src/helper.rs /home/ihitplayzyt/SpeRu/src/main.rs /home/ihitplayzyt/SpeRu/src/read.rs /home/ihitplayzyt/SpeRu/src/speru.rs /home/ihitplayzyt/SpeRu/src/tree.rs
