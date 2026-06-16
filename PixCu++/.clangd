@@ -1,0 +1,6 @@
+CompileFlags:
+  Add:
+    - --cuda-path=/opt/cuda
+    - --cuda-gpu-arch=sm_120
+    - -isystem
+    - /opt/cuda/include
