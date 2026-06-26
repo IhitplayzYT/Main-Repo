@@ -43,19 +43,21 @@ extern String piBaseUrl;
 
 
 // Set ISR Flags
-volatile bool F_Up = false, F_Down = false, F_Left = false, F_Right = false, F_Center = false,F_Enc1Push = false, F_Enc2Push = false;
+volatile bool F_Enc1Push = false, F_Enc2Push = false;
 volatile int Enc1_D = 0, Enc2_D = 0;
-volatile uint32_t lastMs_Up = 0, lastMs_Down = 0, lastMs_Left = 0, lastMs_Right = 0, lastMs_Center = 0,lastMs_enc1Push = 0, lastMs_enc2Push = 0;
+volatile uint32_t lastMs_enc1Push = 0, lastMs_enc2Push = 0;
 volatile uint8_t enc1LastAB = 0, enc2LastAB = 0;
 
 // -------------------------- ISR ROUTINE ---------------------------------
 // ISRs (debounce then set flag and lastMs)
 
-void IRAM_ATTR isrBtnUp()     { uint32_t t = millis(); if (t - lastMs_Up > DEBOUNCE_MS)     { F_Up = true;     lastMs_Up = t; } }
-void IRAM_ATTR isrBtnDown()   { uint32_t t = millis(); if (t - lastMs_Down > DEBOUNCE_MS)   { F_Down = true;   lastMs_Down = t; } }
-void IRAM_ATTR isrBtnLeft()   { uint32_t t = millis(); if (t - lastMs_Left > DEBOUNCE_MS)   { F_Left = true;   lastMs_Left = t; } }
-void IRAM_ATTR isrBtnRight()  { uint32_t t = millis(); if (t - lastMs_Right > DEBOUNCE_MS)  { F_Right = true;  lastMs_Right = t; } }
-void IRAM_ATTR isrBtnCenter() { uint32_t t = millis(); if (t - lastMs_Center > DEBOUNCE_MS) { F_Center = true; lastMs_Center = t; } }
+volatile bool F_JoyPush = false;
+volatile uint32_t lastMs_JoyPush = 0;
+void IRAM_ATTR isrJoyPush() {
+  uint32_t t = millis();
+  if (t - lastMs_JoyPush > DEBOUNCE_MS) { F_JoyPush = true; lastMs_JoyPush = t; }
+}
+
 void IRAM_ATTR isrEnc1Push()  { uint32_t t = millis(); if (t - lastMs_enc1Push > DEBOUNCE_MS)  { F_Enc1Push = true;  lastMs_enc1Push = t; } }
 void IRAM_ATTR isrEnc2Push()  { uint32_t t = millis(); if (t - lastMs_enc2Push > DEBOUNCE_MS)  { F_Enc2Push = true;  lastMs_enc2Push = t; } }
 
@@ -114,33 +116,39 @@ bool discoverPi() {
   return true;
 }
 
+// ---------------- JOYSTICK POLLING ----------------
+// Tracks which direction is currently "held" so it only fires once per movement
+// and requires return-to-center before firing again.
+enum JoyDir { JOY_NONE, JOY_UP, JOY_DOWN, JOY_LEFT, JOY_RIGHT };
+JoyDir joyHeld = JOY_NONE;
+uint32_t lastJoySampleMs = 0;
+
+
 // ============================================================
 // Setup helpers
 // ============================================================
+// ---------------- setupPins() — replace button setup with joystick ----------------
 void setupPins() {
-  pinMode(PIN_BTN_UP, INPUT_PULLUP);
-  pinMode(PIN_BTN_DOWN, INPUT_PULLUP);
-  pinMode(PIN_BTN_LEFT, INPUT_PULLUP);
-  pinMode(PIN_BTN_RIGHT, INPUT_PULLUP);
-  pinMode(PIN_BTN_CENTER, INPUT_PULLUP);
-  pinMode(PIN_ENC1_A, INPUT_PULLUP);
-  pinMode(PIN_ENC1_B, INPUT_PULLUP);
+  // REMOVE all PIN_BTN_* pinMode and attachInterrupt calls
+
+  // Joystick push button (replaces center button)
+  pinMode(PIN_JOY_PUSH, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(PIN_JOY_PUSH), isrJoyPush, FALLING);
+
+  // Encoders unchanged
+  pinMode(PIN_ENC1_A, INPUT_PULLUP);   pinMode(PIN_ENC1_B, INPUT_PULLUP);
   pinMode(PIN_ENC1_PUSH, INPUT_PULLUP);
-  pinMode(PIN_ENC2_A, INPUT_PULLUP);
-  pinMode(PIN_ENC2_B, INPUT_PULLUP);
+  pinMode(PIN_ENC2_A, INPUT_PULLUP);   pinMode(PIN_ENC2_B, INPUT_PULLUP);
   pinMode(PIN_ENC2_PUSH, INPUT_PULLUP);
 
-  attachInterrupt(digitalPinToInterrupt(PIN_BTN_UP), isrBtnUp, FALLING);
-  attachInterrupt(digitalPinToInterrupt(PIN_BTN_DOWN), isrBtnDown, FALLING);
-  attachInterrupt(digitalPinToInterrupt(PIN_BTN_LEFT), isrBtnLeft, FALLING);
-  attachInterrupt(digitalPinToInterrupt(PIN_BTN_RIGHT), isrBtnRight, FALLING);
-  attachInterrupt(digitalPinToInterrupt(PIN_BTN_CENTER), isrBtnCenter, FALLING);
   attachInterrupt(digitalPinToInterrupt(PIN_ENC1_PUSH), isrEnc1Push, FALLING);
   attachInterrupt(digitalPinToInterrupt(PIN_ENC2_PUSH), isrEnc2Push, FALLING);
   attachInterrupt(digitalPinToInterrupt(PIN_ENC1_A), isrEnc1Change, CHANGE);
   attachInterrupt(digitalPinToInterrupt(PIN_ENC1_B), isrEnc1Change, CHANGE);
   attachInterrupt(digitalPinToInterrupt(PIN_ENC2_A), isrEnc2Change, CHANGE);
   attachInterrupt(digitalPinToInterrupt(PIN_ENC2_B), isrEnc2Change, CHANGE);
+
+  // Joystick ADC pins are input-only, no pinMode needed for ADC1 on ESP32
 }
 
 void setupDisplay() {
@@ -397,6 +405,37 @@ String bookId = urlEncode(state.currentBookId);
       break;
   }
 }
+
+void pollJoystick() {
+  uint32_t now = millis();
+  if (now - lastJoySampleMs < SLIDER_SAMPLE_MS) return; // reuse sample rate
+  lastJoySampleMs = now;
+
+  int x = analogRead(PIN_JOY_X); // ~2048 at center on ESP32 12-bit ADC
+  int y = analogRead(PIN_JOY_Y);
+  int dx = x - 2048;
+  int dy = y - 2048;
+
+  // Check if joystick has returned to center (releases the held direction)
+  if (joyHeld != JOY_NONE) {
+    if (abs(dx) < JOY_DEADZONE && abs(dy) < JOY_DEADZONE) {
+      joyHeld = JOY_NONE;
+    }
+    return; // don't fire again until released
+  }
+
+  // Determine dominant axis and direction, fire once
+  if (abs(dx) > abs(dy)) {
+    if (dx > JOY_THRESHOLD)       { joyHeld = JOY_RIGHT; handleNavEvent(NAV_RIGHT); }
+    else if (dx < -JOY_THRESHOLD) { joyHeld = JOY_LEFT;  handleNavEvent(NAV_LEFT);  }
+  } else {
+    // Y axis: depends on your physical wiring — flip if inverted
+    if (dy > JOY_THRESHOLD)       { joyHeld = JOY_DOWN;  handleNavEvent(NAV_DOWN);  }
+    else if (dy < -JOY_THRESHOLD) { joyHeld = JOY_UP;    handleNavEvent(NAV_UP);    }
+  }
+}
+
+
  
 // Interprets encoder delta according to current encoderMode. Mode list is example-only per spec, not finalized.
 void handleEncoderDelta(int encoderId, int delta) {
@@ -470,23 +509,27 @@ void pollSlider() {
 // Main flag-polling loop (ISRs only set flags; all logic happens here)
 // ============================================================
  
+// ---------------- pollInputFlags() — replace button flag checks ----------------
 void pollInputFlags() {
-  if (F_Up)     { F_Up = false;     handleNavEvent(NAV_UP); }
-  if (F_Down)   { F_Down = false;   handleNavEvent(NAV_DOWN); }
-  if (F_Left)   { F_Left = false;   handleNavEvent(NAV_LEFT); }
-  if (F_Right)  { F_Right = false;  handleNavEvent(NAV_RIGHT); }
-  if (F_Center) { F_Center = false; handleNavEvent(NAV_MODE_CHANGE); }
-  if (F_Enc1Push)  { F_Enc1Push = false;  handleNavEvent(NAV_SELECT); }
-  if (F_Enc2Push)  { F_Enc2Push = false;  handleNavEvent(NAV_SELECT); }
- 
+  // REMOVE: F_Up, F_Down, F_Left, F_Right, F_Center checks
+
+  // Joystick push → NAV_MODE_CHANGE (was center button)
+  if (F_JoyPush) { F_JoyPush = false; handleNavEvent(NAV_MODE_CHANGE); }
+
+  // Encoder pushes → NAV_SELECT (unchanged)
+  if (F_Enc1Push) { F_Enc1Push = false; handleNavEvent(NAV_SELECT); }
+  if (F_Enc2Push) { F_Enc2Push = false; handleNavEvent(NAV_SELECT); }
+
+  // Encoder rotation (unchanged)
   noInterrupts();
   int d1 = Enc1_D; Enc1_D = 0;
   int d2 = Enc2_D; Enc2_D = 0;
   interrupts();
   if (d1 != 0) handleEncoderDelta(1, d1);
   if (d2 != 0) handleEncoderDelta(2, d2);
- 
+
   pollSlider();
+  pollJoystick(); // add this
 }
  
 // ============================================================
@@ -495,6 +538,9 @@ void pollInputFlags() {
  
 void setup() {
   Serial.begin(SERIAL_BAUD_RATE);
+  Serial.print("hello");
+  delay(5000);
+  Serial.print("bye");
   setupPins();
   setupDisplay();
   connectWiFi();  

@@ -1,0 +1,1 @@
+/home/ihitplayzyt/LangCompose/target/debug/LangCompose: /home/ihitplayzyt/LangCompose/src/Langcompose.rs /home/ihitplayzyt/LangCompose/src/ai.rs /home/ihitplayzyt/LangCompose/src/helper.rs /home/ihitplayzyt/LangCompose/src/main.rs

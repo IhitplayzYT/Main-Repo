@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#define PI_MDNS_HOSTNAME "IhitPi3B" // resolves to ebookserver.local
+#define PI_MDNS_HOSTNAME "ebookserver" // resolves to ebookserver.local
 
 // ---------------- DISPLAY PINS (finalized, do not change) ----------------
 #define PIN_EPD_MOSI 23
@@ -10,12 +10,12 @@
 #define PIN_EPD_BUSY 4
 
 // ---------------- INPUT PINS (defaults — change here if your wiring differs) ----------------
-// Directional buttons (fixed meaning in every menu/mode)
-#define PIN_BTN_UP     13
-#define PIN_BTN_DOWN   12
-#define PIN_BTN_LEFT   14
-#define PIN_BTN_RIGHT  27
-#define PIN_BTN_CENTER 26 // cycles rotary encoder mode
+#define PIN_JOY_X      34   // ADC1 — joystick horizontal axis
+#define PIN_JOY_Y      35   // ADC1 — joystick vertical axis
+#define PIN_JOY_PUSH   26   // digital, replaces center button
+
+#define JOY_THRESHOLD  1800 // ADC counts from center (center ≈ 2048) to trigger
+#define JOY_DEADZONE   600  // must return within this of center before re-triggering
 
 // Rotary encoder #1 (A/B/push)
 #define PIN_ENC1_A     32
@@ -28,7 +28,7 @@
 #define PIN_ENC2_PUSH  22
 
 // Wiper slider potentiometer (ADC1 pin only — ADC2 conflicts with WiFi)
-#define PIN_SLIDER_ADC 34
+#define PIN_SLIDER_ADC 36  // 36
 // Baud Rate
 #define SERIAL_BAUD_RATE 115200
 

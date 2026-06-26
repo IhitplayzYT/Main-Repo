@@ -39,8 +39,9 @@ Rules:
 - Do not modify format specifiers.
 - Do not modify placeholder variables.
 - Keep escaped characters intact.
+- I dont need code i want direct translation done by you
 - Translate only human-readable text.
-
+- Do not touch the enclosing quotes, doublequotes or tildas
 Input:
 {}
 
@@ -62,13 +63,14 @@ Output format:
     };
 
     let client = Client::new();
-
+    println!("Sending {source_lang} {target_lang} {json_input}");
     let resp: OllamaResponse = client
         .post("http://localhost:11434/api/generate")
         .json(&req)
         .send()?
         .json()?;
-
+    println!("Done");
+println!("{}",resp.response);
     let translated: Vec<String> =
         serde_json::from_str(resp.response.trim())?;
 
