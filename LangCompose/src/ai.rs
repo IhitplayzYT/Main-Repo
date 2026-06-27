@@ -34,6 +34,7 @@ Rules:
 - Return a JSON array of strings.
 - Do not add explanations.
 - Do not add markdown.
+- Remove enclosing ``,"",''
 - Do not translate numbers.
 - Do not modify special characters.
 - Do not modify format specifiers.
@@ -41,7 +42,8 @@ Rules:
 - Keep escaped characters intact.
 - I dont need code i want direct translation done by you
 - Translate only human-readable text.
-- Do not touch the enclosing quotes, doublequotes or tildas
+- Donot translate contents in ${{}}
+- If a word looks like a name or not in the vocabulary assume it as special and translate by pronounciation/dialect
 Input:
 {}
 

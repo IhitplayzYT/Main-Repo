@@ -1,0 +1,9 @@
+{"ihit":"いひつ",
+"hello":"こんにちは",
+"hello %s":"こんにちは %s",
+"hello ${name}":"こんにちは ${name}",
+"ihit":"はいと",
+"hello":"バイ",
+"hello %s":"バイ %s",
+"hello ${name}":"バイ ${name} ${age}"
+}

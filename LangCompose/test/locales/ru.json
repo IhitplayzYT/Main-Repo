@@ -1,0 +1,9 @@
+{"ihit":"ihit",
+"hello":"zdravstvuyte",
+"hello %s":"zdravstvuye %s",
+"hello ${name}":"Privyet {name}",
+"ihit":"ihit",
+"hello":"bye",
+"hello %s":"bye %s",
+"hello ${name}":"`bye` ${name} ${age}`"
+}

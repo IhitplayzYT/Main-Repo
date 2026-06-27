@@ -1,0 +1,9 @@
+{"ihit":"ihit",
+"hello":"hello",
+"hello %s":"hello %s",
+"hello ${name}":"hello name",
+"ihit":"İhit",
+"hello":"Vefat",
+"hello %s":"Vefat %s",
+"hello ${name}":"Vefat ${ad} ${yaş}"
+}

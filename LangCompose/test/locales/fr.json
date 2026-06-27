@@ -1,0 +1,9 @@
+{"ihit":"hiit",
+"hello":"bonjour",
+"hello %s":"bonjour %s",
+"hello ${name}":"bonjour {name}",
+"ihit":"hi",
+"hello":"au revoir",
+"hello %s":"au revoir %s",
+"hello ${name}":"au revoir nom age"
+}

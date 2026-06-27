@@ -1,0 +1,9 @@
+{
+"ihit":"i hit",
+"hello":"hello",
+"hello %s":"hello %s",
+"hello ${name}":"hello name",
+"hello":"Bye",
+"hello %s":"Bye %s",
+"hello ${name}":"bye ${name} ${age}"
+}
