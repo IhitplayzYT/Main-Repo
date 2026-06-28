@@ -17,6 +17,13 @@ fn main() {
     if clargs.dbg_flag {
         println!("{clargs:?}");
     }
+    
+    match (clargs.restore,clargs.clean_run){
+        (true,true) | (false,true) => {LangCompose::restore(&clargs.proj_dir[..]);},
+        (true,false) => {LangCompose::restore(&clargs.proj_dir[..]);std::process::exit(0);},
+        (false,false) => {}
+    }
+
     let mut ignores = LangCompose::get_langignore(&clargs.proj_dir)
         .into_iter()
         .collect::<HashSet<String>>();

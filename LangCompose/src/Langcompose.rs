@@ -1,12 +1,28 @@
 pub mod LangCompose {
 
     use std::{
-        collections::{HashMap, HashSet},
-        fs,
-        path::{Path, PathBuf},
+        collections::{HashMap, HashSet}, fmt::format, fs, path::{Path, PathBuf}, process::exit, sync::{LazyLock, RwLock},
     };
 
     use regex::Regex;
+
+static UNIQUE_MAP: LazyLock<RwLock<HashSet<String>>> = LazyLock::new(|| RwLock::new(HashSet::new()));
+
+pub fn is_added(word:&str) -> bool{
+    UNIQUE_MAP.try_read().unwrap().contains(word)
+}
+
+pub fn add(word:&str){
+    UNIQUE_MAP.try_write().unwrap().insert(word.to_string());
+}
+
+pub fn remove(word:&str){
+    UNIQUE_MAP.try_write().unwrap().remove(word);
+}
+
+
+
+
 
     pub fn get_i18n(langs: Vec<String>) -> String {
         format!(
@@ -136,9 +152,13 @@ export function getLanguage() {{
                     let fpath = bpath.join(a.to_string() + ".json");
                     let mut buff = "{".to_string();
                     for (old, new) in og.iter().zip(b.iter()) {
+                        if is_added(old) {
+                            continue;
+                        }
                         let mut old = old[1..].to_string();
                         old.pop();
                         buff += &format!("\"{old}\":\"{new}\",\n");
+                        add(&old[..]);
                     }
                     if buff.len() > 2 {
                         buff.pop();
@@ -211,7 +231,9 @@ export function getLanguage() {{
             let mut buff = std::fs::read_to_string(fpath.clone()).unwrap();
             for i in list {
                 if i.starts_with("`") {
-                    buff = buff.replace(i, &convert_template_literal(i)[..]);
+                    let mut i = (&i[1..]).to_string();
+                    i.pop();
+                    buff = buff.replace(&i[..], &convert_template_literal(&i[..])[..]);
                 } else {
                     let mut m = (&i[1..]).to_string();
                     m.pop().unwrap();
@@ -225,4 +247,65 @@ export function getLanguage() {{
             fs::write(fpath, updated).unwrap();
         }
     }
+
+
+fn find_fn_t(text: &str) -> Vec<usize> {
+    let re = Regex::new(r#"t\("([^"\\]|\\.)*"\)"#).unwrap();
+
+    re.find_iter(text)
+        .map(|m| m.start())
+        .collect()
 }
+
+fn remove_replaces(s: &str) -> String {
+    let re = Regex::new(
+        r#"(?m)^[ \t]*\.replace\("\$\{[^"]+\}",\s*[^)]+\)\r?\n?"#
+    ).unwrap();
+
+    re.replace_all(s, "").into_owned()
+}
+
+
+static PLACEHOLDER_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"\$\{[^}]+\}").unwrap());
+
+fn contains_placeholder(s: &str) -> bool {
+    PLACEHOLDER_RE.is_match(s)
+}
+
+    pub fn restore(root:&str){
+        fs::remove_dir(Path::new(root).join("locales")).unwrap();
+        fs::remove_file(Path::new(root).join("i18n.js")).unwrap();
+        fs::read_dir(Path::new(root)).unwrap().for_each(|x| {
+            let dirent = x.unwrap();
+            if dirent.path().is_dir(){
+                restore(dirent.path().to_str().unwrap());
+            }else if dirent.path().is_file(){
+               let mut buff = remove_replaces(&fs::read_to_string(dirent.path()).unwrap()[..]);
+            if let Some(i_idx) = buff.find("import { setLanguage, t, getLanguage} from "){
+                let i_end = buff[i_idx..].find(";").unwrap();
+                buff = buff.replace(&buff[i_idx..i_idx+i_end+1 + if buff[i_idx+i_end+2..].starts_with("\n") {1}else{0}],"");
+                
+
+
+            find_fn_t(&buff[..]).into_iter().for_each(|idx| {
+                let start = idx;
+                let fn_t_end = &buff[start..].find(")").unwrap();
+                let old = &buff[start..fn_t_end+1];
+                let mut new = (&old[2..]).to_string();
+                new.pop();
+                if contains_placeholder(&new[..]){
+                new = format!("`{}`",&new[1..new.len()-1]);
+                }
+                buff = buff.replace(old,&new);
+            });
+            fs::write(dirent.path(), buff).unwrap();
+        }
+            }else{
+                std::process::exit(2);
+            }
+        });
+
+    }
+}
+ 
